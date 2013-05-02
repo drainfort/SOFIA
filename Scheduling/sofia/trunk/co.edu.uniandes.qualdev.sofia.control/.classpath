@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.gammaCalculator"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.modifier"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.neighborCalculator"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.structure"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
