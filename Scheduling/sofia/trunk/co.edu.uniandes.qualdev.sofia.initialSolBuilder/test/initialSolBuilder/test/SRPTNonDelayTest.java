@@ -55,7 +55,7 @@ public class SRPTNonDelayTest {
 		BetaVO tearDownTravelTimes = new BetaVO("TearDownTravelTime", "beta.TearDownTravelTime", tearDownTravelTimeFiles);
 		betas.add(tearDownTravelTimes);
 		
-		constructiveInitialSolution = testRule.createInitialSolution(problemFiles, betas , "vector.factory.VectorFactory", null).calculateAMatrix();
+		constructiveInitialSolution = testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null).calculateAMatrix();
 		
 	}
 	
