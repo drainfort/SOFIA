@@ -1,7 +1,6 @@
 package neighborCalculator.impl;
 
 import java.util.ArrayList;
-import java.util.Properties;
 
 import structure.IStructure;
 import structure.impl.Graph;
