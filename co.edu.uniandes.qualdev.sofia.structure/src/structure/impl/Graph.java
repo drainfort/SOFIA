@@ -506,14 +506,14 @@ public class Graph extends AbstractStructure {
 	
 	@Override
 	public IOperation getCiminus1J(IOperation Cij, int vectorPos) {
-		return nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getJobId()].getPreviousRouteNode() != null ? 
-				nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getJobId()].getPreviousRouteNode().getOperation() : null;
+		return nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousRouteNode() != null ? 
+				nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousRouteNode().getOperation() : null;
 	}
 
 	@Override
 	public IOperation getCiJminus1(IOperation Cij, int vectorPos) {
-		return nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getJobId()].getPreviousSequenceNode() != null ? 
-				nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getJobId()].getPreviousSequenceNode().getOperation() : null;
+		return nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousSequenceNode() != null ? 
+				nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousSequenceNode().getOperation() : null;
 	}
 	
 	@Override

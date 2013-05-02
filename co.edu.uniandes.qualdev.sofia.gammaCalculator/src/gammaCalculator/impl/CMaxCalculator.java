@@ -14,7 +14,6 @@ public class CMaxCalculator implements IGammaCalculator {
 	@Override
 	public int calculateGamma(IStructure vector) throws Exception {
 		int[][] C = vector.calculateCMatrix();
-		MatrixUtils.printMatrix(C);
 		
 		int cmax = -1;
 		for (int i = 0; i < vector.getTotalJobs(); i++) {
