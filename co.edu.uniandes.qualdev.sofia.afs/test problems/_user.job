@@ -1,0 +1,34 @@
+Shop:               Job
+Job:                Job000
+  Release:            30
+  Due:                7
+  Weight:             1
+  Oper:               Wkc000;50;A
+  Oper:               Wkc001;60;A
+  Oper:               Wkc002;70;A
+  Oper:               Wkc003;80;A
+
+Job:                Job001
+  Release:            0
+  Due:                70
+  Weight:             1
+  Oper:               Wkc001;80;B
+  Oper:               Wkc002;90;B
+  Oper:               Wkc003;33;B
+
+Job:                Job002
+  Release:            0
+  Due:                70
+  Weight:             1
+  Oper:               Wkc001;22;C
+  Oper:               Wkc002;89;B
+
+Job:                Job003
+  Release:            10
+  Due:                70
+  Weight:             1
+  Oper:               Wkc003;56;D
+  Oper:               Wkc002;44;D
+  Oper:               Wkc001;27;C
+  Oper:               Wkc000;73;B
+
