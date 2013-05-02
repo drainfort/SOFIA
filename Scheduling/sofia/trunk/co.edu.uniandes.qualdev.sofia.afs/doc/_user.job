@@ -1,0 +1,157 @@
+Shop:               Single
+Job:                Job000
+  Release:            0
+  Due:                2145
+  Weight:             4
+  Oper:               Wkc000;144;A
+
+Job:                Job001
+  Release:            0
+  Due:                2259
+  Weight:             9
+  Oper:               Wkc000;66;B
+
+Job:                Job002
+  Release:            0
+  Due:                1666
+  Weight:             4
+  Oper:               Wkc000;147;C
+
+Job:                Job003
+  Release:            0
+  Due:                2251
+  Weight:             3
+  Oper:               Wkc000;93;D
+
+Job:                Job004
+  Release:            0
+  Due:                1855
+  Weight:             8
+  Oper:               Wkc000;115;E
+
+Job:                Job005
+  Release:            0
+  Due:                2271
+  Weight:             0
+  Oper:               Wkc000;106;F
+
+Job:                Job006
+  Release:            0
+  Due:                2053
+  Weight:             2
+  Oper:               Wkc000;133;G
+
+Job:                Job007
+  Release:            0
+  Due:                2203
+  Weight:             5
+  Oper:               Wkc000;64;H
+
+Job:                Job008
+  Release:            0
+  Due:                1830
+  Weight:             4
+  Oper:               Wkc000;52;I
+
+Job:                Job009
+  Release:            0
+  Due:                2117
+  Weight:             6
+  Oper:               Wkc000;134;J
+
+Job:                Job010
+  Release:            0
+  Due:                2002
+  Weight:             10
+  Oper:               Wkc000;68;K
+
+Job:                Job011
+  Release:            0
+  Due:                2174
+  Weight:             6
+  Oper:               Wkc000;123;L
+
+Job:                Job012
+  Release:            0
+  Due:                2213
+  Weight:             9
+  Oper:               Wkc000;124;M
+
+Job:                Job013
+  Release:            0
+  Due:                2259
+  Weight:             8
+  Oper:               Wkc000;93;N
+
+Job:                Job014
+  Release:            0
+  Due:                2213
+  Weight:             4
+  Oper:               Wkc000;50;O
+
+Job:                Job015
+  Release:            0
+  Due:                2137
+  Weight:             9
+  Oper:               Wkc000;100;P
+
+Job:                Job016
+  Release:            0
+  Due:                2248
+  Weight:             1
+  Oper:               Wkc000;78;Q
+
+Job:                Job017
+  Release:            0
+  Due:                1616
+  Weight:             8
+  Oper:               Wkc000;131;R
+
+Job:                Job018
+  Release:            0
+  Due:                2120
+  Weight:             7
+  Oper:               Wkc000;106;S
+
+Job:                Job019
+  Release:            0
+  Due:                1666
+  Weight:             7
+  Oper:               Wkc000;82;T
+
+Job:                Job020
+  Release:            0
+  Due:                2232
+  Weight:             7
+  Oper:               Wkc000;79;U
+
+Job:                Job021
+  Release:            0
+  Due:                2135
+  Weight:             3
+  Oper:               Wkc000;133;V
+
+Job:                Job022
+  Release:            0
+  Due:                2189
+  Weight:             5
+  Oper:               Wkc000;93;W
+
+Job:                Job023
+  Release:            0
+  Due:                2190
+  Weight:             8
+  Oper:               Wkc000;82;X
+
+Job:                Job024
+  Release:            0
+  Due:                1856
+  Weight:             3
+  Oper:               Wkc000;138;Y
+
+Job:                Job025
+  Release:            0
+  Due:                1545
+  Weight:             0
+  Oper:               Wkc000;126;Z
+

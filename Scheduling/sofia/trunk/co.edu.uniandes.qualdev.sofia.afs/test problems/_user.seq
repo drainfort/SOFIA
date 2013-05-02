@@ -1,0 +1,20 @@
+Schedule:           General SB Routine / Cmax
+  Machine:            3.0
+    Oper:               3
+    Oper:               1
+    Oper:               0
+  Machine:            0.0
+    Oper:               0
+  Machine:            0.1
+    Oper:               3
+  Machine:            1.0
+    Oper:               1
+    Oper:               0
+    Oper:               2
+    Oper:               3
+  Machine:            2.0
+    Oper:               1
+    Oper:               2
+  Machine:            2.1
+    Oper:               3
+    Oper:               0
