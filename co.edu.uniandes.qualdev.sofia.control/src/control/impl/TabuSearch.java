@@ -39,11 +39,10 @@ public class TabuSearch extends Control {
 		executionResults.setInitialCmax(GammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 
-		int vectorSize = initialSolution.getVector().size();
+		int vectorSize = initialSolution.getTotalJobs() * initialSolution.getTotalStations() ;
 		int tabuSize = vectorSize;
 
 		IStructure current = initialSolution.cloneStructure();
-		int currentGamma = gammaCalculator.calculateGamma(current);
 
 		// Initializes the best solution (XBest) as the first one (X)
 		IStructure best = current.cloneStructure();
@@ -138,7 +137,6 @@ public class TabuSearch extends Control {
 				}
 				// System.out.println("current: " + current.getVector());
 				current = bestCandidate.cloneStructure();
-				currentGamma = gammaBestCandidate;
 				count++;
 
 				if (tabuIndex > tabuSize) {
