@@ -98,7 +98,9 @@ public class BestDispatchingRule implements IInitialSolBuilder{
 		solutions.add(afslrptSolution);
 		solutions.add(afssptSolution);
 		solutions.add(afssrptSolution);
+		
 		int menor=Integer.MAX_VALUE;
+		
 		IStructure bestSolution=null;
 		for(int i=0; i< solutions.size();i++ ){
 			int solutionGamma = gammaCalculator.calculateGamma(solutions.get(i));

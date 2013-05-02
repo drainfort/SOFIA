@@ -44,12 +44,12 @@ public class LPTNonDelayTest {
 		
 		ArrayList<String> travelTimeFiles = new ArrayList<String>();
 		travelTimeFiles.add("./data/TT-04x04-01.txt");
-		BetaVO travelTimes = new BetaVO("TravelTimes", "beta.TravelTimes", travelTimeFiles);
+		BetaVO travelTimes = new BetaVO("TravelTimes", "beta.impl.TravelTimes", travelTimeFiles);
 		betas.add(travelTimes);
 		
 		ArrayList<String> tearDownTravelTimeFiles = new ArrayList<String>();
 		tearDownTravelTimeFiles.add("./data/TT-04x04-01.txt");
-		BetaVO tearDownTravelTimes = new BetaVO("TearDownTravelTime", "beta.TearDownTravelTime", tearDownTravelTimeFiles);
+		BetaVO tearDownTravelTimes = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", tearDownTravelTimeFiles);
 		betas.add(tearDownTravelTimes);
 		
 		constructiveInitialSolution = testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null).calculateAMatrix();
