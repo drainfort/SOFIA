@@ -4,6 +4,7 @@ import gammaCalculator.IGammaCalculator;
 import initialSolBuilder.IInitialSolBuilder;
 import java.util.ArrayList;
 import structure.IStructure;
+import structure.factory.AbstractStructureFactory;
 import structure.factory.impl.VectorFactory;
 import afs.AFSInitialSolutionCreator;
 import common.types.BetaVO;
@@ -43,12 +44,15 @@ public class AFSLPTNonDelay implements IInitialSolBuilder{
 	
 	@Override
 	public IStructure createInitialSolution(ArrayList<String> problemFiles,
-			ArrayList<BetaVO> betas, String structureFactory,
+			ArrayList<BetaVO> pBetas, String structureFactory,
 			IGammaCalculator gammaCalculator) throws Exception {
 		
 		String TFile = problemFiles.get(0);
 		String TTFile = problemFiles.get(1);
-		return VectorFactory.createNewInstance(structureFactory).createSolutionStructure(AFSInitialSolutionCreator.getInstance().createInitialSolution("LPT", TFile, TTFile), problemFiles, betas);
+		
+		IStructure structure = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(AFSInitialSolutionCreator.getInstance().createInitialSolution("LPT", TFile, TTFile), problemFiles, pBetas);
+		structure.calculateCMatrix();
+		return structure;
 	}
 
 	@Override

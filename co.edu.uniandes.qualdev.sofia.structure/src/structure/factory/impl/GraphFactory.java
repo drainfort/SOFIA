@@ -46,7 +46,7 @@ public class GraphFactory extends AbstractStructureFactory {
 		int jobsAmount = A.length;
 		int stationsAmount = A[0].length;
 
-		IStructure graph = new Graph(problemMatrix, new ArrayList<BetaVO>());
+		IStructure graph = new Graph(problemMatrix, betas);
 		graph.setTotalJobs(jobsAmount);
 		graph.setTotalStations(stationsAmount);
 
