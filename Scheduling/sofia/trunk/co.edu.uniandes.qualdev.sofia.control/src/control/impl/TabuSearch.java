@@ -158,8 +158,5 @@ public class TabuSearch extends Control {
 		ExecutionResults result = obtainExecutionResults(best, gammaCalculator);
 		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
 		return result;
-
-
-
 	}
 }
