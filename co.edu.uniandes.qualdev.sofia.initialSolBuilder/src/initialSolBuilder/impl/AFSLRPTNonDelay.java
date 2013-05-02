@@ -48,7 +48,7 @@ public class AFSLRPTNonDelay implements IInitialSolBuilder{
 		
 		String TFile = problemFiles.get(0);
 		String TTFile = problemFiles.get(1);
-		return VectorFactory.createNewInstance("structure.factory.impl.VectorFactory").createSolutionStructure(AFSInitialSolutionCreator.getInstance().createInitialSolution("LRPT", TFile, TTFile), problemFiles, betas);
+		return VectorFactory.createNewInstance(structureFactory).createSolutionStructure(AFSInitialSolutionCreator.getInstance().createInitialSolution("LRPT", TFile, TTFile), problemFiles, betas);
 	}
 
 	@Override

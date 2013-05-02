@@ -149,7 +149,7 @@ public class LPTNonDelay implements IInitialSolBuilder{
 					
 					int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
 					int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
-					int travelTime = lastJob != null ? finalList.getTTBetas(lastJob, index + 1) : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+					int travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
 					
 					int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
 					int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
