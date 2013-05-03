@@ -124,7 +124,7 @@ public class T_GRASP_EXHAUSTIVE_RANDOM_05x05 {
 	
 	@After
 	public void tearDown(){
-		ChartPrinter.getInstance().printGlobalResults("./results/Om_TT/TT_05x05_GRASP_EXHAUSTIVE_RANDOM_consolidated.html");
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/TT_05x05_GRASP_EXHAUSTIVE_RANDOM_consolidated.html");
 	}
 	
 	// ---------------------------------------------------------
