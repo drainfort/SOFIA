@@ -202,7 +202,8 @@ public class GRASPERLS extends Control {
 							neighborsImproving.add(pair);
 							break;							
 					};
-				}	
+				}
+				candidate.clean();
 			}
 		
 			//
