@@ -378,7 +378,6 @@ public class ChartPrinter {
 		printTable=globalExecutionResults.get(0).get(0).isPrintTable();
 		printInitialSolutions = globalExecutionResults.get(0).get(0).isPrintInitialSolution();
 		printSolutions = globalExecutionResults.get(0).get(0).isPrintFinalSolution();
-		System.out.println(printTable);
 		
 	}
 	

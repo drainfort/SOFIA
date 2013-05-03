@@ -51,7 +51,7 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 	}
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int start, int end)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int size)
 			throws Exception {
 		
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
@@ -61,7 +61,7 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 		int salida=0;
 		int i = 0;
 		int j = 1;
-		while(neighborhood.size()<end){
+		while(neighborhood.size()<size){
 			
 			OperationIndexVO initialOperationIndex = new OperationIndexVO(temp.get(i)[0],temp.get(i)[1]);
 			OperationIndexVO finalOperationIndex = new OperationIndexVO(temp.get(j)[0], temp.get(j)[1]);

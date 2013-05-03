@@ -145,8 +145,7 @@ public class IteratedTabuSearch extends Control {
 			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
 		}
 
-		ArrayList<PairVO> arrayNeighbors = neighborCalculator
-				.calculateNeighborhood(Sa, 0, neighborhodSize);
+		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(Sa, neighborhodSize);
 
 		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
 			IStructure Skb = null;
@@ -218,7 +217,7 @@ public class IteratedTabuSearch extends Control {
 			// Avance while
 			iterations--;
 			nonimproving--;
-			arrayNeighbors = neighborCalculator.calculateNeighborhood(Sa, 0, (Sa.getTotalStations() * Sa.getTotalJobs()) - 1);
+			arrayNeighbors = neighborCalculator.calculateNeighborhood(Sa, (Sa.getTotalStations() * Sa.getTotalJobs()) - 1);
 		}
 		return Sb;
 	}

@@ -73,6 +73,16 @@ public class OperationIndexVO {
 	}
 
 	// --------------------------------------------
+	// Methods
+	// --------------------------------------------
+	
+	public boolean equals(Object operationIndex) {
+		return jobId == ((OperationIndexVO) operationIndex).jobId
+				&& ((OperationIndexVO) operationIndex).stationId == stationId
+				&& ((OperationIndexVO) operationIndex).machineId == machineId;
+	}
+	
+	// --------------------------------------------
 	// Getters and setters
 	// --------------------------------------------
 
@@ -126,12 +136,6 @@ public class OperationIndexVO {
 
 	public void setProcessingTime(int processingTime) {
 		this.processingTime = processingTime;
-	}
-
-	public boolean equals(Object operationIndex) {
-		return jobId == ((OperationIndexVO) operationIndex).jobId
-				&& ((OperationIndexVO) operationIndex).stationId == stationId
-				&& ((OperationIndexVO) operationIndex).machineId == machineId;
 	}
 
 	public String getNameStation() {

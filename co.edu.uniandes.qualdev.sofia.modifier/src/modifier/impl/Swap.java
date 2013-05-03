@@ -32,7 +32,6 @@ public class Swap implements IModifier {
 	@Override
 	public IStructure performModification(PairVO movement, IStructure currentVector) throws Exception {
 		IStructure vector = currentVector.cloneStructure();
-//		System.out.println("exchange: " + movement.getoX() + ", " +  movement.getoY());
 		vector.exchangeOperations(movement.getoX(), movement.getoY());
 		return vector;
 	}

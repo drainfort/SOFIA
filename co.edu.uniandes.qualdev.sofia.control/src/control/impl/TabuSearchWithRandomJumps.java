@@ -90,8 +90,7 @@ public class TabuSearchWithRandomJumps extends Control {
 
 				 int totalJobs = X.getTotalJobs();
 				 int totalStations = X.getTotalStations();
-				 arrayNeighbors = neighborCalculator.calculateNeighborhood(X, 0,
-						 totalJobs * totalStations - 1);
+				 arrayNeighbors = neighborCalculator.calculateNeighborhood(X, totalJobs * totalStations - 1);
 
 				 for (int i = 0; i < arrayNeighbors.size(); i++) {
 					 isTabu = false;

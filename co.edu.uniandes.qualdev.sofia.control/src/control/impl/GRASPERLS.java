@@ -63,7 +63,7 @@ public class GRASPERLS extends Control {
 				bounds[i]=Integer.MAX_VALUE;			
 			
 			System.out.println(gammaBestSolution[0]);
-			ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(initialSolution, 0, (initialSolution.getTotalStations() * initialSolution.getTotalJobs()) - 1);
+			ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(initialSolution, (initialSolution.getTotalStations() * initialSolution.getTotalJobs()) - 1);
 			
 			//Fase de busqueda local exhaustiva
 			best = ERLS(initialSolution, modifier,
