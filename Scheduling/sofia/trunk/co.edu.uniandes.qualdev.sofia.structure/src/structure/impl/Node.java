@@ -62,7 +62,8 @@ public class Node {
 					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ), cj);
 			this.operation.setInitialTime(initialTime);
 			
-			if(ci+  this.onwerGraph.getTTBetas(this.operation, this.getPreviousRouteNode().operation) ==cj )
+			if(ci+  this.onwerGraph.getTTBetas(this.getOperation(), 
+					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ) ==cj )
 				sameInitialTime = true;	
 			
 			int finalTime = initialTime + operation.getProcessingTime();
