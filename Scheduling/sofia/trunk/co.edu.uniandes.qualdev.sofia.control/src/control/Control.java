@@ -5,6 +5,10 @@ import java.util.Properties;
 
 import structure.IOperation;
 import structure.IStructure;
+import structure.impl.Graph;
+import structure.impl.Job;
+import structure.impl.Machine;
+import structure.impl.Station;
 import common.types.OperationIndexVO;
 import common.utils.ExecutionResults;
 import common.utils.GanttTask;
@@ -65,21 +69,36 @@ public abstract class Control {
 	 * @return
 	 * @throws Exception 
 	 */
-	protected ExecutionResults obtainExecutionResults(IStructure S0, IGammaCalculator gammaCalculator) throws Exception {
+	protected ExecutionResults obtainExecutionResults(IStructure S0, IGammaCalculator gammaCalculator, boolean printTable, boolean printSolution, boolean printInitialSolution) throws Exception {
 		S0.calculateCMatrix();
-		int GammaInitialSolution = gammaCalculator.calculateGamma(S0);
-		executionResults.setBestCmax(GammaInitialSolution);
-		//System.out.println("Valida la solucion: "+validateSolution(S0));
+		executionResults.setBestCmax(gammaCalculator.calculateGamma(S0));
+		executionResults.setPrintTable(printTable);
+		executionResults.setPrintInitialSolution(printInitialSolution);
+		executionResults.setPrintFinalSolution(printSolution);
 		
-		So.calculateCMatrix();
-		generateGanttTasks(So, true);
-		generateGanttTasks(S0, false);
+		//System.out.println("Valida la solucion:"+ validateSolution(S0));
+
+		if(printInitialSolution){
+			So.calculateCMatrix();
+			generateGanttTasks(So, true);
+		}
+		if(printSolution){
+			generateGanttTasks(S0, false);
+		}
 		
 		return executionResults;
 	}
 	
 	
 	private void generateGanttTasks(IStructure solution, boolean initial){
+		ArrayList<Station> stations= new ArrayList<Station>();
+		ArrayList<Job> jobs = new ArrayList<Job>();
+		ArrayList<Machine> machines =new ArrayList<Machine>();
+		if(solution.getClass().equals(Graph.class)){
+			machines = ((Graph) solution).getMachines();
+			jobs =((Graph) solution).getJobs();
+			stations =((Graph) solution).getStations();
+		}
 
 		ArrayList<GanttTask> tasksFinalSolution = new ArrayList<GanttTask>();
 		ArrayList<OperationIndexVO> operationIndexesFinalSolution = new ArrayList<OperationIndexVO>();
@@ -88,15 +107,29 @@ public abstract class Control {
 			if (operation!=null && !machineNotDefinedInGantt(tasksFinalSolution, operation.getOperationIndex().getStationId())) {
 				GanttTask task = new GanttTask();
 				task.setStationIdentifier(operation.getOperationIndex().getStationId());
-				task.setName("Estación " + operation.getOperationIndex().getStationId());
-
+				Station temp = findStation(stations, operation.getOperationIndex().getStationId()+1);
+				if(temp==null){
+					task.setName("Estación " + operation.getOperationIndex().getStationId());
+				}
+				else{
+					task.setName(temp.getNameClass()+" "+ temp.getAtributes().get(0).getValue());
+				}
 				tasksFinalSolution.add(task);
 			}
+			Machine machine = findMachine(machines, operation.getOperationIndex().getStationId()+1);
+			Job job = findJob(jobs, operation.getOperationIndex().getJobId()+1);
+			
 			OperationIndexVO operationIndex = new OperationIndexVO(operation.getOperationIndex().getJobId(), operation.getOperationIndex().getStationId());
 			operationIndex.setInitialTime(operation.getInitialTime());
 			operationIndex.setFinalTime(operation.getFinalTime());
-			operationIndex.setNameJob("Trabajo "+operation.getOperationIndex().getJobId());
-			operationIndex.setNameMachine("Máquina " +1);
+			if(job!=null){
+				operationIndex.setNameJob(job.getNameClass()+" "+job.getAtributes().get(0).getValue());
+				operationIndex.setNameMachine(machine.getNameClass()+" "+machine.getAtributes().get(0).getValue());
+			}
+			else{
+				operationIndex.setNameJob("Trabajo "+operation.getOperationIndex().getJobId());
+				operationIndex.setNameMachine("Máquina " +1);
+			}
 			operationIndexesFinalSolution.add(operationIndex);
 			
 		}
@@ -110,6 +143,7 @@ public abstract class Control {
 	}
 	
 	
+	
 	private boolean machineNotDefinedInGantt(ArrayList<GanttTask> tasks,
 			int machineIndex) {
 		for (GanttTask ganttTask : tasks) {
@@ -117,6 +151,40 @@ public abstract class Control {
 				return true;
 		}
 		return false;
+	}
+	
+	
+	private Station findStation(ArrayList<Station>stations, int id){
+		if(stations!=null){
+			for(int i=0; i<stations.size();i++){
+				if(stations.get(i).getId()==id){
+					return stations.get(i);
+				}
+			}
+		}
+		return null;
+	}
+	
+	private Machine findMachine(ArrayList<Machine>machines, int id){
+		if(machines!=null){
+			for(int i=0; i<machines.size();i++){
+				if(machines.get(i).getId()==id){
+					return machines.get(i);
+				}
+			}
+		}
+		return null;
+	}
+	
+	private Job findJob(ArrayList<Job>jobs, int id){
+		if(jobs!=null){
+			for(int i=0; i<jobs.size();i++){
+				if(jobs.get(i).getId()==id){
+					return jobs.get(i);
+				}
+			}
+		}
+		return null;
 	}
 
 //	private boolean validateSolution(IVector S0){
