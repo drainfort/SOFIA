@@ -49,11 +49,13 @@ public class Graph extends AbstractStructure {
 	 * Array with the initial nodes for each sequence
 	 */
 	public Node[] initialStationNodesArray = null;
-	
-	
+
+
 	private ArrayList<Job> jobs;
 	private ArrayList<Machine> machines;
 	private ArrayList<Station> stations;
+
+	private ArrayList<int[]> weightedNodesCriticaRoute;
 
 	// -----------------------------------------------
 	// Constructor
@@ -64,18 +66,18 @@ public class Graph extends AbstractStructure {
 	 */
 	public Graph(int totalJobs, int totalStations) {
 		super(totalJobs, totalStations);
-		
+
 		nodes = new Node[totalJobs][totalStations];
-		
+
 		for (int i = 0; i < totalJobs; i++) {
 			for (int j = 0; j < totalStations; j++) {
 				nodes[i][j] = new Node(operationsMatrix[i][j], this);
 			}
 		}
-		
+
 		initialJobNodesArray = new Node[totalJobs];
 		initialStationNodesArray = new Node[totalStations];
-		
+
 		jobs = new ArrayList<Job>();
 		machines = new ArrayList<Machine>();
 		stations = new ArrayList<Station>();
@@ -86,34 +88,34 @@ public class Graph extends AbstractStructure {
 	 */
 	public Graph(String processingTimesFile, ArrayList<BetaVO> pBetas) throws Exception {
 		super(processingTimesFile, pBetas);
-		
+
 		nodes = new Node[totalJobs][totalStations];
-		
+
 		for (int i = 0; i < totalJobs; i++) {
 			for (int j = 0; j < totalStations; j++) {
 				nodes[i][j] = new Node(operationsMatrix[i][j], this);
 			}
 		}
-		
+
 		initialJobNodesArray = new Node[totalJobs];
 		initialStationNodesArray = new Node[totalStations];
-		
+
 		jobs = new ArrayList<Job>();
 		machines = new ArrayList<Machine>();
 		stations = new ArrayList<Station>();
 	}
-	
+
 	// -------------------------------------------------
 	// Construction auxiliary methods
 	// -------------------------------------------------
-	
+
 
 	public void createRouteArc(OperationIndexVO start, OperationIndexVO end) {
 		nodes[start.getJobId()][start.getStationId()]
 				.setNextRouteNode(nodes[end.getJobId()][end.getStationId()]);
 		nodes[end.getJobId()][end.getStationId()]
 				.setPreviousRouteNode(nodes[start.getJobId()][start
-						.getStationId()]);
+				                                              .getStationId()]);
 
 	}
 
@@ -122,9 +124,9 @@ public class Graph extends AbstractStructure {
 				.setNextSequenceNode(nodes[end.getJobId()][end.getStationId()]);
 		nodes[end.getJobId()][end.getStationId()]
 				.setPreviousSequenceNode(nodes[start.getJobId()][start
-						.getStationId()]);
+				                                                 .getStationId()]);
 	}
-	
+
 	public Node getInitialJobNode(int job) {
 		return initialJobNodesArray[job];
 	}
@@ -144,15 +146,15 @@ public class Graph extends AbstractStructure {
 		this.initialStationNodesArray[station] = initialStationNode;
 		initialStationNode.setPreviousSequenceNode(null);
 	}
-	
+
 	public Node getNode(int job, int station){
 		return nodes[job][station];
 	}
-	
+
 	// -------------------------------------------------
 	// Neighbor methods
 	// -------------------------------------------------
-	
+
 	@Override
 	public void exchangeOperations(OperationIndexVO first, OperationIndexVO second) {
 
@@ -164,7 +166,7 @@ public class Graph extends AbstractStructure {
 			Collection<Integer> route = getJobRoute(jobId);
 
 			Integer[] routearray = (Integer[]) route.toArray(new Integer[route
-					.size()]);
+			                                                             .size()]);
 
 			// swap
 			Integer machine1Index = find(machineId, routearray);
@@ -189,7 +191,7 @@ public class Graph extends AbstractStructure {
 			}
 
 			this.getNode(jobId, routearray[routearray.length - 1])
-					.setNextRouteNode(null);
+			.setNextRouteNode(null);
 
 		}
 		// If the exchange is in the route. Same machine
@@ -220,7 +222,7 @@ public class Graph extends AbstractStructure {
 			}
 
 			this.getNode(seqarray[seqarray.length - 1], machineId)
-					.setNextSequenceNode(null);
+			.setNextSequenceNode(null);
 		}
 	}
 
@@ -228,9 +230,9 @@ public class Graph extends AbstractStructure {
 	public void exchangeOperations(int initialOperationPosition,
 			int finalOperationPosition) throws Exception{
 		throw new Exception("Operation not currently supported");
-		
+
 	}
-	
+
 	private int find(int id, Integer[] routearray) {
 		for (int i = 0; i < routearray.length; i++) {
 			if (routearray[i] == id)
@@ -251,7 +253,7 @@ public class Graph extends AbstractStructure {
 			Vector<Integer> route = (Vector<Integer>) getJobRoute(jobId);
 
 			Integer[] routearray = (Integer[]) route.toArray(new Integer[route
-					.size()]);
+			                                                             .size()]);
 
 			// insertion
 			Integer machine1Index = find(machineId, routearray);
@@ -291,7 +293,7 @@ public class Graph extends AbstractStructure {
 			}
 
 			this.getNode(jobId, routearray[routearray.length - 1])
-					.setNextRouteNode(null);
+			.setNextRouteNode(null);
 
 		}
 		// If the insertion is in the sequence. Same machine
@@ -338,7 +340,7 @@ public class Graph extends AbstractStructure {
 			}
 
 			this.getNode(seqarray[seqarray.length - 1], machineId)
-					.setNextSequenceNode(null);
+			.setNextSequenceNode(null);
 		}
 	}
 
@@ -346,9 +348,9 @@ public class Graph extends AbstractStructure {
 	public void insertOperationBefore(int toInsertOperationPosition,
 			int successorOperationPosition) throws Exception{
 		throw new Exception("Operation not currently supported");
-		
+
 	}
-	
+
 	@Override
 	public void insertOperationAfter(OperationIndexVO toInsertOperationIndex,
 			OperationIndexVO predeccessorOperationIndex) {
@@ -361,7 +363,7 @@ public class Graph extends AbstractStructure {
 			Vector<Integer> route = (Vector<Integer>) getJobRoute(jobId);
 
 			Integer[] routearray = (Integer[]) route.toArray(new Integer[route
-					.size()]);
+			                                                             .size()]);
 
 			// insertion
 			Integer machine1Index = find(machineId, routearray);
@@ -391,7 +393,7 @@ public class Graph extends AbstractStructure {
 			Node initialNode = getNode(jobId, routearray[0]);
 			this.initialJobNodesArray[jobId] = initialNode;
 			initialNode.setPreviousRouteNode(null);
-			
+
 			for (int k = 0; k < (routearray.length - 1); k++) {
 				OperationIndexVO start = new OperationIndexVO(jobId, routearray[k]);
 				OperationIndexVO end = new OperationIndexVO(jobId,
@@ -400,7 +402,7 @@ public class Graph extends AbstractStructure {
 			}
 
 			this.getNode(jobId, routearray[routearray.length - 1])
-					.setNextRouteNode(null);
+			.setNextRouteNode(null);
 
 		}
 		// If the insertion is in the sequence. Same machine
@@ -447,7 +449,7 @@ public class Graph extends AbstractStructure {
 			}
 
 			this.getNode(seqarray[seqarray.length - 1], machineId)
-					.setNextSequenceNode(null);
+			.setNextSequenceNode(null);
 		}
 	}
 
@@ -456,11 +458,11 @@ public class Graph extends AbstractStructure {
 			int successorOperationPosition) throws Exception{
 		throw new Exception("Operation not currently supported");
 	}
-	
+
 	// -------------------------------------------------
 	// Queries
 	// -------------------------------------------------
-	
+
 	@Override
 	public int getTotalJobs() {
 		return this.totalJobs;
@@ -470,7 +472,7 @@ public class Graph extends AbstractStructure {
 	public int getTotalStations() {
 		return this.totalStations;
 	}
-	
+
 	@Override
 	public int[][] calculateCMatrix() throws Exception{
 		C = new int[totalJobs][totalStations + 1];
@@ -489,7 +491,7 @@ public class Graph extends AbstractStructure {
 
 		return C;
 	}
-	
+
 	@Override
 	public int[][] calculateInitialTimesMatrix() throws Exception {
 		C = new int[getTotalJobs()][getTotalStations()];
@@ -501,7 +503,7 @@ public class Graph extends AbstractStructure {
 		}
 		return C;
 	}
-	
+
 	@Override
 	public int[][] calculateAMatrix() {
 		int[][] A = new int[this.getTotalJobs()][this.totalStations];
@@ -516,7 +518,7 @@ public class Graph extends AbstractStructure {
 		}
 		return A;
 	}
-	
+
 	@Override
 	public IOperation getCiminus1J(IOperation Cij, int vectorPos) {
 		return nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousRouteNode() != null ? 
@@ -528,7 +530,7 @@ public class Graph extends AbstractStructure {
 		return nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousSequenceNode() != null ? 
 				nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousSequenceNode().getOperation() : null;
 	}
-	
+
 	@Override
 	public int geInitialTime(OperationIndexVO operationIndex) {
 		return nodes[operationIndex.getJobId()][operationIndex.getStationId()]
@@ -569,7 +571,7 @@ public class Graph extends AbstractStructure {
 
 		return operations;
 	}
-	
+
 	@Override
 	public ArrayList<BetaVO> getBetas() {
 		ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
@@ -590,12 +592,12 @@ public class Graph extends AbstractStructure {
 		}
 		return betas;
 	}
-	
+
 	@Override
 	public int getTTBetas(IOperation Cij, int predecessor) throws Exception{
 		throw new Exception("Operation not currently supported");
 	}
-	
+
 	@Override
 	public int getTTBetas(IOperation origin, IOperation destination) throws Exception{
 		int sumBetas = 0;
@@ -616,7 +618,7 @@ public class Graph extends AbstractStructure {
 		}
 		return sumBetas;
 	}
-	
+
 	private int[][] applyTearDownBetas() {
 		int[][] newC = null;
 		if (this.betas != null) {
@@ -625,14 +627,14 @@ public class Graph extends AbstractStructure {
 				Beta beta = i.next();
 
 				if (beta instanceof TearDownBeta) {
-					 newC = ((TearDownTravelTime) beta).applyBeta(C);
+					newC = ((TearDownTravelTime) beta).applyBeta(C);
 				}
 
 			}
 		}
 		return newC == null ? C : newC;
 	}
-	
+
 	@Override
 	public Collection<Integer> getJobRoute(int job) {
 		Collection<Integer> route = new Vector<Integer>(totalStations);
@@ -645,7 +647,7 @@ public class Graph extends AbstractStructure {
 		}
 		return route;
 	}
-	
+
 	@Override
 	public Collection<Integer> getStationSequence(int stationId) {
 		Collection<Integer> sequence = new Vector<Integer>(totalJobs);
@@ -657,11 +659,11 @@ public class Graph extends AbstractStructure {
 		}
 		return sequence;
 	}
-	
+
 	private IOperation getOperation(int job, int station) {
 		return operationsMatrix[job][station];
 	}
-	
+
 	@Override
 	public IOperation getPosition(int pos) throws Exception{
 		throw new Exception("Operation not currently supported");
@@ -671,12 +673,12 @@ public class Graph extends AbstractStructure {
 	public int getTT(int initialPosition, int finalPosition) throws Exception {
 		throw new Exception("Operation not currently supported");
 	}
-	
+
 	@Override
 	public ArrayList<IOperation> getVector() throws Exception {
 		throw new Exception("Operation not currently supported");
 	}
-	
+
 	@Override
 	public int getMaxMachinesPerStation() {
 		return 0;
@@ -692,7 +694,7 @@ public class Graph extends AbstractStructure {
 	public IOperation getOperationByPosition(int position) throws Exception {
 		throw new Exception("Operation not currently supported");
 	}
-	
+
 	@Override
 	public int getPositionByOperationIndex(OperationIndexVO operationIndex) {
 		return 0;
@@ -708,29 +710,29 @@ public class Graph extends AbstractStructure {
 	public int[][] updateCMatrix(PairVO pair) throws Exception{
 		throw new Exception("Operation not currently supported");
 	}
-	
+
 	// -------------------------------------------------
 	// Manipulation methods
 	// -------------------------------------------------
-	
+
 	@Override
 	public void scheduleOperation(OperationIndexVO operationIndex) {
 		Vector<Integer> route = (Vector<Integer>) this.getJobRoute(operationIndex.getJobId());
 		Vector<Integer> sequence = (Vector<Integer>) this.getStationSequence(operationIndex.getStationId());
-		
+
 		Node graphNode = this.getNode(operationIndex.getJobId(), operationIndex.getStationId());
-		
+
 		//Scheduling the route
 		if(route.size() == 0){
-				initialJobNodesArray[operationIndex.getJobId()] = graphNode;
+			initialJobNodesArray[operationIndex.getJobId()] = graphNode;
 		}else{
 			OperationIndexVO start = new OperationIndexVO(operationIndex.getJobId(), route.get(route.size()-1));
 			this.createRouteArc(start, operationIndex); 
 		}
-		
+
 		//Scheduling the sequence
 		if(sequence.size() == 0){
-				initialStationNodesArray[operationIndex.getStationId()] = graphNode;
+			initialStationNodesArray[operationIndex.getStationId()] = graphNode;
 		}else{
 			OperationIndexVO start = new OperationIndexVO(sequence.get(sequence.size()-1), operationIndex.getStationId());
 			this.createSequenceArc(start, operationIndex); 
@@ -740,28 +742,28 @@ public class Graph extends AbstractStructure {
 	@Override
 	public void removeOperationFromSchedule(OperationIndexVO operationIndex) {
 		Node graphNode = this.getNode(operationIndex.getJobId(), operationIndex.getStationId());
-		
-			//Unscheduling the route
-			if(graphNode.getPreviousRouteNode() == null && initialJobNodesArray[operationIndex.getJobId()] == graphNode){
-				initialJobNodesArray[operationIndex.getJobId()] = null;
-			}else{
-				graphNode.getPreviousRouteNode().setNextRouteNode(null);
-				graphNode.setPreviousRouteNode(null);
-			}
-			
-			//Unscheduling the sequence
-			if(graphNode.getPreviousSequenceNode() == null && initialStationNodesArray[operationIndex.getStationId()] == graphNode){
-				initialStationNodesArray[operationIndex.getStationId()] = null;
-			}else{
-				graphNode.getPreviousSequenceNode().setNextSequenceNode(null);
-				graphNode.setPreviousSequenceNode(null);
-			}
+
+		//Unscheduling the route
+		if(graphNode.getPreviousRouteNode() == null && initialJobNodesArray[operationIndex.getJobId()] == graphNode){
+			initialJobNodesArray[operationIndex.getJobId()] = null;
+		}else{
+			graphNode.getPreviousRouteNode().setNextRouteNode(null);
+			graphNode.setPreviousRouteNode(null);
+		}
+
+		//Unscheduling the sequence
+		if(graphNode.getPreviousSequenceNode() == null && initialStationNodesArray[operationIndex.getStationId()] == graphNode){
+			initialStationNodesArray[operationIndex.getStationId()] = null;
+		}else{
+			graphNode.getPreviousSequenceNode().setNextSequenceNode(null);
+			graphNode.setPreviousSequenceNode(null);
+		}
 	}
-	
+
 	// -------------------------------------------------
 	// Utilities
 	// -------------------------------------------------
-	
+
 	/**
 	 * Returns a copy of the graph
 	 * 
@@ -775,7 +777,7 @@ public class Graph extends AbstractStructure {
 		newGraph.totalStations = this.getTotalStations();
 		newGraph.nodes = new Node[newGraph.totalJobs][newGraph.totalStations];
 		newGraph.operationsMatrix = new IOperation[newGraph.totalJobs][newGraph.totalStations];
-		
+
 		newGraph.initialJobNodesArray = new Node[newGraph.totalJobs];
 		newGraph.initialStationNodesArray = new Node[newGraph.totalStations];
 
@@ -794,7 +796,7 @@ public class Graph extends AbstractStructure {
 				IOperation op = this.getOperation(i, j);
 				if (op != null)
 					newGraph.operationsMatrix[i][j] = new Operation(this.operationsMatrix[i][j].getProcessingTime(), i, j);
-					newGraph.nodes[i][j] = new Node(newGraph.operationsMatrix[i][j], this);
+				newGraph.nodes[i][j] = new Node(newGraph.operationsMatrix[i][j], this);
 			}
 		}
 
@@ -807,25 +809,25 @@ public class Graph extends AbstractStructure {
 					if (this.getNode(i, j).getNextRouteNode() != null) {
 						ni = this.getNode(i, j).getNextRouteNode().getOperation().getOperationIndex().getJobId();
 						nj = this.getNode(i, j).getNextRouteNode().getOperation().getOperationIndex().getStationId();
-						
+
 						newGraph.createRouteArc(new OperationIndexVO(i, j), new OperationIndexVO(ni, nj));
 					}
 
 					if (this.getNode(i, j).getNextSequenceNode() != null) {
 						ni = this.getNode(i, j).getNextSequenceNode().getOperation().getOperationIndex().getJobId();
 						nj = this.getNode(i, j).getNextSequenceNode().getOperation().getOperationIndex().getStationId();
-						
+
 						newGraph.createSequenceArc(new OperationIndexVO(i, j), new OperationIndexVO(ni, nj));
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < newGraph.totalJobs; i++) {
 			if (this.initialJobNodesArray[i] != null) {
 				int job = this.initialJobNodesArray[i].getOperation().getOperationIndex().getJobId();
 				int machine = this.initialJobNodesArray[i].getOperation().getOperationIndex().getStationId();
-				
+
 				newGraph.setInitialJobNode(i,newGraph.getNode(job, machine));
 			}
 		}
@@ -857,7 +859,7 @@ public class Graph extends AbstractStructure {
 			initialStationNodesArray[j] = null;
 		}
 	}
-	
+
 	/**
 	 * Print in the console the matrix given in the parameter.
 	 * 
@@ -883,11 +885,11 @@ public class Graph extends AbstractStructure {
 		}
 		return matrix;
 	}
-	
+
 	// -------------------------------------------------
 	// Getters and setters
 	// -------------------------------------------------
-	
+
 	@Override
 	public String getProcessingTimesFile() {
 		return processingTimesFile;
@@ -897,24 +899,24 @@ public class Graph extends AbstractStructure {
 	public void setProcessingTimesFile(String processingTimesFile) {
 		this.processingTimesFile = processingTimesFile;
 	}
-	
+
 	@Override
 	public void setTotalJobs(int totalJobs) {
 		this.totalJobs = totalJobs;
-		
+
 	}
 
 	@Override
 	public void setTotalStations(int totalStations) {
 		this.totalStations = totalStations;
-		
+
 	}
 
 	@Override
 	public void setMaxMachinesPerStation(int maxMachinesPerStation) {
 		// TODO Complete
 	}
-	
+
 	public ArrayList<Job> getJobs() {
 		return jobs;
 	}
@@ -934,15 +936,24 @@ public class Graph extends AbstractStructure {
 	public ArrayList<Station> getStations() {
 		return stations;
 	}
-	
+
 	public void setStations(ArrayList<Station> stations) {
 		this.stations = stations;
 	}
-	
+
+	public ArrayList<int[]> getWeightedNodesCriticaRoute() {
+		return weightedNodesCriticaRoute;
+	}
+
+	public void setWeightedNodesCriticaRoute(
+			ArrayList<int[]> weightedNodesCriticaRoute) {
+		this.weightedNodesCriticaRoute = weightedNodesCriticaRoute;
+	}
+
 	// -------------------------------------------------
 	// TODO Metodos aun por arreglar...
 	// -------------------------------------------------
-	
+
 	/**
 	 * Calculates the longest paths of the graph.
 	 * @throws Exception 
@@ -977,9 +988,9 @@ public class Graph extends AbstractStructure {
 				}
 			}
 		}
-		
+
 		ArrayList<CriticalRoute> totalRoutes = new ArrayList<CriticalRoute>();
-		
+
 		for(int i=0; i< cMaxNodes.size();i++){
 			ArrayList<CriticalRoute> criticalRoutes = new ArrayList<CriticalRoute>();
 			CriticalRoute firstRoute = new CriticalRoute();
@@ -987,7 +998,7 @@ public class Graph extends AbstractStructure {
 			cMaxNodes.get(i).getCriticalRoutes(criticalRoutes, incidenciasCriticaRoute );
 			totalRoutes.addAll(criticalRoutes);
 		}
-		
+
 		Collections.sort(incidenciasCriticaRoute, new Comparator<int[]>() {
 			@Override
 			public int compare(int[] o1, int[] o2) {
@@ -997,227 +1008,192 @@ public class Graph extends AbstractStructure {
 
 			}
 		});
-		
+
 		weightedNodesCriticaRoute = incidenciasCriticaRoute;
 		return totalRoutes;
 	}
-	
-//	
-//	
-//	// Metodo orden topologico
-//	// Tener cuidado porque destruye las relaciones del grafo de solucion
-//	public ArrayList<IOperation> topologicalSort()  throws Exception{
-//		ArrayList<IOperation> l = new ArrayList<IOperation>();
-//		ArrayList<IOperation> s = new ArrayList<IOperation>();
-//		
-//		for (int i = 0; i < totalJobs; i++) {
-//			for (int j = 0; j < totalStations; j++) {
-//				if (nodes[i][j] != null){
-//					if (nodes[i][j].getPreviousRouteNode()==null && nodes[i][j].getPreviousSequenceNode()==null){
-//						s.add(nodes[i][j]);
-//					}	
-//				}
-//			}
-//		}
-//		
-//		while(s.size()>0)
-//		{
-//			IOperation temp = s.get(0);
-//			s.remove(0);
-//			IOperation nextRoute = temp.getNextRouteNode();
-//			IOperation nextSequence = temp.getNextSequenceNode();
-//			temp.setNextRouteNode(null);
-//			temp.setNextSequenceNode(null);
-//			l.add(temp);
-//			if(nextRoute !=null){
-//				nextRoute.setPreviousRouteNode(null);
-//				if( nextRoute.getPreviousRouteNode()==null && nextRoute.getPreviousSequenceNode()==null)
-//					s.add(nextRoute);
-//			}
-//			
-//			if(nextSequence !=null){
-//				nextSequence.setPreviousSequenceNode(null);
-//				if( nextSequence.getPreviousRouteNode()==null && nextSequence.getPreviousSequenceNode()==null)
-//					s.add(nextSequence);
-//			}
-//			
-//		}
-//		
-//		boolean presenceOfCycles = false;
-//		
-//		for (int i = 0; i < totalJobs; i++) {
-//			for (int j = 0; j < totalStations; j++) {
-//				if (nodes[i][j] != null){
-//					if (nodes[i][j].getPreviousRouteNode()!=null && nodes[i][j].getPreviousSequenceNode()!=null){
-//						presenceOfCycles =true;
-//					}	
-//				}
-//			}
-//		}
-//		if(presenceOfCycles){
-//			throw new Exception("Prensence of cycles");
-//		}
-//		return l;
-//	}
-//	
-//	
-//	//Topological sort no destruye el grafo
-//	public ArrayList<IOperation> topologicalSort2()  throws Exception{
-//		ArrayList<IOperation> l = new ArrayList<IOperation>();
-//		ArrayList<IOperation> s = new ArrayList<IOperation>();
-//		int counter = 1;
-//		
-//		for (int i = 0; i < totalJobs; i++) {
-//			for (int j = 0; j < totalStations; j++) {
-//				if (nodes[i][j] != null){
-//					if (nodes[i][j].getPreviousRouteNode()==null && nodes[i][j].getPreviousSequenceNode()==null){
-//						s.add(nodes[i][j]);
-//					}	
-//				}
-//			}
-//		}
-//		
-//		while(s.size()>0)
-//		{
-//			if(counter >totalJobs*totalStations)
-//				throw new Exception("Prensence of cycles");
-//			
-//			IOperation temp = s.get(0);
-//			temp.setPositionSort(counter);
-//			
-//			IOperation nextRoute = temp.getNextRouteNode();
-//			IOperation nextSequence = temp.getNextSequenceNode();
-//			s.remove(0);
-//			l.add(temp);
-//			if(nextRoute !=null){
-//				IOperation previosRoute = nextRoute.getPreviousRouteNode();
-//				IOperation previousSequence = nextRoute.getPreviousSequenceNode();
-//				boolean condition1=false;
-//				boolean condition2 =false;
-//				
-//				if(previosRoute==null){
-//					condition1=true;
-//				}
-//				else{
-//					if(l.contains(previosRoute))
-//						condition1=true;
-//				}
-//				
-//				if(previousSequence==null){
-//					condition2=true;
-//				}
-//				else{
-//					if(l.contains(previousSequence))
-//						condition2=true;
-//				}
-//				if(condition1 && condition2)
-//					s.add(nextRoute);
-//				
-//			}
-//			
-//			if(nextSequence !=null){
-//				IOperation previosRoute = nextSequence.getPreviousRouteNode();
-//				IOperation previousSequence = nextSequence.getPreviousSequenceNode();
-//				boolean condition1=false;
-//				boolean condition2 =false;
-//				
-//				if(previosRoute==null){
-//					condition1=true;
-//				}
-//				else{
-//					if(l.contains(previosRoute))
-//						condition1=true;
-//				}
-//				
-//				if(previousSequence==null){
-//					condition2=true;
-//				}
-//				else{
-//					if(l.contains(previousSequence))
-//						condition2=true;
-//				}
-//				if(condition1 && condition2)
-//					s.add(nextSequence);
-//			}
-//			
-//			counter++;
-//		}
-//		
-//		if(l.size() !=totalJobs*totalStations-getNumberNullNodes())
-//			throw new Exception("Prensence of cycles");
-//		return l;
-//	}
-//	
-//	public int getNumberNullNodes(){
-//		int number=0;
-//		for (int i = 0; i < totalJobs; i++) {
-//			for (int j = 0; j < totalStations; j++) {
-//				if (nodes[i][j] == null){
-//					number++;	
-//				}
-//			}
-//		}
-//		return number;
-//	}
-//	
-//	public void restartC(){
-//		C=null;
-//		for (int i = 0; i < totalJobs; i++) {
-//			for (int j = 0; j < totalStations; j++) {
-//				if (nodes[i][j] != null){
-//					nodes[i][j].restartC();
-//				}
-//			}
-//		}
-//	}
-//
-//	public ArrayList<int[]> getWeightedNodesCriticaRoute() {
-//		return weightedNodesCriticaRoute;
-//	}
-//
-//	public void setWeightedNodesCriticaRoute(
-//			ArrayList<int[]> weightedNodesCriticaRoute) {
-//		this.weightedNodesCriticaRoute = weightedNodesCriticaRoute;
-//	}
-//
-//	public void setBetas(Map<String, Beta> betas) {
-//		this.betas = betas;
-//	}
-//
-//	public ArrayList<Job> getJobs() {
-//		return jobs;
-//	}
-//
-//	public void setJobs(ArrayList<Job> jobs) {
-//		this.jobs = jobs;
-//	}
-//
-//	public ArrayList<Machine> getMachines() {
-//		return machines;
-//	}
-//
-//	public void setMachines(ArrayList<Machine> machines) {
-//		this.machines = machines;
-//	}
-//
-//	public ArrayList<Station> getStations() {
-//		return stations;
-//	}
-//
-//	public void setStations(ArrayList<Station> stations) {
-//		this.stations = stations;
-//	}
-//	
-//	public int getTT(int stationId1, int stationId2){
-//		if(this.betas!=null){
-//			Iterator<Beta> iterator = betas.values().iterator();
-//			while (iterator.hasNext()) {
-//				Beta beta = iterator.next();
-//				if (beta instanceof TTBeta){
-//					return (int) ((TTBeta) beta).getValue(stationId1,stationId2);
-//				}
-//			}
-//		}
-//		return 0;
-//	}
+
+	//	
+	//	
+	//	// Metodo orden topologico
+	//	// Tener cuidado porque destruye las relaciones del grafo de solucion
+	//	public ArrayList<IOperation> topologicalSort()  throws Exception{
+	//		ArrayList<IOperation> l = new ArrayList<IOperation>();
+	//		ArrayList<IOperation> s = new ArrayList<IOperation>();
+	//		
+	//		for (int i = 0; i < totalJobs; i++) {
+	//			for (int j = 0; j < totalStations; j++) {
+	//				if (nodes[i][j] != null){
+	//					if (nodes[i][j].getPreviousRouteNode()==null && nodes[i][j].getPreviousSequenceNode()==null){
+	//						s.add(nodes[i][j]);
+	//					}	
+	//				}
+	//			}
+	//		}
+	//		
+	//		while(s.size()>0)
+	//		{
+	//			IOperation temp = s.get(0);
+	//			s.remove(0);
+	//			IOperation nextRoute = temp.getNextRouteNode();
+	//			IOperation nextSequence = temp.getNextSequenceNode();
+	//			temp.setNextRouteNode(null);
+	//			temp.setNextSequenceNode(null);
+	//			l.add(temp);
+	//			if(nextRoute !=null){
+	//				nextRoute.setPreviousRouteNode(null);
+	//				if( nextRoute.getPreviousRouteNode()==null && nextRoute.getPreviousSequenceNode()==null)
+	//					s.add(nextRoute);
+	//			}
+	//			
+	//			if(nextSequence !=null){
+	//				nextSequence.setPreviousSequenceNode(null);
+	//				if( nextSequence.getPreviousRouteNode()==null && nextSequence.getPreviousSequenceNode()==null)
+	//					s.add(nextSequence);
+	//			}
+	//			
+	//		}
+	//		
+	//		boolean presenceOfCycles = false;
+	//		
+	//		for (int i = 0; i < totalJobs; i++) {
+	//			for (int j = 0; j < totalStations; j++) {
+	//				if (nodes[i][j] != null){
+	//					if (nodes[i][j].getPreviousRouteNode()!=null && nodes[i][j].getPreviousSequenceNode()!=null){
+	//						presenceOfCycles =true;
+	//					}	
+	//				}
+	//			}
+	//		}
+	//		if(presenceOfCycles){
+	//			throw new Exception("Prensence of cycles");
+	//		}
+	//		return l;
+	//	}
+	//	
+	//	
+
+	//Topological sort no destruye el grafo
+	public ArrayList<IOperation> topologicalSort2()  throws Exception{
+		ArrayList<IOperation> l = new ArrayList<IOperation>();
+		ArrayList<Node> s = new ArrayList<Node>();
+		int counter = 1;
+
+		for (int i = 0; i < totalJobs; i++) {
+			for (int j = 0; j < totalStations; j++) {
+				if (nodes[i][j] != null){
+					if (nodes[i][j].getPreviousRouteNode()==null && nodes[i][j].getPreviousSequenceNode()==null){
+						s.add(nodes[i][j]);
+					}	
+				}
+			}
+		}
+
+		while(s.size()>0)
+		{
+			if(counter >totalJobs*totalStations)
+				throw new Exception("Prensence of cycles");
+
+			Node temp = s.get(0);
+			temp.setPositionSort(counter);
+
+			Node nextRoute = temp.getNextRouteNode();
+			Node nextSequence = temp.getNextSequenceNode();
+			s.remove(0);
+			l.add(temp.getOperation());
+			if(nextRoute !=null){
+				Node previosRoute = nextRoute.getPreviousRouteNode();
+				Node previousSequence = nextRoute.getPreviousSequenceNode();
+				boolean condition1=false;
+				boolean condition2 =false;
+
+				if(previosRoute==null){
+					condition1=true;
+				}
+				else{
+					if(l.contains(previosRoute))
+						condition1=true;
+				}
+
+				if(previousSequence==null){
+					condition2=true;
+				}
+				else{
+					if(l.contains(previousSequence))
+						condition2=true;
+				}
+				if(condition1 && condition2)
+					s.add(nextRoute);
+
+			}
+
+			if(nextSequence !=null){
+				Node previosRoute = nextSequence.getPreviousRouteNode();
+				Node previousSequence = nextSequence.getPreviousSequenceNode();
+				boolean condition1=false;
+				boolean condition2 =false;
+
+				if(previosRoute==null){
+					condition1=true;
+				}
+				else{
+					if(l.contains(previosRoute))
+						condition1=true;
+				}
+
+				if(previousSequence==null){
+					condition2=true;
+				}
+				else{
+					if(l.contains(previousSequence))
+						condition2=true;
+				}
+				if(condition1 && condition2)
+					s.add(nextSequence);
+			}
+
+			counter++;
+		}
+
+		if(l.size() !=totalJobs*totalStations-getNumberNullNodes())
+			throw new Exception("Prensence of cycles");
+		return l;
+	}
+
+	public int getNumberNullNodes(){
+		int number=0;
+		for (int i = 0; i < totalJobs; i++) {
+			for (int j = 0; j < totalStations; j++) {
+				if (nodes[i][j] == null){
+					number++;	
+				}
+			}
+		}
+		return number;
+	}
+
+	//	public void restartC(){
+	//		C=null;
+	//		for (int i = 0; i < totalJobs; i++) {
+	//			for (int j = 0; j < totalStations; j++) {
+	//				if (nodes[i][j] != null){
+	//					nodes[i][j].restartC();
+	//				}
+	//			}
+	//		}
+	//	}
+	//
+
+	//	public int getTT(int stationId1, int stationId2){
+	//		if(this.betas!=null){
+	//			Iterator<Beta> iterator = betas.values().iterator();
+	//			while (iterator.hasNext()) {
+	//				Beta beta = iterator.next();
+	//				if (beta instanceof TTBeta){
+	//					return (int) ((TTBeta) beta).getValue(stationId1,stationId2);
+	//				}
+	//			}
+	//		}
+	//		return 0;
+	//	}
 }
