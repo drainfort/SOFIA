@@ -93,7 +93,7 @@ public class GRASP extends Control {
 				k--;
 			}
 		}
-		ExecutionResults result = obtainExecutionResults(best, gammaCalculator);
+		ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"));
 		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
 		return result;
 	}	

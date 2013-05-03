@@ -33,6 +33,15 @@ public class SimpleSimulatedAnnealingParametersLoader implements IParametersLoad
 			System.out.println("entro");
 			params.put("maxNumberImprovements", Integer.parseInt(algorithmConfiguration.getProperty("params.maxNumberImprovements")));
 		}
+		
+		params.put("printTable", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.consolidationTable")));
+		
+		params.put("printInitialSolution", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.gantt.initialsolutions")));
+		
+		params.put("printSolutions", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.gantt.bestsolutions")));
 		return params;
 		
 	}
