@@ -55,7 +55,7 @@ public class T_TS_CR_ADJ_SWAP__04x04 {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 
 		String[] file1 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G_G.properties","./data/Om-TT/04x04/04x04_01.properties", "./results/TT_04x04_01.pdf", "04x04_01"};
+				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/04x04/04x04_01.properties", "./results/TT_04x04_01.pdf", "04x04_01"};
 		datos.add(file1);
 
 		String[] file2 = {
