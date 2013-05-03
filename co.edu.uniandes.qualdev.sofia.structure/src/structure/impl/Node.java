@@ -1,5 +1,7 @@
 package structure.impl;
 
+import java.util.ArrayList;
+
 import structure.IOperation;
 
 public class Node {
@@ -25,6 +27,10 @@ public class Node {
 	private int rank;
 	
 	private Graph onwerGraph;
+	
+	private boolean sameInitialTime= false;
+	
+	private int positionSort = -1;
 	
 	// -------------------------------------
 	// Constructor
@@ -55,6 +61,9 @@ public class Node {
 			int initialTime = Math.max(ci + this.onwerGraph.getTTBetas(this.getOperation(), 
 					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ), cj);
 			this.operation.setInitialTime(initialTime);
+			
+			if(ci+  this.onwerGraph.getTTBetas(this.operation, this.getPreviousRouteNode().operation) ==cj )
+				sameInitialTime = true;	
 			
 			int finalTime = initialTime + operation.getProcessingTime();
 			this.operation.setFinalTime(finalTime);
@@ -103,6 +112,57 @@ public class Node {
 		}
 	}
 	
+	
+	public ArrayList<CriticalRoute> getCriticalRoutes(ArrayList<CriticalRoute> criticalRoutes, ArrayList<int[]> incidencias)throws Exception{
+		//Caso Base
+		for(int i=0; i<criticalRoutes.size();i++)
+		{
+			criticalRoutes.get(i).addNodeBegin(this.operation);
+			int	position = ((this.operation.getOperationIndex().getJobId())*this.onwerGraph.getTotalJobs())+this.operation.getOperationIndex().getStationId();
+			incidencias.get(position)[2]++;
+		}
+		if(previousRouteNode==null && previousSequenceNode==null ){
+			
+			return criticalRoutes;
+		}
+		else{
+			if(sameInitialTime){
+				ArrayList<CriticalRoute> temp = new ArrayList<CriticalRoute>();
+				for(int i=0; i<criticalRoutes.size();i++){
+					CriticalRoute clone = new CriticalRoute();
+					for(int j=0; j<criticalRoutes.get(i).getRoute().size();j++){
+						IOperation node = criticalRoutes.get(i).getRoute().get(j);
+						int	position = ((node.getOperationIndex().getJobId())*this.onwerGraph.getTotalJobs())+node.getOperationIndex().getStationId();
+						incidencias.get(position)[2]++;
+						clone.getRoute().add(node);
+					}
+					temp.add(clone);
+				}
+				this.getPreviousSequenceNode().getCriticalRoutes(criticalRoutes,incidencias);
+				criticalRoutes.addAll(this.getPreviousRouteNode().getCriticalRoutes(temp,incidencias));
+
+			}
+			else{
+				int lastroute = 0;
+				int lastsequence = 0;
+				if(this.getPreviousRouteNode()!=null){
+					lastroute = this.getPreviousRouteNode().calculateC();
+				}
+				
+				if(this.getPreviousSequenceNode()!=null){
+					lastsequence = this.getPreviousSequenceNode().calculateC();
+				}
+				if(lastroute<lastsequence){
+					this.getPreviousSequenceNode().getCriticalRoutes(criticalRoutes,incidencias);
+				}
+				else{
+					this.getPreviousRouteNode().getCriticalRoutes(criticalRoutes,incidencias);
+				}
+			}
+			return criticalRoutes;
+		}
+	}
+	
 	// -------------------------------------
 	// Getters and setters
 	// -------------------------------------
@@ -146,4 +206,6 @@ public class Node {
 	public void setPreviousSequenceNode(Node previousSequenceNode) {
 		this.previousSequenceNode = previousSequenceNode;
 	}
+	
+	
 }

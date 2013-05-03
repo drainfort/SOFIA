@@ -984,12 +984,11 @@ public class Graph extends AbstractStructure {
 			ArrayList<CriticalRoute> criticalRoutes = new ArrayList<CriticalRoute>();
 			CriticalRoute firstRoute = new CriticalRoute();
 			criticalRoutes.add(firstRoute);
-//			cMaxNodes.get(i).getCriticalRoutes(criticalRoutes, incidenciasCriticaRoute );
+			cMaxNodes.get(i).getCriticalRoutes(criticalRoutes, incidenciasCriticaRoute );
 			totalRoutes.addAll(criticalRoutes);
 		}
 		
 		Collections.sort(incidenciasCriticaRoute, new Comparator<int[]>() {
-
 			@Override
 			public int compare(int[] o1, int[] o2) {
 				int a = o1[2];
@@ -998,7 +997,8 @@ public class Graph extends AbstractStructure {
 
 			}
 		});
-//		weightedNodesCriticaRoute = incidenciasCriticaRoute;
+		
+		weightedNodesCriticaRoute = incidenciasCriticaRoute;
 		return totalRoutes;
 	}
 	
