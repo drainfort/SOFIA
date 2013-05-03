@@ -124,7 +124,7 @@ public class T_TS_RANDOM_RANDOM_07x07 {
 	
 	@After
 	public void tearDown(){
-		ChartPrinter.getInstance().printGlobalResults("./results/Om_TT/TT_07x07_TS_RANDOM_RANDOM_07x07_consolidated.pdf");
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/TT_07x07_TS_RANDOM_RANDOM_07x07_consolidated.html");
 	}
 	
 	// ---------------------------------------------------------
