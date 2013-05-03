@@ -1013,65 +1013,7 @@ public class Graph extends AbstractStructure {
 		return totalRoutes;
 	}
 
-	//	
-	//	
-	//	// Metodo orden topologico
-	//	// Tener cuidado porque destruye las relaciones del grafo de solucion
-	//	public ArrayList<IOperation> topologicalSort()  throws Exception{
-	//		ArrayList<IOperation> l = new ArrayList<IOperation>();
-	//		ArrayList<IOperation> s = new ArrayList<IOperation>();
-	//		
-	//		for (int i = 0; i < totalJobs; i++) {
-	//			for (int j = 0; j < totalStations; j++) {
-	//				if (nodes[i][j] != null){
-	//					if (nodes[i][j].getPreviousRouteNode()==null && nodes[i][j].getPreviousSequenceNode()==null){
-	//						s.add(nodes[i][j]);
-	//					}	
-	//				}
-	//			}
-	//		}
-	//		
-	//		while(s.size()>0)
-	//		{
-	//			IOperation temp = s.get(0);
-	//			s.remove(0);
-	//			IOperation nextRoute = temp.getNextRouteNode();
-	//			IOperation nextSequence = temp.getNextSequenceNode();
-	//			temp.setNextRouteNode(null);
-	//			temp.setNextSequenceNode(null);
-	//			l.add(temp);
-	//			if(nextRoute !=null){
-	//				nextRoute.setPreviousRouteNode(null);
-	//				if( nextRoute.getPreviousRouteNode()==null && nextRoute.getPreviousSequenceNode()==null)
-	//					s.add(nextRoute);
-	//			}
-	//			
-	//			if(nextSequence !=null){
-	//				nextSequence.setPreviousSequenceNode(null);
-	//				if( nextSequence.getPreviousRouteNode()==null && nextSequence.getPreviousSequenceNode()==null)
-	//					s.add(nextSequence);
-	//			}
-	//			
-	//		}
-	//		
-	//		boolean presenceOfCycles = false;
-	//		
-	//		for (int i = 0; i < totalJobs; i++) {
-	//			for (int j = 0; j < totalStations; j++) {
-	//				if (nodes[i][j] != null){
-	//					if (nodes[i][j].getPreviousRouteNode()!=null && nodes[i][j].getPreviousSequenceNode()!=null){
-	//						presenceOfCycles =true;
-	//					}	
-	//				}
-	//			}
-	//		}
-	//		if(presenceOfCycles){
-	//			throw new Exception("Prensence of cycles");
-	//		}
-	//		return l;
-	//	}
-	//	
-	//	
+	
 
 	//Topological sort no destruye el grafo
 	public ArrayList<IOperation> topologicalSort2()  throws Exception{
@@ -1196,4 +1138,64 @@ public class Graph extends AbstractStructure {
 	//		}
 	//		return 0;
 	//	}
+	
+//	
+	//	
+	//	// Metodo orden topologico
+	//	// Tener cuidado porque destruye las relaciones del grafo de solucion
+	//	public ArrayList<IOperation> topologicalSort()  throws Exception{
+	//		ArrayList<IOperation> l = new ArrayList<IOperation>();
+	//		ArrayList<IOperation> s = new ArrayList<IOperation>();
+	//		
+	//		for (int i = 0; i < totalJobs; i++) {
+	//			for (int j = 0; j < totalStations; j++) {
+	//				if (nodes[i][j] != null){
+	//					if (nodes[i][j].getPreviousRouteNode()==null && nodes[i][j].getPreviousSequenceNode()==null){
+	//						s.add(nodes[i][j]);
+	//					}	
+	//				}
+	//			}
+	//		}
+	//		
+	//		while(s.size()>0)
+	//		{
+	//			IOperation temp = s.get(0);
+	//			s.remove(0);
+	//			IOperation nextRoute = temp.getNextRouteNode();
+	//			IOperation nextSequence = temp.getNextSequenceNode();
+	//			temp.setNextRouteNode(null);
+	//			temp.setNextSequenceNode(null);
+	//			l.add(temp);
+	//			if(nextRoute !=null){
+	//				nextRoute.setPreviousRouteNode(null);
+	//				if( nextRoute.getPreviousRouteNode()==null && nextRoute.getPreviousSequenceNode()==null)
+	//					s.add(nextRoute);
+	//			}
+	//			
+	//			if(nextSequence !=null){
+	//				nextSequence.setPreviousSequenceNode(null);
+	//				if( nextSequence.getPreviousRouteNode()==null && nextSequence.getPreviousSequenceNode()==null)
+	//					s.add(nextSequence);
+	//			}
+	//			
+	//		}
+	//		
+	//		boolean presenceOfCycles = false;
+	//		
+	//		for (int i = 0; i < totalJobs; i++) {
+	//			for (int j = 0; j < totalStations; j++) {
+	//				if (nodes[i][j] != null){
+	//					if (nodes[i][j].getPreviousRouteNode()!=null && nodes[i][j].getPreviousSequenceNode()!=null){
+	//						presenceOfCycles =true;
+	//					}	
+	//				}
+	//			}
+	//		}
+	//		if(presenceOfCycles){
+	//			throw new Exception("Prensence of cycles");
+	//		}
+	//		return l;
+	//	}
+	//	
+	//	
 }
