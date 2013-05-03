@@ -35,7 +35,7 @@ public class CriticalRouteTest {
 			//Escenario 1
 			
 			Operation o1 = new Operation(10, 0, 0);
-			problem.addOperation(o1);
+			/*problem.addOperation(o1);
 			
 			Operation o4 = new Operation(5, 1, 1);
 			problem.addOperation(o4);
@@ -59,7 +59,7 @@ public class CriticalRouteTest {
 			problem1.addOperation(o21);
 			
 			Operation o31 = new Operation(20, 1, 0);
-			problem1.addOperation(o31);
+			problem1.addOperation(o31);*/
 			
 			
 			
@@ -91,7 +91,7 @@ public class CriticalRouteTest {
 	@Test
 	public void testClone2() throws InterruptedException {
 		
-		Vector newVector = (Vector) problem1.clone();
+		Vector newVector = (Vector) problem1.cloneStructure();
 		ArrayList<CriticalRoute> routes = newVector.getLongestRoutes();
 		System.out.println(routes);
 		assertTrue(routes.size()==4);
