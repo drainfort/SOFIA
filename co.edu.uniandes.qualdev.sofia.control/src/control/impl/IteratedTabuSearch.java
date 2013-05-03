@@ -98,6 +98,7 @@ public class IteratedTabuSearch extends Control {
 					GammaSb = GammaSg;
 				}
 				iter--;
+				Sa.clean();
 			}
 		}
 		
