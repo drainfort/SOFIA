@@ -111,6 +111,7 @@ public class TabuSearch extends Control {
 						bestPairCandidate = pairCandidate;
 					}
 				}
+				candidate.clean();
 			}
 
 			if (bestCandidate != null) {
