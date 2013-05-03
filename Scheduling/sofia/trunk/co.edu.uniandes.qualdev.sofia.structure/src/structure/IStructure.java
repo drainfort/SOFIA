@@ -316,5 +316,6 @@ public interface IStructure {
 	public ArrayList<IOperation> getVector() throws Exception;
 	
 	public ArrayList<CriticalRoute> getLongestRoutes() throws Exception;
+	
 
 }
