@@ -24,7 +24,7 @@ import common.utils.GanttTask;
  * libraries
  * 
  * @author David Mendez-Acuna
- * 
+ * @author Jaime Romero
  */
 public class ChartPrinter {
 
@@ -35,6 +35,12 @@ public class ChartPrinter {
 	private static ChartPrinter instance;
 	
 	private ArrayList<ArrayList<ExecutionResults>> globalExecutionResults;
+	
+	private boolean printTable;
+	
+	private boolean printInitialSolutions;
+	
+	private boolean printSolutions;
 	
 	// ------------------------------------------------------------
 	// Constructor
@@ -79,26 +85,45 @@ public class ChartPrinter {
 	
 	private void printBodyHTML(PrintWriter pw) {
 		pw.println("<body><table style=\"width:100% height:50px;\"> <tr><td ><img src=\"styles/header.png\" style=\"max-width:80%; max-height:80%; display: block;margin-left: auto; margin-right: auto;\" border=\"0\"></td></tr></table>" +
-			"<div  style=\"width: 1000px; margin: 0 auto; padding: 80px 0 40px; font: 0.85em arial;\">"+
-	        "<ul class=\"tabs\" persist=\"true\"><li><a href=\"#\" rel=\"view1\">Overview Results</a></li>" +
-	        "<li><a href=\"#\" rel=\"view2\">Gantt of best solutions</a></li><li><a href=\"#\" rel=\"view3\">InitialSolutions</a></li>" +
-	        "</ul><div class=\"tabcontents\"><div id=\"view1\" class=\"tabcontent\">");
-		printResultTable(pw);
-		pw.println("<div id=\"view2\" class=\"tabcontent\"><table>");
-		for ( int i =0; i< globalExecutionResults.size();i++) {
-			String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
-			pw.println("<tr><td><div id=\"title_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformation('"+nombre+"');\">Open "+nombre+"</a></div>" +
-					"<div class=\"informationbox\"  id=\"information_"+nombre+"\"><div style=\"width:950px; height:620px; position:relative;\" id=\"gantt_"+nombre+"\" ></div>"+
-					"</div></td><tr>");
-		}			
-		pw.println("</table></div><div id=\"view3\" class=\"tabcontent\"> <table>");
-		for ( int i =0; i< globalExecutionResults.size();i++) {
-			String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
-			pw.println("<tr><td><div id=\"title_initial_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformation('"+"initial_"+nombre+"');\">Open initial_"+nombre+"</a></div>" +
-					"<div class=\"informationbox\"  id=\"information_initial_"+nombre+"\"><div style=\"width:950px; height:620px; position:relative;\" id=\"gantt_initial_"+nombre+"\" ></div>"+
-					"</div></td><tr>");
-		}	
-		pw.println("</div></div></div></table>");	
+			"<div  style=\"width: 1000px; margin: 0 auto; padding: 80px 0 40px; font: 0.85em arial;\"><ul class=\"tabs\" persist=\"true\">");
+		if(printTable){		
+			pw.println("<li><a href=\"#\" rel=\"view1\">Overview Results</a></li>");
+		}
+		if(printSolutions){
+			pw.println("<li><a href=\"#\" rel=\"view2\">Gantt of best solutions</a></li>");
+		}
+		if(printInitialSolutions){
+			pw.println("<li><a href=\"#\" rel=\"view3\">InitialSolutions</a></li>");
+		}
+		
+		pw.println("</ul><div class=\"tabcontents\">");
+		if(printTable){	
+			pw.println("<div id=\"view1\" class=\"tabcontent\">");
+			printResultTable(pw);
+		}
+		if(printSolutions){
+			pw.println("<div id=\"view2\" class=\"tabcontent\"><table>");
+			for ( int i =0; i< globalExecutionResults.size();i++) {
+				String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
+				pw.println("<tr><td><div id=\"title_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformation('"+nombre+"');\">Open "+nombre+"</a></div>" +
+						"<div class=\"informationbox\"  id=\"information_"+nombre+"\"><div style=\"width:950px; height:620px; position:relative;\" id=\"gantt_"+nombre+"\" ></div>"+
+						"</div></td><tr>");
+			}
+			pw.println("</table></div>");
+		}
+		if(printInitialSolutions){
+			pw.println("<div id=\"view3\" class=\"tabcontent\"> <table>");
+			for ( int i =0; i< globalExecutionResults.size();i++) {
+				String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
+				pw.println("<tr><td><div id=\"title_initial_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformation('"+"initial_"+nombre+"');\">Open initial_"+nombre+"</a></div>" +
+						"<div class=\"informationbox\"  id=\"information_initial_"+nombre+"\"><div style=\"width:950px; height:620px; position:relative;\" id=\"gantt_initial_"+nombre+"\" ></div>"+
+						"</div></td><tr>");
+			}
+			pw.println("</table></div>");
+			
+		}
+		
+		pw.println("</div></div>");
 		pw.println("</body></html>");
 	}
 
@@ -170,16 +195,22 @@ public class ChartPrinter {
 				"<script type=\"text/javascript\" language=\"JavaScript\">" );
 		
 		for ( int i =0; i< globalExecutionResults.size();i++) {
-			printGanttJs(pw, globalExecutionResults.get(i).get(0),i);
-			printGanttInitialJs(pw, globalExecutionResults.get(i).get(0),i);
+			if(printSolutions)
+				printGanttJs(pw, globalExecutionResults.get(i).get(0),i);
+			if(printInitialSolutions)
+				printGanttInitialJs(pw, globalExecutionResults.get(i).get(0),i);
 			
 		}
 		
 		pw.println("window.onload = function() {");
 		for ( int i =0; i< globalExecutionResults.size();i++) {
 			String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
-			pw.println("createChartControl"+i+"('gantt_"+nombre+"');");
-			pw.println("createChartInitialControl"+i+"('gantt_initial_"+nombre+"');closeInformation('"+nombre+"');closeInformation('initial_"+nombre+"');");
+			if(printSolutions){
+				pw.println("createChartControl"+i+"('gantt_"+nombre+"');closeInformation('"+nombre+"');");
+			}
+			if(printInitialSolutions){
+				pw.println("createChartInitialControl"+i+"('gantt_initial_"+nombre+"');closeInformation('initial_"+nombre+"');");
+			}
 		}
 		
 		pw.println("};</script></head>");
@@ -250,7 +281,8 @@ public class ChartPrinter {
 		pw.println("ganttChartControl.create(htmlDiv1);}");
 		
 	}
-	
+
+
 	public void printGlobalResults(String resultsFile) {
 		Document document = new Document();
 		try {
@@ -325,10 +357,11 @@ public class ChartPrinter {
 				PdfPCell averageCMaxCell = new PdfPCell(new Phrase(average+""));
 				averageCMaxCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			    resultsTable.addCell(averageCMaxCell);
-				
+			    
 			    PdfPCell neighborCell = new PdfPCell(new Phrase(neighbor));
 			    neighborCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			    resultsTable.addCell(neighborCell);
+				
 			}
 			document.add(resultsTable);
 
@@ -341,6 +374,12 @@ public class ChartPrinter {
 	
 	public void addResults(ArrayList<ExecutionResults> results) {
 		globalExecutionResults.add(results);
+		
+		printTable=globalExecutionResults.get(0).get(0).isPrintTable();
+		printInitialSolutions = globalExecutionResults.get(0).get(0).isPrintInitialSolution();
+		printSolutions = globalExecutionResults.get(0).get(0).isPrintFinalSolution();
+		System.out.println(printTable);
+		
 	}
 	
 	// ------------------------------------------------------------
