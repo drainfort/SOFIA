@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import neighborCalculator.INeighborCalculator;
 import structure.IStructure;
+import common.types.OperationIndexVO;
 import common.types.PairVO;
 
 public class Random implements INeighborCalculator{
@@ -20,8 +21,17 @@ public class Random implements INeighborCalculator{
 		
 		int randomA = randomNumber(0, (totalJobs * totalStations) - 1);
 		int randomB = randomNumber(0, (totalJobs * totalStations) - 1);
+		int randomC = randomNumber(0, (totalJobs * totalStations) - 1);
+
+		double randomX = Math.random();
 		
-		return new PairVO(randomA, randomB);
+		if(randomX > 0.5){
+			return new PairVO(new OperationIndexVO(randomB, randomA), new OperationIndexVO(randomC, randomA));
+		}
+		else{
+			return new PairVO(new OperationIndexVO(randomA, randomB), new OperationIndexVO(randomA, randomC));
+		}
+		
 	}
 
 	//TODO arreglar porque esto aun no es aleatorio.. pensar que hacemos
