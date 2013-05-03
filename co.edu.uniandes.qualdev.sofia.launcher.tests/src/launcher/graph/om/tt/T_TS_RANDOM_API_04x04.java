@@ -124,7 +124,7 @@ public class T_TS_RANDOM_API_04x04 {
 	
 	@After
 	public void tearDown(){
-		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/TT_04x04_TS_RANDOM_API_04x04_consolidated.pdf");
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/TT_04x04_TS_RANDOM_API_04x04_consolidated.html");
 	}
 	
 	// ---------------------------------------------------------
