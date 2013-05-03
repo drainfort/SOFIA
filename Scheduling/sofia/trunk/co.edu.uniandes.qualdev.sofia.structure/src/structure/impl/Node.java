@@ -207,5 +207,12 @@ public class Node {
 		this.previousSequenceNode = previousSequenceNode;
 	}
 	
+	public int getPositionSort() {
+		return positionSort;
+	}
+
+	public void setPositionSort(int positionSort) {
+		this.positionSort = positionSort;
+	}
 	
 }
