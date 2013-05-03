@@ -117,6 +117,7 @@ public class SimpleSimulatedAnnealing extends Control {
 				}
 				
 				k--;
+				Y.clean();
 			}
 			
 			// Temperature reductions
