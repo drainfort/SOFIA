@@ -703,7 +703,7 @@ public class Vector extends AbstractStructure{
 		if(!operationsJob.isEmpty()){
 			IOperation operationBeforeByJob = operationsJob.get(operationsJob.size()-1);
 			if(!operationsStation.isEmpty()){
-				IOperation operationBeforeByStation = operationsStation.get(operationsJob.size()-1);
+				IOperation operationBeforeByStation = operationsStation.get(operationsStation.size()-1);
 				if(operationBeforeByJob.getFinalTime()>operationBeforeByStation.getFinalTime()){
 					route.addNodeBegin(operationBeforeByJob);
 					operationsJob=null;
