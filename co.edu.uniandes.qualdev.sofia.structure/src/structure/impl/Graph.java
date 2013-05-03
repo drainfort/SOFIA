@@ -1114,17 +1114,17 @@ public class Graph extends AbstractStructure {
 		return number;
 	}
 
-	//	public void restartC(){
-	//		C=null;
-	//		for (int i = 0; i < totalJobs; i++) {
-	//			for (int j = 0; j < totalStations; j++) {
-	//				if (nodes[i][j] != null){
-	//					nodes[i][j].restartC();
-	//				}
-	//			}
-	//		}
-	//	}
-	//
+	/*public void restartC(){
+		C=null;
+		for (int i = 0; i < totalJobs; i++) {
+			for (int j = 0; j < totalStations; j++) {
+				if (nodes[i][j] != null){
+					nodes[i][j].restartC();
+				}
+			}
+		}
+	}*/
+	
 
 	//	public int getTT(int stationId1, int stationId2){
 	//		if(this.betas!=null){
