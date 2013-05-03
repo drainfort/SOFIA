@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import common.types.OperationIndexVO;
 
+
 /**
  * Class that contains the information of the results for a given execution
  * @author David Mendez-Acuna
@@ -44,6 +45,13 @@ public class ExecutionResults {
 	private int optimal;
 	
 	private int numberOfVisitedNeighbors;
+	
+	
+	private boolean printTable;
+	
+	private boolean printInitialSolution;
+	
+	private boolean printFinalSolution;
 	
 	// --------------------------------------------
 	// Constructor
@@ -154,6 +162,30 @@ public class ExecutionResults {
 
 	public void setNumberOfVisitedNeighbors(int numberOfVisitedNeighbors) {
 		this.numberOfVisitedNeighbors = numberOfVisitedNeighbors;
+	}
+
+	public boolean isPrintTable() {
+		return printTable;
+	}
+
+	public void setPrintTable(boolean printTable) {
+		this.printTable = printTable;
+	}
+
+	public boolean isPrintInitialSolution() {
+		return printInitialSolution;
+	}
+
+	public void setPrintInitialSolution(boolean printInitialSolution) {
+		this.printInitialSolution = printInitialSolution;
+	}
+
+	public boolean isPrintFinalSolution() {
+		return printFinalSolution;
+	}
+
+	public void setPrintFinalSolution(boolean printFinalSolution) {
+		this.printFinalSolution = printFinalSolution;
 	}
 	
 	
