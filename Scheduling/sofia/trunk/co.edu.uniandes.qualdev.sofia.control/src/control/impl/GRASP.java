@@ -91,6 +91,7 @@ public class GRASP extends Control {
 					k = arrayNeighbors.size();
 				}
 				k--;
+				candidate.clean();
 			}
 		}
 		ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"));
