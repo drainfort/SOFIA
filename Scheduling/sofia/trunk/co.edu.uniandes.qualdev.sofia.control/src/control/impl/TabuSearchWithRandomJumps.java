@@ -184,6 +184,7 @@ public class TabuSearchWithRandomJumps extends Control {
 				 }
 				 count++;
 				 k--;
+				 Y.clean();
 			 }
 			 maxIter++;
 		 }
