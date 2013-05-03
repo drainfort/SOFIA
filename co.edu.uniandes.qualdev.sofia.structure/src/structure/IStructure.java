@@ -3,6 +3,8 @@ package structure;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import structure.impl.CriticalRoute;
+
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
@@ -313,6 +315,6 @@ public interface IStructure {
 
 	public ArrayList<IOperation> getVector() throws Exception;
 	
-	
+	public ArrayList<CriticalRoute> getLongestRoutes() throws Exception;
 
 }
