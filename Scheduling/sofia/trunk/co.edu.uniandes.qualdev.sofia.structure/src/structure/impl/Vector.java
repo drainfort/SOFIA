@@ -642,4 +642,141 @@ public class Vector extends AbstractStructure{
 		this.maxMachinesPerStation = maxMachinesPerStation;
 		CCalculated = false;
 	}
+	
+	public ArrayList<IOperation> getOperationsBeforeByStation(OperationIndexVO operation){
+		ArrayList<IOperation> operations = new ArrayList<IOperation>();
+		for(IOperation op : vector){
+			if(op.getOperationIndex().getStationId()==operation.getStationId()){
+				if(!op.getOperationIndex().equals(operation)){
+					operations.add(op);
+				}else{
+					return operations;
+				}
+			}
+				
+		}
+		return operations;
+	}
+	
+	public ArrayList<IOperation> getOperationsBeforeByJob(OperationIndexVO operation){
+		ArrayList<IOperation> operations = new ArrayList<IOperation>();
+		for(IOperation op : vector){
+			if(op.getOperationIndex().getJobId()==operation.getJobId()){
+				if(!op.getOperationIndex().equals(operation)){
+					operations.add(op);
+				}else{
+					return operations;
+				}
+			}
+				
+		}
+		return operations;
+	}
+	
+	public ArrayList<IOperation> getLastOperation(){
+		calculateCMatrix();
+		ArrayList<IOperation> operations = new ArrayList<IOperation>();
+		int lastTime=0;
+		for(int i=0; i< vector.size();i++){
+			IOperation temp= vector.get(i);
+			if(temp.getFinalTime()>lastTime){
+				lastTime= temp.getFinalTime();
+			}
+		}
+		
+		for(int i=0; i< vector.size();i++){
+			IOperation temp= vector.get(i);
+			if(temp.getFinalTime()==lastTime){
+				operations.add(temp);
+			}
+		}
+		
+		return operations;
+	}
+	
+	public ArrayList<CriticalRoute> getLongestRoute(CriticalRoute route){
+		
+		ArrayList<CriticalRoute> routes = new ArrayList<CriticalRoute>();
+		IOperation lastOperation= route.getRoute().get(0);
+		ArrayList<IOperation> operationsStation = getOperationsBeforeByStation(lastOperation.getOperationIndex());
+		ArrayList<IOperation> operationsJob = getOperationsBeforeByJob(lastOperation.getOperationIndex());
+		if(!operationsJob.isEmpty()){
+			IOperation operationBeforeByJob = operationsJob.get(operationsJob.size()-1);
+			if(!operationsStation.isEmpty()){
+				IOperation operationBeforeByStation = operationsStation.get(operationsJob.size()-1);
+				if(operationBeforeByJob.getFinalTime()>operationBeforeByStation.getFinalTime()){
+					route.addNodeBegin(operationBeforeByJob);
+					operationsJob=null;
+					operationsStation=null;
+					return getLongestRoute(route);
+					
+				}
+				else if(operationBeforeByJob.getFinalTime()==operationBeforeByStation.getFinalTime()){
+					CriticalRoute clone = new CriticalRoute();
+					for(int j=0; j<route.getRoute().size();j++){
+						IOperation node = route.getRoute().get(j);
+						clone.getRoute().add(node);
+					}
+					route.addNodeBegin(operationBeforeByJob);
+					clone.addNodeBegin(operationBeforeByStation);
+					ArrayList<CriticalRoute> temp1 = getLongestRoute(route);
+					
+					ArrayList<CriticalRoute> temp2 = getLongestRoute(clone);
+					
+					temp1.addAll(temp2);
+					operationsJob=null;
+					operationsStation=null;
+					return temp1;
+				}
+				else{
+					route.addNodeBegin(operationBeforeByStation);
+					operationsJob=null;
+					operationsStation=null;
+					return getLongestRoute(route);
+					
+				}
+			}
+			else{
+				route.addNodeBegin( operationBeforeByJob);
+				operationsJob=null;
+				operationsStation=null;
+				return getLongestRoute(route);
+			}
+	
+		}
+		else{
+			if(!operationsStation.isEmpty()){
+					IOperation operationBeforeByStation = operationsStation.get(operationsStation.size()-1);
+					route.addNodeBegin(operationBeforeByStation);
+					operationsJob=null;
+					operationsStation=null;
+					return getLongestRoute(route);
+			}
+			else{
+				routes.add(route);
+				operationsJob=null;
+				operationsStation=null;
+				return routes;	
+			}
+		}
+		
+	}
+		
+		
+	
+	public ArrayList<CriticalRoute> getLongestRoutes(){
+		ArrayList<CriticalRoute> routes = new ArrayList<CriticalRoute>();
+		ArrayList<IOperation> finalNodes = getLastOperation();
+		
+		for(int i=0; i < finalNodes.size();i++ ){
+			CriticalRoute temp= new CriticalRoute();
+			temp.addNodeBegin(finalNodes.get(i));
+			routes.addAll(getLongestRoute(temp));
+		}
+		
+		
+		
+		return routes;
+	}
+	
 }
