@@ -49,6 +49,11 @@ public class Graph extends AbstractStructure {
 	 * Array with the initial nodes for each sequence
 	 */
 	public Node[] initialStationNodesArray = null;
+	
+	
+	private ArrayList<Job> jobs;
+	private ArrayList<Machine> machines;
+	private ArrayList<Station> stations;
 
 	// -----------------------------------------------
 	// Constructor
@@ -70,6 +75,10 @@ public class Graph extends AbstractStructure {
 		
 		initialJobNodesArray = new Node[totalJobs];
 		initialStationNodesArray = new Node[totalStations];
+		
+		jobs = new ArrayList<Job>();
+		machines = new ArrayList<Machine>();
+		stations = new ArrayList<Station>();
 	}
 
 	/**
@@ -88,6 +97,10 @@ public class Graph extends AbstractStructure {
 		
 		initialJobNodesArray = new Node[totalJobs];
 		initialStationNodesArray = new Node[totalStations];
+		
+		jobs = new ArrayList<Job>();
+		machines = new ArrayList<Machine>();
+		stations = new ArrayList<Station>();
 	}
 	
 	// -------------------------------------------------
@@ -900,6 +913,30 @@ public class Graph extends AbstractStructure {
 	@Override
 	public void setMaxMachinesPerStation(int maxMachinesPerStation) {
 		// TODO Complete
+	}
+	
+	public ArrayList<Job> getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(ArrayList<Job> jobs) {
+		this.jobs = jobs;
+	}
+
+	public ArrayList<Machine> getMachines() {
+		return machines;
+	}
+
+	public void setMachines(ArrayList<Machine> machines) {
+		this.machines = machines;
+	}
+
+	public ArrayList<Station> getStations() {
+		return stations;
+	}
+	
+	public void setStations(ArrayList<Station> stations) {
+		this.stations = stations;
 	}
 	
 	// -------------------------------------------------
