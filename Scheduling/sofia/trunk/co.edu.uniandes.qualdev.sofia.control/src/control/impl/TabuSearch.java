@@ -155,7 +155,7 @@ public class TabuSearch extends Control {
 		}
 
 		System.out.println();
-		ExecutionResults result = obtainExecutionResults(best, gammaCalculator);
+		ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"));
 		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
 		return result;
 	}

@@ -20,7 +20,14 @@ public class GRASPERLSParametersLoader implements IParametersLoader{
 				.getProperty("params.maxLSDepth")));
 		params.put("maxNeighbors", Integer.parseInt((String) algorithmConfiguration
 				.getProperty("params.maxNeighbors")));		
+		params.put("printTable", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.consolidationTable")));
 		
+		params.put("printInitialSolution", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.gantt.initialsolutions")));
+		
+		params.put("printSolutions", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.gantt.bestsolutions")));
 		return params;
 		
 	}

@@ -23,6 +23,15 @@ public class TabuSearchWithRandomJumpsParametersLoader  implements IParametersLo
 				.getProperty("params.restarts")));
 		params.put("boltzmann", Double.parseDouble((String) algorithmConfiguration
 				.getProperty("params.boltzmann")));
+		
+		params.put("printTable", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.consolidationTable")));
+		
+		params.put("printInitialSolution", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.gantt.initialsolutions")));
+		
+		params.put("printSolutions", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.gantt.bestsolutions")));
 		return params;
 		
 	}
