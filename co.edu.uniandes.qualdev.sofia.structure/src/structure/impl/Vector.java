@@ -762,7 +762,10 @@ public class Vector extends AbstractStructure{
 		
 	}
 		
+	public ArrayList<int[]> getWeightedNodesCriticaRoute(){
 		
+		return null;
+	}
 	
 	public ArrayList<CriticalRoute> getLongestRoutes(){
 		ArrayList<CriticalRoute> routes = new ArrayList<CriticalRoute>();
