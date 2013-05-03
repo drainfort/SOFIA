@@ -312,5 +312,7 @@ public interface IStructure {
 	public void setMaxMachinesPerStation(int maxMachinesPerStation);
 
 	public ArrayList<IOperation> getVector() throws Exception;
+	
+	
 
 }
