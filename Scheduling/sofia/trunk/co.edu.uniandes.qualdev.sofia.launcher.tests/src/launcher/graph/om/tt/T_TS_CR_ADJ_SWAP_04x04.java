@@ -136,6 +136,6 @@ public class T_TS_CR_ADJ_SWAP_04x04 {
 	 */
 	public static void main(String[] args) {
 		 JUnitCore.main(
-	                "launcher.graph.om.tt.T_TS_CR_ADJ_RANDOM_G_04x04");           
+	                "launcher.graph.om.tt.T_TS_CR_ADJ_RANDOM_04x04");           
 	}
 }
