@@ -67,7 +67,7 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 	}
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int start, int end)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int size)
 			throws Exception {
 		
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
@@ -77,7 +77,7 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 		int number = randomNumber(0, routes.size() - 1);
 		ArrayList<ArrayList<IOperation>> blocks = routes.get(number).getBlocks();
 		
-		while(neighborhood.size()<end){
+		while(neighborhood.size()<size){
 			
 			number = randomNumber(0, blocks.size() - 1);
 		    ArrayList<IOperation> selectedBlock = blocks.get(number);

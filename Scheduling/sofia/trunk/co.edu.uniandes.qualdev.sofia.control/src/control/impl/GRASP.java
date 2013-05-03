@@ -62,7 +62,7 @@ public class GRASP extends Control {
 			System.out.println("****Optimal CMax found!");
 			optimalAchieved = true;
 		}else{
-			ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(initialSolution, 0, (initialSolution.getTotalStations() * initialSolution.getTotalJobs()) - 1);
+			ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(initialSolution, (initialSolution.getTotalStations() * initialSolution.getTotalJobs()) - 1);
 			Integer k = arrayNeighbors.size();
 			
 			//Fase de busqueda local Best-First

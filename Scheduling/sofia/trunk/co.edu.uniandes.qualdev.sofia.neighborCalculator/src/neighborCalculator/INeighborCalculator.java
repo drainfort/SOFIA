@@ -39,5 +39,5 @@ public interface INeighborCalculator {
 	 * 			The calculate neighbor
 	 * @throws Exception
 	 */
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, int start, int end) throws Exception;
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, int size) throws Exception;
 }

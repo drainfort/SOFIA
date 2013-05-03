@@ -34,11 +34,13 @@ public class PairVO {
 	
 	@Override
 	public boolean equals(Object pair){
-		boolean answer=false;
 		
-		if(((PairVO)pair).getX()==this.getX()&& ((PairVO)pair).getY()==this.getY())
-			answer=true;
-		return answer;
+		boolean intIndexes = ((PairVO)pair).getX() == this.getX()&& ((PairVO)pair).getY()==this.getY();
+		
+		boolean OIIndexes = (oX != null && oY != null) ? (oX.getJobId() == ((PairVO)pair).getoX().getJobId() && oX.getStationId() == ((PairVO)pair).getoX().getStationId() && oX.getMachineId() == ((PairVO)pair).getoX().getMachineId() &&
+				oY.getJobId() == ((PairVO)pair).getoY().getJobId() && oY.getStationId() == ((PairVO)pair).getoY().getStationId() && oY.getMachineId() == ((PairVO)pair).getoY().getMachineId()) : true;
+		
+		return intIndexes && OIIndexes;
 	}
 	
 	// ---------------------------------------

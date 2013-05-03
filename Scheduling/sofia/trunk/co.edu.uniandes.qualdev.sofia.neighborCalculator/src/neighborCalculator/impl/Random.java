@@ -36,11 +36,11 @@ public class Random implements INeighborCalculator{
 
 	//TODO arreglar porque esto aun no es aleatorio.. pensar que hacemos
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, int start, int end)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, int size)
 			throws Exception {
 		ArrayList<PairVO> pairs = new ArrayList<PairVO>();
 
-		while(end>0)
+		while(size>0)
 		{
 			int totalJobs = currentVector.getTotalJobs();
 			int totalStations = currentVector.getTotalStations();
@@ -50,7 +50,7 @@ public class Random implements INeighborCalculator{
 			PairVO pair = new PairVO(randomA, randomB);
 			if(!pairs.contains(pair)){
 				pairs.add(pair);
-				end--;
+				size--;
 			}
 		}
 		

@@ -20,7 +20,7 @@ public class Complete implements INeighborCalculator{
 
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, int start, int end)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, int size)
 			throws Exception {
 		ArrayList<PairVO> pairs = new ArrayList<PairVO>();
 		int num = 0;
@@ -33,8 +33,8 @@ public class Complete implements INeighborCalculator{
 //			}
 //		}
 		
-		for(int i = start; i < end; i++){
-			for(int j = i + 1; j <= end; j++ ){
+		for(int i = 0; i < size; i++){
+			for(int j = i + 1; j <= size; j++ ){
 				PairVO pair = new PairVO(i, j);
 				pairs.add(pair);
 			}

@@ -34,8 +34,7 @@ public class TabuSearch extends Control {
 			throws Exception {
 		
 		int numberOfVisitedNeighbors=0;
-		int GammaInitialSolution = gammaCalculator
-				.calculateGamma(initialSolution);
+		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		executionResults.setInitialCmax(GammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 
@@ -58,15 +57,13 @@ public class TabuSearch extends Control {
 			optimalAchieved = true;
 		}
 
-		int count = 0;
 		ArrayList<PairVO> arrayTabu = new ArrayList<PairVO>();
 		int tabuIndex = 0;
 
-		// parameter
 		int iterations = vectorSize * 10000;
-		// parameter
 		int nonimproving = (int) (iterations * (Double) params.get("non-improving"));
 		int maxNumberImprovements =0;
+		
 		if(params.get("maxNumberImprovements")!=null){
 			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
 		}
@@ -75,16 +72,14 @@ public class TabuSearch extends Control {
 		double percent =(Double) params.get("percent");
 		int neighborhodSize = (int) ((vectorSize * (vectorSize - 1)) / 2 * percent);
 
-		ArrayList<PairVO> arrayNeighbors = neighborCalculator
-				.calculateNeighborhood(current, 0, neighborhodSize);
+		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 
 		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
 			IStructure bestCandidate = null;
 			int gammaBestCandidate = Integer.MAX_VALUE;
 			PairVO bestPairCandidate = null;
 
-			for (int index = 0; index < arrayNeighbors.size()
-					&& !optimalAchieved; index++) {
+			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved; index++) {
 				PairVO pairCandidate = arrayNeighbors.get(index);
 				IStructure candidate = modifier.performModification(pairCandidate,current);
 				numberOfVisitedNeighbors++;
@@ -138,7 +133,7 @@ public class TabuSearch extends Control {
 				}
 				// System.out.println("current: " + current.getVector());
 				current = bestCandidate.cloneStructure();
-				count++;
+				bestCandidate.clean();
 
 				if (tabuIndex > tabuSize) {
 					arrayTabu.remove(0);
@@ -150,9 +145,7 @@ public class TabuSearch extends Control {
 			// Avance while
 			iterations--;
 			nonimproving--;
-			arrayNeighbors = neighborCalculator.calculateNeighborhood(current,
-					0,
-					(current.getTotalStations() * current.getTotalJobs()) - 1);
+			arrayNeighbors = neighborCalculator.calculateNeighborhood(current, (current.getTotalStations() * current.getTotalJobs()) - 1);
 		}
 
 		System.out.println();

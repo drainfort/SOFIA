@@ -58,7 +58,7 @@ public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 	}
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int start, int end)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int size)
 			throws Exception {
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		IStructure clone = currentGraph.cloneStructure();
@@ -67,7 +67,7 @@ public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 		int salida = 0;
 		ArrayList<IOperation> selectedCritialPath = routes.get(number).getRoute();
 
-		while(neighborhood.size()<end){
+		while(neighborhood.size() < size){
 			int i = randomNumber(0, selectedCritialPath.size() - 2);
 			IOperation initialNode = selectedCritialPath.get(i);
 			IOperation finalNode = selectedCritialPath.get(i + 1);
