@@ -775,10 +775,7 @@ public class Vector extends AbstractStructure{
 			CriticalRoute temp= new CriticalRoute();
 			temp.addNodeBegin(finalNodes.get(i));
 			routes.addAll(getLongestRoute(temp));
-		}
-		
-		
-		
+		}		
 		return routes;
 	}
 
