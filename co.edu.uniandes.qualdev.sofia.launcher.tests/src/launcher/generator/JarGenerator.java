@@ -29,13 +29,16 @@ public class JarGenerator {
 	public static String GRAPH="Graph";
 	public static String VECTOR="Vector";
 	
+	public static String RANDOMMODFIER="RANDOM";
+	public static String SWAP="SWAP";
+	
 	public static String ruta1="C:/Users/ja.romero940/workspace/sofia/";
 	public static String ruta2="C:\\Users\\ja.romero940\\workspace\\sofia\\";
 	public static String rutaEclipse="C:\\Users\\ja.romero940\\Desktop\\";
 	
 	public JarGenerator(){
 		
-		generateJavaFiles("07x07", TABUSEARCH, CRITICAL_ADJACENT, 1,GRAPH);
+		generateJavaFiles("07x07", TABUSEARCH, CRITICAL_ADJACENT, 1,GRAPH,RANDOMMODFIER);
 		/*generateJavaFiles("10x10", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("15x15", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("07x07", SIMULATEDANNELING, RANDOM, 1);
@@ -47,7 +50,7 @@ public class JarGenerator {
 
 	}
 	
-	private void generateJavaFiles(String sizeInstance, String algorithym, String neighbors, int instancesXFile, String structure){
+	private void generateJavaFiles(String sizeInstance, String algorithym, String neighbors, int instancesXFile, String structure, String modifier){
 		
 		int num=0;
 		int numarchivo=0;
@@ -72,12 +75,12 @@ public class JarGenerator {
 				}
 			}
 			numarchivo++;
-			printJavaFile(instances, algorithym, neighbors, numarchivo, sizeInstance, structure);
+			printJavaFile(instances, algorithym, neighbors, numarchivo, sizeInstance, structure, modifier);
 		}
         
 	}
 	
-	private void printJavaFile(ArrayList<String> instances, String algorithym, String neighbors, int number ,String sizeInstance, String structure){
+	private void printJavaFile(ArrayList<String> instances, String algorithym, String neighbors, int number ,String sizeInstance, String structure, String modifier){
 		FileWriter fichero = null;
         PrintWriter pw = null;
 		try
@@ -121,7 +124,7 @@ public class JarGenerator {
             	int a=i+1; 
             	String instanceName = instances.get(i);
             	 pw.println("		String[] file"+a+"= {");
-            	 pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+sizeInstance+"/"+algorithym+"_"+neighbors+"_SWAP"+".properties\",\"./data/Om-TT/"+sizeInstance+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
+            	 pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+sizeInstance+"/"+algorithym+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+sizeInstance+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
             	 pw.println("		datos.add(file"+a+");");
             }
 					
