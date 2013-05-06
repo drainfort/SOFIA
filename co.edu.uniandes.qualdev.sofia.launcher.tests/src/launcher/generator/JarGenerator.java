@@ -182,7 +182,7 @@ public class JarGenerator {
         }
         
         try {
-			Process process = Runtime.getRuntime().exec("java " + "./src/launcher/om/tt/generator/"+name+".java");
+			Process process = Runtime.getRuntime().exec("java " + "./src/launcher/generator/"+name+".java");
 			process.destroy();
         } catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -199,7 +199,7 @@ public class JarGenerator {
         PrintWriter pw = null;
 		try{
 		
-	        fichero = new FileWriter(new File("./src/launcher/om/tt/generator/"+name+".xml"));
+	        fichero = new FileWriter(new File("./src/launcher/generator/"+name+".xml"));
 	        pw = new PrintWriter(fichero);		
 			
 			pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
