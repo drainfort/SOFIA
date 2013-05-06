@@ -319,6 +319,6 @@ public interface IStructure {
 	
 	public ArrayList<int[]> getWeightedNodesCriticaRoute();
 	
-	public boolean validateStructure(IStructure structure);
+	public boolean validateStructure();
 
 }
