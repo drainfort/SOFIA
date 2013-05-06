@@ -23,6 +23,9 @@ public class JarGenerator {
 	public static String SIMULATEDANNELING="SA";
 	public static String GRASP="GRASP";
 	public static String RANDOM="RANDOM";
+	
+	public static String CRITICAL_ADJACENT="CR_ADJ";
+	
 	public static String GRAPH="G";
 	public static String VECTOR="V";
 	
