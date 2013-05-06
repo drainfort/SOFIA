@@ -32,51 +32,7 @@ public class CriticalRouteTest {
 	@Before
 	public void setUp() throws Exception {
 		try {
-			
-			//Escenario 1
-			IOperation[][] problem = new IOperation[2][2]; 
-			
-			Operation o1 = new Operation(10, 0, 0);
-			problem[0][0]= o1;
-			
-			Operation o4 = new Operation(5, 1, 1);
-			problem[1][1]= o4;
-			
-			Operation o3 = new Operation(5, 1, 0);
-			problem[1][0]= o3;
-			
-			Operation o2 = new Operation(20, 0, 1);
-			problem[0][1]= o2;
-			
-			problemVector.setProblem(problem);
-			problemVector.scheduleOperation(o1.getOperationIndex());
-			problemVector.scheduleOperation(o4.getOperationIndex());
-			problemVector.scheduleOperation(o3.getOperationIndex());
-			problemVector.scheduleOperation(o2.getOperationIndex());
 						
-			//Escenario 2
-			
-			IOperation[][] secondEscenario = new IOperation[2][2];
-			Operation o11 = new Operation(10, 0, 0);
-			secondEscenario[0][0]= o11;
-			
-			Operation o41 = new Operation(10, 1, 1);
-			secondEscenario[1][1]= o41;
-			
-			Operation o21 = new Operation(20, 0, 1);
-			secondEscenario[0][1]= o21;
-			
-			Operation o31 = new Operation(20, 1, 0);
-			secondEscenario[1][0]= o31;
-			problem1.setProblem(secondEscenario);
-			
-			problem1.scheduleOperation(o11.getOperationIndex());
-			problem1.scheduleOperation(o41.getOperationIndex());
-			problem1.scheduleOperation(o31.getOperationIndex());
-			problem1.scheduleOperation(o21.getOperationIndex());
-			
-			
-			
 			
 		} catch (Exception e) {
 			fail("Fail loading the input processing times file ");
@@ -89,6 +45,27 @@ public class CriticalRouteTest {
 	
 	@Test
 	public void testClone1() throws InterruptedException {
+		
+		IOperation[][] problem = new IOperation[2][2]; 
+		
+		Operation o1 = new Operation(10, 0, 0);
+		problem[0][0]= o1;
+		
+		Operation o4 = new Operation(5, 1, 1);
+		problem[1][1]= o4;
+		
+		Operation o3 = new Operation(5, 1, 0);
+		problem[1][0]= o3;
+		
+		Operation o2 = new Operation(20, 0, 1);
+		problem[0][1]= o2;
+		
+		problemVector.setProblem(problem);
+		problemVector.scheduleOperation(o1.getOperationIndex());
+		problemVector.scheduleOperation(o4.getOperationIndex());
+		problemVector.scheduleOperation(o3.getOperationIndex());
+		problemVector.scheduleOperation(o2.getOperationIndex());
+
 		
 		Graph newVector = (Graph) problemVector.cloneStructure();
 		ArrayList<CriticalRoute> routes;
@@ -111,6 +88,25 @@ public class CriticalRouteTest {
 	}
 	@Test
 	public void testClone2() throws InterruptedException {
+		
+		IOperation[][] secondEscenario = new IOperation[2][2];
+		Operation o11 = new Operation(10, 0, 0);
+		secondEscenario[0][0]= o11;
+		
+		Operation o41 = new Operation(10, 1, 1);
+		secondEscenario[1][1]= o41;
+		
+		Operation o21 = new Operation(20, 0, 1);
+		secondEscenario[0][1]= o21;
+		
+		Operation o31 = new Operation(20, 1, 0);
+		secondEscenario[1][0]= o31;
+		problem1.setProblem(secondEscenario);
+		
+		problem1.scheduleOperation(o11.getOperationIndex());
+		problem1.scheduleOperation(o41.getOperationIndex());
+		problem1.scheduleOperation(o31.getOperationIndex());
+		problem1.scheduleOperation(o21.getOperationIndex());
 		
 		Graph newVector = (Graph) problem1.cloneStructure();
 		ArrayList<CriticalRoute> routes;
