@@ -23,6 +23,8 @@ public class JarGenerator {
 	public static String SIMULATEDANNELING="SA";
 	public static String GRASP="GRASP";
 	public static String RANDOM="RANDOM";
+	public static String GRAPH="G";
+	public static String VECTOR="V";
 	
 	public static String ruta1="C:/Users/ja.romero940/workspace/sofia/";
 	public static String ruta2="C:\\Users\\ja.romero940\\workspace\\sofia\\";
@@ -31,14 +33,14 @@ public class JarGenerator {
 	public JarGenerator(){
 		
 		generateJavaFiles("07x07", TABUSEARCH, RANDOM, 1);
-		generateJavaFiles("10x10", TABUSEARCH, RANDOM, 1);
+		/*generateJavaFiles("10x10", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("15x15", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("07x07", SIMULATEDANNELING, RANDOM, 1);
 		generateJavaFiles("10x10", SIMULATEDANNELING, RANDOM, 1);
 		generateJavaFiles("15x15", SIMULATEDANNELING, RANDOM, 1);
 		generateJavaFiles("07x07", GRASP, RANDOM, 1);
 		generateJavaFiles("10x10", GRASP, RANDOM, 1);
-		generateJavaFiles("15x15", GRASP, RANDOM, 1);
+		generateJavaFiles("15x15", GRASP, RANDOM, 1);*/
 
 	}
 	
@@ -78,15 +80,15 @@ public class JarGenerator {
 		try
         {
 			String name ="T_"+algorithym+"_"+neighbors+"_SWAP_"+sizeInstance+"_"+number;
-            fichero = new FileWriter(new File("./src/launcher/om/tt/generator/"+name+".java"));
+            fichero = new FileWriter(new File("./src/launcher/generator/"+name+".java"));
             pw = new PrintWriter(fichero);
-            pw.println("package launcher.om.tt.generator;");
+            pw.println("package launcher.generator;");
             pw.println("import java.util.ArrayList;");           
             pw.println("import launcher.Launcher;");
             pw.println("import org.junit.After;" );
             pw.println("import org.junit.Before;" );
             pw.println("import org.junit.Test;" );
-            pw.println(" import org.junit.runner.JUnitCore;" );
+            pw.println("import org.junit.runner.JUnitCore;" );
             pw.println("import org.junit.runner.RunWith;");
             pw.println("import org.junit.runners.Parameterized;");
             pw.println("import org.junit.runners.Parameterized.Parameters;");
@@ -144,18 +146,18 @@ public class JarGenerator {
 			pw.println("	}");
 			pw.println("	@After");
 			pw.println("	public void tearDown(){");
-			pw.println("		ChartPrinter.getInstance().printGlobalResults(\"./results/Om_TT/"+name+"_consolidated.pdf\");");
+			pw.println("		ChartPrinter.getInstance().printGlobalResultsHTML(\"./results/Om_TT/"+name+"_consolidated.html\");");
 			pw.println("	}");
 			
 			
 			pw.println("	public static void main(String[] args) {");
-			pw.println(" 		JUnitCore.main(\"launcher.om.tt.generator."+name+"\");  ");         
+			pw.println(" 		JUnitCore.main(\"launcher.generator."+name+"\");  ");         
 			pw.println("	}");
     		pw.println("}");
             
     		fichero.close();
     		
-    		compileFile(name);
+    		//compileFile(name);
      
         } catch (Exception e) {
             e.printStackTrace();
