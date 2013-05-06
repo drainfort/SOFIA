@@ -37,6 +37,11 @@ public class RightInsertion implements IModifier {
 	public IStructure performModification(PairVO movement, IStructure currentVector) throws Exception {
 		IStructure vector = currentVector.cloneStructure();
 		vector.insertOperationAfter(movement.getX(), movement.getY());
-		return vector;
+		if(vector.validateStructure()){
+			return vector;
+		}else{
+			vector.clean();
+			return currentVector;
+		}
 	}
 }

@@ -38,6 +38,11 @@ public class RandomNeighbor implements IModifier {
 			vector.insertOperationAfter(movement.getX(), movement.getY());
 		}
 		
-		return vector;
+		if(vector.validateStructure()){
+			return vector;
+		}else{
+			vector.clean();
+			return currentVector;
+		}
 	}
 }
