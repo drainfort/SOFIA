@@ -26,8 +26,8 @@ public class JarGenerator {
 	
 	public static String CRITICAL_ADJACENT="CR_ADJ";
 	
-	public static String GRAPH="G";
-	public static String VECTOR="V";
+	public static String GRAPH="Graph";
+	public static String VECTOR="Vector";
 	
 	public static String ruta1="C:/Users/ja.romero940/workspace/sofia/";
 	public static String ruta2="C:\\Users\\ja.romero940\\workspace\\sofia\\";
@@ -35,7 +35,7 @@ public class JarGenerator {
 	
 	public JarGenerator(){
 		
-		generateJavaFiles("07x07", TABUSEARCH, CRITICAL_ADJACENT, 1);
+		generateJavaFiles("07x07", TABUSEARCH, CRITICAL_ADJACENT, 1,GRAPH);
 		/*generateJavaFiles("10x10", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("15x15", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("07x07", SIMULATEDANNELING, RANDOM, 1);
@@ -47,7 +47,7 @@ public class JarGenerator {
 
 	}
 	
-	private void generateJavaFiles(String sizeInstance, String algorithym, String neighbors, int instancesXFile){
+	private void generateJavaFiles(String sizeInstance, String algorithym, String neighbors, int instancesXFile, String structure){
 		
 		int num=0;
 		int numarchivo=0;
@@ -72,12 +72,12 @@ public class JarGenerator {
 				}
 			}
 			numarchivo++;
-			printJavaFile(instances, algorithym, neighbors, numarchivo, sizeInstance);
+			printJavaFile(instances, algorithym, neighbors, numarchivo, sizeInstance, structure);
 		}
         
 	}
 	
-	private void printJavaFile(ArrayList<String> instances, String algorithym, String neighbors, int number ,String sizeInstance){
+	private void printJavaFile(ArrayList<String> instances, String algorithym, String neighbors, int number ,String sizeInstance, String structure){
 		FileWriter fichero = null;
         PrintWriter pw = null;
 		try
@@ -121,7 +121,7 @@ public class JarGenerator {
             	int a=i+1; 
             	String instanceName = instances.get(i);
             	 pw.println("		String[] file"+a+"= {");
-            	 pw.println("			\"./data/Om-TT/Algorithm/"+algorithym+"_"+neighbors+"_SWAP_"+sizeInstance+".properties\",\"./data/Om-TT/"+sizeInstance+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
+            	 pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+sizeInstance+"/"+algorithym+"_"+neighbors+"_SWAP"+".properties\",\"./data/Om-TT/"+sizeInstance+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
             	 pw.println("		datos.add(file"+a+");");
             }
 					
