@@ -780,7 +780,7 @@ public class Vector extends AbstractStructure{
 	}
 
 	@Override
-	public boolean validateStructure(IStructure structure) {
+	public boolean validateStructure() {
 		return true;
 	}
 	

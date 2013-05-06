@@ -1115,14 +1115,12 @@ public class Graph extends AbstractStructure {
 	}
 
 	@Override
-	public boolean validateStructure(IStructure structure) {
-		Graph graph= (Graph)structure;
+	public boolean validateStructure() {
 		try {
-			graph.restartC();
-			graph.topologicalSort();
+			this.restartC();
+			this.topologicalSort();
 			return true;
 		} catch (Exception e) {
-			graph.clean();
 			return false;
 		}
 	}
