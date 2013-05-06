@@ -163,7 +163,7 @@ public class JarGenerator {
             
     		fichero.close();
     		
-    		//compileFile(name);
+    		compileFile(name);
      
         } catch (Exception e) {
             e.printStackTrace();
@@ -171,7 +171,7 @@ public class JarGenerator {
 	}
 
 	private void compileFile(String name) {
-		String fileToCompile = "./src/launcher/om/tt/generator/"+name+".java";
+		String fileToCompile = "./src/launcher/generator/"+name+".java";
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		int compilationResult = compiler.run(null, null, null, fileToCompile);
         if(compilationResult == 0){
