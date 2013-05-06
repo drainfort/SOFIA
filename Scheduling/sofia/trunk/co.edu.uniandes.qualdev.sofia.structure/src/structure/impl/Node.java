@@ -164,6 +164,13 @@ public class Node {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		String index = operation.toString();
+		return index;
+	}
+	
+	
 	// -------------------------------------
 	// Getters and setters
 	// -------------------------------------

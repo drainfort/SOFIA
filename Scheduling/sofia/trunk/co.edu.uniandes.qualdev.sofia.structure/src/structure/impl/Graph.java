@@ -1016,7 +1016,7 @@ public class Graph extends AbstractStructure {
 	
 
 	//Topological sort no destruye el grafo
-	public ArrayList<IOperation> topologicalSort()  throws Exception{
+	public ArrayList<IOperation> topologicalSort2()  throws Exception{
 		ArrayList<IOperation> l = new ArrayList<IOperation>();
 		ArrayList<Node> s = new ArrayList<Node>();
 		int counter = 1;
@@ -1033,7 +1033,7 @@ public class Graph extends AbstractStructure {
 
 		while(s.size()>0)
 		{
-			if(counter >totalJobs*totalStations)
+			if(counter>totalJobs*totalStations)
 				throw new Exception("Prensence of cycles");
 
 			Node temp = s.get(0);
@@ -1053,7 +1053,7 @@ public class Graph extends AbstractStructure {
 					condition1=true;
 				}
 				else{
-					if(l.contains(previosRoute))
+					if(l.contains(previosRoute.getOperation()))
 						condition1=true;
 				}
 
@@ -1061,7 +1061,7 @@ public class Graph extends AbstractStructure {
 					condition2=true;
 				}
 				else{
-					if(l.contains(previousSequence))
+					if(l.contains(previousSequence.getOperation()))
 						condition2=true;
 				}
 				if(condition1 && condition2)
@@ -1079,7 +1079,7 @@ public class Graph extends AbstractStructure {
 					condition1=true;
 				}
 				else{
-					if(l.contains(previosRoute))
+					if(l.contains(previosRoute.getOperation()))
 						condition1=true;
 				}
 
@@ -1087,7 +1087,7 @@ public class Graph extends AbstractStructure {
 					condition2=true;
 				}
 				else{
-					if(l.contains(previousSequence))
+					if(l.contains(previousSequence.getOperation()))
 						condition2=true;
 				}
 				if(condition1 && condition2)
@@ -1118,9 +1118,10 @@ public class Graph extends AbstractStructure {
 	public boolean validateStructure() {
 		try {
 			this.restartC();
-			this.topologicalSort();
+			this.topologicalSort2();
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -1151,7 +1152,7 @@ public class Graph extends AbstractStructure {
 	//	}
 	
 //	
-	//	
+		
 	//	// Metodo orden topologico
 	//	// Tener cuidado porque destruye las relaciones del grafo de solucion
 	//	public ArrayList<IOperation> topologicalSort()  throws Exception{
