@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import structure.IOperation;
 import structure.impl.CriticalRoute;
 import structure.impl.Operation;
 import structure.impl.Vector;
@@ -18,10 +19,8 @@ public class CriticalRouteTest {
 	// Attributes
 	// -----------------------------------------------
 	
-	private static Vector problem = new Vector(2,2);
+	private static Vector problemVector = new Vector(2,2);
 	private static Vector problem1 = new Vector(2,2);
-
-
 	
 	
 	// -----------------------------------------------
@@ -33,33 +32,48 @@ public class CriticalRouteTest {
 		try {
 			
 			//Escenario 1
+			IOperation[][] problem = new IOperation[2][2]; 
 			
 			Operation o1 = new Operation(10, 0, 0);
-			/*problem.addOperation(o1);
+			problem[0][0]= o1;
 			
 			Operation o4 = new Operation(5, 1, 1);
-			problem.addOperation(o4);
+			problem[1][1]= o4;
 			
 			Operation o3 = new Operation(5, 1, 0);
-			problem.addOperation(o3);
+			problem[1][0]= o3;
 			
 			Operation o2 = new Operation(20, 0, 1);
-			problem.addOperation(o2);
+			problem[0][1]= o2;
+			
+			problemVector.setProblem(problem);
+			problemVector.scheduleOperation(o1.getOperationIndex());
+			problemVector.scheduleOperation(o4.getOperationIndex());
+			problemVector.scheduleOperation(o3.getOperationIndex());
+			problemVector.scheduleOperation(o2.getOperationIndex());
+			
 			
 			
 			//Escenario 2
 			
+			IOperation[][] secondEscenario = new IOperation[2][2];
 			Operation o11 = new Operation(10, 0, 0);
-			problem1.addOperation(o11);
+			secondEscenario[0][0]= o11;
 			
 			Operation o41 = new Operation(10, 1, 1);
-			problem1.addOperation(o41);
+			secondEscenario[1][1]= o41;
 			
 			Operation o21 = new Operation(20, 0, 1);
-			problem1.addOperation(o21);
+			secondEscenario[0][1]= o21;
 			
 			Operation o31 = new Operation(20, 1, 0);
-			problem1.addOperation(o31);*/
+			secondEscenario[1][0]= o31;
+			problem1.setProblem(secondEscenario);
+			
+			problem1.scheduleOperation(o11.getOperationIndex());
+			problem1.scheduleOperation(o41.getOperationIndex());
+			problem1.scheduleOperation(o31.getOperationIndex());
+			problem1.scheduleOperation(o21.getOperationIndex());
 			
 			
 			
@@ -76,7 +90,7 @@ public class CriticalRouteTest {
 	@Test
 	public void testClone1() throws InterruptedException {
 		
-		Vector newVector = (Vector) problem.cloneStructure();
+		Vector newVector = (Vector) problemVector.cloneStructure();
 		ArrayList<CriticalRoute> routes = newVector.getLongestRoutes();
 		CriticalRoute route = routes.get(0);
 		

@@ -120,6 +120,10 @@ public abstract class AbstractStructure  implements IStructure{
 		return operationsMatrix;
 	}
 	
+	public void setProblem(IOperation[][] problem){
+		operationsMatrix=problem;
+	}
+	
 	// ---------------------------------------------
 	// Utilities
 	// ---------------------------------------------

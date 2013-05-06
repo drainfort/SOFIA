@@ -783,5 +783,5 @@ public class Vector extends AbstractStructure{
 	public boolean validateStructure() {
 		return true;
 	}
-	
+		
 }
