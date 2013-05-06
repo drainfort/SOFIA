@@ -40,9 +40,9 @@ public class RandomNeighbor implements IModifier {
 		
 		if(vector.validateStructure()){
 			return vector;
-		}else{
-			vector.clean();
-			return currentVector;
 		}
+		
+		vector.clean();
+		return currentVector.cloneStructure();
 	}
 }
