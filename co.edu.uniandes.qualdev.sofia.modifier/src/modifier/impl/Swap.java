@@ -41,7 +41,6 @@ public class Swap implements IModifier {
 		return currentVector.cloneStructure();
 
 		
-		
 			
 	}
 }
