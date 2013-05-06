@@ -318,5 +318,7 @@ public interface IStructure {
 	public ArrayList<CriticalRoute> getLongestRoutes() throws Exception;
 	
 	public ArrayList<int[]> getWeightedNodesCriticaRoute();
+	
+	public boolean validateStructure(IStructure structure);
 
 }

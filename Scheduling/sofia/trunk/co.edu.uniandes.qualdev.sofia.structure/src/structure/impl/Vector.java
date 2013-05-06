@@ -781,5 +781,10 @@ public class Vector extends AbstractStructure{
 		
 		return routes;
 	}
+
+	@Override
+	public boolean validateStructure(IStructure structure) {
+		return true;
+	}
 	
 }

@@ -1016,7 +1016,7 @@ public class Graph extends AbstractStructure {
 	
 
 	//Topological sort no destruye el grafo
-	public ArrayList<IOperation> topologicalSort2()  throws Exception{
+	public ArrayList<IOperation> topologicalSort()  throws Exception{
 		ArrayList<IOperation> l = new ArrayList<IOperation>();
 		ArrayList<Node> s = new ArrayList<Node>();
 		int counter = 1;
@@ -1114,7 +1114,20 @@ public class Graph extends AbstractStructure {
 		return number;
 	}
 
-	/*public void restartC(){
+	@Override
+	public boolean validateStructure(IStructure structure) {
+		Graph graph= (Graph)structure;
+		try {
+			graph.restartC();
+			graph.topologicalSort();
+			return true;
+		} catch (Exception e) {
+			graph.clean();
+			return false;
+		}
+	}
+
+	public void restartC(){
 		C=null;
 		for (int i = 0; i < totalJobs; i++) {
 			for (int j = 0; j < totalStations; j++) {
@@ -1123,7 +1136,7 @@ public class Graph extends AbstractStructure {
 				}
 			}
 		}
-	}*/
+	}
 	
 
 	//	public int getTT(int stationId1, int stationId2){
