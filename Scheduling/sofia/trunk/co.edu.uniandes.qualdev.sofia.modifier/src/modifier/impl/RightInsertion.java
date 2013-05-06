@@ -39,9 +39,8 @@ public class RightInsertion implements IModifier {
 		vector.insertOperationAfter(movement.getX(), movement.getY());
 		if(vector.validateStructure()){
 			return vector;
-		}else{
-			vector.clean();
-			return currentVector;
 		}
+		vector.clean();
+		return currentVector.cloneStructure();
 	}
 }

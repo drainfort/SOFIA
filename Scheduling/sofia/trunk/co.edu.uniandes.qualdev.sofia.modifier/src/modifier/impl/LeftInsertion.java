@@ -34,9 +34,9 @@ public class LeftInsertion implements IModifier {
 		vector.insertOperationBefore(movement.getX(), movement.getY());
 		if(vector.validateStructure()){
 			return vector;
-		}else{
-			vector.clean();
-			return currentVector;
 		}
+		
+		vector.clean();
+		return currentVector.cloneStructure();
 	}
 }

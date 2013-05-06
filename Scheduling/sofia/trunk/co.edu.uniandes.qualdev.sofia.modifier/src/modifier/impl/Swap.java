@@ -35,10 +35,12 @@ public class Swap implements IModifier {
 		vector.exchangeOperations(movement.getoX(), movement.getoY());
 		if(vector.validateStructure()){
 			return vector;
-		}else{
-			vector.clean();
-			return currentVector;
 		}
+		
+		vector.clean();
+		return currentVector.cloneStructure();
+		
+		
 			
 	}
 }
