@@ -257,7 +257,7 @@ public class JarGenerator {
 
 		
 		
-	   File buildFile = new File("./src/launcher/om/tt/generator/"+name+".xml");
+	   File buildFile = new File("./src/launcher/generator/"+name+".xml");
 	   Project p = new Project();
 	   p.setUserProperty("ant.file", buildFile.getAbsolutePath());
 	   p.init();
