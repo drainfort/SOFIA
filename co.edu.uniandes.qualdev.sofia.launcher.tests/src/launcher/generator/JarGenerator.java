@@ -124,7 +124,7 @@ public class JarGenerator {
             	int a=i+1; 
             	String instanceName = instances.get(i);
             	 pw.println("		String[] file"+a+"= {");
-            	 pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+sizeInstance+"/"+algorithym+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+sizeInstance+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
+            	 pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+algorithym+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+sizeInstance+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
             	 pw.println("		datos.add(file"+a+");");
             }
 					
