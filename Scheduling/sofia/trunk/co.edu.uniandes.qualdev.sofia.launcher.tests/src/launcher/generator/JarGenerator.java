@@ -25,6 +25,9 @@ public class JarGenerator {
 	public static String RANDOM="RANDOM";
 	
 	public static String CRITICAL_ADJACENT="CR_ADJ";
+	public static String CRITICAL_BLOCK_ADJACENT="CR_BLQADJ";
+	public static String CRITICAL_BLOCK="CR_BLQ";
+	public static String CRITICAL_BLOCK_ENDSTART="CR_BLQENDSTART";
 	
 	public static String GRAPH="Graph";
 	public static String VECTOR="Vector";
@@ -38,7 +41,7 @@ public class JarGenerator {
 	
 	public JarGenerator(){
 		
-		generateJavaFiles("07x07", TABUSEARCH, CRITICAL_ADJACENT, 1,GRAPH,RANDOMMODFIER);
+		generateJavaFiles("07x07", TABUSEARCH, CRITICAL_BLOCK_ENDSTART, 1,GRAPH,RANDOMMODFIER);
 		/*generateJavaFiles("10x10", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("15x15", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("07x07", SIMULATEDANNELING, RANDOM, 1);
