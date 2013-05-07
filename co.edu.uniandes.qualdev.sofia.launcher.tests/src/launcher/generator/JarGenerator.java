@@ -41,7 +41,7 @@ public class JarGenerator {
 	
 	public JarGenerator(){
 		
-		generateJavaFiles("07x07", TABUSEARCH, CRITICAL_BLOCK_ENDSTART, 1,GRAPH,RANDOMMODFIER);
+		generateJavaFiles("07x07", TABUSEARCH, CRITICAL_BLOCK_ENDSTART, 1,GRAPH,SWAP);
 		/*generateJavaFiles("10x10", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("15x15", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("07x07", SIMULATEDANNELING, RANDOM, 1);
