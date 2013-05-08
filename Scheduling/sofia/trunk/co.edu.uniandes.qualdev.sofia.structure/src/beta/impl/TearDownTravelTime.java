@@ -17,7 +17,7 @@ public class TearDownTravelTime extends TearDownBeta{
 
 	private int[][] TTMatrix;
 	
-	private ArrayList<String> informationFiles;
+	private ArrayList<String> informationFiles= new ArrayList<String>();
 
 	// --------------------------------------------------------
 	// Constructor

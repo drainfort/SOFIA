@@ -25,7 +25,7 @@ public class TravelTimes extends TTBeta {
 
 	private Float[][] TTMatrix;
 	
-	private ArrayList<String> informationFiles;
+	private ArrayList<String> informationFiles = new ArrayList<String>();
 
 	// --------------------------------------------------------
 	// Constructor
