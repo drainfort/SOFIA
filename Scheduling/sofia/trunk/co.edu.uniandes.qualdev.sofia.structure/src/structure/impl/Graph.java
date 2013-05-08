@@ -780,6 +780,9 @@ public class Graph extends AbstractStructure {
 
 		newGraph.initialJobNodesArray = new Node[newGraph.totalJobs];
 		newGraph.initialStationNodesArray = new Node[newGraph.totalStations];
+		newGraph.jobs= this.jobs;
+		newGraph.machines= this.machines;
+		newGraph.stations= this.stations;
 
 		// Clone betas
 		if (this.betas != null) {
