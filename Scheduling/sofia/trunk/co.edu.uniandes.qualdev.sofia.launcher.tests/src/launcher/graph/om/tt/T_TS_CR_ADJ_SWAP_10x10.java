@@ -55,43 +55,43 @@ public class T_TS_CR_ADJ_SWAP_10x10 {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 
 		String[] file1 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/10x10/10x10_01.properties", "./results/TT_10x10_01.pdf", "10x10_01"};
+				"./data/Om-TT/Algorithm/Graph/TS_CR_ADJ_SWAP.properties","./data/Om-TT/10x10/10x10_01.properties", "./results/TT_10x10_01.pdf", "10x10_01"};
 		datos.add(file1);
 
 		String[] file2 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/10x10/10x10_02.properties", "./results/TT_10x10_02.pdf", "10x10_02"};
+				"./data/Om-TT/Algorithm/Graph/TS_CR_ADJ_SWAP.properties","./data/Om-TT/10x10/10x10_02.properties", "./results/TT_10x10_02.pdf", "10x10_02"};
 		datos.add(file2);
 
 		String[] file3 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/10x10/10x10_03.properties", "./results/TT_10x10_03.pdf", "10x10_03"};
+				"./data/Om-TT/Algorithm/Graph/TS_CR_ADJ_SWAP.properties","./data/Om-TT/10x10/10x10_03.properties", "./results/TT_10x10_03.pdf", "10x10_03"};
 		datos.add(file3);
 		
 		String[] file4 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/10x10/10x10_04.properties", "./results/TT_10x10_04.pdf", "10x10_04"};
+				"./data/Om-TT/Algorithm/Graph/TS_CR_ADJ_SWAP.properties","./data/Om-TT/10x10/10x10_04.properties", "./results/TT_10x10_04.pdf", "10x10_04"};
 		datos.add(file4);
 
 		String[] file5 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/10x10/10x10_05.properties", "./results/TT_10x10_05.pdf", "10x10_05"};
+				"./data/Om-TT/Algorithm/Graph/TS_CR_ADJ_SWAP.properties","./data/Om-TT/10x10/10x10_05.properties", "./results/TT_10x10_05.pdf", "10x10_05"};
 		datos.add(file5);
 		
 		String[] file6 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/10x10/10x10_06.properties", "./results/TT_10x10_06.pdf", "10x10_06"};
+				"./data/Om-TT/Algorithm/Graph/TS_CR_ADJ_SWAP.properties","./data/Om-TT/10x10/10x10_06.properties", "./results/TT_10x10_06.pdf", "10x10_06"};
 		datos.add(file6);
 		
 		String[] file7 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/10x10/10x10_07.properties", "./results/TT_10x10_07.pdf", "10x10_07"};
+				"./data/Om-TT/Algorithm/Graph/TS_CR_ADJ_SWAP.properties","./data/Om-TT/10x10/10x10_07.properties", "./results/TT_10x10_07.pdf", "10x10_07"};
 		datos.add(file7);
 		
 		String[] file8 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/10x10/10x10_08.properties", "./results/TT_10x10_08.pdf", "10x10_08"};
+				"./data/Om-TT/Algorithm/Graph/TS_CR_ADJ_SWAP.properties","./data/Om-TT/10x10/10x10_08.properties", "./results/TT_10x10_08.pdf", "10x10_08"};
 		datos.add(file8);
 		
 		String[] file9 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/10x10/10x10_09.properties", "./results/TT_10x10_09.pdf", "10x10_09"};
+				"./data/Om-TT/Algorithm/Graph/TS_CR_ADJ_SWAP.properties","./data/Om-TT/10x10/10x10_09.properties", "./results/TT_10x10_09.pdf", "10x10_09"};
 		datos.add(file9);
 		
 		String[] file10 = {
-				"./data/Om-TT/Algorithm/TS_CR_ADJ_RANDOM_G.properties","./data/Om-TT/10x10/10x10_10.properties", "./results/TT_10x10_10.pdf", "10x10_10"};
+				"./data/Om-TT/Algorithm/Graph/TS_CR_ADJ_SWAP.properties","./data/Om-TT/10x10/10x10_10.properties", "./results/TT_10x10_10.pdf", "10x10_10"};
 		datos.add(file10);
 		
 		return datos;
