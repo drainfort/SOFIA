@@ -124,10 +124,17 @@ public abstract class AbstractStructure  implements IStructure{
 		operationsMatrix=problem;
 	}
 	
+	public void setBetas(Map<String, Beta> betas) {
+		this.betas = betas;
+	}
+	
 	// ---------------------------------------------
 	// Utilities
 	// ---------------------------------------------
 	
+
+	
+
 	/**
 	 * Loads an IOperation matrix from a file in the parameter
 	 * @param processingTimesFile File with the processing times of the problem
@@ -188,4 +195,6 @@ public abstract class AbstractStructure  implements IStructure{
 
 		return problemMatrix;
 	}
+	
+	
 }
