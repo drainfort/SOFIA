@@ -119,4 +119,15 @@ public class TravelTimes extends TTBeta {
 	public void setInformationFiles(ArrayList<String> informationFiles) {
 		this.informationFiles = informationFiles;
 	}
+
+	public Float[][] getTTMatrix() {
+		return TTMatrix;
+	}
+
+	public void setTTMatrix(Float[][] tTMatrix) {
+		TTMatrix = tTMatrix;
+	}
+	
+	
+	
 }
