@@ -128,7 +128,7 @@ public abstract class AbstractStructure  implements IStructure{
 		this.betas = betas;
 	}
 	
-	public void setOpertation(int job, int station, Operation nOperation){
+	public void setOperation(int job, int station, Operation nOperation){
 		operationsMatrix[job][station]=nOperation;
 	}
 	
