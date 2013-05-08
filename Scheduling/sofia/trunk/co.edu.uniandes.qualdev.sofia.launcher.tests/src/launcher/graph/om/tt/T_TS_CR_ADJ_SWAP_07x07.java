@@ -110,7 +110,7 @@ public class T_TS_CR_ADJ_SWAP_07x07 {
 	public void testLaunch() throws Exception {
 		try {
 			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i < 20; i++) {
 				
 				results.add(launcher.launch(algorithmFile,problemFile, resultsFile, instanceName));
 			}
