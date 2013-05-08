@@ -73,7 +73,8 @@ public class GRASPERLS extends Control {
 			best = ERLS(initialSolution, modifier,
 						gammaCalculator, arrayNeighbors, optimal.intValue(),
 						continua, 0, gammaBestSolution, (Integer) params.get("maxLSDepth"),
-						(Integer) params.get("strategyLS"), bounds, numberOfNeighbors, (Integer) params.get("maxNeighbors"));
+						(Integer) params.get("strategyLS"), bounds, numberOfNeighbors, 
+						(Integer) params.get("maxNeighbors"), (HashSet<String>[]) controlExplorados);
 			
 			bestGamma=gammaCalculator.calculateGamma(best);
 			System.out.println(" Neighbors processed: "+numberOfNeighbors[0]);
