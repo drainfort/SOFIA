@@ -26,6 +26,7 @@ public class MultiStartAlgorithm extends SchedulingAlgorithm {
 		int bestGamma = Integer.MAX_VALUE;
 		ExecutionResults bestResults = null;
 		boolean optimal = false;
+		int neighborAmount = 0;
 		
 		for (int i = 0; i < startsNumber && !optimal; i++) {
 			IStructure initialSolution = constructiveAlgorithm.getInitialSolutionBuilder().createInitialSolution(problem.getProblemFiles(), problem.getBetas(), problem.getStructrureFactory(), iterativeAlgorithm.getGammaCalculator());
@@ -42,10 +43,12 @@ public class MultiStartAlgorithm extends SchedulingAlgorithm {
 					System.out.println("******* Optimal found: " + results.getBestCmax() );
 				}
 			}
+			neighborAmount += results.getNumberOfVisitedNeighbors();
 			
 			results.setInstanceName(instanceName);
 		}
-				
+		
+		bestResults.setNumberOfVisitedNeighbors(neighborAmount);
 		return bestResults;
 	}
 }
