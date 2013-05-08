@@ -138,4 +138,14 @@ public class TearDownTravelTime extends TearDownBeta{
 		
 		return newC;
 	}
+
+	public int[][] getTTMatrix() {
+		return TTMatrix;
+	}
+
+	public void setTTMatrix(int[][] tTMatrix) {
+		TTMatrix = tTMatrix;
+	}
+	
+	
 }
