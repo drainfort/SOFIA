@@ -1,7 +1,9 @@
 package control.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 import structure.IStructure;
 
@@ -56,7 +58,9 @@ public class GRASPERLS extends Control {
 			System.out.print("Iniciando fase de busqueda local.....");
 			boolean continua[]=new boolean[1];   continua[0]=true;
 			int gammaBestSolution[]=new int[1];  gammaBestSolution[0]=bestGamma;
-
+			Set<String> controlExplorados[] = new HashSet[1];  
+			controlExplorados[0]=new HashSet<String>();
+			
 			//Keep the minimum values obtained at each depth
 			int bounds[]=new int[(Integer) params.get("maxLSDepth")];			
 			for (int i=0; i<bounds.length;i++)  
@@ -105,7 +109,8 @@ public class GRASPERLS extends Control {
 					 int strategyLS,
 					 int bounds[],
 					 int numberOfNeighbors[],
-					 int maxNeighbors)throws Exception{
+					 int maxNeighbors,
+					 HashSet<String> ctrlExp[])throws Exception{
 		
 		
 		depth++;
@@ -124,88 +129,89 @@ public class GRASPERLS extends Control {
 			int minGamma=gammaCurrentSolution;   int maxGamma=-1;
 			for (PairVO pair : arrayNeighbors) {
 				IStructure candidate = modifier.performModification(pair, currentSolution);
-				int gammaCandidate = gammaCalculator.calculateGamma(candidate);
+				if(!ctrlExp[0].contains(candidate.toString())){
+					int gammaCandidate = gammaCalculator.calculateGamma(candidate);
 			
-				//Considers only the pairs that generate improvement in the current solution
-				if(gammaCurrentSolution > gammaCandidate){ 
-					switch (strategyLS){
-						case 0: //Exhaustive search, it will explore all the choices
-							neighborsImproving.add(pair);
+					//Considers only the pairs that generate improvement in the current solution
+					if(gammaCurrentSolution > gammaCandidate){ 
+						switch (strategyLS){
+							case 0: //Exhaustive search, it will explore all the choices
+								neighborsImproving.add(pair);
+								break;
+							case 1: //Only the best improvements are considered at each instance of ERLS
+								if(minGamma==gammaCandidate)	
+									neighborsImproving.add(pair);
+								if(minGamma>gammaCandidate){
+									//Clear the list
+									neighborsImproving.clear();
+									//Add the pair to the list of next current solution
+									neighborsImproving.add(pair);
+									minGamma=gammaCandidate;
+								}
 							break;
-						case 1: //Only the best improvements are considered at each instance of ERLS
-							if(minGamma==gammaCandidate)	
-								neighborsImproving.add(pair);
-							if(minGamma>gammaCandidate){
-								//Clear the list
-								neighborsImproving.clear();
-								//Add the pair to the list of next current solution
-								neighborsImproving.add(pair);
-								minGamma=gammaCandidate;
-							}
-							break;
-						case 2: //Uses the best value obtained at each depth to prune the candidates to explore 
-							if(bounds[depth]==gammaCandidate){
-								neighborsImproving.add(pair);
-								minGamma=gammaCandidate;
-							}	
-							if(bounds[depth]>gammaCandidate){
-								//Clear the list
-								neighborsImproving.clear();
-								//Add the pair to the list of next current solution
-								neighborsImproving.add(pair);
-								minGamma=gammaCandidate;
-								bounds[depth]=gammaCandidate;
-							}
-							break;
-						case 3: //the worst and best candidates are considered to be explored					
-							if(minGamma==gammaCandidate)	
-								bestNeighborsImproving.add(pair);
-							if(minGamma>gammaCandidate){
-								//Clear the list
-								bestNeighborsImproving.clear();
-								//Add the pair to the list of next current solution
-								bestNeighborsImproving.add(pair);
-								minGamma=gammaCandidate;
-							}							
+							case 2: //Uses the best value obtained at each depth to prune the candidates to explore 
+								if(bounds[depth]==gammaCandidate){
+									neighborsImproving.add(pair);
+									minGamma=gammaCandidate;
+								}	
+								if(bounds[depth]>gammaCandidate){
+									//Clear the list
+									neighborsImproving.clear();
+									//Add the pair to the list of next current solution
+									neighborsImproving.add(pair);
+									minGamma=gammaCandidate;
+									bounds[depth]=gammaCandidate;
+								}
+								break;
+							case 3: //the worst and best candidates are considered to be explored					
+								if(minGamma==gammaCandidate)	
+									bestNeighborsImproving.add(pair);
+								if(minGamma>gammaCandidate){
+									//Clear the list
+									bestNeighborsImproving.clear();
+									//Add the pair to the list of next current solution
+									bestNeighborsImproving.add(pair);
+									minGamma=gammaCandidate;
+								}							
 							
-							if(maxGamma==gammaCandidate)	
-								worstNeighborsImproving.add(pair);
-							if(maxGamma<gammaCandidate){
-								//Clear the list
-								worstNeighborsImproving.clear();
-								//Add the pair to the list of next current solution
-								worstNeighborsImproving.add(pair);
-								maxGamma=gammaCandidate;
-							}
-							break;
-						case 4: //just the worst candidates are considered to be explored					
-							if(maxGamma==gammaCandidate)	
+								if(maxGamma==gammaCandidate)	
+									worstNeighborsImproving.add(pair);
+								if(maxGamma<gammaCandidate){
+									//Clear the list
+									worstNeighborsImproving.clear();
+									//Add the pair to the list of next current solution
+									worstNeighborsImproving.add(pair);
+									maxGamma=gammaCandidate;
+								}
+								break;
+							case 4: //just the worst candidates are considered to be explored					
+								if(maxGamma==gammaCandidate)	
+									neighborsImproving.add(pair);
+								if(maxGamma<gammaCandidate){
+									//Clear the list
+									neighborsImproving.clear();
+									//Add the pair to the list of next current solution
+									neighborsImproving.add(pair);
+									maxGamma=gammaCandidate;
+								}
+								break;
+							case 5: //the worst and best candidates are considered to be explored					
+								if(minGamma==gammaCandidate)	
+									bestNeighborsImproving.add(pair);
+								if(minGamma>gammaCandidate){
+									//Clear the list
+									bestNeighborsImproving.clear();
+									//Add the pair to the list of next current solution
+									bestNeighborsImproving.add(pair);
+									minGamma=gammaCandidate;
+								}							
 								neighborsImproving.add(pair);
-							if(maxGamma<gammaCandidate){
-								//Clear the list
-								neighborsImproving.clear();
-								//Add the pair to the list of next current solution
-								neighborsImproving.add(pair);
-								maxGamma=gammaCandidate;
-							}
-							break;
-						case 5: //the worst and best candidates are considered to be explored					
-							if(minGamma==gammaCandidate)	
-								bestNeighborsImproving.add(pair);
-							if(minGamma>gammaCandidate){
-								//Clear the list
-								bestNeighborsImproving.clear();
-								//Add the pair to the list of next current solution
-								bestNeighborsImproving.add(pair);
-								minGamma=gammaCandidate;
-							}							
-							neighborsImproving.add(pair);
-							break;							
-					};
+								break;							
+						};
+					}
+					candidate.clean();
 				}
-				candidate.clean();
 			}
-		
 			//
 			if(strategyLS==3){
 				neighborsImproving.addAll(worstNeighborsImproving);
@@ -228,11 +234,15 @@ public class GRASPERLS extends Control {
 				
 				PairVO pair=neighborsImproving.get(k);
 				IStructure candidate = modifier.performModification(pair, currentSolution);
+				
+				ctrlExp[0].add(candidate.toString());
+				
 				IStructure improvedSolution = ERLS(candidate,	modifier,
 												gammaCalculator, arrayNeighbors, optimal,
 												continua, depth, gammaBestSolution,
 												maxLSDepth, strategyLS, bounds,
-												numberOfNeighbors,maxNeighbors);
+												numberOfNeighbors,maxNeighbors,
+												ctrlExp);
 			
 				int gammaImprovedSolution=gammaCalculator.calculateGamma(improvedSolution);
 			
