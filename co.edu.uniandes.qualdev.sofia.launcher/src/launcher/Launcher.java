@@ -29,7 +29,7 @@ public class Launcher {
 								.getProperty("scheduling.control");
 		
 		SchedulingAlgorithm algorithm =  null;
-		if(iterative.equals("control.GRASP") || iterative.equals("control.GRASPERLS")){
+		if(iterative.equals("control.impl.GRASP") || iterative.equals("control.impl.GRASPERLS")){
 			algorithm = new MultiStartAlgorithm(algorithmConfiguration,problemConfiguration);
 		}else{
 			algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problemConfiguration);
