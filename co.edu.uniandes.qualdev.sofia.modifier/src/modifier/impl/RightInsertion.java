@@ -40,7 +40,6 @@ public class RightInsertion implements IModifier {
 		if(currentVector.getClass().equals(Graph.class)){
 			vector.insertOperationAfter(movement.getoY(), movement.getoX());
 			if(vector.validateStructure()){
-				System.out.println("entro");
 				return vector;
 			}
 		}
