@@ -41,7 +41,7 @@ public class JarGenerator {
 	
 	public JarGenerator(){
 		
-		generateJavaFiles("07x07", TABUSEARCH, CRITICAL_BLOCK_ENDSTART, 1,GRAPH,SWAP);
+		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_ADJACENT, 10,VECTOR,SWAP);
 		/*generateJavaFiles("10x10", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("15x15", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("07x07", SIMULATEDANNELING, RANDOM, 1);
@@ -88,7 +88,7 @@ public class JarGenerator {
         PrintWriter pw = null;
 		try
         {
-			String name ="T_"+algorithym+"_"+neighbors+"_SWAP_"+sizeInstance+"_"+number;
+			String name ="T_"+algorithym+"_"+neighbors+"_SWAP_"+sizeInstance+"_"+number+"_"+structure;
             fichero = new FileWriter(new File("./src/launcher/generator/"+name+".java"));
             pw = new PrintWriter(fichero);
             pw.println("package launcher.generator;");
