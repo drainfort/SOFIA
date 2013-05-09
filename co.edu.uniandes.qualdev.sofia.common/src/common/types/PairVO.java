@@ -48,7 +48,7 @@ public class PairVO {
 	// ---------------------------------------
 	
 	public String toString(){
-		return "<" + x + "," + y + ">";
+		return "<" + oX.toString() + "," + oY.toString() + ">";
 	}
 	
 	public int getX() {
