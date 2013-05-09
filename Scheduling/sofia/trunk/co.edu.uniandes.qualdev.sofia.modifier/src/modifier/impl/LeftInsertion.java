@@ -4,6 +4,7 @@ import modifier.IModifier;
 import common.types.PairVO;
 
 import structure.IStructure;
+import structure.impl.Graph;
 
 /**
  * Implementation of the swap at random neighbor using the vector sequence
@@ -31,8 +32,15 @@ public class LeftInsertion implements IModifier {
 	@Override
 	public IStructure performModification(PairVO movement, IStructure currentVector) throws Exception {
 		IStructure vector = currentVector.cloneStructure();
-		vector.insertOperationBefore(movement.getX(), movement.getY());
-		if(vector.validateStructure()){
+		
+		if(currentVector.getClass().equals(Graph.class)){
+			vector.insertOperationBefore(movement.getoY(), movement.getoX());
+			if(vector.validateStructure()){
+				return vector;
+			}
+		}
+		else{
+			vector.insertOperationBefore(movement.getX(), movement.getY());
 			return vector;
 		}
 		

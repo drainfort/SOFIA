@@ -8,6 +8,7 @@ import common.types.NeighborInformation;
 import common.types.PairVO;
 
 import structure.IStructure;
+import structure.impl.Graph;
 
 
 /**
@@ -36,10 +37,18 @@ public class RightInsertion implements IModifier {
 	@Override
 	public IStructure performModification(PairVO movement, IStructure currentVector) throws Exception {
 		IStructure vector = currentVector.cloneStructure();
-		vector.insertOperationAfter(movement.getX(), movement.getY());
-		if(vector.validateStructure()){
+		if(currentVector.getClass().equals(Graph.class)){
+			vector.insertOperationAfter(movement.getoY(), movement.getoX());
+			if(vector.validateStructure()){
+				System.out.println("entro");
+				return vector;
+			}
+		}
+		else{
+			vector.insertOperationAfter(movement.getX(), movement.getY());
 			return vector;
 		}
+		
 		vector.clean();
 		return currentVector.cloneStructure();
 	}
