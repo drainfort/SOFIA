@@ -1,6 +1,8 @@
 package neighborCalculator.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Properties;
 
 import structure.IOperation;
@@ -119,7 +121,7 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 						else{
 							salida++;
 							if(salida>=100){
-								
+								Collections.shuffle(neighborhood);
 								return neighborhood;
 							}
 						}
@@ -128,6 +130,7 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 			}
 		}
 		System.out.println(neighborhood);
+		Collections.shuffle(neighborhood);
 		return neighborhood;
 	}
 		
