@@ -121,7 +121,8 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 						else{
 							salida++;
 							if(salida>=100){
-								Collections.shuffle(neighborhood);
+								//long seed = System.nanoTime();
+								//Collections.shuffle(neighborhood, new java.util.Random(seed));
 								return neighborhood;
 							}
 						}
@@ -130,7 +131,8 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 			}
 		}
 		System.out.println(neighborhood);
-		Collections.shuffle(neighborhood);
+		//long seed = System.nanoTime();
+		//Collections.shuffle(neighborhood, new java.util.Random(seed));
 		return neighborhood;
 	}
 		
