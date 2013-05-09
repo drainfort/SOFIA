@@ -56,7 +56,7 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 		if(j==1)
 			initialNode= selectedBlock.get(selectedBlock.size()-1);
 		
-		int i = randomNumber(selectedBlock.size()/2 - selectedBlock.size()/8, selectedBlock.size()/2 + selectedBlock.size()/8);
+		int i = randomNumber(1, selectedBlock.size()-1);
 		IOperation finalNode = selectedBlock.get(i);
 
 		OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
@@ -79,29 +79,33 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 		
 		while(neighborhood.size()<size){
 			
-			number = randomNumber(0, blocks.size() - 1);
-		    ArrayList<IOperation> selectedBlock = blocks.get(number);
-			
-			int j = randomNumber(0, 1);
-			IOperation initialNode = selectedBlock.get(j);
-			
-			if(j==1)
-				initialNode= selectedBlock.get(selectedBlock.size()-1);
-			
-			int i = randomNumber(selectedBlock.size()/2 - selectedBlock.size()/8, selectedBlock.size()/2 + selectedBlock.size()/8);
-			IOperation finalNode = selectedBlock.get(i);
-
-			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
-			OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
-			
-			PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
-			if(!neighborhood.contains(temp)){
-				neighborhood.add(temp);
-				salida=0;
-			}else{
-				salida++;
-				if(salida>=100)
-					return neighborhood;
+			for(int i=0; i< routes.size();i++){
+				ArrayList<IOperation> selectedBlock = blocks.get(i);
+				for(int j=1; j<selectedBlock.size()-1;i++){
+					IOperation initial= selectedBlock.get(0);
+					IOperation finalOperation = selectedBlock.get(selectedBlock.size()-1);
+					IOperation temp = selectedBlock.get(j);
+					
+					PairVO newPair = new PairVO(initial.getOperationIndex(), temp.getOperationIndex());
+					PairVO newPair2 = new PairVO(finalOperation.getOperationIndex(), temp.getOperationIndex());
+					if(!neighborhood.contains(newPair)){
+						neighborhood.add(newPair);
+						salida=0;
+					}else{
+						salida++;
+						if(salida>=100)
+							return neighborhood;
+					}
+					
+					if(!neighborhood.contains(newPair2)){
+						neighborhood.add(newPair2);
+						salida=0;
+					}else{
+						salida++;
+						if(salida>=100)
+							return neighborhood;
+					}
+				}
 			}
 		}
 		
