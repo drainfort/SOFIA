@@ -34,6 +34,8 @@ public class JarGenerator {
 	
 	public static String RANDOMMODFIER="RANDOM";
 	public static String SWAP="SWAP";
+	public static String LEFTINSERTION="LEFTINSERTION";
+	public static String RIGHTINSERTION="RIGHTINSERTION";
 	
 	public static String ruta1="C:/Users/ja.romero940/workspace/sofia/";
 	public static String ruta2="C:\\Users\\ja.romero940\\workspace\\sofia\\";
@@ -41,7 +43,10 @@ public class JarGenerator {
 	
 	public JarGenerator(){
 		
-		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_ADJACENT, 10,VECTOR,SWAP);
+		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_BLOCK, 10, VECTOR, LEFTINSERTION);
+		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_BLOCK, 10, VECTOR, RIGHTINSERTION);
+		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_BLOCK, 10, VECTOR, SWAP);
+		
 		/*generateJavaFiles("10x10", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("15x15", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("07x07", SIMULATEDANNELING, RANDOM, 1);
@@ -88,7 +93,7 @@ public class JarGenerator {
         PrintWriter pw = null;
 		try
         {
-			String name ="T_"+algorithym+"_"+neighbors+"_SWAP_"+sizeInstance+"_"+number+"_"+structure;
+			String name ="T_"+algorithym+"_"+neighbors+"_"+modifier+"_"+sizeInstance+"_"+number+"_"+structure;
             fichero = new FileWriter(new File("./src/launcher/generator/"+name+".java"));
             pw = new PrintWriter(fichero);
             pw.println("package launcher.generator;");
