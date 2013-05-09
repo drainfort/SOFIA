@@ -43,9 +43,9 @@ public class JarGenerator {
 	
 	public JarGenerator(){
 		
-		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_BLOCK, 10, VECTOR, LEFTINSERTION);
-		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_BLOCK, 10, VECTOR, RIGHTINSERTION);
-		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_BLOCK, 10, VECTOR, SWAP);
+		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
+		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, RIGHTINSERTION);
+		generateJavaFiles("04x04", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, SWAP);
 		
 		/*generateJavaFiles("10x10", TABUSEARCH, RANDOM, 1);
 		generateJavaFiles("15x15", TABUSEARCH, RANDOM, 1);
