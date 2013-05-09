@@ -71,9 +71,8 @@ public class TabuSearch extends Control {
 		// parameter
 		double percent =(Double) params.get("percent");
 		int neighborhodSize = (int) ((vectorSize * (vectorSize - 1)) / 2 * percent);
-
+		
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
-
 		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
 			IStructure bestCandidate = null;
 			int gammaBestCandidate = Integer.MAX_VALUE;
@@ -82,9 +81,9 @@ public class TabuSearch extends Control {
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved; index++) {
 				PairVO pairCandidate = arrayNeighbors.get(index);
 				IStructure candidate = modifier.performModification(pairCandidate,current);
+				
 				numberOfVisitedNeighbors++;
 				int gammaCandidate = gammaCalculator.calculateGamma(candidate);
-
 				if (gammaCandidate <= gammaBestCandidate) {
 					boolean tabu = false;
 					for (int i = 0; i < arrayTabu.size() && !tabu; i++) {
@@ -132,6 +131,7 @@ public class TabuSearch extends Control {
 
 				}
 				// System.out.println("current: " + current.getVector());
+				
 				current = bestCandidate.cloneStructure();
 				bestCandidate.clean();
 
@@ -142,6 +142,7 @@ public class TabuSearch extends Control {
 				tabuIndex++;
 
 			}
+			
 			// Avance while
 			iterations--;
 			nonimproving--;
