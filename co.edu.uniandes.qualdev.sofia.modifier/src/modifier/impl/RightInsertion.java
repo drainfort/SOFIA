@@ -37,17 +37,10 @@ public class RightInsertion implements IModifier {
 	@Override
 	public IStructure performModification(PairVO movement, IStructure currentVector) throws Exception {
 		IStructure vector = currentVector.cloneStructure();
-		if(currentVector.getClass().equals(Graph.class)){
-			vector.insertOperationAfter(movement.getoY(), movement.getoX());
-			if(vector.validateStructure()){
-				return vector;
-			}
-		}
-		else{
-			vector.insertOperationAfter(movement.getX(), movement.getY());
+		vector.insertOperationAfter(movement.getoY(), movement.getoX());
+		if(vector.validateStructure()){
 			return vector;
 		}
-		
 		vector.clean();
 		return currentVector.cloneStructure();
 	}
