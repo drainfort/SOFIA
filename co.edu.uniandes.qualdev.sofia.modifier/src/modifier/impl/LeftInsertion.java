@@ -33,7 +33,7 @@ public class LeftInsertion implements IModifier {
 	public IStructure performModification(PairVO movement, IStructure currentVector) throws Exception {
 		IStructure vector = currentVector.cloneStructure();
 		
-		vector.insertOperationBefore(movement.getoY(), movement.getoX());
+		vector.insertOperationBefore(movement.getoX(), movement.getoY());
 		if(vector.validateStructure()){
 			return vector;
 		}
