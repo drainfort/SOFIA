@@ -81,26 +81,39 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 			
 			for(int i=0; i< routes.size();i++){
 				ArrayList<IOperation> selectedBlock = blocks.get(i);
-				for(int j=1; j<selectedBlock.size()-1;i++){
+				if(selectedBlock.size()>2){
+					for(int j=1; j<selectedBlock.size()-1;i++){
+						
+						IOperation initial= selectedBlock.get(0);
+						IOperation finalOperation = selectedBlock.get(selectedBlock.size()-1);
+						IOperation temp = selectedBlock.get(j);
+						
+						PairVO newPair = new PairVO(initial.getOperationIndex(), temp.getOperationIndex());
+						PairVO newPair2 = new PairVO(finalOperation.getOperationIndex(), temp.getOperationIndex());
+						if(!neighborhood.contains(newPair)){
+							neighborhood.add(newPair);
+							salida=0;
+						}					
+						if(!neighborhood.contains(newPair2)){
+							neighborhood.add(newPair2);
+							salida=0;
+						}else{
+							salida++;
+							if(salida>=100)
+								return neighborhood;
+						}
+					}
+				}
+				else{
 					IOperation initial= selectedBlock.get(0);
 					IOperation finalOperation = selectedBlock.get(selectedBlock.size()-1);
-					IOperation temp = selectedBlock.get(j);
+					PairVO newPair = new PairVO(initial.getOperationIndex(), finalOperation.getOperationIndex());
 					
-					PairVO newPair = new PairVO(initial.getOperationIndex(), temp.getOperationIndex());
-					PairVO newPair2 = new PairVO(finalOperation.getOperationIndex(), temp.getOperationIndex());
 					if(!neighborhood.contains(newPair)){
 						neighborhood.add(newPair);
 						salida=0;
-					}else{
-						salida++;
-						if(salida>=100)
-							return neighborhood;
-					}
-					
-					if(!neighborhood.contains(newPair2)){
-						neighborhood.add(newPair2);
-						salida=0;
-					}else{
+					}					
+					else{
 						salida++;
 						if(salida>=100)
 							return neighborhood;
