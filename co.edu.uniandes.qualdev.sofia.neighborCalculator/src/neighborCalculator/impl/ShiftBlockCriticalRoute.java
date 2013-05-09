@@ -74,8 +74,6 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 		IStructure clone = currentGraph.cloneStructure();
 		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
 		int salida=0;
-		int number = randomNumber(0, routes.size() - 1);
-		
 		
 		while(neighborhood.size()<size){
 			
@@ -83,7 +81,6 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 				ArrayList<ArrayList<IOperation>> blocks = routes.get(i).getBlocks();
 				for(int z=0; z<blocks.size();z++){
 					ArrayList<IOperation> selectedBlock = blocks.get(z);
-					System.out.println(selectedBlock);
 					if(selectedBlock.size()>2){
 						for(int j=1; j<selectedBlock.size()-1;i++){
 							
@@ -95,10 +92,12 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 							PairVO newPair2 = new PairVO(finalOperation.getOperationIndex(), temp.getOperationIndex());
 							if(!neighborhood.contains(newPair)){
 								neighborhood.add(newPair);
+								neighborhood.add(new PairVO(temp.getOperationIndex(), initial.getOperationIndex()));
 								salida=0;
 							}					
 							if(!neighborhood.contains(newPair2)){
 								neighborhood.add(newPair2);
+								neighborhood.add(new PairVO(temp.getOperationIndex(), finalOperation.getOperationIndex()));
 								salida=0;
 							}else{
 								salida++;
@@ -111,21 +110,24 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 						IOperation initial= selectedBlock.get(0);
 						IOperation finalOperation = selectedBlock.get(selectedBlock.size()-1);
 						PairVO newPair = new PairVO(initial.getOperationIndex(), finalOperation.getOperationIndex());
-						
+						PairVO newPair2 = new PairVO(finalOperation.getOperationIndex(), initial.getOperationIndex());
 						if(!neighborhood.contains(newPair)){
 							neighborhood.add(newPair);
+							neighborhood.add(newPair2);
 							salida=0;
 						}					
 						else{
 							salida++;
-							if(salida>=100)
+							if(salida>=100){
+								
 								return neighborhood;
+							}
 						}
 					}
 				}
 			}
 		}
-		
+		System.out.println(neighborhood);
 		return neighborhood;
 	}
 		
