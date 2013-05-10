@@ -1124,7 +1124,7 @@ public class Graph extends AbstractStructure {
 			this.topologicalSort2();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return false;
 		}
 	}
