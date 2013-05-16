@@ -18,6 +18,7 @@ import neighborCalculator.INeighborCalculator;
  * Van Laarhoven PJM, Aarts EHL, Lenstra JK. Job shop scheduling by simulated annealing. Operations Research 1992;40(1):113–25.
  * 
  * @author Jaime Romero
+ * @author David Mendez Acuna
  */
 public class N1_AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 
