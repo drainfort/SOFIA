@@ -18,26 +18,38 @@ import structure.IStructure;
 public interface INeighborCalculator {
 
 	/**
-	 * Calculates a neighbor from a given vector
+	 * Calculates a neighbor from a given solution
 	 * 
-	 * @param currentVector
-	 * 			The vector that represents the current solution
+	 * @param currentStructure
+	 * 			The structure that represents the current solution
 	 * @return pair
 	 * 			The movement that should be performed to create a neighbor
 	 * 			The calculate neighbor
 	 * @throws Exception
 	 */
-	public PairVO calculateNeighbor(IStructure currentVector) throws Exception;
+	public PairVO calculateNeighbor(IStructure currentStructure) throws Exception;
 	
 	/**
-	 * Calculates a neighborhood from a given vector
+	 * Calculates a neighborhood of the given size from a given solution
 	 * 
-	 * @param currentVector
-	 * 			The vector that represents the current solution
+	 * @param currentStructure
+	 * 			The structure that represents the current solution
 	 * @return pairs
 	 * 			The movements that should be performed to create a neighbor
 	 * 			The calculate neighbor
 	 * @throws Exception
 	 */
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, int size) throws Exception;
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, int size) throws Exception;
+
+	/**
+	 * Calculates the complete neighborhood from the given solution
+	 * 
+	 * @param currentStructure
+	 * 			The structure that represents the current solution
+	 * 
+	 * @return pairs
+	 * 			The movements that should be performed to create a neighbor
+	 * @throws Exception 
+	 */
+	public ArrayList<PairVO> calculateCompleteNeighborhood(IStructure currentStructure) throws Exception;
 }

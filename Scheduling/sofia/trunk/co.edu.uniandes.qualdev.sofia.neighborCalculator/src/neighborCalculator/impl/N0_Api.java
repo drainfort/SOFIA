@@ -17,7 +17,7 @@ import neighborCalculator.INeighborCalculator;
  * 
  * @author David Mendez-Acuna
  */
-public class Api implements INeighborCalculator {
+public class N0_Api implements INeighborCalculator {
 
 	// -----------------------------------------------
 	// Attributes
@@ -31,7 +31,7 @@ public class Api implements INeighborCalculator {
 	// Constructor
 	// -----------------------------------------------
 
-	public Api() {
+	public N0_Api() {
 
 	}
 
@@ -114,16 +114,16 @@ public class Api implements INeighborCalculator {
 	}
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int size)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, int size)
 			throws Exception {
-		A = currentGraph.calculateAMatrix();
+		A = currentStructure.calculateAMatrix();
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		OperationIndexVO initialOperationIndex = null;
 		OperationIndexVO finalOperationIndex = null;
 
 		while (size>=0) {
-			int i = randomNumber(0, currentGraph.getTotalJobs() - 1);
-			int j = randomNumber(0, currentGraph.getTotalStations() - 1);
+			int i = randomNumber(0, currentStructure.getTotalJobs() - 1);
+			int j = randomNumber(0, currentStructure.getTotalStations() - 1);
 
 			Integer aij = A[i][j];
 			if (aij != null) {
@@ -132,10 +132,10 @@ public class Api implements INeighborCalculator {
 				if(directionRandom < 0.5){
 					// route
 					double successorOrPredecessorRandom = Math.random();
-					if(successorOrPredecessorRandom < 0.5 && ((Graph)currentGraph).getNode(i, j).getPreviousRouteNode() != null){
+					if(successorOrPredecessorRandom < 0.5 && ((Graph)currentStructure).getNode(i, j).getPreviousRouteNode() != null){
 						//predecessor
-						int newI = ((Graph)currentGraph).getNode(i, j).getPreviousRouteNode().getOperation().getOperationIndex().getJobId();
-						int newJ = ((Graph)currentGraph).getNode(i, j).getPreviousRouteNode().getOperation().getOperationIndex().getStationId();
+						int newI = ((Graph)currentStructure).getNode(i, j).getPreviousRouteNode().getOperation().getOperationIndex().getJobId();
+						int newJ = ((Graph)currentStructure).getNode(i, j).getPreviousRouteNode().getOperation().getOperationIndex().getStationId();
 						if((Math.abs(A[i][j]-A[newI][newJ]) == 1)){
 							initialOperationIndex = new OperationIndexVO(i, j);
 							finalOperationIndex = new OperationIndexVO(newI, newJ);
@@ -145,10 +145,10 @@ public class Api implements INeighborCalculator {
 								neighborhood.add(temp);
 							}
 						}
-					}else if(successorOrPredecessorRandom >= 0.5 && ((Graph)currentGraph).getNode(i,j).getNextRouteNode() != null){
+					}else if(successorOrPredecessorRandom >= 0.5 && ((Graph)currentStructure).getNode(i,j).getNextRouteNode() != null){
 						//successor
-						int newI = ((Graph)currentGraph).getNode(i, j).getNextRouteNode().getOperation().getOperationIndex().getJobId();
-						int newJ = ((Graph)currentGraph).getNode(i, j).getNextRouteNode().getOperation().getOperationIndex().getStationId();
+						int newI = ((Graph)currentStructure).getNode(i, j).getNextRouteNode().getOperation().getOperationIndex().getJobId();
+						int newJ = ((Graph)currentStructure).getNode(i, j).getNextRouteNode().getOperation().getOperationIndex().getStationId();
 						
 						if((Math.abs(A[i][j]-A[newI][newJ]) == 1)){
 							initialOperationIndex = new OperationIndexVO(i, j);
@@ -160,14 +160,13 @@ public class Api implements INeighborCalculator {
 							}
 						}
 					}
-					
 				}else{
 					// sequence
 					double successorOrPredecessorRandom = Math.random();
-					if(successorOrPredecessorRandom < 0.5 && ((Graph)currentGraph).getNode(i, j).getNextSequenceNode() != null){
+					if(successorOrPredecessorRandom < 0.5 && ((Graph)currentStructure).getNode(i, j).getNextSequenceNode() != null){
 						//predecessor
-						int newI = ((Graph)currentGraph).getNode(i, j).getNextSequenceNode().getOperation().getOperationIndex().getJobId();
-						int newJ = ((Graph)currentGraph).getNode(i, j).getNextSequenceNode().getOperation().getOperationIndex().getStationId();
+						int newI = ((Graph)currentStructure).getNode(i, j).getNextSequenceNode().getOperation().getOperationIndex().getJobId();
+						int newJ = ((Graph)currentStructure).getNode(i, j).getNextSequenceNode().getOperation().getOperationIndex().getStationId();
 						
 						if((Math.abs(A[i][j]-A[newI][newJ]) == 1)){
 							initialOperationIndex = new OperationIndexVO(i, j);
@@ -178,10 +177,10 @@ public class Api implements INeighborCalculator {
 								neighborhood.add(temp);
 							}
 						}
-					}else if(successorOrPredecessorRandom >= 0.5 && ((Graph)currentGraph).getNode(i, j).getPreviousSequenceNode() != null){
+					}else if(successorOrPredecessorRandom >= 0.5 && ((Graph)currentStructure).getNode(i, j).getPreviousSequenceNode() != null){
 						//successor
-						int newI = ((Graph)currentGraph).getNode(i, j).getPreviousSequenceNode().getOperation().getOperationIndex().getJobId();
-						int newJ = ((Graph)currentGraph).getNode(i, j).getPreviousSequenceNode().getOperation().getOperationIndex().getStationId();
+						int newI = ((Graph)currentStructure).getNode(i, j).getPreviousSequenceNode().getOperation().getOperationIndex().getJobId();
+						int newJ = ((Graph)currentStructure).getNode(i, j).getPreviousSequenceNode().getOperation().getOperationIndex().getStationId();
 						
 						if((Math.abs(A[i][j]-A[newI][newJ]) == 1)){
 							initialOperationIndex = new OperationIndexVO(i, j);
@@ -198,6 +197,19 @@ public class Api implements INeighborCalculator {
 		}
 
 		return neighborhood;
+	}
+	
+	@Override
+	public ArrayList<PairVO> calculateCompleteNeighborhood(
+			IStructure currentStructure) throws Exception {
+		A = currentStructure.calculateAMatrix();
+		
+		for (int i = 0; i < A.length; i++) {
+			for (int j = 0; j < A[0].length; j++) {
+				
+			}
+		}
+		return null;
 	}
 	
 	// -----------------------------------------------

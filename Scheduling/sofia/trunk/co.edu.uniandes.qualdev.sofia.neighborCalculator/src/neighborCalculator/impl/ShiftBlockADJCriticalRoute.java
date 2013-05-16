@@ -110,6 +110,13 @@ public class ShiftBlockADJCriticalRoute implements INeighborCalculator {
 		return neighborhood;
 	}
 	
+	@Override
+	public ArrayList<PairVO> calculateCompleteNeighborhood(
+			IStructure currentStructure) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	// -----------------------------------------------
 	// Utilities
 	// -----------------------------------------------
@@ -117,6 +124,4 @@ public class ShiftBlockADJCriticalRoute implements INeighborCalculator {
 	private static int randomNumber(int min, int max) {
 		return (int) Math.round((Math.random() * (max - min)) + min);
 	}
-
-	
 }
