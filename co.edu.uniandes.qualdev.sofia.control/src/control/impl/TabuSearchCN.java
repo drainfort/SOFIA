@@ -13,13 +13,13 @@ import modifier.IModifier;
 import neighborCalculator.INeighborCalculator;
 import gammaCalculator.IGammaCalculator;
 
-public class TabuSearch extends Control {
+public class TabuSearchCN extends Control {
 
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
 
-	public TabuSearch() {
+	public TabuSearchCN() {
 		super();
 	}
 
@@ -68,11 +68,7 @@ public class TabuSearch extends Control {
 			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
 		}
 
-		// parameter
-		double percent =(Double) params.get("percent");
-		int neighborhodSize = (int) ((vectorSize * (vectorSize - 1)) / 2 * percent);
-		
-		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
+		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateCompleteNeighborhood(current);
 		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
 			IStructure bestCandidate = null;
 			int gammaBestCandidate = Integer.MAX_VALUE;
@@ -130,7 +126,6 @@ public class TabuSearch extends Control {
 					}
 
 				}
-				// System.out.println("current: " + current.getVector());
 				
 				current = bestCandidate.cloneStructure();
 				bestCandidate.clean();
@@ -146,7 +141,7 @@ public class TabuSearch extends Control {
 			// Avance while
 			iterations--;
 			nonimproving--;
-			arrayNeighbors = neighborCalculator.calculateNeighborhood(current, (current.getTotalStations() * current.getTotalJobs()) - 1);
+			arrayNeighbors = neighborCalculator.calculateCompleteNeighborhood(current);
 		}
 
 		System.out.println();
