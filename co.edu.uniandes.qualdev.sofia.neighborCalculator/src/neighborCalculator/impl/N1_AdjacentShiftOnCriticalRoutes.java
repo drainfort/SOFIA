@@ -1,7 +1,6 @@
 package neighborCalculator.impl;
 
 import java.util.ArrayList;
-import java.util.Properties;
 
 import structure.IOperation;
 import structure.IStructure;
@@ -15,25 +14,18 @@ import neighborCalculator.INeighborCalculator;
 
 /**
  * Class that is able to calculate a neighbor of a solution using the algorithm
- * Adjacent Shift on a critical route.
+ * Adjacent Shift on a critical route described by Van Laarhoven et al. in 
+ * Van Laarhoven PJM, Aarts EHL, Lenstra JK. Job shop scheduling by simulated annealing. Operations Research 1992;40(1):113–25.
  * 
  * @author Jaime Romero
  */
-public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
-
-	// -----------------------------------------------
-	// Attributes
-	// -----------------------------------------------
-	
-	private OperationIndexVO a;
-	
-	private OperationIndexVO b;
+public class N1_AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
 
-	public AdjacentShiftOnCriticalRoutes() {
+	public N1_AdjacentShiftOnCriticalRoutes() {
 
 	}
 
@@ -42,85 +34,91 @@ public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 	// -----------------------------------------------
 
 	@Override
-	public PairVO calculateNeighbor(IStructure currentGraph) throws Exception {
-		IStructure clone = currentGraph.cloneStructure();
-		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
-		int number = randomNumber(0, routes.size() - 1);
+	public PairVO calculateNeighbor(IStructure currentStructure) throws Exception {
+		IStructure clone = currentStructure.cloneStructure();
 		
-		ArrayList<IOperation> selectedCritialPath = routes.get(number).getRoute();
-		int i = randomNumber(0, selectedCritialPath.size() - 2);
-		IOperation initialNode = selectedCritialPath.get(i);
-		IOperation finalNode = selectedCritialPath.get(i + 1);
+		// Obtaining all the critical paths of the current solutions
+		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+		
+		// Selecting one of the critical paths
+		int number = randomNumber(0, routes.size() - 1);
+		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
+
+		// Selecting an adjacent pair of operations
+		int i = randomNumber(0, selectedCriticalPath.size() - 2);
+		IOperation initialNode = selectedCriticalPath.get(i);
+		IOperation finalNode = selectedCriticalPath.get(i + 1);
 		OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
 		OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
-		return new PairVO(initialOperationIndex, finalOperationIndex);
 		
+		return new PairVO(initialOperationIndex, finalOperationIndex);
 	}
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int size)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, int size)
 			throws Exception {
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
-		IStructure clone = currentGraph.cloneStructure();
+		IStructure clone = currentStructure.cloneStructure();
+		
+		// Obtaining all the critical paths of the current solutions
 		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+		
+		// Selecting one of the critical paths
 		int number = randomNumber(0, routes.size() - 1);
-		int salida = 0;
-		ArrayList<IOperation> selectedCritialPath = routes.get(number).getRoute();
+		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
+		int exit = 0;
 		while(neighborhood.size() < size){
-			int i = randomNumber(0, selectedCritialPath.size() - 2);
-			IOperation initialNode = selectedCritialPath.get(i);
-			IOperation finalNode = selectedCritialPath.get(i + 1);
+			
+			// Selecting an adjacent pair of operations
+			int i = randomNumber(0, selectedCriticalPath.size() - 2);
+			IOperation initialNode = selectedCriticalPath.get(i);
+			IOperation finalNode = selectedCriticalPath.get(i + 1);
 			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
 			OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
 			
+			// Adding the new neighbor to the array if it is not previously considered
 			PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
 			if(!neighborhood.contains(temp)){
 				neighborhood.add(temp);
-				salida=0;
+				exit=0;
 			}else{
-				salida++;
-				if(salida>=100)
+				exit++;
+				if(exit>=100){
 					return neighborhood;
+				}
 			}
+		}
+		return neighborhood;
+	}
+	
+	@Override
+	public ArrayList<PairVO> calculateCompleteNeighborhood(
+			IStructure currentStructure) throws Exception {
+		
+		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
+		IStructure clone = currentStructure.cloneStructure();
+		
+		// Obtaining all the critical paths of the current solutions
+		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+		
+		// Selecting one of the critical paths
+		int number = randomNumber(0, routes.size() - 1);
+		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
+		
+		for (int i = 0; i < selectedCriticalPath.size() - 1; i++) {
+			IOperation initialNode = selectedCriticalPath.get(i);
+			IOperation finalNode = selectedCriticalPath.get(i + 1);
+			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
+			OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+		
+			PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+			neighborhood.add(temp);
 		}
 		
 		return neighborhood;
 	}
 	
-	/*public IStructure calculateNeighbor(IStructure currentGraph, Properties artificialRandom) throws Exception {
-		
-		IStructure clone = currentGraph.clone();
-		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
-		int number = randomNumber(0, routes.size() - 1);
-		
-		ArrayList<IOperation> selectedCritialPath = routes.get(number).getRoute();
-
-		while(true){
-			int i = randomNumber(0, selectedCritialPath.size() - 2);
-			
-			IOperation initialNode = selectedCritialPath.get(i);
-			IOperation finalNode = selectedCritialPath.get(i + 1);
-			
-			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
-			OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
-			
-			//Exchange
-			clone.exchangeOperations(initialOperationIndex, finalOperationIndex);
-			
-			try{
-				clone.restartC();
-				clone.topologicalSort2();
-				a = initialOperationIndex;
-				b = finalOperationIndex;
-				return clone;
-			}
-			catch(Exception e){
-				clone.exchangeOperations(finalOperationIndex, initialOperationIndex);
-			}
-		}
-	}*/
-		
 	// -----------------------------------------------
 	// Utilities
 	// -----------------------------------------------
@@ -128,6 +126,4 @@ public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 	private static int randomNumber(int min, int max) {
 		return (int) Math.round((Math.random() * (max - min)) + min);
 	}
-
-	
 }

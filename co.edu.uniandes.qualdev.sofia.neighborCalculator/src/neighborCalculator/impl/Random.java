@@ -34,7 +34,6 @@ public class Random implements INeighborCalculator{
 		
 	}
 
-	//TODO arreglar porque esto aun no es aleatorio.. pensar que hacemos
 	@Override
 	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, int size)
 			throws Exception {
@@ -55,6 +54,13 @@ public class Random implements INeighborCalculator{
 		}
 		
 		return pairs;
+	}
+	
+	@Override
+	public ArrayList<PairVO> calculateCompleteNeighborhood(
+			IStructure currentStructure) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	// -----------------------------------------------

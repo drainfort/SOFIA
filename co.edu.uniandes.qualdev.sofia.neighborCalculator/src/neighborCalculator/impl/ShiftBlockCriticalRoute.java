@@ -1,9 +1,6 @@
 package neighborCalculator.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Properties;
 
 import structure.IOperation;
 import structure.IStructure;
@@ -28,6 +25,7 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 
 	private OperationIndexVO randomA;
 	private OperationIndexVO randomB;
+	
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
@@ -71,14 +69,12 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 	@Override
 	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int size)
 			throws Exception {
-		
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		IStructure clone = currentGraph.cloneStructure();
 		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
 		int salida=0;
 		
 		while(neighborhood.size()<size){
-				
 			int i= randomNumber(0, routes.size()-1);
 			ArrayList<ArrayList<IOperation>> blocks = routes.get(i).getBlocks();
 			int z= randomNumber(0, blocks.size()-1);
@@ -135,6 +131,13 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 		return neighborhood;
 	}
 		
+	@Override
+	public ArrayList<PairVO> calculateCompleteNeighborhood(
+			IStructure currentStructure) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	// -----------------------------------------------
 	// Utilities
 	// -----------------------------------------------
@@ -142,6 +145,4 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 	private static int randomNumber(int min, int max) {
 		return (int) Math.round((Math.random() * (max - min)) + min);
 	}
-
-	
 }
