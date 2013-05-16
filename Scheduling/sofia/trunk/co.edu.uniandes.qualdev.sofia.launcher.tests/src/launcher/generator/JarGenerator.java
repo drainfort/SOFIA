@@ -1,15 +1,14 @@
 package launcher.generator;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.jar.JarEntry;
-import java.util.jar.JarOutputStream;
-import java.util.jar.Manifest;
+import java.util.Properties;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -17,37 +16,60 @@ import javax.tools.ToolProvider;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
 
+/**
+ * Class that offers the functionality for automatically creating the test cases
+ * for the experimentation of the algorithms
+ * 
+ * @author Jaime Romero
+ * @author David Mendez Acuna
+ */
 public class JarGenerator {
 	
-	public static String TABUSEARCH="TS";
-	public static String SIMULATEDANNELING="SA";
-	public static String GRASP="GRASP";
-	public static String RANDOM="RANDOM";
+	// -------------------------------------------------------------
+	// Constants
+	// -------------------------------------------------------------
 	
+	// Meta-heuristics
+	public static String TABU_SEARCH_COMPLETE_NEIGHBORHOOD = "TS_CN";
+	public static String TABU_SEARCH_RANDOM_NEIGHBORHOOD = "TS_RN";
+	public static String SIMULATED_ANNELING ="SA";
+	public static String GRASP = "GRASP";
+	public static String RANDOM_WALK = "RANDOM";
+	
+	// Neighborhood algorithm
 	public static String CRITICAL_ADJACENT="CR_ADJ";
 	public static String CRITICAL_BLOCK_ADJACENT="CR_BLQADJ";
 	public static String CRITICAL_BLOCK="CR_BLQ";
 	public static String CRITICAL_BLOCK_ENDSTART="CR_BLQENDSTART";
 	
-	public static String GRAPH="Graph";
-	public static String VECTOR="Vector";
+	// Representation structure
+	public static String GRAPH = "Graph";
+	public static String VECTOR = "Vector";
 	
-	public static String RANDOMMODFIER="RANDOM";
-	public static String SWAP="SWAP";
-	public static String LEFTINSERTION="LEFTINSERTION";
-	public static String RIGHTINSERTION="RIGHTINSERTION";
+	// Modifiers
+	public static String RANDOM_MODFIER = "RANDOM";
+	public static String SWAP = "SWAP";
+	public static String LEFT_INSERTION = "LEFTINSERTION";
+	public static String RIGHT_INSERTION="RIGHTINSERTION";
 	
 	public static String ruta1="C:/Users/ja.romero940/workspace/sofia/";
 	public static String ruta2="C:\\Users\\ja.romero940\\workspace\\sofia\\";
 	public static String rutaEclipse="C:\\Users\\ja.romero940\\Desktop\\";
 	
+	// -------------------------------------------------------------
+	// Constructor
+	// -------------------------------------------------------------
+
+	/**
+	 * Default constructor of the class
+	 */
 	public JarGenerator(){
 		
 		//generateJavaFiles("07x07", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
 		//generateJavaFiles("10x10", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
 		//generateJavaFiles("15x15", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
 		//generateJavaFiles("05x05", TABUSEARCH, CRITICAL_BLOCK, 10, VECTOR, SWAP);
-		generateJavaFiles("07x07", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
+		generateJavaFiles("07x07", TABU_SEARCH_COMPLETE_NEIGHBORHOOD, CRITICAL_BLOCK, 10, GRAPH, LEFT_INSERTION);
 		//generateJavaFiles("10x10", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, SWAP);
 		//generateJavaFiles("15x15", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, SWAP);
 		
@@ -62,8 +84,11 @@ public class JarGenerator {
 
 	}
 	
+	// -------------------------------------------------------------
+	// Methods
+	// -------------------------------------------------------------
+	
 	private void generateJavaFiles(String sizeInstance, String algorithym, String neighbors, int instancesXFile, String structure, String modifier){
-		
 		int num=0;
 		int numarchivo=0;
 		while(num<10){
@@ -266,8 +291,6 @@ public class JarGenerator {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-
-		
 		
 	   File buildFile = new File("./src/launcher/generator/"+name+".xml");
 	   Project p = new Project();
@@ -279,12 +302,38 @@ public class JarGenerator {
 	   p.executeTarget(p.getDefaultTarget());
 		
 	}
+	
+	// -------------------------------------------------------------
+	// Utilities
+	// -------------------------------------------------------------
+	
 	/**
-	 * @param args
+	 * Loads the execution properties from a properties file
+	 * @param archPath. Path of the file that contains the execution properties 
+	 * @return data A properties object containing the execution properties.
+	 * @throws Exception. If the format of the file is not correct.
+	 */
+	private Properties loadProperties( String archPath ) throws Exception{
+        Properties data = new Properties( );
+        FileInputStream in = new FileInputStream( new File(archPath) );
+        try{
+            data.load( in );
+            in.close( );
+        }catch( Exception e ){
+            throw new Exception( "Invalid format" );
+        }
+        return data;
+    }
+	
+	// -------------------------------------------------------------
+	// Main
+	// -------------------------------------------------------------
+	
+	/**
+	 * Main method. Execution start.
+	 * @param args. Execution arguments.
 	 */
 	public static void main(String[] args) {
 		new JarGenerator();
-
 	}
-
 }
