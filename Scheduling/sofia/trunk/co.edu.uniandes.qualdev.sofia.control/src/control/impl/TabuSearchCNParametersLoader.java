@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import control.IParametersLoader;
 
-public class TabuSearchParametersLoader  implements IParametersLoader{
+public class TabuSearchCNParametersLoader  implements IParametersLoader{
 
 	@Override
 	public Properties loadParameters(Properties algorithmConfiguration) {
