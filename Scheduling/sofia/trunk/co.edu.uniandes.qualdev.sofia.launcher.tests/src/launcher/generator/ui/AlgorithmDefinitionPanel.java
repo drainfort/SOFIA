@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.CompoundBorder;
@@ -14,6 +13,12 @@ import javax.swing.border.TitledBorder;
 import launcher.generator.vos.AlgorithmConfigurationVO;
 
 public class AlgorithmDefinitionPanel extends JPanel {
+
+	// ----------------------------------------------------
+	// Constants
+	// ----------------------------------------------------
+	
+	private static final long serialVersionUID = 8150013403300202285L;
 
 	// ----------------------------------------------------
 	// Attributes
@@ -85,10 +90,10 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		metaheuristicsPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Metaheuristic" ) ) );
 		metaheuristicsPanel.setLayout(new GridLayout(2,2));
 		
-		JRadioButton tabucn = new JRadioButton("Tabu search (CN)");
-		JRadioButton taburn = new JRadioButton("Tabu search (RN)");
-		JRadioButton simulatedAnnealing = new JRadioButton("SimulatedAnnealing");
-		JRadioButton grasp = new JRadioButton("GRASP");
+		JRadioButton tabucn = new JRadioButton(AlgorithmConfigurationVO.TABU_SEARCH_COMPLETE_NEIGHBORHOOD);
+		JRadioButton taburn = new JRadioButton(AlgorithmConfigurationVO.TABU_SEARCH_RESTRICTED_NEIGHBORHOOD);
+		JRadioButton simulatedAnnealing = new JRadioButton(AlgorithmConfigurationVO.SIMULATED_ANNELING);
+		JRadioButton grasp = new JRadioButton(AlgorithmConfigurationVO.GRASP);
 		
 		metaheuristicsPanel.add(tabucn);
 		metaheuristicsPanel.add(taburn);
@@ -112,22 +117,26 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		neighborhoodPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Neighborhood" ) ) );
 		neighborhoodPanel.setLayout(new GridLayout(2,2));
 		
-		JRadioButton random = new JRadioButton("Random");
-		JRadioButton adjacent = new JRadioButton("CP: Adjacent");
-		JRadioButton adjacentMachine = new JRadioButton("CP: Adjacent machine");
+		JRadioButton random = new JRadioButton(AlgorithmConfigurationVO.RANDOM_NEIGHBORHOOD);
+		JRadioButton adjacent = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_ADJACENT);
+		JRadioButton adjacentMachine = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_ADJACENT_MACHINES);
+		JRadioButton randomInCriticalBlock = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_BLOCK);
 		
 		neighborhoodPanel.add(random);
 		neighborhoodPanel.add(adjacent);
 		neighborhoodPanel.add(adjacentMachine);
+		neighborhoodPanel.add(randomInCriticalBlock);
 		
 		neighborhoodButtons.add(random);
 		neighborhoodButtons.add(adjacent);
 		neighborhoodButtons.add(adjacentMachine);
+		neighborhoodButtons.add(randomInCriticalBlock);
 		
 		ButtonGroup neighGroup = new ButtonGroup();
 		neighGroup.add(random);
 		neighGroup.add(adjacent);
 		neighGroup.add(adjacentMachine);
+		neighGroup.add(randomInCriticalBlock);
 		
 		this.add(neighborhoodPanel);
 		
@@ -135,10 +144,10 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		ModifierPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Modifier" ) ) );
 		ModifierPanel.setLayout(new GridLayout(2,2));
 		
-		JRadioButton swap = new JRadioButton("Swap");
-		JRadioButton leftInsertion = new JRadioButton("Left Insertion");
-		JRadioButton rightInsertion = new JRadioButton("Right Insertion");
-		JRadioButton randomModifier = new JRadioButton("Random");
+		JRadioButton swap = new JRadioButton(AlgorithmConfigurationVO.SWAP);
+		JRadioButton leftInsertion = new JRadioButton(AlgorithmConfigurationVO.LEFT_INSERTION);
+		JRadioButton rightInsertion = new JRadioButton(AlgorithmConfigurationVO.RIGHT_INSERTION);
+		JRadioButton randomModifier = new JRadioButton(AlgorithmConfigurationVO.RANDOM_MODFIER);
 		
 		ModifierPanel.add(swap);
 		ModifierPanel.add(leftInsertion);
@@ -162,8 +171,8 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		representationPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Representation" ) ) );
 		representationPanel.setLayout(new GridLayout(1,2));
 		
-		JRadioButton vector = new JRadioButton("Vector");
-		JRadioButton graph = new JRadioButton("Graph");
+		JRadioButton vector = new JRadioButton(AlgorithmConfigurationVO.VECTOR);
+		JRadioButton graph = new JRadioButton(AlgorithmConfigurationVO.GRAPH);
 		
 		representationPanel.add(vector);
 		representationPanel.add(graph);
