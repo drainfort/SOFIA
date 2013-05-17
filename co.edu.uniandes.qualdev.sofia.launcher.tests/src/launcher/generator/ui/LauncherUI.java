@@ -42,7 +42,7 @@ public class LauncherUI extends JFrame{
 		String eclipsePath = configurationPanel.getEclipsePath();
 		
 		JarGenerator jarsGenerator = new JarGenerator(workspacePath, eclipsePath);
-		
+		jarsGenerator.generateJavaFiles(instancesToExecute, algorithmDefinition);
 	}
 	
 	/**

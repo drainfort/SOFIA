@@ -137,92 +137,100 @@ public class JarGenerator {
 		}
 		
 		String representation = null;
+		
+		if(algorithmConfiguration.getRepresentation().equals(AlgorithmConfigurationVO.VECTOR)){
+			representation = VECTOR;
+		}else if(algorithmConfiguration.getRepresentation().equals(AlgorithmConfigurationVO.GRAPH)){
+			representation = GRAPH;
+		}
+		
+		printJavaFile(instancesIdentifiers, algorithm, neighbors, representation, modifier);
 	}
 	
-	private void printJavaFile(ArrayList<String> instances, String algorithm, String neighbors, String sizeInstance, String structure, String modifier){
+	private void printJavaFile(ArrayList<String> instances, String metaheuristic, String neighbors, String structure, String modifier){
 		FileWriter fichero = null;
         PrintWriter pw = null;
 		try
         {
-			String name ="T_" + algorithm + "_" + neighbors + "_"+ modifier+"_"+sizeInstance+"_"+"_"+structure;
-            fichero = new FileWriter(new File("./src/launcher/generator/"+name+".java"));
-            pw = new PrintWriter(fichero);
-            pw.println("package launcher.generator;");
-            pw.println("import java.util.ArrayList;");           
-            pw.println("import launcher.Launcher;");
-            pw.println("import org.junit.After;" );
-            pw.println("import org.junit.Before;" );
-            pw.println("import org.junit.Test;" );
-            pw.println("import org.junit.runner.JUnitCore;" );
-            pw.println("import org.junit.runner.RunWith;");
-            pw.println("import org.junit.runners.Parameterized;");
-            pw.println("import org.junit.runners.Parameterized.Parameters;");
-            pw.println("import common.utils.ExecutionResults;");
-            pw.println("import chart.printer.ChartPrinter;");
-	
-            pw.println("@RunWith(Parameterized.class)");
-            pw.println("public class "+name+"{");
-            pw.println("	private Launcher launcher;");
-            pw.println("	private String algorithmFile;");
-            pw.println("	private String problemFile;");	
-            pw.println("	private String resultsFile;");		
-            pw.println("	private String instanceName;");
-            pw.println("	public "+name+"(String pAlgorithmFile, String pProblemFile, String pResultsFile, String pInstanceName) {");
-            pw.println("			super();");
-            pw.println("			algorithmFile = pAlgorithmFile;");
-            pw.println("			problemFile = pProblemFile;");
-            pw.println("			resultsFile = pResultsFile;");
-            pw.println("			instanceName = pInstanceName;");
-            pw.println("	}");
-
-            pw.println("	@Parameters");
-            pw.println("	public static ArrayList<String[]> datos() {");
-            pw.println("		ArrayList<String[]> datos = new ArrayList<String[]>();");
+			 for(int i=0; i<instances.size();i++){
+	            	int a=i+1; 
+	            	String instanceName = instances.get(i);
+					String name = "T_" + "_" + instanceName + "_" + metaheuristic + "_" + neighbors + "_" + modifier + "_" + structure;
+			        fichero = new FileWriter(new File("./src/launcher/generator/"+name+".java"));
+			        
+			        pw = new PrintWriter(fichero);
+			        pw.println("package launcher.generator;");
+			        pw.println("import java.util.ArrayList;");           
+			        pw.println("import launcher.Launcher;");
+			        pw.println("import org.junit.After;" );
+			        pw.println("import org.junit.Before;" );
+			        pw.println("import org.junit.Test;" );
+			        pw.println("import org.junit.runner.JUnitCore;" );
+			        pw.println("import org.junit.runner.RunWith;");
+			        pw.println("import org.junit.runners.Parameterized;");
+			        pw.println("import org.junit.runners.Parameterized.Parameters;");
+			        pw.println("import common.utils.ExecutionResults;");
+			        pw.println("import chart.printer.ChartPrinter;");
 			
-            for(int i=0; i<instances.size();i++){
-            	int a=i+1; 
-            	String instanceName = instances.get(i);
-            	 pw.println("		String[] file"+a+"= {");
-            	 pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+sizeInstance+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
-            	 pw.println("		datos.add(file"+a+");");
-            }
-					
-		    pw.println("			return datos;");
-		    pw.println("	}");
-					
-		    pw.println("	@Before");
-		    pw.println("	public void setupScenario() {");
-		    pw.println("		launcher = new Launcher();");
-		    pw.println("	}");
-
-					
-		    pw.println("	@Test");
-		    pw.println("	public void testLaunch() throws Exception {");
-		    pw.println("		try {");
-		    pw.println("			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();");
-		    pw.println("			for (int i = 0; i < 1; i++) {	");			
-		    pw.println("				results.add(launcher.launch(algorithmFile,problemFile, resultsFile, instanceName));");
-		    pw.println("			}");
-			pw.println("			ChartPrinter.getInstance().addResults(results);");
-			pw.println("		} catch (Exception e) {");
-			pw.println("			e.printStackTrace();");
-			pw.println("			throw e;");
-			pw.println("		}");
-			pw.println("	}");
-			pw.println("	@After");
-			pw.println("	public void tearDown(){");
-			pw.println("		ChartPrinter.getInstance().printGlobalResultsHTML(\"./results/Om_TT/"+name+"_consolidated.html\");");
-			pw.println("	}");
+			        pw.println("@RunWith(Parameterized.class)");
+			        pw.println("public class "+name+"{");
+			        pw.println("	private Launcher launcher;");
+			        pw.println("	private String algorithmFile;");
+			        pw.println("	private String problemFile;");	
+			        pw.println("	private String resultsFile;");		
+			        pw.println("	private String instanceName;");
+			        pw.println("	public "+name+"(String pAlgorithmFile, String pProblemFile, String pResultsFile, String pInstanceName) {");
+			        pw.println("			super();");
+			        pw.println("			algorithmFile = pAlgorithmFile;");
+			        pw.println("			problemFile = pProblemFile;");
+			        pw.println("			resultsFile = pResultsFile;");
+			        pw.println("			instanceName = pInstanceName;");
+			        pw.println("	}");
 			
+			        pw.println("	@Parameters");
+			        pw.println("	public static ArrayList<String[]> datos() {");
+			        pw.println("		ArrayList<String[]> datos = new ArrayList<String[]>();");
+					
+			        pw.println("		String[] file"+a+"= {");
+			        pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+metaheuristic+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+instanceName.substring(0,4)+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
+			        pw.println("		datos.add(file"+a+");");
+							
+				    pw.println("			return datos;");
+				    pw.println("	}");
+							
+				    pw.println("	@Before");
+				    pw.println("	public void setupScenario() {");
+				    pw.println("		launcher = new Launcher();");
+				    pw.println("	}");
 			
-			pw.println("	public static void main(String[] args) {");
-			pw.println(" 		JUnitCore.main(\"launcher.generator."+name+"\");  ");         
-			pw.println("	}");
-    		pw.println("}");
-            
+							
+				    pw.println("	@Test");
+				    pw.println("	public void testLaunch() throws Exception {");
+				    pw.println("		try {");
+				    pw.println("			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();");
+				    pw.println("			for (int i = 0; i < 1; i++) {	");			
+				    pw.println("				results.add(launcher.launch(algorithmFile,problemFile, resultsFile, instanceName));");
+				    pw.println("			}");
+					pw.println("			ChartPrinter.getInstance().addResults(results);");
+					pw.println("		} catch (Exception e) {");
+					pw.println("			e.printStackTrace();");
+					pw.println("			throw e;");
+					pw.println("		}");
+					pw.println("	}");
+					pw.println("	@After");
+					pw.println("	public void tearDown(){");
+					pw.println("		ChartPrinter.getInstance().printGlobalResultsHTML(\"./results/Om_TT/"+name+"_consolidated.html\");");
+					pw.println("	}");
+					
+					
+					pw.println("	public static void main(String[] args) {");
+					pw.println(" 		JUnitCore.main(\"launcher.generator."+name+"\");  ");         
+					pw.println("	}");
+					pw.println("}");
+			        
+					compileFile(name);
+			}
     		fichero.close();
-    		
-    		compileFile(name);
      
         } catch (Exception e) {
             e.printStackTrace();
@@ -230,7 +238,7 @@ public class JarGenerator {
 	}
 
 	private void compileFile(String name) {
-		String fileToCompile = "./src/launcher/generator/"+name+".java";
+		String fileToCompile = "./src/launcher/generator/" + name + ".java";
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		int compilationResult = compiler.run(null, null, null, fileToCompile);
         if(compilationResult == 0){
@@ -265,7 +273,8 @@ public class JarGenerator {
 			pw.println("<!--this file was created by Eclipse Runnable JAR Export Wizard-->");
 			pw.println("<!--ANT 1.7 is required                                        -->");
 			pw.println("<target name=\"create_run_jar\">");
-			pw.println("<jar destfile=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.launcher.tests/jars/"+name+".jar\">");
+			pw.println("<jar destfile=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.launcher.tests/jars/"+name+".jar\">");
+			System.out.println("---- " + this.workspacePath);
 			pw.println("<manifest>");
 			pw.println("<attribute name=\"Main-Class\" value=\"org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader\"/>");
 			pw.println("<attribute name=\"Rsrc-Main-Class\" value=\"launcher.generator."+name+"\"/>");
@@ -273,21 +282,21 @@ public class JarGenerator {
 			pw.println("<attribute name=\"Rsrc-Class-Path\" value=\"./ junit.jar org.hamcrest.core_1.1.0.v20090501071000.jar ant-launcher.jar ant.jar gnujaxp.jar jcommon-1.0.17.jar jfreechart-1.0.14.jar itext-pdfa-5.3.1.jar itext-xtra-5.3.1.jar itextpdf-5.3.1.jar bcmail-jdk15-146.jar bcprov-jdk15-146.jar bctsp-jdk15-146.jar itext-asian.jar itext-hyph-xml.jar jcommon-1.0.17.jar jfreechart-1.0.14.jar\"/>");
 			pw.println("</manifest>");
 			pw.println("<zipfileset src=\"jar-in-jar-loader.zip\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.launcher.tests/bin\"/>");
-			pw.println("<zipfileset dir=\""+eclipsePath+"plugins\\org.junit_4.10.0.v4_10_0_v20120426-0900\" includes=\"junit.jar\"/>");
-			pw.println("<zipfileset dir=\""+eclipsePath+"plugins\" includes=\"org.hamcrest.core_1.1.0.v20090501071000.jar\"/>");
-			pw.println("<fileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.launcher.tests\\lib\" includes=\"ant-launcher.jar\"/>");
-			pw.println("<fileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.launcher.tests\\lib\" includes=\"ant.jar\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.afs/bin\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.algorithm/bin\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.common/bin\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.control/bin\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.gammaCalculator/bin\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.structure/bin\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.modifier/bin\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.neighborCalculator/bin\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.initialSolBuilder/bin\"/>");
-			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.reports/bin\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.launcher.tests/bin\"/>");
+			pw.println("<zipfileset dir=\"" + eclipsePath + "plugins\\org.junit_4.10.0.v4_10_0_v20120426-0900\" includes=\"junit.jar\"/>");
+			pw.println("<zipfileset dir=\"" + eclipsePath + "plugins\" includes=\"org.hamcrest.core_1.1.0.v20090501071000.jar\"/>");
+			pw.println("<fileset dir=\"" + workspacePathBackSlash + "co.edu.uniandes.qualdev.sofia.launcher.tests\\lib\" includes=\"ant-launcher.jar\"/>");
+			pw.println("<fileset dir=\"" + workspacePathBackSlash + "co.edu.uniandes.qualdev.sofia.launcher.tests\\lib\" includes=\"ant.jar\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.afs/bin\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.algorithm/bin\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.common/bin\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.control/bin\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.gammaCalculator/bin\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.structure/bin\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.modifier/bin\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.neighborCalculator/bin\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.initialSolBuilder/bin\"/>");
+			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.reports/bin\"/>");
 			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"gnujaxp.jar\"/>");
 			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"jcommon-1.0.17.jar\"/>");
 			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"jfreechart-1.0.14.jar\"/>");

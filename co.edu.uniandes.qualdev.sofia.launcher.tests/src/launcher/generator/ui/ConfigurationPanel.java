@@ -63,7 +63,7 @@ public class ConfigurationPanel extends JPanel implements ActionListener{
 		this.add(labWorkspacePath);
 		
 		txtWorkspacePath = new JTextField();
-		txtWorkspacePath.setEnabled(false);
+		txtWorkspacePath.setEnabled(true);
 		this.add(txtWorkspacePath);
 		
 		btnWorkspacePath = new JButton("Browse");
