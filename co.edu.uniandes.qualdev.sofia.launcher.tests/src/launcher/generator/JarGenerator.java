@@ -71,24 +71,6 @@ public class JarGenerator {
 		this.workspacePath = workspacePath.replace("\\", "/") + "/";
 		this.workspacePathBackSlash = workspacePath.replace("\\", "\\\\") + "\\\\";
 		this.eclipsePath = eclipsePath.replace("\\", "\\\\") + "\\\\";
-		
-		//generateJavaFiles("07x07", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
-		//generateJavaFiles("10x10", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
-		//generateJavaFiles("15x15", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
-		//generateJavaFiles("05x05", TABUSEARCH, CRITICAL_BLOCK, 10, VECTOR, SWAP);
-//		generateJavaFiles("07x07", TABU_SEARCH_COMPLETE_NEIGHBORHOOD, CRITICAL_BLOCK, 10, GRAPH, LEFT_INSERTION);
-		//generateJavaFiles("10x10", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, SWAP);
-		//generateJavaFiles("15x15", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, SWAP);
-		
-		/*generateJavaFiles("10x10", TABUSEARCH, RANDOM, 1);
-		generateJavaFiles("15x15", TABUSEARCH, RANDOM, 1);
-		generateJavaFiles("07x07", SIMULATEDANNELING, RANDOM, 1);
-		generateJavaFiles("10x10", SIMULATEDANNELING, RANDOM, 1);
-		generateJavaFiles("15x15", SIMULATEDANNELING, RANDOM, 1);
-		generateJavaFiles("07x07", GRASP, RANDOM, 1);
-		generateJavaFiles("10x10", GRASP, RANDOM, 1);
-		generateJavaFiles("15x15", GRASP, RANDOM, 1);*/
-
 	}
 	
 	// -------------------------------------------------------------
@@ -228,9 +210,11 @@ public class JarGenerator {
 					pw.println("	}");
 					pw.println("}");
 			        
+					fichero.close();
+					
 					compileFile(name);
 			}
-    		fichero.close();
+    		
      
         } catch (Exception e) {
             e.printStackTrace();
@@ -274,7 +258,6 @@ public class JarGenerator {
 			pw.println("<!--ANT 1.7 is required                                        -->");
 			pw.println("<target name=\"create_run_jar\">");
 			pw.println("<jar destfile=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.launcher.tests/jars/"+name+".jar\">");
-			System.out.println("---- " + this.workspacePath);
 			pw.println("<manifest>");
 			pw.println("<attribute name=\"Main-Class\" value=\"org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader\"/>");
 			pw.println("<attribute name=\"Rsrc-Main-Class\" value=\"launcher.generator."+name+"\"/>");
