@@ -1,11 +1,9 @@
 package launcher.generator;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -52,9 +50,17 @@ public class JarGenerator {
 	public static String LEFT_INSERTION = "LEFTINSERTION";
 	public static String RIGHT_INSERTION="RIGHTINSERTION";
 	
-	public static String ruta1="C:/Users/ja.romero940/workspace/sofia/";
-	public static String ruta2="C:\\Users\\ja.romero940\\workspace\\sofia\\";
-	public static String rutaEclipse="C:\\Users\\ja.romero940\\Desktop\\";
+	// -------------------------------------------------------------
+	// Attributes
+	// -------------------------------------------------------------
+	
+//	public static String ruta1="C:/Users/ja.romero940/workspace/sofia/";
+//	public static String ruta2="C:\\Users\\ja.romero940\\workspace\\sofia\\";
+//	public static String rutaEclipse="C:\\Users\\ja.romero940\\Desktop\\";
+	
+	private String workspacePath;
+	private String workspacePathBackSlash;
+	private String eclipsePath;
 	
 	// -------------------------------------------------------------
 	// Constructor
@@ -63,7 +69,12 @@ public class JarGenerator {
 	/**
 	 * Default constructor of the class
 	 */
-	public JarGenerator(){
+	public JarGenerator(String workspacePath, String eclipsePath){
+		this.workspacePath = workspacePath.replace("\\", "/") + "/";
+		this.workspacePathBackSlash = workspacePath.replace("\\", "\\\\") + "\\\\";
+		this.eclipsePath = eclipsePath.replace("\\", "\\\\") + "\\\\";
+		
+		System.out.println(this.workspacePath + " - " + this.workspacePathBackSlash + " - " + this.eclipsePath);
 		
 		//generateJavaFiles("07x07", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
 		//generateJavaFiles("10x10", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
@@ -244,7 +255,7 @@ public class JarGenerator {
 			pw.println("<!--this file was created by Eclipse Runnable JAR Export Wizard-->");
 			pw.println("<!--ANT 1.7 is required                                        -->");
 			pw.println("<target name=\"create_run_jar\">");
-			pw.println("<jar destfile=\""+ruta1+"co.edu.uniandes.qualdev.sofia.launcher.tests/jars/"+name+".jar\">");
+			pw.println("<jar destfile=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.launcher.tests/jars/"+name+".jar\">");
 			pw.println("<manifest>");
 			pw.println("<attribute name=\"Main-Class\" value=\"org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader\"/>");
 			pw.println("<attribute name=\"Rsrc-Main-Class\" value=\"launcher.generator."+name+"\"/>");
@@ -252,36 +263,36 @@ public class JarGenerator {
 			pw.println("<attribute name=\"Rsrc-Class-Path\" value=\"./ junit.jar org.hamcrest.core_1.1.0.v20090501071000.jar ant-launcher.jar ant.jar gnujaxp.jar jcommon-1.0.17.jar jfreechart-1.0.14.jar itext-pdfa-5.3.1.jar itext-xtra-5.3.1.jar itextpdf-5.3.1.jar bcmail-jdk15-146.jar bcprov-jdk15-146.jar bctsp-jdk15-146.jar itext-asian.jar itext-hyph-xml.jar jcommon-1.0.17.jar jfreechart-1.0.14.jar\"/>");
 			pw.println("</manifest>");
 			pw.println("<zipfileset src=\"jar-in-jar-loader.zip\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.launcher.tests/bin\"/>");
-			pw.println("<zipfileset dir=\""+rutaEclipse+"eclipse\\plugins\\org.junit_4.10.0.v4_10_0_v20120426-0900\" includes=\"junit.jar\"/>");
-			pw.println("<zipfileset dir=\""+rutaEclipse+"eclipse\\plugins\" includes=\"org.hamcrest.core_1.1.0.v20090501071000.jar\"/>");
-			pw.println("<fileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.launcher.tests\\lib\" includes=\"ant-launcher.jar\"/>");
-			pw.println("<fileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.launcher.tests\\lib\" includes=\"ant.jar\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.afs/bin\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.algorithm/bin\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.common/bin\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.control/bin\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.gammaCalculator/bin\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.structure/bin\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.modifier/bin\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.neighborCalculator/bin\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.initialSolBuilder/bin\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.reports/bin\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"gnujaxp.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"jcommon-1.0.17.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"jfreechart-1.0.14.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-pdfa-5.3.1.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-xtra-5.3.1.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itextpdf-5.3.1.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"bcmail-jdk15-146.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"bcprov-jdk15-146.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"bctsp-jdk15-146.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-asian.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-hyph-xml.jar\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.instancesgenerator/bin\"/>");
-			pw.println("<fileset dir=\""+ruta1+"co.edu.uniandes.qualdev.sofia.launcher/bin\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.launcher\\lib\" includes=\"jcommon-1.0.17.jar\"/>");
-			pw.println("<zipfileset dir=\""+ruta2+"co.edu.uniandes.qualdev.sofia.launcher\\lib\" includes=\"jfreechart-1.0.14.jar\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.launcher.tests/bin\"/>");
+			pw.println("<zipfileset dir=\""+eclipsePath+"plugins\\org.junit_4.10.0.v4_10_0_v20120426-0900\" includes=\"junit.jar\"/>");
+			pw.println("<zipfileset dir=\""+eclipsePath+"plugins\" includes=\"org.hamcrest.core_1.1.0.v20090501071000.jar\"/>");
+			pw.println("<fileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.launcher.tests\\lib\" includes=\"ant-launcher.jar\"/>");
+			pw.println("<fileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.launcher.tests\\lib\" includes=\"ant.jar\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.afs/bin\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.algorithm/bin\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.common/bin\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.control/bin\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.gammaCalculator/bin\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.structure/bin\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.modifier/bin\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.neighborCalculator/bin\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.initialSolBuilder/bin\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.reports/bin\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"gnujaxp.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"jcommon-1.0.17.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"jfreechart-1.0.14.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-pdfa-5.3.1.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-xtra-5.3.1.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itextpdf-5.3.1.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"bcmail-jdk15-146.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"bcprov-jdk15-146.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"bctsp-jdk15-146.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-asian.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-hyph-xml.jar\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.instancesgenerator/bin\"/>");
+			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.launcher/bin\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.launcher\\lib\" includes=\"jcommon-1.0.17.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.launcher\\lib\" includes=\"jfreechart-1.0.14.jar\"/>");
 			pw.println("</jar>");
 			pw.println("</target>");
 			pw.println("</project>");
@@ -301,39 +312,5 @@ public class JarGenerator {
 	   helper.parse(p, buildFile);
 	   p.executeTarget(p.getDefaultTarget());
 		
-	}
-	
-	// -------------------------------------------------------------
-	// Utilities
-	// -------------------------------------------------------------
-	
-	/**
-	 * Loads the execution properties from a properties file
-	 * @param archPath. Path of the file that contains the execution properties 
-	 * @return data A properties object containing the execution properties.
-	 * @throws Exception. If the format of the file is not correct.
-	 */
-	private Properties loadProperties( String archPath ) throws Exception{
-        Properties data = new Properties( );
-        FileInputStream in = new FileInputStream( new File(archPath) );
-        try{
-            data.load( in );
-            in.close( );
-        }catch( Exception e ){
-            throw new Exception( "Invalid format" );
-        }
-        return data;
-    }
-	
-	// -------------------------------------------------------------
-	// Main
-	// -------------------------------------------------------------
-	
-	/**
-	 * Main method. Execution start.
-	 * @param args. Execution arguments.
-	 */
-	public static void main(String[] args) {
-		new JarGenerator();
 	}
 }

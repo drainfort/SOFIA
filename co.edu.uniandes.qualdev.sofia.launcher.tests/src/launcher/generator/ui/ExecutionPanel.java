@@ -35,11 +35,14 @@ public class ExecutionPanel extends JPanel implements ActionListener {
 	
 	private JButton btnExecute;
 	
+	private LauncherUI launcher;
+	
 	// -----------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------
 	
-	public ExecutionPanel(){
+	public ExecutionPanel(LauncherUI launcher){
+		this.launcher = launcher;
 		this.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Execution" ) ) );
 		this.setLayout(new BorderLayout());
 		
@@ -74,14 +77,11 @@ public class ExecutionPanel extends JPanel implements ActionListener {
 		
 		if(command.equals(GENERATE_JARS)){
 			ArrayList<String> instancesToExecute = problemPanel.getSelectedInstances();
-			System.out.println(instancesToExecute);
 			AlgorithmConfigurationVO algorithmDefinition = algorithmDefinitionPanel.getAlgorithmDefinition();
-			System.out.println(algorithmDefinition);
+			launcher.generateJars(instancesToExecute, algorithmDefinition);
 		}else if(command.equals(EXECUTE)){
 			ArrayList<String> instancesToExecute = problemPanel.getSelectedInstances();
-			System.out.println(instancesToExecute);
 			AlgorithmConfigurationVO algorithmDefinition = algorithmDefinitionPanel.getAlgorithmDefinition();
-			System.out.println(algorithmDefinition);
 		}
 	}
 }
