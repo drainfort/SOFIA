@@ -1,15 +1,15 @@
 package launcher.generator;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Properties;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+
+import launcher.generator.vos.AlgorithmConfigurationVO;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
@@ -29,13 +29,15 @@ public class JarGenerator {
 	
 	// Meta-heuristics
 	public static String TABU_SEARCH_COMPLETE_NEIGHBORHOOD = "TS_CN";
-	public static String TABU_SEARCH_RANDOM_NEIGHBORHOOD = "TS_RN";
+	public static String TABU_SEARCH_RESTRICTED_NEIGHBORHOOD = "TS_RN";
 	public static String SIMULATED_ANNELING ="SA";
 	public static String GRASP = "GRASP";
 	public static String RANDOM_WALK = "RANDOM";
 	
 	// Neighborhood algorithm
+	public static String RANDOM_NEIGHBORHOOD = "RDM";
 	public static String CRITICAL_ADJACENT="CR_ADJ";
+	public static String CRITICAL_ADJACENT_MACHINES = "CR_ADJ_MS";
 	public static String CRITICAL_BLOCK_ADJACENT="CR_BLQADJ";
 	public static String CRITICAL_BLOCK="CR_BLQ";
 	public static String CRITICAL_BLOCK_ENDSTART="CR_BLQENDSTART";
@@ -54,10 +56,6 @@ public class JarGenerator {
 	// Attributes
 	// -------------------------------------------------------------
 	
-//	public static String ruta1="C:/Users/ja.romero940/workspace/sofia/";
-//	public static String ruta2="C:\\Users\\ja.romero940\\workspace\\sofia\\";
-//	public static String rutaEclipse="C:\\Users\\ja.romero940\\Desktop\\";
-	
 	private String workspacePath;
 	private String workspacePathBackSlash;
 	private String eclipsePath;
@@ -74,13 +72,11 @@ public class JarGenerator {
 		this.workspacePathBackSlash = workspacePath.replace("\\", "\\\\") + "\\\\";
 		this.eclipsePath = eclipsePath.replace("\\", "\\\\") + "\\\\";
 		
-		System.out.println(this.workspacePath + " - " + this.workspacePathBackSlash + " - " + this.eclipsePath);
-		
 		//generateJavaFiles("07x07", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
 		//generateJavaFiles("10x10", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
 		//generateJavaFiles("15x15", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, LEFTINSERTION);
 		//generateJavaFiles("05x05", TABUSEARCH, CRITICAL_BLOCK, 10, VECTOR, SWAP);
-		generateJavaFiles("07x07", TABU_SEARCH_COMPLETE_NEIGHBORHOOD, CRITICAL_BLOCK, 10, GRAPH, LEFT_INSERTION);
+//		generateJavaFiles("07x07", TABU_SEARCH_COMPLETE_NEIGHBORHOOD, CRITICAL_BLOCK, 10, GRAPH, LEFT_INSERTION);
 		//generateJavaFiles("10x10", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, SWAP);
 		//generateJavaFiles("15x15", TABUSEARCH, CRITICAL_BLOCK, 10, GRAPH, SWAP);
 		
@@ -99,41 +95,56 @@ public class JarGenerator {
 	// Methods
 	// -------------------------------------------------------------
 	
-	private void generateJavaFiles(String sizeInstance, String algorithym, String neighbors, int instancesXFile, String structure, String modifier){
-		int num=0;
-		int numarchivo=0;
-		while(num<10){
-			int j=0;
-			
-			ArrayList<String> instances = new ArrayList<String>();
-			while(j<instancesXFile){
-				if(num<10){
-					int position = num+1;
-					if(position==10){
-						instances.add(sizeInstance+"_10");
-					}
-					else{
-						instances.add(sizeInstance+"_0"+position);
-					}
-					num++;
-					j++;
-				}
-				else{
-					j++;
-				}
-			}
-			numarchivo++;
-			printJavaFile(instances, algorithym, neighbors, numarchivo, sizeInstance, structure, modifier);
+	public void generateJavaFiles(ArrayList<String> instancesIdentifiers, AlgorithmConfigurationVO algorithmConfiguration){
+		String algorithm = null;
+		
+		if(algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_COMPLETE_NEIGHBORHOOD)){
+			algorithm = TABU_SEARCH_COMPLETE_NEIGHBORHOOD;
+		}else if(algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_RESTRICTED_NEIGHBORHOOD)){
+			algorithm = TABU_SEARCH_RESTRICTED_NEIGHBORHOOD;
+		}else if(algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.SIMULATED_ANNELING)){
+			algorithm = SIMULATED_ANNELING;
+		}else if(algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.GRASP)){
+			algorithm = GRASP;
 		}
-        
+		
+		String neighbors = null;
+		
+		if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.RANDOM_NEIGHBORHOOD)){
+			neighbors = RANDOM_NEIGHBORHOOD;
+		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ADJACENT)){
+			neighbors = CRITICAL_ADJACENT;
+		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ADJACENT_MACHINES)){
+			neighbors = CRITICAL_ADJACENT_MACHINES;
+		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK)){
+			neighbors = CRITICAL_BLOCK;
+		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_ADJACENT)){
+			neighbors = CRITICAL_BLOCK_ADJACENT;
+		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_ENDSTART)){
+			neighbors = CRITICAL_BLOCK_ENDSTART;
+		}
+		
+		String modifier = null;
+		
+		if(algorithmConfiguration.getModifier().equals(AlgorithmConfigurationVO.RANDOM_MODFIER)){
+			modifier = RANDOM_MODFIER;
+		}else if(algorithmConfiguration.getModifier().equals(AlgorithmConfigurationVO.SWAP)){
+			modifier = SWAP;
+		}else if(algorithmConfiguration.getModifier().equals(AlgorithmConfigurationVO.LEFT_INSERTION)){
+			modifier = LEFT_INSERTION;
+		}else if(algorithmConfiguration.getModifier().equals(AlgorithmConfigurationVO.RIGHT_INSERTION)){
+			modifier = RIGHT_INSERTION;
+		}
+		
+		String representation = null;
 	}
 	
-	private void printJavaFile(ArrayList<String> instances, String algorithym, String neighbors, int number ,String sizeInstance, String structure, String modifier){
+	private void printJavaFile(ArrayList<String> instances, String algorithm, String neighbors, String sizeInstance, String structure, String modifier){
 		FileWriter fichero = null;
         PrintWriter pw = null;
 		try
         {
-			String name ="T_"+algorithym+"_"+neighbors+"_"+modifier+"_"+sizeInstance+"_"+number+"_"+structure;
+			String name ="T_" + algorithm + "_" + neighbors + "_"+ modifier+"_"+sizeInstance+"_"+"_"+structure;
             fichero = new FileWriter(new File("./src/launcher/generator/"+name+".java"));
             pw = new PrintWriter(fichero);
             pw.println("package launcher.generator;");
@@ -172,7 +183,7 @@ public class JarGenerator {
             	int a=i+1; 
             	String instanceName = instances.get(i);
             	 pw.println("		String[] file"+a+"= {");
-            	 pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+algorithym+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+sizeInstance+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
+            	 pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+sizeInstance+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
             	 pw.println("		datos.add(file"+a+");");
             }
 					
@@ -233,7 +244,6 @@ public class JarGenerator {
 			Process process = Runtime.getRuntime().exec("java " + "./src/launcher/generator/"+name+".java");
 			process.destroy();
         } catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         

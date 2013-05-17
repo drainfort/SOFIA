@@ -51,7 +51,7 @@ public class ConfigurationPanel extends JPanel implements ActionListener{
 		this.add(labEclipsePath);
 		
 		txtEclipsePath = new JTextField();
-		txtEclipsePath.setEnabled(false);
+		txtEclipsePath.setEnabled(true);
 		this.add(txtEclipsePath);
 		
 		btnEclipsePath = new JButton("Browse");

@@ -24,7 +24,7 @@ public class LauncherUI extends JFrame{
 	
 	public LauncherUI(){
 		this.setLayout(new BorderLayout());
-		this.setSize(700, 700);
+		this.setSize(790, 720);
 		
 		configurationPanel = new ConfigurationPanel();
 		this.add(configurationPanel, BorderLayout.NORTH);
@@ -42,6 +42,7 @@ public class LauncherUI extends JFrame{
 		String eclipsePath = configurationPanel.getEclipsePath();
 		
 		JarGenerator jarsGenerator = new JarGenerator(workspacePath, eclipsePath);
+		
 	}
 	
 	/**
