@@ -14,24 +14,19 @@ public class LauncherUI extends JFrame{
 	
 	private ExecutionPanel executionPanel;
 	
-	private JarsGenerationPanel jarsGenerationPanel;
-	
 	// ----------------------------------------------------
 	// Constructor
 	// ----------------------------------------------------
 	
 	public LauncherUI(){
 		this.setLayout(new BorderLayout());
-		this.setSize(500, 500);
+		this.setSize(700, 700);
 		
 		configurationPanel = new ConfigurationPanel();
 		this.add(configurationPanel, BorderLayout.NORTH);
 		
 		executionPanel = new ExecutionPanel();
 		this.add(executionPanel, BorderLayout.CENTER);
-		
-		jarsGenerationPanel = new JarsGenerationPanel();
-		this.add(jarsGenerationPanel, BorderLayout.SOUTH);
 	}
 	
 	// ----------------------------------------------------

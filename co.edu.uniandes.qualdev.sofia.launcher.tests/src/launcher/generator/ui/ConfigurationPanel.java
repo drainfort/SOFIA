@@ -59,7 +59,7 @@ public class ConfigurationPanel extends JPanel implements ActionListener{
 		btnEclipsePath.setActionCommand(BROWSE_ECLIPSE);
 		this.add(btnEclipsePath);
 		
-		labWorkspacePath = new JLabel("Eclipse location:");
+		labWorkspacePath = new JLabel("Workspace location:");
 		this.add(labWorkspacePath);
 		
 		txtWorkspacePath = new JTextField();
