@@ -1,7 +1,13 @@
 package launcher;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Properties;
+
+import algorithm.SchedulingAlgorithm;
+import algorithm.SchedulingProblem;
+import algorithm.impl.TrajectoryBasedAlgorithm;
 
 import launcher.generator.vos.AlgorithmConfigurationVO;
 import launcher.generator.vos.ParameterVO;
@@ -61,7 +67,7 @@ public class ProgrammaticLauncher {
 	// ------------------------------------------------------------
 
 	public void launch(ArrayList<String> instancesToExecute,
-			AlgorithmConfigurationVO algorithmDefinition) {
+			AlgorithmConfigurationVO algorithmDefinition, String resultsFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, Exception {
 		
 		// Obtaining the initial solution builder
 		String initialSolutionBuilder = null;
@@ -172,5 +178,47 @@ public class ProgrammaticLauncher {
 		algorithmConfiguration.setProperty("report.consolidationTable", consolidateTable);
 		algorithmConfiguration.setProperty("report.gantt.initialsolutions", initialSolutions);
 		algorithmConfiguration.setProperty("report.gantt.bestsolutions", finalSolutions);
+		
+		// Launching instances
+		// TODO: Make this execution parallel
+		for (String instance : instancesToExecute) {
+			// TODO: Este archivo debería contener TODOS los archivos de las betas.. no solamente los TT
+			String problemFile = "./data/Om-TT/" + instance.substring(0, 4) + "/" + instance + ".properties";
+			System.out.println("problemFile: " + problemFile);
+			Properties problem = loadProductConfiguration(new File(problemFile));
+			// TODO: Tener en cuenta los MultiStart
+			SchedulingAlgorithm algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem);
+			algorithm.execute(resultsFile, instance);
+		}
+	}
+	
+	// ------------------------------------------------------------
+	// Utilities
+	// ------------------------------------------------------------
+	
+	/**
+	 * Loads the configuration of the scheduling algorithm from a properties
+	 * file.
+	 * 
+	 * @param file
+	 *            . File that contains the configuration of the scheduling
+	 *            algorithm.
+	 * @return data. Properties object with the configuration of the scheduling
+	 *         algorithm.
+	 * @throws Exception. Either
+	 *             the file does not exist or it does not exist.
+	 */
+	private Properties loadProductConfiguration(File file) {
+		Properties data = new Properties();
+
+		try {
+			System.out.println(file);
+			FileInputStream in = new FileInputStream(file);
+			data.load(in);
+			in.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
 	}
 }

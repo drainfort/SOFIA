@@ -5,12 +5,9 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 import algorithm.SchedulingAlgorithm;
-import algorithm.SchedulingProblem;
 import algorithm.impl.MultiStartAlgorithm;
 import algorithm.impl.TrajectoryBasedAlgorithm;
 import common.utils.ExecutionResults;
-import control.impl.GRASP;
-import control.impl.GRASPERLS;
 
 /**
  * Main class that is able to launch a scheduling algorithm
