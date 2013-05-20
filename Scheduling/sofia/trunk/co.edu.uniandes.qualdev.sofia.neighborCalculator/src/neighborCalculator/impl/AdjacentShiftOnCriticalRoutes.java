@@ -20,13 +20,13 @@ import neighborCalculator.INeighborCalculator;
  * @author Jaime Romero
  * @author David Mendez Acuna
  */
-public class N1_AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
+public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
 
-	public N1_AdjacentShiftOnCriticalRoutes() {
+	public AdjacentShiftOnCriticalRoutes() {
 
 	}
 

@@ -17,7 +17,7 @@ import neighborCalculator.INeighborCalculator;
  * 
  * @author David Mendez-Acuna
  */
-public class N0_Api implements INeighborCalculator {
+public class Api implements INeighborCalculator {
 
 	// -----------------------------------------------
 	// Attributes
@@ -31,7 +31,7 @@ public class N0_Api implements INeighborCalculator {
 	// Constructor
 	// -----------------------------------------------
 
-	public N0_Api() {
+	public Api() {
 
 	}
 
