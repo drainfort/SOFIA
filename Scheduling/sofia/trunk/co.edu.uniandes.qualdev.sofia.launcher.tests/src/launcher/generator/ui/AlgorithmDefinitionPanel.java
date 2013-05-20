@@ -67,6 +67,7 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		JRadioButton sptRadioButton = new JRadioButton(AlgorithmConfigurationVO.SPTNonDelay);
 		JRadioButton srptRadioButton = new JRadioButton(AlgorithmConfigurationVO.SRPTNonDelay);
 		JRadioButton bestRadioButton = new JRadioButton(AlgorithmConfigurationVO.BestDispatchingRule);
+		bestRadioButton.setSelected(true);
 		JRadioButton randomRadioButton = new JRadioButton(AlgorithmConfigurationVO.RandomDispatchingRule);
 		
 		initialSolutionPanel.add(lptRadioButton);
@@ -99,6 +100,7 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		
 		JRadioButton tabucn = new JRadioButton(AlgorithmConfigurationVO.TABU_SEARCH_COMPLETE_NEIGHBORHOOD);
 		JRadioButton taburn = new JRadioButton(AlgorithmConfigurationVO.TABU_SEARCH_RESTRICTED_NEIGHBORHOOD);
+		taburn.setSelected(true);
 		JRadioButton simulatedAnnealing = new JRadioButton(AlgorithmConfigurationVO.SIMULATED_ANNELING);
 		JRadioButton grasp = new JRadioButton(AlgorithmConfigurationVO.GRASP);
 		
@@ -126,6 +128,7 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		
 		JRadioButton random = new JRadioButton(AlgorithmConfigurationVO.RANDOM_NEIGHBORHOOD);
 		JRadioButton adjacent = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_ADJACENT);
+		adjacent.setSelected(true);
 		JRadioButton adjacentMachine = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_ADJACENT_MACHINES);
 		JRadioButton randomInCriticalBlock = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_BLOCK);
 		
@@ -152,6 +155,7 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		ModifierPanel.setLayout(new GridLayout(2,2));
 		
 		JRadioButton swap = new JRadioButton(AlgorithmConfigurationVO.SWAP);
+		swap.setSelected(true);
 		JRadioButton leftInsertion = new JRadioButton(AlgorithmConfigurationVO.LEFT_INSERTION);
 		JRadioButton rightInsertion = new JRadioButton(AlgorithmConfigurationVO.RIGHT_INSERTION);
 		JRadioButton randomModifier = new JRadioButton(AlgorithmConfigurationVO.RANDOM_MODFIER);
@@ -179,6 +183,7 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		representationPanel.setLayout(new GridLayout(1,2));
 		
 		JRadioButton vector = new JRadioButton(AlgorithmConfigurationVO.VECTOR);
+		vector.setSelected(true);
 		JRadioButton graph = new JRadioButton(AlgorithmConfigurationVO.GRAPH);
 		
 		representationPanel.add(vector);
@@ -198,6 +203,7 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		gammaPanel.setLayout(new GridLayout(1,2));
 		
 		JRadioButton cmax = new JRadioButton(AlgorithmConfigurationVO.CMAX);
+		cmax.setSelected(true);
 		JRadioButton mft = new JRadioButton(AlgorithmConfigurationVO.MEAN_FLOW_TIME);
 		
 		gammaPanel.add(cmax);
@@ -217,6 +223,7 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		betasPanel.setLayout(new GridLayout(1,1));
 		
 		JCheckBox travelTimes = new JCheckBox(AlgorithmConfigurationVO.TRAVEL_TIMES);
+		travelTimes.setSelected(true);
 		JCheckBox setupTimes = new JCheckBox(AlgorithmConfigurationVO.SETUP_TIMES);
 		
 		betaBoxes.add(travelTimes);
