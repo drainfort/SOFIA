@@ -47,8 +47,8 @@ public class ProgrammaticLauncher {
 	public static String RIGHT_INSERTION = "modifier.impl.RightInsertion";
 	
 	// Representation structure
-	public static String GRAPH = "structure.impl.Graph";
-	public static String VECTOR = "structure.impl.Vector";
+	public static String GRAPH = "structure.factory.impl.GraphFactory";
+	public static String VECTOR = "structure.factory.impl.VectorFactory";
 	
 	// Objective function
 	public static String CMAX = "gammaCalculator.impl.CMaxCalculator";
@@ -183,7 +183,7 @@ public class ProgrammaticLauncher {
 		// TODO: Make this execution parallel
 		for (String instance : instancesToExecute) {
 			// TODO: Este archivo debería contener TODOS los archivos de las betas.. no solamente los TT
-			String problemFile = "./data/Om-TT/" + instance.substring(0, 4) + "/" + instance + ".properties";
+			String problemFile = "./data/Om-TT/" + instance.substring(0, 5) + "/" + instance + ".properties";
 			System.out.println("problemFile: " + problemFile);
 			Properties problem = loadProductConfiguration(new File(problemFile));
 			// TODO: Tener en cuenta los MultiStart

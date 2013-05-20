@@ -13,9 +13,6 @@ public class TabuSearchCNParametersLoader  implements IParametersLoader{
 		params.put("non-improving", Double.parseDouble((String) algorithmConfiguration
 				.getProperty("params.non-improving")));
 
-		params.put("percent", Double.parseDouble((String) algorithmConfiguration
-				.getProperty("params.percent")));
-		
 		if(algorithmConfiguration.getProperty("params.maxNumberImprovements")!=null){
 			params.put("maxNumberImprovements", Integer.parseInt(algorithmConfiguration.getProperty("params.maxNumberImprovements")));
 		}

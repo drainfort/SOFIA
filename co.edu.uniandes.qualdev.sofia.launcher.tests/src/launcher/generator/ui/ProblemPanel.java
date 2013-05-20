@@ -41,7 +41,11 @@ public class ProblemPanel extends JPanel{
 		
 		boxes4 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
-			boxes4.add(new JCheckBox("04x04_" + i));
+			if(i < 10){
+				boxes4.add(new JCheckBox("04x04_0" + i));
+			}else{
+				boxes4.add(new JCheckBox("04x04_" + i));
+			}
 			p4.add(boxes4.get(i-1));
 		}
 		
