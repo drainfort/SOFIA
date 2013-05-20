@@ -59,7 +59,7 @@ public class ExecutionPanel extends JPanel implements ActionListener {
 		btnGenerateJars.addActionListener(this);
 		panelButtons.add(btnGenerateJars);
 		
-		btnExecute = new JButton("Generate jars and execute in parallel");
+		btnExecute = new JButton("Execute");
 		btnExecute.setActionCommand(EXECUTE);
 		btnExecute.addActionListener(this);
 		panelButtons.add(btnExecute);

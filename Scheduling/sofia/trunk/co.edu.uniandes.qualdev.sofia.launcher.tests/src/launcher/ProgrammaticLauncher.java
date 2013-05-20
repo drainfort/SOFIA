@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import launcher.generator.vos.AlgorithmConfigurationVO;
+import launcher.generator.vos.ParameterVO;
 
 public class ProgrammaticLauncher {
 
@@ -135,7 +136,10 @@ public class ProgrammaticLauncher {
 		}
 		System.out.println("gammaCalculator: " + gammaCalculator);
 		
+		
 		Properties algorithmConfiguration = new Properties();
+		
+		// Scheduling algorithm configuration
 		algorithmConfiguration.setProperty("scheduling.structureFactory", representation);
 		algorithmConfiguration.setProperty("scheduling.neighborCalculator", neighborhoodCalculator);
 		algorithmConfiguration.setProperty("scheduling.modifier", modifier);
@@ -143,6 +147,30 @@ public class ProgrammaticLauncher {
 		algorithmConfiguration.setProperty("scheduling.control", control);
 		algorithmConfiguration.setProperty("scheduling.initialSolutionBuilder", initialSolutionBuilder);
 		algorithmConfiguration.setProperty("scheduling.parametersLoader", control + "ParametersLoader");
+		
+		// Metaheuristic's parameters
+		ArrayList<ParameterVO> parameters = algorithmDefinition.getMetaheuristicParams();
+		for (ParameterVO parameterVO : parameters) {
+			algorithmConfiguration.setProperty(parameterVO.getName(), parameterVO.getValue());
+		}
+		
+		// Execution report configuration
+		String consolidateTable = "false";
+		String initialSolutions = "false";
+		String finalSolutions = "false";
+		
+		ArrayList<String> reportConfiguration = algorithmDefinition.getReportConfiguration();
+		for (String report : reportConfiguration) {
+			if(report.equals(AlgorithmConfigurationVO.CONSOLIDATION_TABLE)){
+				consolidateTable = "true";
+			}else if(report.equals(AlgorithmConfigurationVO.INITIAL_SOLUTIONS)){
+				initialSolutions = "true";
+			}else if(report.equals(AlgorithmConfigurationVO.FINAL_SOLUTIONS)){
+				finalSolutions = "true";
+			}
+		}
+		algorithmConfiguration.setProperty("report.consolidationTable", consolidateTable);
+		algorithmConfiguration.setProperty("report.gantt.initialsolutions", initialSolutions);
+		algorithmConfiguration.setProperty("report.gantt.bestsolutions", finalSolutions);
 	}
-	
 }

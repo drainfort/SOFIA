@@ -47,8 +47,9 @@ public class LauncherUI extends JFrame{
 	}
 	
 	public void execute(ArrayList<String> instancesToExecute, AlgorithmConfigurationVO algorithmDefinition){
-		ProgrammaticLauncher launcher = new ProgrammaticLauncher();
-		launcher.launch(instancesToExecute, algorithmDefinition);
+		ParametersDialog dialog = new ParametersDialog(this, instancesToExecute, algorithmDefinition);
+		dialog.setLocationRelativeTo(this);
+		dialog.setVisible(true);
 	}
 	
 	/**
