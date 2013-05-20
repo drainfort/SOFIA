@@ -6,6 +6,14 @@ public class AlgorithmConfigurationVO {
 	// Constants
 	// ----------------------------------------------------
 
+	// Initial solution builders
+	public final static String LPTNonDelay = "LPT";
+	public final static String LRPTNonDelay = "LRPT";
+	public final static String SPTNonDelay = "SPT";
+	public final static String SRPTNonDelay = "SRPT";
+	public final static String RandomDispatchingRule = "Select random";
+	public final static String BestDispatchingRule = "Select best";
+	
 	// Metaheuristics
 	public static String TABU_SEARCH_COMPLETE_NEIGHBORHOOD = "Tabu search (CN)";
 	public static String TABU_SEARCH_RESTRICTED_NEIGHBORHOOD = "Tabu search (RN)";
@@ -30,6 +38,10 @@ public class AlgorithmConfigurationVO {
 	// Representation structure
 	public static String GRAPH = "Graph";
 	public static String VECTOR = "Vector";
+	
+	// Objective function
+	public static String CMAX = "CMax";
+	public static String MEAN_FLOW_TIME = "Mean flow time";
 	
 	// ----------------------------------------------------
 	// Attributes

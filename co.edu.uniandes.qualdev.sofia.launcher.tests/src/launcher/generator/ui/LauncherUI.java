@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import launcher.ProgrammaticLauncher;
 import launcher.generator.JarGenerator;
 import launcher.generator.vos.AlgorithmConfigurationVO;
 
@@ -24,7 +25,7 @@ public class LauncherUI extends JFrame{
 	
 	public LauncherUI(){
 		this.setLayout(new BorderLayout());
-		this.setSize(790, 720);
+		this.setSize(790, 800);
 		
 		configurationPanel = new ConfigurationPanel();
 		this.add(configurationPanel, BorderLayout.NORTH);
@@ -45,6 +46,11 @@ public class LauncherUI extends JFrame{
 		jarsGenerator.generateJavaFiles(instancesToExecute, algorithmDefinition);
 	}
 	
+	public void execute(ArrayList<String> instancesToExecute, AlgorithmConfigurationVO algorithmDefinition){
+		ProgrammaticLauncher launcher = new ProgrammaticLauncher();
+		launcher.launch(instancesToExecute, algorithmDefinition);
+	}
+	
 	/**
 	 * Main method. Execution start
 	 * @param args. Execution arguments
@@ -53,5 +59,4 @@ public class LauncherUI extends JFrame{
 		LauncherUI launcher = new LauncherUI();
 		launcher.setVisible(true);
 	}
-
 }

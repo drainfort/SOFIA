@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.CompoundBorder;
@@ -36,13 +37,17 @@ public class AlgorithmDefinitionPanel extends JPanel {
 	
 	private ArrayList<JRadioButton> gammaButtons;
 	
+	private ArrayList<JCheckBox> betaBoxes;
+	
+	private ArrayList<JCheckBox> reportBoxes;
+	
 	// ----------------------------------------------------
 	// Constructor
 	// ----------------------------------------------------
 	
 	public AlgorithmDefinitionPanel(){
 		this.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Algorithm definition" ) ) );
-		this.setLayout(new GridLayout(3,2));
+		this.setLayout(new GridLayout(4,2));
 		
 		initialSolutionButtons = new ArrayList<JRadioButton>();
 		metaheuristicsButtons = new ArrayList<JRadioButton>();
@@ -50,17 +55,19 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		modifierButtons = new ArrayList<JRadioButton>();
 		representationButtons = new ArrayList<JRadioButton>();
 		gammaButtons = new ArrayList<JRadioButton>();
+		betaBoxes = new ArrayList<JCheckBox>();
+		reportBoxes = new ArrayList<JCheckBox>();
 		
 		JPanel initialSolutionPanel = new JPanel();
 		initialSolutionPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Initial solution" ) ) );
 		initialSolutionPanel.setLayout( new GridLayout(2,4));
 		
-		JRadioButton lptRadioButton = new JRadioButton("LPT");
-		JRadioButton lrptRadioButton = new JRadioButton("LRPT");
-		JRadioButton sptRadioButton = new JRadioButton("SPT");
-		JRadioButton srptRadioButton = new JRadioButton("SRPT");
-		JRadioButton bestRadioButton = new JRadioButton("Best");
-		JRadioButton randomRadioButton = new JRadioButton("Random");
+		JRadioButton lptRadioButton = new JRadioButton(AlgorithmConfigurationVO.LPTNonDelay);
+		JRadioButton lrptRadioButton = new JRadioButton(AlgorithmConfigurationVO.LRPTNonDelay);
+		JRadioButton sptRadioButton = new JRadioButton(AlgorithmConfigurationVO.SPTNonDelay);
+		JRadioButton srptRadioButton = new JRadioButton(AlgorithmConfigurationVO.SRPTNonDelay);
+		JRadioButton bestRadioButton = new JRadioButton(AlgorithmConfigurationVO.BestDispatchingRule);
+		JRadioButton randomRadioButton = new JRadioButton(AlgorithmConfigurationVO.RandomDispatchingRule);
 		
 		initialSolutionPanel.add(lptRadioButton);
 		initialSolutionPanel.add(lrptRadioButton);
@@ -190,8 +197,8 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		gammaPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Objective function" ) ) );
 		gammaPanel.setLayout(new GridLayout(1,2));
 		
-		JRadioButton cmax = new JRadioButton("CMax");
-		JRadioButton mft = new JRadioButton("Mean flow time");
+		JRadioButton cmax = new JRadioButton(AlgorithmConfigurationVO.CMAX);
+		JRadioButton mft = new JRadioButton(AlgorithmConfigurationVO.MEAN_FLOW_TIME);
 		
 		gammaPanel.add(cmax);
 		gammaPanel.add(mft);
@@ -204,6 +211,41 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		gammaGroup.add(mft);
 		
 		this.add(gammaPanel);
+		
+		JPanel betasPanel = new JPanel();
+		betasPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Betas" ) ) );
+		betasPanel.setLayout(new GridLayout(1,1));
+		
+		JCheckBox travelTimes = new JCheckBox("Travel times");
+		JCheckBox setupTimes = new JCheckBox("Setup times");
+		
+		betaBoxes.add(travelTimes);
+		betaBoxes.add(setupTimes);
+		
+		betasPanel.add(travelTimes);
+		betasPanel.add(setupTimes);
+		
+		this.add(betasPanel);
+		
+		JPanel reportPanel = new JPanel();
+		reportPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Report configuration" ) ) );
+		reportPanel.setLayout(new GridLayout(2,1));
+		
+		JCheckBox consolidationTable = new JCheckBox("Consolidation table");
+		consolidationTable.setSelected(true);
+		JCheckBox initialSolitions = new JCheckBox("Initial solutions");
+		JCheckBox finalSolitions = new JCheckBox("Final solutions");
+		
+		reportBoxes.add(consolidationTable);
+		reportBoxes.add(initialSolitions);
+		reportBoxes.add(finalSolitions);
+		
+		reportPanel.add(consolidationTable);
+		reportPanel.add(initialSolitions);
+		reportPanel.add(finalSolitions);
+		
+		this.add(reportPanel);
+		
 	}
 
 	// ----------------------------------------------------
