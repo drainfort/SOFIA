@@ -71,7 +71,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Non-improving
 			JLabel labNonImproving = new JLabel("non-improving");
-			JTextField txtNonImproving = new JTextField();
+			JTextField txtNonImproving = new JTextField("0.6");
 			panelParameters.add(labNonImproving);
 			panelParameters.add(txtNonImproving);
 			
@@ -80,7 +80,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Restarts
 			JLabel labRestarts = new JLabel("restarts");
-			JTextField txtRestarts = new JTextField();
+			JTextField txtRestarts = new JTextField("0");
 			panelParameters.add(labRestarts);
 			panelParameters.add(txtRestarts);
 			
@@ -89,7 +89,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Max number of improvements
 			JLabel labMaxImprovements = new JLabel("maxNumberImprovements");
-			JTextField txtMaxImprovements = new JTextField();
+			JTextField txtMaxImprovements = new JTextField("1");
 			panelParameters.add(labMaxImprovements);
 			panelParameters.add(txtMaxImprovements);
 			
@@ -108,7 +108,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Percent
 			JLabel labPercent = new JLabel("percent");
-			JTextField txtPercent = new JTextField();
+			JTextField txtPercent = new JTextField("0.7");
 			panelParameters.add(labPercent);
 			panelParameters.add(txtPercent);
 			
@@ -117,7 +117,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Non-improving
 			JLabel labNonImproving = new JLabel("non-improving");
-			JTextField txtNonImproving = new JTextField();
+			JTextField txtNonImproving = new JTextField("0.6");
 			panelParameters.add(labNonImproving);
 			panelParameters.add(txtNonImproving);
 			
@@ -126,7 +126,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Restarts
 			JLabel labRestarts = new JLabel("restarts");
-			JTextField txtRestarts = new JTextField();
+			JTextField txtRestarts = new JTextField("0");
 			panelParameters.add(labRestarts);
 			panelParameters.add(txtRestarts);
 			
@@ -135,7 +135,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Max number of improvements
 			JLabel labMaxImprovements = new JLabel("maxNumberImprovements");
-			JTextField txtMaxImprovements = new JTextField();
+			JTextField txtMaxImprovements = new JTextField("1");
 			panelParameters.add(labMaxImprovements);
 			panelParameters.add(txtMaxImprovements);
 			
@@ -250,25 +250,23 @@ public class ParametersDialog extends JDialog implements ActionListener{
 				ParameterVO paramVO = new ParameterVO();
 				paramVO.setName("params." + param.getLabel().getText());
 				paramVO.setValue(param.getText().getText());
+				algorithmConfiguration.getMetaheuristicParams().add(paramVO);
 			}
-			
 			
 			ProgrammaticLauncher launcher = new ProgrammaticLauncher();
 			//TODO File chooser or something
 			try {
+				
 				String fileName =  "./results/Om_TT/results/" + System.currentTimeMillis() + ".html";
 				launcher.launch(instancesToExecute, algorithmConfiguration, fileName);
 				JOptionPane.showMessageDialog(this, "Results saved in: " + fileName);
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else if(command.equals(CANCEL)){
