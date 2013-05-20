@@ -216,8 +216,8 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		betasPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Betas" ) ) );
 		betasPanel.setLayout(new GridLayout(1,1));
 		
-		JCheckBox travelTimes = new JCheckBox("Travel times");
-		JCheckBox setupTimes = new JCheckBox("Setup times");
+		JCheckBox travelTimes = new JCheckBox(AlgorithmConfigurationVO.TRAVEL_TIMES);
+		JCheckBox setupTimes = new JCheckBox(AlgorithmConfigurationVO.SETUP_TIMES);
 		
 		betaBoxes.add(travelTimes);
 		betaBoxes.add(setupTimes);
@@ -231,10 +231,10 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		reportPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Report configuration" ) ) );
 		reportPanel.setLayout(new GridLayout(2,1));
 		
-		JCheckBox consolidationTable = new JCheckBox("Consolidation table");
+		JCheckBox consolidationTable = new JCheckBox(AlgorithmConfigurationVO.CONSOLIDATION_TABLE);
 		consolidationTable.setSelected(true);
-		JCheckBox initialSolitions = new JCheckBox("Initial solutions");
-		JCheckBox finalSolitions = new JCheckBox("Final solutions");
+		JCheckBox initialSolitions = new JCheckBox(AlgorithmConfigurationVO.INITIAL_SOLUTIONS);
+		JCheckBox finalSolitions = new JCheckBox(AlgorithmConfigurationVO.FINAL_SOLUTIONS);
 		
 		reportBoxes.add(consolidationTable);
 		reportBoxes.add(initialSolitions);
@@ -245,7 +245,6 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		reportPanel.add(finalSolitions);
 		
 		this.add(reportPanel);
-		
 	}
 
 	// ----------------------------------------------------
@@ -293,6 +292,20 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		for (JRadioButton radioButton : gammaButtons) {
 			if(radioButton.isSelected()){
 				answer.setObjectiveFunction(radioButton.getText());
+				break;
+			}
+		}
+		
+		for (JCheckBox checkBox : betaBoxes) {
+			if(checkBox.isSelected()){
+				answer.getSelectedBetas().add(checkBox.getText());
+				break;
+			}
+		}
+		
+		for (JCheckBox checkBox : reportBoxes) {
+			if(checkBox.isSelected()){
+				answer.getReportConfiguration().add(checkBox.getText());
 				break;
 			}
 		}

@@ -1,5 +1,7 @@
 package launcher.generator.vos;
 
+import java.util.ArrayList;
+
 public class AlgorithmConfigurationVO {
 
 	// ----------------------------------------------------
@@ -43,6 +45,15 @@ public class AlgorithmConfigurationVO {
 	public static String CMAX = "CMax";
 	public static String MEAN_FLOW_TIME = "Mean flow time";
 	
+	// Betas
+	public static String TRAVEL_TIMES = "Travel times";
+	public static String SETUP_TIMES = "Setup times";
+	
+	// Report configuration
+	public static String CONSOLIDATION_TABLE = "Consolidation table";
+	public static String INITIAL_SOLUTIONS = "Initial solutions";
+	public static String FINAL_SOLUTIONS = "Final solutions";
+	
 	// ----------------------------------------------------
 	// Attributes
 	// ----------------------------------------------------
@@ -50,6 +61,8 @@ public class AlgorithmConfigurationVO {
 	private String initialSolutionBuilder;
 	
 	private String metaheuristic;
+	
+	private ArrayList<ParameterVO> metaheuristicParams;
 	
 	private String modifier;
 	
@@ -59,12 +72,18 @@ public class AlgorithmConfigurationVO {
 	
 	private String objectiveFunction;
 	
+	private ArrayList<String> selectedBetas;
+	
+	private ArrayList<String> reportConfiguration;
+	
 	// ----------------------------------------------------
 	// Constructor
 	// ----------------------------------------------------
 	
 	public AlgorithmConfigurationVO(){
-		
+		selectedBetas = new ArrayList<String>();
+		reportConfiguration = new ArrayList<String>();
+		metaheuristicParams = new ArrayList<ParameterVO>();
 	}
 
 	// ----------------------------------------------------
@@ -119,6 +138,18 @@ public class AlgorithmConfigurationVO {
 		this.objectiveFunction = objectiveFunction;
 	}
 	
+	public ArrayList<String> getSelectedBetas() {
+		return selectedBetas;
+	}
+
+	public ArrayList<String> getReportConfiguration() {
+		return reportConfiguration;
+	}
+
+	public ArrayList<ParameterVO> getMetaheuristicParams() {
+		return metaheuristicParams;
+	}
+
 	public String toString(){
 		return "Initial solution: " +  initialSolutionBuilder + "\n" +
 				"Metaheuristic: " + metaheuristic + "\n" + 
