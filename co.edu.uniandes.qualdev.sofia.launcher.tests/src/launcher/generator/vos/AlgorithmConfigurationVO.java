@@ -15,8 +15,11 @@ public class AlgorithmConfigurationVO {
 	public final static String SRPTNonDelay = "SRPT";
 	public final static String RandomDispatchingRule = "Select random";
 	public final static String BestDispatchingRule = "Select best";
+	public final static String StochasticERM = "Stochastic ERM";
+	public final static String StochasticLPTNonDelay = "Stochastic LPT";
+	public final static String StochasticSPTNonDelay = "Stochastic SPT";
 	
-	// Metaheuristics
+	// Meta-heuristics
 	public static String TABU_SEARCH_COMPLETE_NEIGHBORHOOD = "Tabu search (CN)";
 	public static String TABU_SEARCH_RESTRICTED_NEIGHBORHOOD = "Tabu search (RN)";
 	public static String SIMULATED_ANNELING = "SimulatedAnnealing";

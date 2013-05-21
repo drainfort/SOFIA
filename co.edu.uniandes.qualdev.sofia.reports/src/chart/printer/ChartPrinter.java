@@ -148,9 +148,11 @@ public class ChartPrinter {
 			int bestCmax = Integer.MAX_VALUE;
 			int sumBestCMax = 0;
 			int iterations = 0;
+			ExecutionResults bestResults = null;
 			for (ExecutionResults executionResults : results) {
 				if(bestCmax > executionResults.getBestCmax()){
 					bestCmax = executionResults.getBestCmax();
+					bestResults = executionResults;
 				}
 				sumBestCMax += executionResults.getBestCmax();
 				iterations++;

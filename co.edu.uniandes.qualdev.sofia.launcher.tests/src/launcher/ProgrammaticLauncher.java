@@ -10,6 +10,7 @@ import common.utils.ExecutionResults;
 import chart.printer.ChartPrinter;
 
 import algorithm.SchedulingAlgorithm;
+import algorithm.impl.MultiStartAlgorithm;
 import algorithm.impl.TrajectoryBasedAlgorithm;
 
 import launcher.generator.vos.AlgorithmConfigurationVO;
@@ -28,6 +29,9 @@ public class ProgrammaticLauncher {
 	public final static String SRPTNonDelay = "initialSolBuilder.impl.SRPTNonDelay";
 	public final static String RandomDispatchingRule = "initialSolBuilder.impl.RandomDispatchingRule";
 	public final static String BestDispatchingRule = "initialSolBuilder.impl.BestDispatchingRule";
+	public final static String StochasticERM = "initialSolBuilder.impl.StochasticERM";
+	public final static String StochasticLPT = "initialSolBuilder.impl.StochasticLPTNonDelay";
+	public final static String StochasticSRT = "initialSolBuilder.impl.StochasticSPTNonDelay";
 	
 	// Metaheuristics
 	public final static String TABU_SEARCH_COMPLETE_NEIGHBORHOOD = "control.impl.TabuSearchCN";
@@ -71,6 +75,7 @@ public class ProgrammaticLauncher {
 
 	public void launch(ArrayList<String> instancesToExecute,
 			AlgorithmConfigurationVO algorithmDefinition, String resultsFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, Exception {
+		boolean multiStart = false;
 		
 		// Obtaining the initial solution builder
 		String initialSolutionBuilder = null;
@@ -86,6 +91,12 @@ public class ProgrammaticLauncher {
 			initialSolutionBuilder = BestDispatchingRule;
 		}else if(algorithmDefinition.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.RandomDispatchingRule)){
 			initialSolutionBuilder = RandomDispatchingRule;
+		}else if(algorithmDefinition.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.StochasticERM)){
+			initialSolutionBuilder = StochasticERM;
+		}else if(algorithmDefinition.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.StochasticLPTNonDelay)){
+			initialSolutionBuilder = StochasticLPT;
+		}else if(algorithmDefinition.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.StochasticSPTNonDelay)){
+			initialSolutionBuilder = StochasticSRT;
 		}
 		
 		String control = null;
@@ -97,6 +108,7 @@ public class ProgrammaticLauncher {
 			control = SIMULATED_ANNEALING;
 		}else if(algorithmDefinition.getMetaheuristic().equals(AlgorithmConfigurationVO.GRASP)){
 			control = GRASP;
+			multiStart = true;
 		}
 		
 		String neighborhoodCalculator = null;
@@ -181,14 +193,20 @@ public class ProgrammaticLauncher {
 			// TODO: Este archivo debería contener TODOS los archivos de las betas.. no solamente los TT
 			String problemFile = "./data/Om-TT/" + instance.substring(0, 5) + "/" + instance + ".properties";
 			Properties problem = loadProductConfiguration(new File(problemFile));
-			// TODO: Tener en cuenta los MultiStart
-			SchedulingAlgorithm algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem);
+			
+			SchedulingAlgorithm algorithm = null;
+			
+			if(!multiStart){
+				algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem);
+			}else{
+				algorithm = new MultiStartAlgorithm(algorithmConfiguration, problem);
+			}
+			
 			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
 			for (int i = 0; i < algorithmDefinition.getAmountOfExecutionsPerInstance(); i++) {
 				ExecutionResults result = algorithm.execute(instance);
 				results.add(result);
 			}
-			System.out.println("results.size(): " + results.size());
 			ChartPrinter.getInstance().addResults(results);
 		}
 		ChartPrinter.getInstance().printGlobalResultsHTML(resultsFile);
