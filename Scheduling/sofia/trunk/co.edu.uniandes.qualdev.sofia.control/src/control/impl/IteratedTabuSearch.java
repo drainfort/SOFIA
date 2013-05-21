@@ -34,7 +34,7 @@ public class IteratedTabuSearch extends Control {
 			INeighborCalculator neighborCalculator, IModifier modifier,
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution)
 			throws Exception {
-		
+		executionResults = new ExecutionResults();
 		executionResults.setOptimal(optimal);
 		
 		// So		So - initial solution

@@ -42,7 +42,7 @@ public abstract class Control {
 	// -----------------------------------------------
 	
 	public Control(){
-		executionResults = new ExecutionResults();
+		
 	}
 	
 	// -----------------------------------------------

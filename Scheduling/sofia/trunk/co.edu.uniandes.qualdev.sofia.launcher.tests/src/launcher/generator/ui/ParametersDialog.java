@@ -58,16 +58,18 @@ public class ParametersDialog extends JDialog implements ActionListener{
 		this.instancesToExecute = instancesToExecute;
 		parameters = new ArrayList<ParamComponent>();
 		
+		//TODO ParametersDialog: Reorganizar para evitar código redundante
 		this.setResizable(true);
 		this.setLayout(new BorderLayout());
-		this.setSize(350,180);
+		this.setSize(450,180);
 		
 		// Case 1: The selected metaheuristic is TabuSearch -> complete neighborhood
 		if((this.algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_COMPLETE_NEIGHBORHOOD))){
 			this.setTitle("Metaheuristic parameters: Tabu search complete neighborhood");
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(3,2));
+			panelParameters.setLayout(new GridLayout(4,2));
+			this.setSize(450,200);
 			
 			//Non-improving
 			JLabel labNonImproving = new JLabel("non-improving");
@@ -96,15 +98,24 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			ParamComponent paramMaxImprovements = new ParamComponent(labMaxImprovements, txtMaxImprovements);
 			parameters.add(paramMaxImprovements);
 			
+			// Amount of executions by instance
+			JLabel labAmountExecutionsByInstance = new JLabel("amountOfExecutionsPerInstance");
+			JTextField txtAmountExecutionsByInstance = new JTextField("1");
+			panelParameters.add(labAmountExecutionsByInstance);
+			panelParameters.add(txtAmountExecutionsByInstance);
+			
+			ParamComponent paramAmountExecutionsByInstance = new ParamComponent(labAmountExecutionsByInstance, txtAmountExecutionsByInstance);
+			parameters.add(paramAmountExecutionsByInstance);
+			
 			this.add(panelParameters, BorderLayout.CENTER);
 		}
 		// Case 2:  The selected metaheuristic is TabuSearch -> restricted neighborhood
 		else if(this.algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_RESTRICTED_NEIGHBORHOOD)){
 			this.setTitle("Metaheuristic parameters: Tabu search restricted neighborhood");
-			this.setSize(350,200);
+			this.setSize(450,220);
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(4,2));
+			panelParameters.setLayout(new GridLayout(5,2));
 			
 			//Percent
 			JLabel labPercent = new JLabel("percent");
@@ -142,6 +153,15 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			ParamComponent paramMaxImprovements = new ParamComponent(labMaxImprovements, txtMaxImprovements);
 			parameters.add(paramMaxImprovements);
 			
+			// Amount of executions by instance
+			JLabel labAmountExecutionsByInstance = new JLabel("amountOfExecutionsPerInstance");
+			JTextField txtAmountExecutionsByInstance = new JTextField("1");
+			panelParameters.add(labAmountExecutionsByInstance);
+			panelParameters.add(txtAmountExecutionsByInstance);
+			
+			ParamComponent paramAmountExecutionsByInstance = new ParamComponent(labAmountExecutionsByInstance, txtAmountExecutionsByInstance);
+			parameters.add(paramAmountExecutionsByInstance);
+			
 			this.add(panelParameters, BorderLayout.CENTER);
 		}
 		// Case 3: The selected metaheuristic is SimulatedAnnealing
@@ -149,8 +169,8 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			this.setTitle("Metaheuristic parameters: Simulated annealing");
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(7,2));
-			this.setSize(350,220);
+			panelParameters.setLayout(new GridLayout(8,2));
+			this.setSize(450,290);
 			
 			//T0
 			JLabel labT0 = new JLabel("T0");
@@ -212,6 +232,15 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			panelParameters.add(labRestarts);
 			panelParameters.add(txtRestarts);
 			
+			// Amount of executions by instance
+			JLabel labAmountExecutionsByInstance = new JLabel("amountOfExecutionsPerInstance");
+			JTextField txtAmountExecutionsByInstance = new JTextField("1");
+			panelParameters.add(labAmountExecutionsByInstance);
+			panelParameters.add(txtAmountExecutionsByInstance);
+			
+			ParamComponent paramAmountExecutionsByInstance = new ParamComponent(labAmountExecutionsByInstance, txtAmountExecutionsByInstance);
+			parameters.add(paramAmountExecutionsByInstance);
+			
 			ParamComponent paramRestarts = new ParamComponent(labRestarts, txtRestarts);
 			parameters.add(paramRestarts);
 			
@@ -251,13 +280,18 @@ public class ParametersDialog extends JDialog implements ActionListener{
 				paramVO.setName("params." + param.getLabel().getText());
 				paramVO.setValue(param.getText().getText());
 				algorithmConfiguration.getMetaheuristicParams().add(paramVO);
+				
+				if(param.getLabel().getText().equals("amountOfExecutionsPerInstance")){
+					int amountOfExecutionsPerInstance = Integer.parseInt(param.getText().getText());
+					algorithmConfiguration.setAmountOfExecutionsPerInstance(amountOfExecutionsPerInstance);
+				}
 			}
 			
 			ProgrammaticLauncher launcher = new ProgrammaticLauncher();
 			//TODO File chooser or something
 			try {
 				
-				String fileName =  "./results/Om_TT/results/" + System.currentTimeMillis() + ".html";
+				String fileName =  "./results/Om_TT/experiment-results-" + System.currentTimeMillis() + ".html";
 				launcher.launch(instancesToExecute, algorithmConfiguration, fileName);
 				JOptionPane.showMessageDialog(this, "Results saved in: " + fileName);
 			} catch (InstantiationException e) {
@@ -269,6 +303,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			this.dispose();
 		}else if(command.equals(CANCEL)){
 			this.dispose();
 		}

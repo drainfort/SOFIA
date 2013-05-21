@@ -605,7 +605,6 @@ import afs.model.Workcenter;
 
 			}// for
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Error calculating performance");
 			System.exit(1);
@@ -654,7 +653,6 @@ import afs.model.Workcenter;
 			
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Error calculating performance");
 			System.exit(1);
@@ -728,13 +726,11 @@ import afs.model.Workcenter;
 
 
 	public Integer[][]getRankMatrix() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	public int[] getMaxCol() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

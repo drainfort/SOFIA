@@ -38,6 +38,6 @@ public class GraphTestClone {
 		//Scenario.drawGraphPredecessor(problem);
 		Graph newGraph = (Graph)problem.cloneStructure();
 		
-		//TODO Completar esta prueba ... 
+		//TODO Complete test clone graph
 	}
 }

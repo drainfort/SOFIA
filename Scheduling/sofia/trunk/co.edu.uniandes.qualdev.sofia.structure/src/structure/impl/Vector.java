@@ -476,7 +476,7 @@ public class Vector extends AbstractStructure{
 	}
 
 	private int getReleaseBetas(IOperation iOperation, IOperation iOperation2) {
-		// TODO complete
+		// TODO getReleaseBetas on Vector
 		return 0;
 	}
 	

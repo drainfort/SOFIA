@@ -52,7 +52,6 @@ public class TimedOperation{
 	 */
 	public TimedOperation() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -275,14 +274,11 @@ public class TimedOperation{
 
 
 	public Integer get(String string) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	public void set(TimedOperation timedOperation) {
-		// TODO Auto-generated method stub
-		
 	}
 
 

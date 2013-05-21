@@ -1,5 +1,6 @@
 package chart.printer;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -283,9 +284,15 @@ public class ChartPrinter {
 	}
 
 
-	public void printGlobalResults(String resultsFile) {
+	public void printGlobalResults(String resultsFilePath) {
+		System.out.println("resultsFilePath:  " + resultsFilePath);
 		Document document = new Document();
 		try {
+			File resultsFile = new File(resultsFilePath);
+			
+			if(!resultsFile.exists())
+				resultsFile.createNewFile();
+			
 			PdfWriter writer = PdfWriter.getInstance(document,
 					new FileOutputStream(resultsFile));
 			document.open();

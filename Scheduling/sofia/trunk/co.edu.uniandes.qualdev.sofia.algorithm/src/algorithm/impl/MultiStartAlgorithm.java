@@ -20,7 +20,7 @@ public class MultiStartAlgorithm extends SchedulingAlgorithm {
 	}
 
 	@Override
-	public ExecutionResults execute(String resultsFile, String instanceName)
+	public ExecutionResults execute(String instanceName)
 			throws Exception {
 
 		int bestGamma = Integer.MAX_VALUE;

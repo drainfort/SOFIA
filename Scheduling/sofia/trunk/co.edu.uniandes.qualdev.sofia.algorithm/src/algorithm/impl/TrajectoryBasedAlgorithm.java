@@ -28,7 +28,7 @@ public class TrajectoryBasedAlgorithm extends SchedulingAlgorithm {
 	// Methods
 	// -------------------------------------------
 	
-	public ExecutionResults execute(String resultsFile, String instanceName) throws Exception {
+	public ExecutionResults execute(String instanceName) throws Exception {
 		long initialExecutionTime = System.currentTimeMillis();
 		
 		IStructure initialSolution = constructiveAlgorithm.getInitialSolutionBuilder().createInitialSolution(problem.getProblemFiles(), problem.getBetas(), problem.getStructrureFactory(), iterativeAlgorithm.getGammaCalculator());
