@@ -59,7 +59,7 @@ public class Random implements INeighborCalculator{
 	@Override
 	public ArrayList<PairVO> calculateCompleteNeighborhood(
 			IStructure currentStructure) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO calculateCompleteNeighborhood for RandomNeighborhood
 		return null;
 	}
 	

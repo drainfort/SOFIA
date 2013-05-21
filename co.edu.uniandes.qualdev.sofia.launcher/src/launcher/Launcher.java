@@ -42,7 +42,7 @@ public class Launcher {
 			algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problemConfiguration);
 		}
 		
-		return algorithm.execute(resultsFile, instanceName);
+		return algorithm.execute(instanceName);
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public class Launcher {
 	 * @throws Exception
 	 */
 	public ExecutionResults launch(SchedulingAlgorithm algorithm, String resultsFile, String instanceName) throws Exception{
-		return algorithm.execute(resultsFile, instanceName);
+		return algorithm.execute(instanceName);
 	}
 	
 	// -----------------------------------------

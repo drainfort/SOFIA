@@ -384,7 +384,6 @@ import afs.schedule.oss.OpenShopSchedule;
 	 */
 
 //	public void addToActiveSchedule(TimedOperation timedOperation) {
-//		// TODO Auto-generated method stub
 //		
 //	}	
 	

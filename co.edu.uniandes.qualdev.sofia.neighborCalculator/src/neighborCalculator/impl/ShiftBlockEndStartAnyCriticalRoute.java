@@ -100,7 +100,7 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
 	@Override
 	public ArrayList<PairVO> calculateCompleteNeighborhood(
 			IStructure currentStructure) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO calculateCompleteNeighborhood for ShiftBlockEndStartAnyCriticalRoute
 		return null;
 	}
 	

@@ -31,7 +31,7 @@ public class RandomWalk extends Control {
 			INeighborCalculator neighborCalculator, IModifier modifier,
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution)
 			throws Exception {
-		
+		executionResults = new ExecutionResults();
 		int numberOfVisitedNeighbors=0;
 		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		executionResults.setInitialCmax(GammaInitialSolution);

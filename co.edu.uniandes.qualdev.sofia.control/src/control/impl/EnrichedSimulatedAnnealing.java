@@ -32,6 +32,7 @@ public class EnrichedSimulatedAnnealing extends Control {
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution)
 			throws Exception {
 		
+		executionResults = new ExecutionResults();
 		int numberOfVisitedNeighbors=0;
 		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		executionResults.setInitialCmax(GammaInitialSolution);

@@ -5,8 +5,11 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import common.utils.ExecutionResults;
+
+import chart.printer.ChartPrinter;
+
 import algorithm.SchedulingAlgorithm;
-import algorithm.SchedulingProblem;
 import algorithm.impl.TrajectoryBasedAlgorithm;
 
 import launcher.generator.vos.AlgorithmConfigurationVO;
@@ -84,7 +87,6 @@ public class ProgrammaticLauncher {
 		}else if(algorithmDefinition.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.RandomDispatchingRule)){
 			initialSolutionBuilder = RandomDispatchingRule;
 		}
-		System.out.println("initialSolutionBuilder: " + initialSolutionBuilder);
 		
 		String control = null;
 		if(algorithmDefinition.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_COMPLETE_NEIGHBORHOOD)){
@@ -96,7 +98,6 @@ public class ProgrammaticLauncher {
 		}else if(algorithmDefinition.getMetaheuristic().equals(AlgorithmConfigurationVO.GRASP)){
 			control = GRASP;
 		}
-		System.out.println("control: " + control);
 		
 		String neighborhoodCalculator = null;
 		if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.RANDOM_NEIGHBORHOOD)){
@@ -112,7 +113,6 @@ public class ProgrammaticLauncher {
 		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_ENDSTART)){
 			neighborhoodCalculator = CRITICAL_BLOCK_ENDSTART;
 		}
-		System.out.println("neighborhoodCalculator: " + neighborhoodCalculator);
 		
 		String modifier = null;
 		if(algorithmDefinition.getModifier().equals(AlgorithmConfigurationVO.LEFT_INSERTION)){
@@ -124,7 +124,6 @@ public class ProgrammaticLauncher {
 		}else if(algorithmDefinition.getModifier().equals(AlgorithmConfigurationVO.RIGHT_INSERTION)){
 			modifier = RIGHT_INSERTION;
 		}
-		System.out.println("modifier: " + modifier);
 		
 		String representation = null;
 		if(algorithmDefinition.getRepresentation().equals(AlgorithmConfigurationVO.GRAPH)){
@@ -132,7 +131,6 @@ public class ProgrammaticLauncher {
 		}else if(algorithmDefinition.getRepresentation().equals(AlgorithmConfigurationVO.VECTOR)){
 			representation = VECTOR;
 		}
-		System.out.println("representation: " + representation);
 		
 		String gammaCalculator = null;
 		if(algorithmDefinition.getObjectiveFunction().equals(AlgorithmConfigurationVO.CMAX)){
@@ -140,8 +138,6 @@ public class ProgrammaticLauncher {
 		}else if(algorithmDefinition.getObjectiveFunction().equals(AlgorithmConfigurationVO.MEAN_FLOW_TIME)){
 			gammaCalculator = MEAN_FLOW_TIME;
 		}
-		System.out.println("gammaCalculator: " + gammaCalculator);
-		
 		
 		Properties algorithmConfiguration = new Properties();
 		
@@ -184,12 +180,18 @@ public class ProgrammaticLauncher {
 		for (String instance : instancesToExecute) {
 			// TODO: Este archivo debería contener TODOS los archivos de las betas.. no solamente los TT
 			String problemFile = "./data/Om-TT/" + instance.substring(0, 5) + "/" + instance + ".properties";
-			System.out.println("problemFile: " + problemFile);
 			Properties problem = loadProductConfiguration(new File(problemFile));
 			// TODO: Tener en cuenta los MultiStart
 			SchedulingAlgorithm algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem);
-			algorithm.execute(resultsFile, instance);
+			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
+			for (int i = 0; i < algorithmDefinition.getAmountOfExecutionsPerInstance(); i++) {
+				ExecutionResults result = algorithm.execute(instance);
+				results.add(result);
+			}
+			System.out.println("results.size(): " + results.size());
+			ChartPrinter.getInstance().addResults(results);
 		}
+		ChartPrinter.getInstance().printGlobalResultsHTML(resultsFile);
 	}
 	
 	// ------------------------------------------------------------

@@ -33,6 +33,7 @@ public class TabuSearchWithRandomJumps extends Control {
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution)
 			throws Exception {
 		
+		executionResults = new ExecutionResults();
 		 int numberOfVisitedNeighbors=0;
 		 int GammaInitialSolution = gammaCalculator
 		 .calculateGamma(initialSolution);
@@ -124,7 +125,6 @@ public class TabuSearchWithRandomJumps extends Control {
 						 i++;
 					 }
 				 }
-				 // TODO BORRAR System.out.println("bestY: " + BestY.getCMax());
 				 deltaXY = BestYCmax - XCMax;
 
 				 // TODO Actualizar el criterio de Diversificacion

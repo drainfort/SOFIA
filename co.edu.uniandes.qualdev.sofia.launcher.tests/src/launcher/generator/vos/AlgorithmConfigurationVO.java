@@ -76,6 +76,8 @@ public class AlgorithmConfigurationVO {
 	
 	private ArrayList<String> reportConfiguration;
 	
+	private int amountOfExecutionsPerInstance;
+	
 	// ----------------------------------------------------
 	// Constructor
 	// ----------------------------------------------------
@@ -148,6 +150,14 @@ public class AlgorithmConfigurationVO {
 
 	public ArrayList<ParameterVO> getMetaheuristicParams() {
 		return metaheuristicParams;
+	}
+
+	public int getAmountOfExecutionsPerInstance() {
+		return amountOfExecutionsPerInstance;
+	}
+
+	public void setAmountOfExecutionsPerInstance(int amountOfExecutionsPerInstance) {
+		this.amountOfExecutionsPerInstance = amountOfExecutionsPerInstance;
 	}
 
 	public String toString(){

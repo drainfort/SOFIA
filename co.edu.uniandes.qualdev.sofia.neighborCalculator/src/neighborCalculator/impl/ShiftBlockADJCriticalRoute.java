@@ -113,7 +113,6 @@ public class ShiftBlockADJCriticalRoute implements INeighborCalculator {
 	@Override
 	public ArrayList<PairVO> calculateCompleteNeighborhood(
 			IStructure currentStructure) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

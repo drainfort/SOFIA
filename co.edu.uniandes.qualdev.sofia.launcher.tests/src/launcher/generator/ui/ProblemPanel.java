@@ -12,6 +12,12 @@ import javax.swing.border.TitledBorder;
 public class ProblemPanel extends JPanel{
 
 	// ----------------------------------------------------
+	// Constants
+	// ----------------------------------------------------
+	
+	private static final long serialVersionUID = 1L;
+
+	// ----------------------------------------------------
 	// Attributes
 	// ----------------------------------------------------
 	
@@ -57,7 +63,12 @@ public class ProblemPanel extends JPanel{
 		
 		boxes5 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
-			boxes5.add(new JCheckBox("05x05_" + i));
+			if(i < 10){
+				boxes5.add(new JCheckBox("05x05_0" + i));
+			}else{
+				boxes5.add(new JCheckBox("05x05_" + i));
+			}
+			
 			p5.add(boxes5.get(i-1));
 		}
 		
@@ -69,7 +80,12 @@ public class ProblemPanel extends JPanel{
 		
 		boxes7 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
-			boxes7.add(new JCheckBox("07x07_" + i));
+			if(i < 10){
+				boxes7.add(new JCheckBox("07x07_0" + i));
+			}else{
+				boxes7.add(new JCheckBox("07x07_" + i));
+			}
+			
 			p7.add(boxes7.get(i-1));
 		}
 		
@@ -81,7 +97,12 @@ public class ProblemPanel extends JPanel{
 		
 		boxes10 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
-			boxes10.add(new JCheckBox("10x10_" + i));
+			if(i < 10){
+				boxes10.add(new JCheckBox("10x10_0" + i));
+			}else{
+				boxes10.add(new JCheckBox("10x10_" + i));
+			}
+			
 			p10.add(boxes10.get(i-1));
 		}
 		this.add(p10);
@@ -92,7 +113,12 @@ public class ProblemPanel extends JPanel{
 		
 		boxes15 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
-			boxes15.add(new JCheckBox("15x15_" + i));
+			if(i < 10){
+				boxes15.add(new JCheckBox("15x15_0" + i));
+			}else{
+				boxes15.add(new JCheckBox("15x15_" + i));
+			}
+			
 			p15.add(boxes15.get(i-1));
 		}
 		this.add(p15);
@@ -103,7 +129,11 @@ public class ProblemPanel extends JPanel{
 		
 		boxes20 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
-			boxes20.add(new JCheckBox("20x20_" + i));
+			if(i < 10){
+				boxes20.add(new JCheckBox("20x20_0" + i));
+			}else{
+				boxes20.add(new JCheckBox("20x20_" + i));
+			}
 			p20.add(boxes20.get(i-1));
 		}
 		this.add(p20);

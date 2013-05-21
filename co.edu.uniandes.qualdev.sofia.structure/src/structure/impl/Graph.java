@@ -917,7 +917,7 @@ public class Graph extends AbstractStructure {
 
 	@Override
 	public void setMaxMachinesPerStation(int maxMachinesPerStation) {
-		// TODO Complete
+		// TODO setMaxMachinesPerStation on Graph
 	}
 
 	public ArrayList<Job> getJobs() {

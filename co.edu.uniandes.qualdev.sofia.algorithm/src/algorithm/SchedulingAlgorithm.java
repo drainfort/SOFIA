@@ -138,7 +138,7 @@ public abstract class SchedulingAlgorithm {
 	 * @throws Exception
 	 *             If something fails
 	 */
-	public abstract ExecutionResults execute(String resultsFile, String instanceName) throws Exception;
+	public abstract ExecutionResults execute(String instanceName) throws Exception;
 
 	// -----------------------------------------------
 	// Getters and setters

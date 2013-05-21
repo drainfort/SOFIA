@@ -84,7 +84,7 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 	@Override
 	public ArrayList<PairVO> calculateCompleteNeighborhood(
 			IStructure currentStructure) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO calculateCompleteNeighborhood for ShiftWeightedNodesCriticalRoute
 		return null;
 	}
 	
