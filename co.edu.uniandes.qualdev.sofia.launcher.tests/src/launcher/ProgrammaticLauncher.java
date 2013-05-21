@@ -174,6 +174,7 @@ public class ProgrammaticLauncher {
 		String finalSolutions = "false";
 		
 		ArrayList<String> reportConfiguration = algorithmDefinition.getReportConfiguration();
+		System.out.println("reportConfiguration: " + reportConfiguration);
 		for (String report : reportConfiguration) {
 			if(report.equals(AlgorithmConfigurationVO.CONSOLIDATION_TABLE)){
 				consolidateTable = "true";
@@ -184,8 +185,11 @@ public class ProgrammaticLauncher {
 			}
 		}
 		algorithmConfiguration.setProperty("report.consolidationTable", consolidateTable);
+		System.out.println("report.consolidationTable: " + consolidateTable);
 		algorithmConfiguration.setProperty("report.gantt.initialsolutions", initialSolutions);
+		System.out.println("report.gantt.initialsolutions: " + initialSolutions);
 		algorithmConfiguration.setProperty("report.gantt.bestsolutions", finalSolutions);
+		System.out.println("report.gantt.bestsolutions: " + finalSolutions);
 		
 		// Launching instances
 		// TODO: Make this execution parallel

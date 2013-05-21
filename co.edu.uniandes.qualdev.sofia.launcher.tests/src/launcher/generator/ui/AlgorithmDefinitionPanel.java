@@ -325,7 +325,6 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		for (JCheckBox checkBox : reportBoxes) {
 			if(checkBox.isSelected()){
 				answer.getReportConfiguration().add(checkBox.getText());
-				break;
 			}
 		}
 		return answer;
