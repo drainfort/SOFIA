@@ -5,7 +5,6 @@ import initialSolBuilder.IInitialSolBuilder;
 import java.util.ArrayList;
 import structure.IStructure;
 import structure.factory.AbstractStructureFactory;
-import structure.factory.impl.VectorFactory;
 import afs.AFSInitialSolutionCreator;
 import common.types.BetaVO;
 

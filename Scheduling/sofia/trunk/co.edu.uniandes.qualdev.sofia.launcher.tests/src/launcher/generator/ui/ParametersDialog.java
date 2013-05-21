@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,6 +26,8 @@ public class ParametersDialog extends JDialog implements ActionListener{
 	// Constants
 	// ------------------------------------------------------------------------------------------
 	
+	private static final long serialVersionUID = 1L;
+
 	public static final String ACCEPT = "accept";
 	
 	public static final String CANCEL = "cancel";
@@ -34,8 +35,6 @@ public class ParametersDialog extends JDialog implements ActionListener{
 	// ------------------------------------------------------------------------------------------
 	// Attributes
 	// ------------------------------------------------------------------------------------------
-	
-	private LauncherUI launcherUI;
 	
 	private AlgorithmConfigurationVO algorithmConfiguration;
 	
@@ -53,7 +52,6 @@ public class ParametersDialog extends JDialog implements ActionListener{
 	
 	public ParametersDialog(LauncherUI launcherUI, ArrayList<String> instancesToExecute, AlgorithmConfigurationVO algorithmConfiguration){
 		super( launcherUI, true );
-		this.launcherUI = launcherUI;
 		this.algorithmConfiguration = algorithmConfiguration;
 		this.instancesToExecute = instancesToExecute;
 		parameters = new ArrayList<ParamComponent>();
@@ -63,7 +61,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 		this.setLayout(new BorderLayout());
 		this.setSize(450,180);
 		
-		// Case 1: The selected metaheuristic is TabuSearch -> complete neighborhood
+		// Case 1: The selected meta-heuristic is TabuSearch -> complete neighborhood
 		if((this.algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_COMPLETE_NEIGHBORHOOD))){
 			this.setTitle("Metaheuristic parameters: Tabu search complete neighborhood");
 			JPanel panelParameters = new JPanel();
@@ -109,7 +107,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			this.add(panelParameters, BorderLayout.CENTER);
 		}
-		// Case 2:  The selected metaheuristic is TabuSearch -> restricted neighborhood
+		// Case 2:  The selected meta-heuristic is TabuSearch -> restricted neighborhood
 		else if(this.algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_RESTRICTED_NEIGHBORHOOD)){
 			this.setTitle("Metaheuristic parameters: Tabu search restricted neighborhood");
 			this.setSize(450,220);
@@ -164,7 +162,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			this.add(panelParameters, BorderLayout.CENTER);
 		}
-		// Case 3: The selected metaheuristic is SimulatedAnnealing
+		// Case 3: The selected meta-heuristic is SimulatedAnnealing
 		else if(this.algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.SIMULATED_ANNELING)){
 			this.setTitle("Metaheuristic parameters: Simulated annealing");
 			JPanel panelParameters = new JPanel();
@@ -232,6 +230,9 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			panelParameters.add(labRestarts);
 			panelParameters.add(txtRestarts);
 			
+			ParamComponent paramRestarts = new ParamComponent(labRestarts, txtRestarts);
+			parameters.add(paramRestarts);
+			
 			// Amount of executions by instance
 			JLabel labAmountExecutionsByInstance = new JLabel("amountOfExecutionsPerInstance");
 			JTextField txtAmountExecutionsByInstance = new JTextField("1");
@@ -241,14 +242,53 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			ParamComponent paramAmountExecutionsByInstance = new ParamComponent(labAmountExecutionsByInstance, txtAmountExecutionsByInstance);
 			parameters.add(paramAmountExecutionsByInstance);
 			
-			ParamComponent paramRestarts = new ParamComponent(labRestarts, txtRestarts);
-			parameters.add(paramRestarts);
-			
 			this.add(panelParameters, BorderLayout.CENTER);
 		}
-		// Case 4: The selected metaheuristic is GRASP
+		// Case 4: The selected meta-heuristic is GRASP
 		else if(this.algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.GRASP)){
 			this.setTitle("Metaheuristic parameters: GRASP");
+			JPanel panelParameters = new JPanel();
+			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
+			panelParameters.setLayout(new GridLayout(4,2));
+			this.setSize(450,200);
+			
+			//strategyLS
+			JLabel labStrategyLS = new JLabel("strategyLS");
+			JTextField txtStrategyLS = new JTextField("0");
+			panelParameters.add(labStrategyLS);
+			panelParameters.add(txtStrategyLS);
+			
+			ParamComponent paramStrategyLS = new ParamComponent(labStrategyLS, txtStrategyLS);
+			parameters.add(paramStrategyLS);
+			
+			//maxLSDepth
+			JLabel labMaxLSDepth = new JLabel("maxLSDepth");
+			JTextField txtMaxLSDepth = new JTextField("999");
+			panelParameters.add(labMaxLSDepth);
+			panelParameters.add(txtMaxLSDepth);
+			
+			ParamComponent paramMaxLSDepth = new ParamComponent(labMaxLSDepth, txtMaxLSDepth);
+			parameters.add(paramMaxLSDepth);
+			
+			//maxLSDepth
+			JLabel labMaxNeighbors = new JLabel("maxNeighbors");
+			JTextField txtMaxNeighbors = new JTextField("2000");
+			panelParameters.add(labMaxNeighbors);
+			panelParameters.add(txtMaxNeighbors);
+			
+			ParamComponent paramMaxNeighbors = new ParamComponent(labMaxNeighbors, txtMaxNeighbors);
+			parameters.add(paramMaxNeighbors);
+			
+			// Amount of executions by instance
+			JLabel labAmountExecutionsByInstance = new JLabel("amountOfExecutionsPerInstance");
+			JTextField txtAmountExecutionsByInstance = new JTextField("1");
+//			panelParameters.add(labAmountExecutionsByInstance);
+//			panelParameters.add(txtAmountExecutionsByInstance);
+			
+			ParamComponent paramAmountExecutionsByInstance = new ParamComponent(labAmountExecutionsByInstance, txtAmountExecutionsByInstance);
+			parameters.add(paramAmountExecutionsByInstance);
+			
+			this.add(panelParameters, BorderLayout.CENTER);
 		}
 		
 		JPanel buttons = new JPanel();
@@ -288,9 +328,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			}
 			
 			ProgrammaticLauncher launcher = new ProgrammaticLauncher();
-			//TODO File chooser or something
 			try {
-				
 				String fileName =  "./results/Om_TT/experiment-results-" + System.currentTimeMillis() + ".html";
 				launcher.launch(instancesToExecute, algorithmConfiguration, fileName);
 				JOptionPane.showMessageDialog(this, "Results saved in: " + fileName);

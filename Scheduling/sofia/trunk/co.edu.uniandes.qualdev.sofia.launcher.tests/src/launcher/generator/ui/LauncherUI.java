@@ -5,11 +5,16 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import launcher.ProgrammaticLauncher;
 import launcher.generator.JarGenerator;
 import launcher.generator.vos.AlgorithmConfigurationVO;
 
 public class LauncherUI extends JFrame{
+
+	// ----------------------------------------------------
+	// Constants
+	// ----------------------------------------------------
+	
+	private static final long serialVersionUID = 1L;
 
 	// ----------------------------------------------------
 	// Attributes
@@ -25,7 +30,8 @@ public class LauncherUI extends JFrame{
 	
 	public LauncherUI(){
 		this.setLayout(new BorderLayout());
-		this.setSize(790, 800);
+		this.setSize(790, 830);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		configurationPanel = new ConfigurationPanel();
 		this.add(configurationPanel, BorderLayout.NORTH);

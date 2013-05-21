@@ -60,7 +60,7 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		
 		JPanel initialSolutionPanel = new JPanel();
 		initialSolutionPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Initial solution" ) ) );
-		initialSolutionPanel.setLayout( new GridLayout(2,4));
+		initialSolutionPanel.setLayout( new GridLayout(3,4));
 		
 		JRadioButton lptRadioButton = new JRadioButton(AlgorithmConfigurationVO.LPTNonDelay);
 		JRadioButton lrptRadioButton = new JRadioButton(AlgorithmConfigurationVO.LRPTNonDelay);
@@ -69,6 +69,9 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		JRadioButton bestRadioButton = new JRadioButton(AlgorithmConfigurationVO.BestDispatchingRule);
 		bestRadioButton.setSelected(true);
 		JRadioButton randomRadioButton = new JRadioButton(AlgorithmConfigurationVO.RandomDispatchingRule);
+		JRadioButton stochasticERM = new JRadioButton(AlgorithmConfigurationVO.StochasticERM);
+		JRadioButton stochasticLPT = new JRadioButton(AlgorithmConfigurationVO.StochasticLPTNonDelay);
+		JRadioButton stochasticSPT = new JRadioButton(AlgorithmConfigurationVO.StochasticSPTNonDelay);
 		
 		initialSolutionPanel.add(lptRadioButton);
 		initialSolutionPanel.add(lrptRadioButton);
@@ -76,6 +79,9 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		initialSolutionPanel.add(srptRadioButton);
 		initialSolutionPanel.add(bestRadioButton);
 		initialSolutionPanel.add(randomRadioButton);
+		initialSolutionPanel.add(stochasticERM);
+		initialSolutionPanel.add(stochasticLPT);
+		initialSolutionPanel.add(stochasticSPT);
 
 		initialSolutionButtons.add(lptRadioButton);
 		initialSolutionButtons.add(lrptRadioButton);
@@ -83,6 +89,9 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		initialSolutionButtons.add(srptRadioButton);
 		initialSolutionButtons.add(bestRadioButton);
 		initialSolutionButtons.add(randomRadioButton);
+		initialSolutionButtons.add(stochasticERM);
+		initialSolutionButtons.add(stochasticLPT);
+		initialSolutionButtons.add(stochasticSPT);
 		
 		ButtonGroup initialSolutionGroup = new ButtonGroup();
 		initialSolutionGroup.add(lptRadioButton);
@@ -91,6 +100,9 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		initialSolutionGroup.add(srptRadioButton);
 		initialSolutionGroup.add(bestRadioButton);
 		initialSolutionGroup.add(randomRadioButton);
+		initialSolutionGroup.add(stochasticERM);
+		initialSolutionGroup.add(stochasticLPT);
+		initialSolutionGroup.add(stochasticSPT);
 		
 		this.add(initialSolutionPanel);
 		

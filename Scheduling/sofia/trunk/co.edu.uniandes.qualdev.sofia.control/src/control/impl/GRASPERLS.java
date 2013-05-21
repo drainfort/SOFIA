@@ -40,6 +40,7 @@ public class GRASPERLS extends Control {
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution)
 			throws Exception {
 
+		executionResults = new ExecutionResults();
 		int numberOfNeighbors[]=new int[1];  numberOfNeighbors[0]=0;
 		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		executionResults.setInitialCmax(GammaInitialSolution);
