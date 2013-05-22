@@ -31,11 +31,11 @@ public class RandomNeighbor implements IModifier {
 		double random = Math.random();
 		
 		if(random > 0.3){
-			vector.exchangeOperations(movement.getX(), movement.getY());
+			vector.exchangeOperations(movement.getoX(), movement.getoY());
 		}else if(random <= 0.3 && random > 0.6){
-			vector.insertOperationBefore(movement.getX(), movement.getY());
+			vector.insertOperationBefore(movement.getoX(), movement.getoY());
 		}else{
-			vector.insertOperationAfter(movement.getX(), movement.getY());
+			vector.insertOperationAfter(movement.getoX(), movement.getoY());
 		}
 		
 		if(vector.validateStructure()){
