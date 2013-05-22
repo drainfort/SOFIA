@@ -208,6 +208,7 @@ public class Vector extends AbstractStructure{
 				return i;
 			i++;
 		}
+		
 		return -1;
 	}
 	

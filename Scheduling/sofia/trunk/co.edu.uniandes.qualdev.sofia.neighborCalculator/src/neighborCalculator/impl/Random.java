@@ -19,17 +19,20 @@ public class Random implements INeighborCalculator{
 		int totalJobs = currentVector.getTotalJobs();
 		int totalStations = currentVector.getTotalStations();
 		
-		int randomA = randomNumber(0, (totalJobs * totalStations) - 1);
-		int randomB = randomNumber(0, (totalJobs * totalStations) - 1);
-		int randomC = randomNumber(0, (totalJobs * totalStations) - 1);
+		int randomA = randomNumber(0, totalStations - 1);
+		int randomB = randomNumber(0, totalJobs - 1);
+		int randomC = randomNumber(0, totalJobs - 1);
+		int randomD = randomNumber(0, totalStations - 1);
 
 		double randomX = Math.random();
 		
+		// Provides a pair with the same station
 		if(randomX > 0.5){
 			return new PairVO(new OperationIndexVO(randomB, randomA), new OperationIndexVO(randomC, randomA));
 		}
+		// Provides a pair with the same job
 		else{
-			return new PairVO(new OperationIndexVO(randomA, randomB), new OperationIndexVO(randomA, randomC));
+			return new PairVO(new OperationIndexVO(randomB, randomA), new OperationIndexVO(randomB, randomD));
 		}
 		
 	}
@@ -44,15 +47,28 @@ public class Random implements INeighborCalculator{
 			int totalJobs = currentVector.getTotalJobs();
 			int totalStations = currentVector.getTotalStations();
 			
-			int randomA = randomNumber(0, (totalJobs * totalStations) - 1);
-			int randomB = randomNumber(0, (totalJobs * totalStations) - 1);
-			PairVO pair = new PairVO(randomA, randomB);
+			int randomA = randomNumber(0, totalStations - 1);
+			int randomB = randomNumber(0, totalJobs - 1);
+			int randomC = randomNumber(0, totalJobs - 1);
+			int randomD = randomNumber(0, totalStations - 1);
+
+			double randomX = Math.random();
+			
+			PairVO pair = null;
+			// Provides a pair with the same station
+			if(randomX > 0.5){
+				pair = new PairVO(new OperationIndexVO(randomB, randomA), new OperationIndexVO(randomC, randomA));
+			}
+			// Provides a pair with the same job
+			else{
+				pair = new PairVO(new OperationIndexVO(randomB, randomA), new OperationIndexVO(randomB, randomD));
+			}
+			
 			if(!pairs.contains(pair)){
 				pairs.add(pair);
 				size--;
 			}
 		}
-		
 		return pairs;
 	}
 	
