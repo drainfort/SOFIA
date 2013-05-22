@@ -53,19 +53,19 @@ public class BestDispatchingRule implements IInitialSolBuilder{
 		LRPTNonDelay lrpt = new LRPTNonDelay();
 		SPTNonDelay spt = new SPTNonDelay();
 		SRPTNonDelay srpt = new SRPTNonDelay();
-		AFSLPTNonDelay afslpt = new AFSLPTNonDelay();
-		AFSLRPTNonDelay afslrpt = new AFSLRPTNonDelay();
-		AFSSPTNonDelay afsspt = new AFSSPTNonDelay();
-		AFSSRPTNonDelay afssrpt = new AFSSRPTNonDelay();
+//		AFSLPTNonDelay afslpt = new AFSLPTNonDelay();
+//		AFSLRPTNonDelay afslrpt = new AFSLRPTNonDelay();
+//		AFSSPTNonDelay afsspt = new AFSSPTNonDelay();
+//		AFSSRPTNonDelay afssrpt = new AFSSRPTNonDelay();
 		
 		IStructure lptSolution = lpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
 		IStructure lrptSolution = lrpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
 		IStructure sptSolution = spt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
 		IStructure srptSolution = srpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
-		IStructure afslptSolution = afslpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
-		IStructure afslrptSolution = afslrpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
-		IStructure afssptSolution = afsspt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
-		IStructure afssrptSolution = afssrpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
+//		IStructure afslptSolution = afslpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
+//		IStructure afslrptSolution = afslrpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
+//		IStructure afssptSolution = afsspt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
+//		IStructure afssrptSolution = afssrpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
 		
 //		int gammalptSolution = gammaCalculator.calculateGamma(lptSolution);
 //		System.out.println("gammalptSolution: " + gammalptSolution);
@@ -94,10 +94,10 @@ public class BestDispatchingRule implements IInitialSolBuilder{
 		solutions.add(lrptSolution);
 		solutions.add(sptSolution);
 		solutions.add(srptSolution);
-		solutions.add(afslptSolution);
-		solutions.add(afslrptSolution);
-		solutions.add(afssptSolution);
-		solutions.add(afssrptSolution);
+//		solutions.add(afslptSolution);
+//		solutions.add(afslrptSolution);
+//		solutions.add(afssptSolution);
+//		solutions.add(afssrptSolution);
 		
 		int menor=Integer.MAX_VALUE;
 		
