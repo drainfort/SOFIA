@@ -82,6 +82,7 @@ public class ChartPrinter {
               e2.printStackTrace();
            }
         }
+        globalExecutionResults = new ArrayList<ArrayList<ExecutionResults>>();
 	}
 	
 	private void printBodyHTML(PrintWriter pw) {
