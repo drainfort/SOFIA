@@ -12,6 +12,7 @@ import common.types.BetaVO;
  * instance
  * 
  * @author Jaime Romero
+ * @author David Mendez-Acuna
  */
 public class RandomDispatchingRule implements IInitialSolBuilder{
 
@@ -48,19 +49,19 @@ public class RandomDispatchingRule implements IInitialSolBuilder{
 		IInitialSolBuilder lrpt = new LRPTNonDelay();
 		IInitialSolBuilder spt = new SPTNonDelay();
 		IInitialSolBuilder srpt = new SRPTNonDelay();
-		IInitialSolBuilder afslpt = new AFSLPTNonDelay();
-		IInitialSolBuilder afslrpt = new AFSLRPTNonDelay();
-		IInitialSolBuilder afsspt = new AFSSPTNonDelay();
-		IInitialSolBuilder afssrpt = new AFSSRPTNonDelay();
+//		IInitialSolBuilder afslpt = new AFSLPTNonDelay();
+//		IInitialSolBuilder afslrpt = new AFSLRPTNonDelay();
+//		IInitialSolBuilder afsspt = new AFSSPTNonDelay();
+//		IInitialSolBuilder afssrpt = new AFSSRPTNonDelay();
 		
 		arrayClasses.add(lpt);
 		arrayClasses.add(lrpt);
 		arrayClasses.add(spt);
 		arrayClasses.add(srpt);
-		arrayClasses.add(afslpt);
-		arrayClasses.add(afslrpt);
-		arrayClasses.add(afsspt);
-		arrayClasses.add(afssrpt);
+//		arrayClasses.add(afslpt);
+//		arrayClasses.add(afslrpt);
+//		arrayClasses.add(afsspt);
+//		arrayClasses.add(afssrpt);
 		
 		int number = randomNumber(0, arrayClasses.size()-1);
 		return arrayClasses.get(number).createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
