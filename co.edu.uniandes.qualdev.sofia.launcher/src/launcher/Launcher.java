@@ -36,10 +36,11 @@ public class Launcher {
 		String iterative = algorithmConfiguration.getProperty("scheduling.control");
 		
 		SchedulingAlgorithm algorithm =  null;
+		//TODO Fix the nulls
 		if(iterative.equals("control.impl.GRASP") || iterative.equals("control.impl.GRASPERLS")){
-			algorithm = new MultiStartAlgorithm(algorithmConfiguration, problemConfiguration);
+			algorithm = new MultiStartAlgorithm(algorithmConfiguration, problemConfiguration, null);
 		}else{
-			algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problemConfiguration);
+			algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problemConfiguration, null);
 		}
 		
 		return algorithm.execute(instanceName);
