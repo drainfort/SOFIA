@@ -61,6 +61,9 @@ public class ProgrammaticLauncher {
 	public static String CMAX = "gammaCalculator.impl.CMaxCalculator";
 	public static String MEAN_FLOW_TIME = "gammaCalculator.impl.MeanFlowTimeCalculator";
 	
+	public static String CMAX_BKS = "cmax";
+	public static String MEAN_FLOW_TIME_BKS = "mft";
+	
 	// ------------------------------------------------------------
 	// Constructor
 	// ------------------------------------------------------------
@@ -145,10 +148,13 @@ public class ProgrammaticLauncher {
 		}
 		
 		String gammaCalculator = null;
+		String gammaBKS = null;
 		if(algorithmDefinition.getObjectiveFunction().equals(AlgorithmConfigurationVO.CMAX)){
 			gammaCalculator = CMAX;
+			gammaBKS = CMAX_BKS;
 		}else if(algorithmDefinition.getObjectiveFunction().equals(AlgorithmConfigurationVO.MEAN_FLOW_TIME)){
 			gammaCalculator = MEAN_FLOW_TIME;
+			gammaBKS = MEAN_FLOW_TIME_BKS;
 		}
 		
 		Properties algorithmConfiguration = new Properties();
@@ -162,19 +168,12 @@ public class ProgrammaticLauncher {
 		algorithmConfiguration.setProperty("scheduling.initialSolutionBuilder", initialSolutionBuilder);
 		algorithmConfiguration.setProperty("scheduling.parametersLoader", control + "ParametersLoader");
 		
-		// Metaheuristic's parameters
-		ArrayList<ParameterVO> parameters = algorithmDefinition.getMetaheuristicParams();
-		for (ParameterVO parameterVO : parameters) {
-			algorithmConfiguration.setProperty(parameterVO.getName(), parameterVO.getValue());
-		}
-		
 		// Execution report configuration
 		String consolidateTable = "false";
 		String initialSolutions = "false";
 		String finalSolutions = "false";
 		
 		ArrayList<String> reportConfiguration = algorithmDefinition.getReportConfiguration();
-		System.out.println("reportConfiguration: " + reportConfiguration);
 		for (String report : reportConfiguration) {
 			if(report.equals(AlgorithmConfigurationVO.CONSOLIDATION_TABLE)){
 				consolidateTable = "true";
@@ -185,25 +184,56 @@ public class ProgrammaticLauncher {
 			}
 		}
 		algorithmConfiguration.setProperty("report.consolidationTable", consolidateTable);
-		System.out.println("report.consolidationTable: " + consolidateTable);
 		algorithmConfiguration.setProperty("report.gantt.initialsolutions", initialSolutions);
-		System.out.println("report.gantt.initialsolutions: " + initialSolutions);
 		algorithmConfiguration.setProperty("report.gantt.bestsolutions", finalSolutions);
-		System.out.println("report.gantt.bestsolutions: " + finalSolutions);
+		
+		String currentBks = "gamma." + gammaBKS + ".bks.";
+		
+		ArrayList<String> selectedBetas = algorithmDefinition.getSelectedBetas();
+		boolean travelTimeSelected = false;
+		boolean setupSelected = false;
+		
+		for (String selectedBeta : selectedBetas) {
+			if(selectedBeta.equals(AlgorithmConfigurationVO.TRAVEL_TIMES)){
+				travelTimeSelected = true;
+			}else if(selectedBeta.equals(AlgorithmConfigurationVO.SETUP_TIMES)){
+				setupSelected = true;
+			}
+		}
+		
+		if(!travelTimeSelected && !setupSelected){
+			currentBks += "om";
+		}
+		else if(!travelTimeSelected && setupSelected){
+			currentBks += "om.s";
+		}
+		else if(travelTimeSelected && !setupSelected){
+			currentBks += "om.tt";
+		}
+		else if(travelTimeSelected && setupSelected){
+			currentBks += "om.tt.s";
+		}
+		
+		System.out.println("currentBks: " + currentBks);
+		
+		// Metaheuristic's parameters
+		ArrayList<ParameterVO> parameters = algorithmDefinition.getMetaheuristicParams();
+		for (ParameterVO parameterVO : parameters) {
+			algorithmConfiguration.setProperty(parameterVO.getName(), parameterVO.getValue());
+		}
 		
 		// Launching instances
 		// TODO: Make this execution parallel
 		for (String instance : instancesToExecute) {
-			// TODO: Este archivo debería contener TODOS los archivos de las betas.. no solamente los TT
-			String problemFile = "./data/Om-TT/" + instance.substring(0, 5) + "/" + instance + ".properties";
+			String problemFile = "./data/Om-TT-S/" + instance.substring(0, 5) + "/" + instance + ".properties";
 			Properties problem = loadProductConfiguration(new File(problemFile));
 			
 			SchedulingAlgorithm algorithm = null;
 			
 			if(!multiStart){
-				algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem);
+				algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem, currentBks);
 			}else{
-				algorithm = new MultiStartAlgorithm(algorithmConfiguration, problem);
+				algorithm = new MultiStartAlgorithm(algorithmConfiguration, problem, currentBks);
 			}
 			
 			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
