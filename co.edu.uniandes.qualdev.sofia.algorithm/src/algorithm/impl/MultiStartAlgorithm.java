@@ -11,10 +11,10 @@ public class MultiStartAlgorithm extends SchedulingAlgorithm {
 
 	private int startsNumber;
 	
-	public MultiStartAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration)
+	public MultiStartAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, Exception {
-		super(algorithmConfiguration, problemConfiguration);
+		super(algorithmConfiguration, problemConfiguration, currentBks);
 		
 		startsNumber = 500;
 	}
@@ -38,7 +38,7 @@ public class MultiStartAlgorithm extends SchedulingAlgorithm {
 				bestResults = results;
 				bestGamma = results.getBestCmax();
 
-				if( results.getBestCmax() <= problem.getOptimal()){
+				if( results.getBestCmax() <= problem.getCurrentBksValue()){
 					optimal = true;
 					System.out.println("******* Optimal found: " + results.getBestCmax() );
 				}

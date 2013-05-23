@@ -1,15 +1,14 @@
 package algorithm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import common.types.BetaVO;
-
 
 /**
  * Represents a scheduling problem
  * 
  * @author David Mendez-Acuna
- * 
  */
 public class SchedulingProblem {
 
@@ -26,21 +25,22 @@ public class SchedulingProblem {
 	
 	private String structrureFactory;
 	
-	private int optimal;
+	private HashMap<String, Integer> bkss;
 	
-	private int yuSolution;
-
+	private String currentBks;
+	
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
 
-	public SchedulingProblem(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, String structrureFactory, int nOptimal)
-			throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException, Exception {
+	public SchedulingProblem(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, String structrureFactory, 
+				HashMap<String, Integer> bkss, String currentBks) throws InstantiationException, IllegalAccessException, ClassNotFoundException, 
+						Exception {
 		this.betas = betas;
 		this.problemFiles = problemFiles;
 		this.structrureFactory = structrureFactory;
-		this.optimal = nOptimal;
+		this.bkss = bkss;
+		this.currentBks = currentBks;
 	}
 
 	// -----------------------------------------------
@@ -71,21 +71,23 @@ public class SchedulingProblem {
 		this.structrureFactory = structrureFactory;
 	}
 
-	public int getOptimal() {
-		return optimal;
+	public HashMap<String, Integer> getBkss() {
+		return bkss;
 	}
 
-	public void setOptimal(int optimal) {
-		this.optimal = optimal;
+	public void setBkss(HashMap<String, Integer> bkss) {
+		this.bkss = bkss;
 	}
 
-	public int getYuSolution() {
-		return yuSolution;
+	public String getCurrentBks() {
+		return currentBks;
 	}
 
-	public void setYuSolution(int yuSolution) {
-		this.yuSolution = yuSolution;
+	public void setCurrentBks(String currentBks) {
+		this.currentBks = currentBks;
 	}
 	
-	
+	public int getCurrentBksValue(){
+		return bkss.get(currentBks);
+	}
 }
