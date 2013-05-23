@@ -1,6 +1,7 @@
 package algorithm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import common.types.BetaVO;
@@ -44,6 +45,7 @@ public abstract class SchedulingAlgorithm {
 
 	/**
 	 * Constructor of the class.
+	 * @param currentBks 
 	 * 
 	 * @param configurationFile. The configuration file that contains the 
 	 * 								information about what components should be instantiated. 
@@ -53,7 +55,7 @@ public abstract class SchedulingAlgorithm {
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	public SchedulingAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration)
+	public SchedulingAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, Exception {
 		
@@ -69,14 +71,6 @@ public abstract class SchedulingAlgorithm {
 		String machinesFile = (String) problemConfiguration
 				.getProperty("scheduling.instancesFile.machines");
 		
-		int optimal = (int) Integer.parseInt(problemConfiguration
-				.getProperty("params.optimal"));
-		
-		int yuSolution=0;
-		if(problemConfiguration.getProperty("params.yuSolution")!=null){
-			 yuSolution = (int) Integer.parseInt(problemConfiguration
-					.getProperty("params.yuSolution"));
-		}
 		// Initializes the constructive algorithm according to the configuration file
 		String initialSolutionBuilderClassName = (String) algorithmConfiguration
 				.getProperty("scheduling.initialSolutionBuilder");
@@ -89,37 +83,27 @@ public abstract class SchedulingAlgorithm {
 		
 		// Initializes the constraints (betas) that the given solution should satisfy.
 		ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
-		int betasAmount = (Integer.parseInt((String) problemConfiguration
-				.getProperty("betas.amount")));
+		int betasAmount = (Integer.parseInt((String) problemConfiguration.getProperty("betas.amount")));
 		for (int i = 0; i < betasAmount; i++) {
-			String currentBetaName = (String) problemConfiguration
-					.getProperty("betas.beta." + i + ".name");
-			String currentBetaClass = (String) problemConfiguration
-					.getProperty("betas.beta." + i + ".class");
-			int informationFilesAmount = Integer
-					.parseInt((String) problemConfiguration
-							.getProperty("betas.beta." + i
-									+ ".informationFiles.amount"));
+			String currentBetaName = (String) problemConfiguration.getProperty("betas.beta." + i + ".name");
+			String currentBetaClass = (String) problemConfiguration.getProperty("betas.beta." + i + ".class");
+			int informationFilesAmount = Integer.parseInt((String) problemConfiguration.getProperty("betas.beta." + i + ".informationFiles.amount"));
 			ArrayList<String> informationFiles = new ArrayList<String>();
 
 			for (int j = 0; j < informationFilesAmount; j++) {
-				String currentInformationFile = (String) problemConfiguration
-						.getProperty("betas.beta." + i + ".informationFiles."
-								+ j + ".path");
+				String currentInformationFile = (String) problemConfiguration.getProperty("betas.beta." + i + ".informationFiles." + j + ".path");
 				informationFiles.add(currentInformationFile);
 				problemFiles.add(currentInformationFile);
 			}
 
-			BetaVO beta = new BetaVO(currentBetaName, currentBetaClass,
-					informationFiles);
+			BetaVO beta = new BetaVO(currentBetaName, currentBetaClass,informationFiles);
 			betas.add(beta);
-			
 		}
 		
-		// Initializes the problem according to the inputs
-		problem = new SchedulingProblem(problemFiles, betas, structrureFactory,optimal);
+		HashMap<String, Integer> bkss = getBkss(problemConfiguration);
 		
-		problem.setYuSolution(yuSolution);
+		// Initializes the problem according to the inputs
+		problem = new SchedulingProblem(problemFiles, betas, structrureFactory, bkss, currentBks);
 		
 		constructiveAlgorithm = new ConstructiveAlgorithm(initialSolutionBuilderClassName);
 		
@@ -130,6 +114,36 @@ public abstract class SchedulingAlgorithm {
 	// -----------------------------------------------
 	// Methods
 	// -----------------------------------------------
+
+	private HashMap<String, Integer> getBkss(Properties problemConfiguration) {
+		HashMap<String, Integer> bkss = new HashMap<String, Integer>();
+		
+		int gamma_cmax_bks_om = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.cmax.bks.om"));
+		bkss.put("gamma.cmax.bks.om", gamma_cmax_bks_om);
+		
+		int gamma_cmax_bks_om_s = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.cmax.bks.om.s"));
+		bkss.put("gamma.cmax.bks.om.s", gamma_cmax_bks_om_s);
+		
+		int gamma_cmax_bks_om_tt = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.cmax.bks.om.tt"));
+		bkss.put("gamma.cmax.bks.om.tt", gamma_cmax_bks_om_tt);
+		
+		int gamma_cmax_bks_om_tt_s = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.cmax.bks.om.tt.s"));
+		bkss.put("gamma.cmax.bks.om.tt.s", gamma_cmax_bks_om_tt_s);
+		
+		int gamma_mft_bks_om = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.mft.bks.om"));
+		bkss.put("gamma.mft.bks.om", gamma_mft_bks_om);
+		
+		int gamma_mft_bks_om_s = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.mft.bks.om.s"));
+		bkss.put("gamma.mft.bks.om.s", gamma_mft_bks_om_s);
+		
+		int gamma_mft_bks_om_tt = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.mft.bks.om.tt"));
+		bkss.put("gamma.mft.bks.om.tt", gamma_mft_bks_om_tt);
+		
+		int gamma_mft_bks_om_tt_s = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.mft.bks.om.tt.s"));
+		bkss.put("gamma.mft.bks.om.tt.s", gamma_mft_bks_om_tt_s);
+		
+		return bkss;
+	}
 
 	/**
 	 * Executes the algorithm by calling the execute method of the control
