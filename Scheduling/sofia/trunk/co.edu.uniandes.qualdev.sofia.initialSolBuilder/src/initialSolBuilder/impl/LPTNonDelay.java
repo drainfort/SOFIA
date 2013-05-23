@@ -74,16 +74,16 @@ public class LPTNonDelay implements IInitialSolBuilder{
 		
 		// When the problem includes travel times but not setup times
 		if(travelTimesIncluded && !setupTimesIncluded){
-			TT = MatrixUtils.loadMatrix(travelTimes.getInformationFiles().get(1));
+			TT = MatrixUtils.loadMatrix(travelTimes.getInformationFiles().get(0));
 		}
 		// When the problem includes setup times but not travel times
 		else if(setupTimesIncluded && !travelTimesIncluded){
-			S = MatrixUtils.loadMatrix(problemFiles.get(1));
+			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
 		}
 		// When the problems includes both travel times and setup times
 		else if(setupTimesIncluded && travelTimesIncluded){
-			TT = MatrixUtils.loadMatrix(travelTimes.getInformationFiles().get(1));
-			S = MatrixUtils.loadMatrix(problemFiles.get(2));
+			TT = MatrixUtils.loadMatrix(travelTimes.getInformationFiles().get(0));
+			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
 		}
 		
 		// Esta es la lista de permutacion que se va a retornar.
