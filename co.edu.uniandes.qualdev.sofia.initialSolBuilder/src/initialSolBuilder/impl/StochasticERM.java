@@ -51,9 +51,40 @@ public class StochasticERM implements IInitialSolBuilder{
 	
 	@Override
 	public IStructure createInitialSolution(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator) throws Exception {
-		Integer [][] T = MatrixUtils.loadMatrix(problemFiles.get(0));
-		Integer [][] TT = MatrixUtils.loadMatrix(problemFiles.get(1));
+		boolean travelTimesIncluded = false;
+		boolean setupTimesIncluded = false;
 		
+		BetaVO travelTimes = null;
+		BetaVO setupTimes = null;
+		
+		for (BetaVO betaVO : betas) {
+			if(betaVO.getName().equals("TravelTimes")){
+				travelTimes = betaVO;
+				travelTimesIncluded = true;
+			}
+			if(betaVO.getName().equals("SetupTimes")){
+				setupTimes = betaVO;
+				setupTimesIncluded = true;
+			}
+		}
+		
+		Integer [][] T = MatrixUtils.loadMatrix(problemFiles.get(0));
+		Integer [][] TT = null;
+		Integer [][] S = null;
+		
+		// When the problem includes travel times but not setup times
+		if(travelTimesIncluded && !setupTimesIncluded){
+			TT = MatrixUtils.loadMatrix(travelTimes.getInformationFiles().get(0));
+		}
+		// When the problem includes setup times but not travel times
+		else if(setupTimesIncluded && !travelTimesIncluded){
+			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
+		}
+		// When the problems includes both travel times and setup times
+		else if(setupTimesIncluded && travelTimesIncluded){
+			TT = MatrixUtils.loadMatrix(travelTimes.getInformationFiles().get(0));
+			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
+		}
 		
 		float operationsAmount = T.length * T[0].length;
 		//Amplitud porcentual para escoger los candidatos de la RCL
@@ -69,7 +100,10 @@ public class StochasticERM implements IInitialSolBuilder{
 				OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
 				currentIOperation.setOperationIndex(currentOperationIndex);
 				currentIOperation.setProcessingTime(T[i][j]);
-				currentIOperation.setInitialTime(TT[0][j + 1]);
+				
+				if(travelTimesIncluded)
+					currentIOperation.setInitialTime(TT[0][j + 1]);
+				
 				currentIOperation.setFinalTime(currentIOperation.getProcessingTime()+currentIOperation.getInitialTime());
 				operations.add(currentIOperation);
 			}
@@ -126,10 +160,27 @@ public class StochasticERM implements IInitialSolBuilder{
 				
 				int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
 				int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
-				int travelTime = lastJob != null ? finalList.getTTBetas(lastJob, index + 1) : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+			
+				int travelTime = 0;
+				int setupTime = 0;
+				
+				// When the problem includes travel times but not setup times
+				if(travelTimesIncluded && !setupTimesIncluded){
+					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+				}
+				// When the problem includes setup times but not travel times
+				else if(setupTimesIncluded && !travelTimesIncluded){
+					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+				}
+				// When the problems includes both travel times and setup times
+				else if(setupTimesIncluded && travelTimesIncluded){
+					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+				}
 				
 				int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-				int finalTime = initialTime + iOperation.getProcessingTime();
+				int finalTime = initialTime + iOperation.getProcessingTime() + setupTime;
+				
 				iOperation.setInitialTime(initialTime);
 				iOperation.setFinalTime(finalTime);
 				
