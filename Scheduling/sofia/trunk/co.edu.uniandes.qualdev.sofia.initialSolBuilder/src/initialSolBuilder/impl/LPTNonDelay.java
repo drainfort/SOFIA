@@ -53,7 +53,6 @@ public class LPTNonDelay implements IInitialSolBuilder{
 		boolean travelTimesIncluded = false;
 		boolean setupTimesIncluded = false;
 		
-		//TODO Check this code in order to remove redundances
 		BetaVO travelTimes = null;
 		BetaVO setupTimes = null;
 		
@@ -102,9 +101,11 @@ public class LPTNonDelay implements IInitialSolBuilder{
 			}
 		}
 		
-		// Para las operaciones sin programar actualiza los tiempos de inicio de la operacion.
-		for (IOperation operation : operations) {
-			operation.setInitialTime(TT[0][operation.getOperationIndex().getStationId() + 1]);
+		if(travelTimesIncluded){
+			// Para las operaciones sin programar actualiza los tiempos de inicio de la operacion.
+			for (IOperation operation : operations) {
+				operation.setInitialTime(TT[0][operation.getOperationIndex().getStationId() + 1]);
+			}
 		}
 		
 		int operationsAmount = T.length * T[0].length;

@@ -50,8 +50,40 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 	
 	@Override
 	public IStructure createInitialSolution(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator) throws Exception {
+		boolean travelTimesIncluded = false;
+		boolean setupTimesIncluded = false;
+		
+		BetaVO travelTimes = null;
+		BetaVO setupTimes = null;
+		
+		for (BetaVO betaVO : betas) {
+			if(betaVO.getName().equals("TravelTimes")){
+				travelTimes = betaVO;
+				travelTimesIncluded = true;
+			}
+			if(betaVO.getName().equals("SetupTimes")){
+				setupTimes = betaVO;
+				setupTimesIncluded = true;
+			}
+		}
+		
 		Integer [][] T = MatrixUtils.loadMatrix(problemFiles.get(0));
-		Integer [][] TT = MatrixUtils.loadMatrix(problemFiles.get(1));
+		Integer [][] TT = null;
+		Integer [][] S = null;
+		
+		// When the problem includes travel times but not setup times
+		if(travelTimesIncluded && !setupTimesIncluded){
+			TT = MatrixUtils.loadMatrix(travelTimes.getInformationFiles().get(0));
+		}
+		// When the problem includes setup times but not travel times
+		else if(setupTimesIncluded && !travelTimesIncluded){
+			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
+		}
+		// When the problems includes both travel times and setup times
+		else if(setupTimesIncluded && travelTimesIncluded){
+			TT = MatrixUtils.loadMatrix(travelTimes.getInformationFiles().get(0));
+			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
+		}
 		
 		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas);
 
@@ -80,8 +112,10 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 			operationI.setJobRemainingTime(remainingTime);
 		}
 		
-		for (IOperation operation : operations) {
-			operation.setInitialTime(TT[0][operation.getOperationIndex().getStationId() + 1]);
+		if(travelTimesIncluded){
+			for (IOperation operation : operations) {
+				operation.setInitialTime(TT[0][operation.getOperationIndex().getStationId() + 1]);
+			}
 		}
 		
 		int operationsAmount = T.length * T[0].length;
@@ -135,10 +169,25 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 				
 				int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
 				int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
-				int travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+				int travelTime = 0;
+				int setupTime = 0;
+				
+				// When the problem includes travel times but not setup times
+				if(travelTimesIncluded && !setupTimesIncluded){
+					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+				}
+				// When the problem includes setup times but not travel times
+				else if(setupTimesIncluded && !travelTimesIncluded){
+					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+				}
+				// When the problems includes both travel times and setup times
+				else if(setupTimesIncluded && travelTimesIncluded){
+					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+				}
 				
 				int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()] + setupTime;
 				iOperation.setInitialTime(initialTime);
 				iOperation.setFinalTime(finalTime);
 				finalList.removeOperationFromSchedule(iOperation.getOperationIndex());

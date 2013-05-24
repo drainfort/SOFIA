@@ -49,8 +49,40 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 	
 	@Override
 	public IStructure createInitialSolution(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator) throws Exception {
+		boolean travelTimesIncluded = false;
+		boolean setupTimesIncluded = false;
+		
+		BetaVO travelTimes = null;
+		BetaVO setupTimes = null;
+		
+		for (BetaVO betaVO : betas) {
+			if(betaVO.getName().equals("TravelTimes")){
+				travelTimes = betaVO;
+				travelTimesIncluded = true;
+			}
+			if(betaVO.getName().equals("SetupTimes")){
+				setupTimes = betaVO;
+				setupTimesIncluded = true;
+			}
+		}
+		
 		Integer [][] T = MatrixUtils.loadMatrix(problemFiles.get(0));
-		Integer [][] TT = MatrixUtils.loadMatrix(problemFiles.get(1));
+		Integer [][] TT = null;
+		Integer [][] S = null;
+		
+		// When the problem includes travel times but not setup times
+		if(travelTimesIncluded && !setupTimesIncluded){
+			TT = MatrixUtils.loadMatrix(travelTimes.getInformationFiles().get(0));
+		}
+		// When the problem includes setup times but not travel times
+		else if(setupTimesIncluded && !travelTimesIncluded){
+			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
+		}
+		// When the problems includes both travel times and setup times
+		else if(setupTimesIncluded && travelTimesIncluded){
+			TT = MatrixUtils.loadMatrix(travelTimes.getInformationFiles().get(0));
+			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
+		}
 		
 		//Amplitud porcentual para escoger los candidatos de la RCL
 		float alfa=0.7f;
@@ -68,9 +100,12 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 				operations.add(currentIOperation);
 			}
 		}
-		//Poner Travel Times desde bodega
-		for (IOperation operation : operations) {
-			operation.setInitialTime(TT[0][operation.getOperationIndex().getStationId() + 1]);
+		
+		if(travelTimesIncluded){
+			//Poner Travel Times desde bodega
+			for (IOperation operation : operations) {
+				operation.setInitialTime(TT[0][operation.getOperationIndex().getStationId() + 1]);
+			}
 		}
 		
 		int numberOfOperations = T.length * T[0].length;  //Numero total de operaciones
@@ -114,7 +149,6 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 					i++;
 			}
 			
-
 			// Escoger operacion a programar
 			int posOperation=Math.round((float)Math.random()*(operationsMinInitialTime.size()-1));
 
@@ -124,8 +158,6 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 			//Eliminar de las operaciones aun por programar
 			operations.remove(selectedOperation);
 			
-			
-			
 			if(selectedOperation!=null)
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
 			
@@ -133,21 +165,36 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
-				finalList.scheduleOperation(iOperation.getOperationIndex());  //OJO Para que se adiciona si se va a eliminar al final del ciclo?
+				finalList.scheduleOperation(iOperation.getOperationIndex());  //OJO Para que se adiciona si se va a eliminar al final del ciclo? 
+																																//R:/ Para poder actualizar los tiempos en caso de que esa sea la siguiente a programar y poder decidir en las reglas de despacho
 				
 				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1);
 				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1);
 				
 				int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
 				int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
-				int travelTime = lastJob != null ? finalList.getTTBetas(lastJob, index + 1) : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+				int travelTime = 0;
+				int setupTime = 0;
+				
+				// When the problem includes travel times but not setup times
+				if(travelTimesIncluded && !setupTimesIncluded){
+					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+				}
+				// When the problem includes setup times but not travel times
+				else if(setupTimesIncluded && !travelTimesIncluded){
+					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+				}
+				// When the problems includes both travel times and setup times
+				else if(setupTimesIncluded && travelTimesIncluded){
+					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+				}
 				
 				int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-				int finalTime = initialTime + iOperation.getProcessingTime();
+				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()] + setupTime;
 				iOperation.setInitialTime(initialTime);
 				iOperation.setFinalTime(finalTime);
-				
-				finalList.removeOperationFromSchedule(iOperation.getOperationIndex());  //OJO comentario al inicio del ciclo
+				finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
 			}
 			index++;
 		}
