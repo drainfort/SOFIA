@@ -96,7 +96,18 @@ public abstract class SchedulingAlgorithm {
 				problemFiles.add(currentInformationFile);
 			}
 
-			BetaVO beta = new BetaVO(currentBetaName, currentBetaClass,informationFiles);
+			String selectedBetas = currentBks.replace("gamma.cmax.bks.om.", "");
+			selectedBetas = currentBks.replace("gamma.cmax.bks.om.", "");
+			
+			boolean considered = false;
+			
+			if(selectedBetas.contains("tt") &&  (currentBetaName.equals("TravelTimes") || currentBetaName.equals("TearDownTravelTime"))){
+				considered = true;
+			}else if(selectedBetas.contains("s") && currentBetaName.equals("SetupTimes")){
+				considered = true;
+			}
+			
+			BetaVO beta = new BetaVO(currentBetaName, currentBetaClass,informationFiles, considered);
 			betas.add(beta);
 		}
 		

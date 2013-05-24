@@ -586,7 +586,7 @@ public class Graph extends AbstractStructure {
 				informationFiles.add(this.betas.get(nextKey)
 						.getInformationFiles().get(j));
 			}
-			BetaVO beta = new BetaVO(nextKey, className, informationFiles);
+			BetaVO beta = new BetaVO(nextKey, className, informationFiles, this.betas.get(nextKey).isConsidered());
 			betas.add(beta);
 
 		}

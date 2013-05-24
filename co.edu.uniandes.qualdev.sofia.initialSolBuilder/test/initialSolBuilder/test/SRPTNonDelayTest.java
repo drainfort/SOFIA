@@ -44,12 +44,12 @@ public class SRPTNonDelayTest {
 		
 		ArrayList<String> travelTimeFiles = new ArrayList<String>();
 		travelTimeFiles.add("./data/TT-04x04-01.txt");
-		BetaVO travelTimes = new BetaVO("TravelTimes", "beta.impl.TravelTimes", travelTimeFiles);
+		BetaVO travelTimes = new BetaVO("TravelTimes", "beta.impl.TravelTimes", travelTimeFiles, true);
 		betas.add(travelTimes);
 		
 		ArrayList<String> tearDownTravelTimeFiles = new ArrayList<String>();
 		tearDownTravelTimeFiles.add("./data/TT-04x04-01.txt");
-		BetaVO tearDownTravelTimes = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", tearDownTravelTimeFiles);
+		BetaVO tearDownTravelTimes = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", tearDownTravelTimeFiles, true);
 		betas.add(tearDownTravelTimes);
 		
 		constructiveInitialSolution = testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null).calculateAMatrix();

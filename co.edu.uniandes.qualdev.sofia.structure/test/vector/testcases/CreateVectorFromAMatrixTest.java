@@ -49,8 +49,8 @@ public class CreateVectorFromAMatrixTest {
 		ArrayList<String> informationFiles = new ArrayList<String>();
 		informationFiles.add(TTFile);
 		
-		BetaVO TT = new BetaVO("TravelTimes", "beta.impl.TravelTimes", informationFiles);
-		BetaVO TearDownTT = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", informationFiles);
+		BetaVO TT = new BetaVO("TravelTimes", "beta.impl.TravelTimes", informationFiles, true);
+		BetaVO TearDownTT = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", informationFiles, true);
 		betas.add(TT);
 		betas.add(TearDownTT);
 		

@@ -14,14 +14,19 @@ public class BetaVO {
 	
 	private ArrayList<String> informationFiles;
 	
+	private boolean considered;
+	
 	// -----------------------------------------
 	// Constructor
 	// -----------------------------------------
 	
-	public BetaVO(String name, String classCanonicalName, ArrayList<String> informationFiles){
+	public BetaVO(String name, String classCanonicalName, ArrayList<String> informationFiles, boolean considered){
 		this.name = name;
 		this.classCanonicalName = classCanonicalName;
 		this.informationFiles = informationFiles;
+		this.considered = considered;
+		
+		System.out.println("BetaVO." + name + "." + considered);
 	}
 
 	// -----------------------------------------
@@ -50,5 +55,13 @@ public class BetaVO {
 
 	public void setInformationFiles(ArrayList<String> informationFiles) {
 		this.informationFiles = informationFiles;
+	}
+
+	public boolean isConsidered() {
+		return considered;
+	}
+
+	public void setConsidered(boolean considered) {
+		this.considered = considered;
 	}
 }

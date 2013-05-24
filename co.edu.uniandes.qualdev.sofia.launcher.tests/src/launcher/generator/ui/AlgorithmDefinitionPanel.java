@@ -318,7 +318,6 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		for (JCheckBox checkBox : betaBoxes) {
 			if(checkBox.isSelected()){
 				answer.getSelectedBetas().add(checkBox.getText());
-				break;
 			}
 		}
 		
