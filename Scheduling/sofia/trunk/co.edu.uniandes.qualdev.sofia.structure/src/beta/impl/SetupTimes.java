@@ -112,11 +112,16 @@ public class SetupTimes extends SetupBeta {
 			clionedInformationFiles.add(informationFiles.get(i));
 		}
 		clone.informationFiles = clionedInformationFiles;
+		clone.setConsidered(this.isConsidered());
 		return clone;
 	}
 
 	@Override
 	public float getValue(int job, int station) {
-		return SMatrix[job][station];
+		if(isConsidered()){
+			return SMatrix[job][station];
+		}else{
+			return 0;
+		}
 	}
 }

@@ -2,7 +2,6 @@ package gammaCalculator.impl;
 
 import gammaCalculator.IGammaCalculator;
 import common.types.PairVO;
-import common.utils.MatrixUtils;
 import structure.IStructure;
 
 public class CMaxCalculator implements IGammaCalculator {

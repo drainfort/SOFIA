@@ -94,6 +94,7 @@ public class TearDownTravelTime extends TearDownBeta{
 			clonedInformationFiles.add(informationFiles.get(i));
 		}
 		clone.informationFiles = clonedInformationFiles;
+		clone.setConsidered(this.isConsidered());
 		return clone;
 	}
 
@@ -109,34 +110,33 @@ public class TearDownTravelTime extends TearDownBeta{
 
 	@Override
 	public int[][] applyBeta(int[][] C) {
-		
-		int[][] newC = new int[C.length][C[0].length];
-		int[] maxs = new int[C.length];
-		int[] maxsPos = new int[C.length];
-		
-		for (int i = 0; i < C.length; i++) {
-			int max = 0;
-			int maxPos = 0;
-			for (int j = 0; j < C[0].length - 1; j++) {
-					if(C[i][j] >= max){
-						max = C[i][j];
-						maxPos = j + 1;
+			int[][] newC = new int[C.length][C[0].length];
+			int[] maxs = new int[C.length];
+			int[] maxsPos = new int[C.length];
+			
+			for (int i = 0; i < C.length; i++) {
+				int max = 0;
+				int maxPos = 0;
+				for (int j = 0; j < C[0].length - 1; j++) {
+						if(C[i][j] >= max){
+							max = C[i][j];
+							maxPos = j + 1;
+					}
+					
 				}
-				
+				maxs[i] = max;
+				maxsPos[i] = maxPos;
 			}
-			maxs[i] = max;
-			maxsPos[i] = maxPos;
-		}
-		
-		for (int i = 0; i < C.length; i++) {
-			for (int j = 0; j < C[0].length; j++) {
-					newC[i][j] = C[i][j];
+			
+			for (int i = 0; i < C.length; i++) {
+				for (int j = 0; j < C[0].length; j++) {
+						newC[i][j] = C[i][j];
+				}
+				int travel = isConsidered() ? TTMatrix[(int)maxsPos[i]][0] : 0;
+				newC[i][C[0].length - 1] = maxs[i] + travel;
 			}
-			int travel = TTMatrix[(int)maxsPos[i]][0];
-			newC[i][C[0].length - 1] = maxs[i] + travel;
-		}
-		
-		return newC;
+			
+			return newC;
 	}
 
 	public int[][] getTTMatrix() {

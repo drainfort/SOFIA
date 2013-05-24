@@ -107,6 +107,7 @@ public abstract class AbstractStructure  implements IStructure{
 					.newInstance();
 			beta.loadBeta(currentBeta.getInformationFiles());
 			beta.setInformationFiles(currentBeta.getInformationFiles());
+			beta.setConsidered(currentBeta.isConsidered());
 			this.betas.put(currentBeta.getName(), beta);
 		}
 	}

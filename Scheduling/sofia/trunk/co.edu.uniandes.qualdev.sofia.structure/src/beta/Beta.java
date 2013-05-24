@@ -12,6 +12,28 @@ import java.util.ArrayList;
  */
 public abstract class Beta {
 
+	// ---------------------------------------------------------------------------------------------
+	// Attributes
+	// ---------------------------------------------------------------------------------------------
+	
+	private boolean considered;
+	
+	// ---------------------------------------------------------------------------------------------
+	// Methods
+	// ---------------------------------------------------------------------------------------------
+		
+	public boolean isConsidered() {
+		return considered;
+	}
+
+	public void setConsidered(boolean considered) {
+		this.considered = considered;
+	}
+	
+	// ---------------------------------------------------------------------------------------------
+	// Abstract methods
+	// ---------------------------------------------------------------------------------------------
+		
 	/**
 	 * Loads the information relative to the beta from a given collection of files.
 	 * @param informationFiles. The collection of files that contain the information about the beta.

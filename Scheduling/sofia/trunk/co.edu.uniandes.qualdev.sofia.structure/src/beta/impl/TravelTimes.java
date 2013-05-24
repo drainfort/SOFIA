@@ -86,7 +86,10 @@ public class TravelTimes extends TTBeta {
 
 	@Override
 	public float getValue(int initialStationId, int finalStationId) {
-		return TTMatrix[initialStationId + 1][finalStationId + 1];
+		if(isConsidered())
+			return TTMatrix[initialStationId + 1][finalStationId + 1];
+		else
+			return 0;
 	}
 	
 	@Override
@@ -107,6 +110,7 @@ public class TravelTimes extends TTBeta {
 			clionedInformationFiles.add(informationFiles.get(i));
 		}
 		clone.informationFiles = clionedInformationFiles;
+		clone.setConsidered(this.isConsidered());
 		return clone;
 	}
 
