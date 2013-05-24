@@ -225,15 +225,15 @@ public class ProgrammaticLauncher {
 		// Launching instances
 		// TODO: Make this execution parallel
 		for (String instance : instancesToExecute) {
-			String problemFile = "./data/Om-TT-S/" + instance.substring(0, 5) + "/" + instance + ".properties";
+			String problemFile = "./data/FilesIndex/" + instance.substring(0, 5) + "/" + instance + ".properties";
 			Properties problem = loadProductConfiguration(new File(problemFile));
 			
 			SchedulingAlgorithm algorithm = null;
 			
 			if(!multiStart){
-				algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem, currentBks);
+				algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem, currentBks, algorithmDefinition.getInstanceType());
 			}else{
-				algorithm = new MultiStartAlgorithm(algorithmConfiguration, problem, currentBks);
+				algorithm = new MultiStartAlgorithm(algorithmConfiguration, problem, currentBks, algorithmDefinition.getInstanceType());
 			}
 			
 			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
