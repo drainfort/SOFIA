@@ -1,13 +1,18 @@
 package launcher.generator.ui;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import launcher.generator.vos.AlgorithmConfigurationVO;
 
 public class ProblemPanel extends JPanel{
 
@@ -20,6 +25,8 @@ public class ProblemPanel extends JPanel{
 	// ----------------------------------------------------
 	// Attributes
 	// ----------------------------------------------------
+	
+	private ArrayList<JRadioButton> buttonsInstancesTypes;
 	
 	private ArrayList<JCheckBox> boxes4;
 	
@@ -38,8 +45,30 @@ public class ProblemPanel extends JPanel{
 	// ----------------------------------------------------
 	
 	public ProblemPanel(){
-		this.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Problem" ) ) );
-		this.setLayout(new GridLayout(1,6));
+		this.setLayout(new BorderLayout());
+		
+		JPanel instanceTypePanel = new JPanel();
+		instanceTypePanel.setLayout(new GridLayout(2,1));
+		instanceTypePanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Benchmark" ) ) );
+		this.add(instanceTypePanel, BorderLayout.WEST);
+		
+		buttonsInstancesTypes = new ArrayList<JRadioButton>();
+		ButtonGroup instancesTypeGroup = new ButtonGroup();
+		
+		JRadioButton taillardInstances = new JRadioButton("Taillard");
+		instanceTypePanel.add(taillardInstances);
+		buttonsInstancesTypes.add(taillardInstances);
+		instancesTypeGroup.add(taillardInstances);
+		
+		JRadioButton yuInstances = new JRadioButton("Yu");
+		yuInstances.setSelected(true);
+		instanceTypePanel.add(yuInstances);
+		buttonsInstancesTypes.add(yuInstances);
+		instancesTypeGroup.add(yuInstances);
+		
+		JPanel instancesPanel = new JPanel();
+		instancesPanel.setLayout(new GridLayout(1,6));
+		instancesPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Instances" ) ) );
 		
 		JPanel p4 = new JPanel();
 		p4.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "04x04" ) ) );
@@ -55,7 +84,7 @@ public class ProblemPanel extends JPanel{
 			p4.add(boxes4.get(i-1));
 		}
 		
-		this.add(p4);
+		instancesPanel.add(p4);
 		
 		JPanel p5 = new JPanel();
 		p5.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "05x05" ) ) );
@@ -72,7 +101,7 @@ public class ProblemPanel extends JPanel{
 			p5.add(boxes5.get(i-1));
 		}
 		
-		this.add(p5);
+		instancesPanel.add(p5);
 		
 		JPanel p7 = new JPanel();
 		p7.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "07x07" ) ) );
@@ -89,7 +118,7 @@ public class ProblemPanel extends JPanel{
 			p7.add(boxes7.get(i-1));
 		}
 		
-		this.add(p7);
+		instancesPanel.add(p7);
 		
 		JPanel p10 = new JPanel();
 		p10.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "10x10" ) ) );
@@ -105,7 +134,7 @@ public class ProblemPanel extends JPanel{
 			
 			p10.add(boxes10.get(i-1));
 		}
-		this.add(p10);
+		instancesPanel.add(p10);
 		
 		JPanel p15 = new JPanel();
 		p15.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "15x15" ) ) );
@@ -121,7 +150,7 @@ public class ProblemPanel extends JPanel{
 			
 			p15.add(boxes15.get(i-1));
 		}
-		this.add(p15);
+		instancesPanel.add(p15);
 		
 		JPanel p20 = new JPanel();
 		p20.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "20x20" ) ) );
@@ -136,12 +165,22 @@ public class ProblemPanel extends JPanel{
 			}
 			p20.add(boxes20.get(i-1));
 		}
-		this.add(p20);
+		instancesPanel.add(p20);
+		
+		this.add(instancesPanel, BorderLayout.CENTER);
 	}
 
 	// ----------------------------------------------------
 	// Methods
 	// ----------------------------------------------------
+	
+	public String getSelectedBenchmark(){
+		if(buttonsInstancesTypes.get(0).isSelected()){
+			return AlgorithmConfigurationVO.TAILLARD;
+		}else{
+			return AlgorithmConfigurationVO.YU;
+		}
+	}
 	
 	public ArrayList<String> getSelectedInstances() {
 		ArrayList<String> answer = new ArrayList<String>();

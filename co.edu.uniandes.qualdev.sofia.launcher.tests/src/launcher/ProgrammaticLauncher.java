@@ -76,7 +76,7 @@ public class ProgrammaticLauncher {
 	// Methods
 	// ------------------------------------------------------------
 
-	public void launch(ArrayList<String> instancesToExecute,
+	public void launch(ArrayList<String> instancesToExecute, String instanceType,
 			AlgorithmConfigurationVO algorithmDefinition, String resultsFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, Exception {
 		boolean multiStart = false;
 		
@@ -231,9 +231,9 @@ public class ProgrammaticLauncher {
 			SchedulingAlgorithm algorithm = null;
 			
 			if(!multiStart){
-				algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem, currentBks, algorithmDefinition.getInstanceType());
+				algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem, currentBks, instanceType);
 			}else{
-				algorithm = new MultiStartAlgorithm(algorithmConfiguration, problem, currentBks, algorithmDefinition.getInstanceType());
+				algorithm = new MultiStartAlgorithm(algorithmConfiguration, problem, currentBks, instanceType);
 			}
 			
 			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();

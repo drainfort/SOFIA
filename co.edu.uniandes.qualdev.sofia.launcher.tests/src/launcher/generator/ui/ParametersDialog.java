@@ -40,6 +40,8 @@ public class ParametersDialog extends JDialog implements ActionListener{
 	
 	private ArrayList<String> instancesToExecute;
 	
+	private String instancesType;
+	
 	private ArrayList<ParamComponent> parameters;
 	
 	private JButton acceptButton;
@@ -50,10 +52,11 @@ public class ParametersDialog extends JDialog implements ActionListener{
 	// Constructor
 	// ------------------------------------------------------------------------------------------
 	
-	public ParametersDialog(LauncherUI launcherUI, ArrayList<String> instancesToExecute, AlgorithmConfigurationVO algorithmConfiguration){
+	public ParametersDialog(LauncherUI launcherUI, ArrayList<String> instancesToExecute, String instancesType, AlgorithmConfigurationVO algorithmConfiguration){
 		super( launcherUI, true );
 		this.algorithmConfiguration = algorithmConfiguration;
 		this.instancesToExecute = instancesToExecute;
+		this.instancesType = instancesType;
 		parameters = new ArrayList<ParamComponent>();
 		
 		//TODO ParametersDialog: Reorganizar para evitar código redundante
@@ -330,7 +333,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			ProgrammaticLauncher launcher = new ProgrammaticLauncher();
 			try {
 				String fileName =  "./results/Om_TT/experiment-results-" + System.currentTimeMillis() + ".html";
-				launcher.launch(instancesToExecute, algorithmConfiguration, fileName);
+				launcher.launch(instancesToExecute, instancesType, algorithmConfiguration, fileName);
 				JOptionPane.showMessageDialog(this, "Results saved in: " + fileName);
 			} catch (InstantiationException e) {
 				e.printStackTrace();

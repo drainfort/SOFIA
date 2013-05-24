@@ -52,8 +52,8 @@ public class LauncherUI extends JFrame{
 		jarsGenerator.generateJavaFiles(instancesToExecute, algorithmDefinition);
 	}
 	
-	public void execute(ArrayList<String> instancesToExecute, AlgorithmConfigurationVO algorithmDefinition){
-		ParametersDialog dialog = new ParametersDialog(this, instancesToExecute, algorithmDefinition);
+	public void execute(ArrayList<String> instancesToExecute, String instancesType, AlgorithmConfigurationVO algorithmDefinition){
+		ParametersDialog dialog = new ParametersDialog(this, instancesToExecute, instancesType, algorithmDefinition);
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
 	}
