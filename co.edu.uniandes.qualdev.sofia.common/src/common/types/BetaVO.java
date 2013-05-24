@@ -25,8 +25,6 @@ public class BetaVO {
 		this.classCanonicalName = classCanonicalName;
 		this.informationFiles = informationFiles;
 		this.considered = considered;
-		
-		System.out.println("BetaVO." + name + "." + considered);
 	}
 
 	// -----------------------------------------
