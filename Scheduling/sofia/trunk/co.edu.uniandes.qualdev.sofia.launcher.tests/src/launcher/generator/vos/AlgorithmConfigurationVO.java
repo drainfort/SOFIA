@@ -9,6 +9,10 @@ public class AlgorithmConfigurationVO {
 	// ----------------------------------------------------
 
 	// Initial solution builders
+	public final static String YU = "Yu";
+	public final static String TAILLARD = "Taillard";
+	
+	// Initial solution builders
 	public final static String LPTNonDelay = "LPT";
 	public final static String LRPTNonDelay = "LRPT";
 	public final static String SPTNonDelay = "SPT";
@@ -61,6 +65,8 @@ public class AlgorithmConfigurationVO {
 	// Attributes
 	// ----------------------------------------------------
 	
+	private String instanceType;
+	
 	private String initialSolutionBuilder;
 	
 	private String metaheuristic;
@@ -89,6 +95,8 @@ public class AlgorithmConfigurationVO {
 		selectedBetas = new ArrayList<String>();
 		reportConfiguration = new ArrayList<String>();
 		metaheuristicParams = new ArrayList<ParameterVO>();
+		//TODO Fix.. esta quemado
+		instanceType = TAILLARD;
 	}
 
 	// ----------------------------------------------------
@@ -161,6 +169,14 @@ public class AlgorithmConfigurationVO {
 
 	public void setAmountOfExecutionsPerInstance(int amountOfExecutionsPerInstance) {
 		this.amountOfExecutionsPerInstance = amountOfExecutionsPerInstance;
+	}
+
+	public String getInstanceType() {
+		return instanceType;
+	}
+
+	public void setInstanceType(String instanceType) {
+		this.instanceType = instanceType;
 	}
 
 	public String toString(){

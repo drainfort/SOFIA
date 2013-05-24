@@ -55,7 +55,7 @@ public abstract class SchedulingAlgorithm {
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	public SchedulingAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks)
+	public SchedulingAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks, String instanceType)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, Exception {
 		
@@ -66,7 +66,8 @@ public abstract class SchedulingAlgorithm {
 		this.structureFactory = structrureFactory;
 		
 		String processingTimesFiles = (String) problemConfiguration
-				.getProperty("scheduling.instancesFile");
+				.getProperty("scheduling.instancesFile." + instanceType);
+		System.out.println("scheduling.instancesFile." + instanceType);
 		
 		String machinesFile = (String) problemConfiguration
 				.getProperty("scheduling.instancesFile.machines");
