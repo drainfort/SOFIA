@@ -58,11 +58,11 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 		for (BetaVO betaVO : betas) {
 			if(betaVO.getName().equals("TravelTimes")){
 				travelTimes = betaVO;
-				travelTimesIncluded = true;
+				travelTimesIncluded = travelTimes.isConsidered();
 			}
 			if(betaVO.getName().equals("SetupTimes")){
 				setupTimes = betaVO;
-				setupTimesIncluded = true;
+				setupTimesIncluded = setupTimes.isConsidered();
 			}
 		}
 		
