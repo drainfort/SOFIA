@@ -1,5 +1,6 @@
 package algorithm;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
@@ -107,7 +108,11 @@ public abstract class SchedulingAlgorithm {
 			}else if(selectedBetas.contains("s") && currentBetaName.equals("SetupTimes")){
 				considered = true;
 			}
-			
+			File f = new File(informationFiles.get(0));
+			if(!f.exists()){
+				considered = false;
+			}
+			System.out.println(currentBetaName + "." + considered);
 			BetaVO beta = new BetaVO(currentBetaName, currentBetaClass,informationFiles, considered);
 			betas.add(beta);
 		}
