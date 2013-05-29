@@ -65,11 +65,13 @@ public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
 		
 		// Selecting one of the critical paths
-		int number = randomNumber(0, routes.size() - 1);
-		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
+		
 
 		int exit = 0;
 		while(neighborhood.size() < size){
+			//Selecting the critical route
+			int number = randomNumber(0, routes.size() - 1);
+			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 			
 			// Selecting an adjacent pair of operations
 			int i = randomNumber(0, selectedCriticalPath.size() - 2);
