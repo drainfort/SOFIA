@@ -16,6 +16,9 @@ public class IteratedTabuSearchParametersLoader  implements IParametersLoader{
 		params.put("percent", Double.parseDouble((String) algorithmConfiguration
 				.getProperty("params.percent")));
 		
+		params.put("tabulist-size", Double.parseDouble((String) algorithmConfiguration
+				.getProperty("params.tabulist-size")));
+		
 		if(algorithmConfiguration.getProperty("params.maxNumberImprovements")!=null){
 			params.put("maxNumberImprovements", Integer.parseInt(algorithmConfiguration.getProperty("params.maxNumberImprovements")));
 		}
