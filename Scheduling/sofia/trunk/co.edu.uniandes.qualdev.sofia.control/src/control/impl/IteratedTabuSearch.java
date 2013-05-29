@@ -124,7 +124,7 @@ public class IteratedTabuSearch extends Control {
 		// Sk		Candidate solution
 		
 		int nm = Sa.getVector().size();
-		int Ts = nm;
+		int Ts = (Integer) params.get("tabulist-size");
 
 		IStructure Sb = Sa.cloneStructure();
 		int GammaSb = gammaCalculator.calculateGamma(Sb);
