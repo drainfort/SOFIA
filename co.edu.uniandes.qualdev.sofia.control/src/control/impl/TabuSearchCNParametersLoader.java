@@ -13,7 +13,7 @@ public class TabuSearchCNParametersLoader  implements IParametersLoader{
 		params.put("non-improving", Double.parseDouble((String) algorithmConfiguration
 				.getProperty("params.non-improving")));
 		
-		params.put("tabulist-size", Double.parseDouble((String) algorithmConfiguration
+		params.put("tabulist-size", Integer.parseInt((String) algorithmConfiguration
 				.getProperty("params.tabulist-size")));
 
 		if(algorithmConfiguration.getProperty("params.maxNumberImprovements")!=null){
