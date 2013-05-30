@@ -32,11 +32,13 @@ public class AlgorithmConfigurationVO {
 	
 	// Neighborhoods
 	public static String RANDOM_NEIGHBORHOOD = "Random";
-	public static String CRITICAL_ADJACENT="CR: Adjacent";
-	public static String CRITICAL_ADJACENT_MACHINES ="CR: Adjacent machines";
-	public static String CRITICAL_BLOCK = "CR: Random in random block";
-	public static String CRITICAL_BLOCK_ADJACENT = "CR: Adjacent in random block";
-	public static String CRITICAL_BLOCK_ENDSTART = "CR: Borders in random block";
+	public static String API_NEIGHBORHOOD = "Api";
+	public static String CRITICAL_ROUTE_ADJACENT_NEIGHBORHOOD="CR: Adjacent";
+	public static String CRITICAL_ROUTE_ADJACENT_MACHINES_NEIGHBORHOOD ="CR: Adjacent (machines only)";
+	public static String CRITICAL_BLOCK_RANDOM_NEIGHBORHOOD = "CR-Block: Random";
+	public static String CRITICAL_BLOCK_ADJACENT_ON_END_NEIGHBORHOOD = "CR-Block: Adjacent on end";
+	public static String CRITICAL_BLOCK_END_START_ANY_NEIGHBORHOOD = "CR-Block: End/start/any";
+	public static String CRITICAL_WEIGHTED_NODES_NEIGHBORHOOD = "CR-Weighted: Sorted nodes";
 	
 	// Modifiers
 	public static String RANDOM_MODFIER = "Random";
