@@ -17,7 +17,7 @@ import neighborCalculator.INeighborCalculator;
  * 
  * @author Jaime Romero
  */
-public class ShiftBlockCriticalRoute implements INeighborCalculator {
+public class ShiftRandomBlockCriticalRoute implements INeighborCalculator {
 
 	// -----------------------------------------------
 	// Attributes
@@ -30,7 +30,7 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 	// Constructor
 	// -----------------------------------------------
 
-	public ShiftBlockCriticalRoute() {
+	public ShiftRandomBlockCriticalRoute() {
 
 	}
 
