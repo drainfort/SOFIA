@@ -136,29 +136,47 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		
 		JPanel neighborhoodPanel = new JPanel();
 		neighborhoodPanel.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Neighborhood" ) ) );
-		neighborhoodPanel.setLayout(new GridLayout(2,2));
+		neighborhoodPanel.setLayout(new GridLayout(4,2));
 		
-		JRadioButton random = new JRadioButton(AlgorithmConfigurationVO.RANDOM_NEIGHBORHOOD);
-		JRadioButton adjacent = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_ADJACENT);
-		adjacent.setSelected(true);
-		JRadioButton adjacentMachine = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_ADJACENT_MACHINES);
-		JRadioButton randomInCriticalBlock = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_BLOCK);
+		JRadioButton btnRandomNeighborhood = new JRadioButton(AlgorithmConfigurationVO.RANDOM_NEIGHBORHOOD);
+		JRadioButton btnApiNeighborhood = new JRadioButton(AlgorithmConfigurationVO.API_NEIGHBORHOOD);
+		JRadioButton btnCRAdjacentNeighborhood = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_ROUTE_ADJACENT_NEIGHBORHOOD);
+		JRadioButton btnCRAdjacentMachineNeighborhood = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_ROUTE_ADJACENT_MACHINES_NEIGHBORHOOD);
+		JRadioButton btnCRBlockRandomNeighborhood = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_BLOCK_RANDOM_NEIGHBORHOOD);
+		JRadioButton btnCRBlockAdjacentOnEndNeighborhood = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_BLOCK_ADJACENT_ON_END_NEIGHBORHOOD);
+		JRadioButton btnCRBlockEndStartAnyNeighborhood = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_BLOCK_END_START_ANY_NEIGHBORHOOD);
+		JRadioButton btnCRWeightedNodesNeighborhood = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_WEIGHTED_NODES_NEIGHBORHOOD);
 		
-		neighborhoodPanel.add(random);
-		neighborhoodPanel.add(adjacent);
-		neighborhoodPanel.add(adjacentMachine);
-		neighborhoodPanel.add(randomInCriticalBlock);
+		btnCRAdjacentNeighborhood.setSelected(true);
 		
-		neighborhoodButtons.add(random);
-		neighborhoodButtons.add(adjacent);
-		neighborhoodButtons.add(adjacentMachine);
-		neighborhoodButtons.add(randomInCriticalBlock);
+		neighborhoodPanel.add(btnRandomNeighborhood);
+		neighborhoodPanel.add(btnApiNeighborhood);
+		neighborhoodPanel.add(btnCRAdjacentNeighborhood);
+		neighborhoodPanel.add(btnCRAdjacentMachineNeighborhood);
+		neighborhoodPanel.add(btnCRBlockRandomNeighborhood);
+		neighborhoodPanel.add(btnCRBlockAdjacentOnEndNeighborhood);
+		neighborhoodPanel.add(btnCRBlockEndStartAnyNeighborhood);
+		neighborhoodPanel.add(btnCRWeightedNodesNeighborhood);
+		
+		neighborhoodButtons.add(btnRandomNeighborhood);
+		neighborhoodButtons.add(btnApiNeighborhood);
+		neighborhoodButtons.add(btnCRAdjacentNeighborhood);
+		neighborhoodButtons.add(btnCRAdjacentMachineNeighborhood);
+		neighborhoodButtons.add(btnCRBlockRandomNeighborhood);
+		neighborhoodButtons.add(btnCRBlockAdjacentOnEndNeighborhood);
+		neighborhoodButtons.add(btnCRBlockEndStartAnyNeighborhood);
+		neighborhoodButtons.add(btnCRWeightedNodesNeighborhood);
 		
 		ButtonGroup neighGroup = new ButtonGroup();
-		neighGroup.add(random);
-		neighGroup.add(adjacent);
-		neighGroup.add(adjacentMachine);
-		neighGroup.add(randomInCriticalBlock);
+		
+		neighGroup.add(btnRandomNeighborhood);
+		neighGroup.add(btnApiNeighborhood);
+		neighGroup.add(btnCRAdjacentNeighborhood);
+		neighGroup.add(btnCRAdjacentMachineNeighborhood);
+		neighGroup.add(btnCRBlockRandomNeighborhood);
+		neighGroup.add(btnCRBlockAdjacentOnEndNeighborhood);
+		neighGroup.add(btnCRBlockEndStartAnyNeighborhood);
+		neighGroup.add(btnCRWeightedNodesNeighborhood);
 		
 		this.add(neighborhoodPanel);
 		

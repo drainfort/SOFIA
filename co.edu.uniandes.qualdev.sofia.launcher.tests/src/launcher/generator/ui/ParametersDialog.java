@@ -69,8 +69,17 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			this.setTitle("Metaheuristic parameters: Tabu search complete neighborhood");
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(4,2));
+			panelParameters.setLayout(new GridLayout(5,2));
 			this.setSize(450,200);
+			
+			//tabulist-size
+			JLabel labTabuListSize = new JLabel("tabulist-size");
+			JTextField txtTabuListSize = new JTextField("10");
+			panelParameters.add(labTabuListSize);
+			panelParameters.add(txtTabuListSize);
+			
+			ParamComponent paramTabuListSize = new ParamComponent(labTabuListSize, txtTabuListSize);
+			parameters.add(paramTabuListSize);
 			
 			//Non-improving
 			JLabel labNonImproving = new JLabel("non-improving");
@@ -113,19 +122,28 @@ public class ParametersDialog extends JDialog implements ActionListener{
 		// Case 2:  The selected meta-heuristic is TabuSearch -> restricted neighborhood
 		else if(this.algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_RESTRICTED_NEIGHBORHOOD)){
 			this.setTitle("Metaheuristic parameters: Tabu search restricted neighborhood");
-			this.setSize(450,220);
+			this.setSize(480,220);
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(5,2));
+			panelParameters.setLayout(new GridLayout(6,2));
 			
 			//Percent
 			JLabel labPercent = new JLabel("percent");
-			JTextField txtPercent = new JTextField("0.7");
+			JTextField txtPercent = new JTextField("0.1");
 			panelParameters.add(labPercent);
 			panelParameters.add(txtPercent);
 			
 			ParamComponent paramPercent = new ParamComponent(labPercent, txtPercent);
 			parameters.add(paramPercent);
+			
+			//tabulist-size
+			JLabel labTabuListSize = new JLabel("tabulist-size");
+			JTextField txtTabuListSize = new JTextField("10");
+			panelParameters.add(labTabuListSize);
+			panelParameters.add(txtTabuListSize);
+			
+			ParamComponent paramTabuListSize = new ParamComponent(labTabuListSize, txtTabuListSize);
+			parameters.add(paramTabuListSize);
 			
 			//Non-improving
 			JLabel labNonImproving = new JLabel("non-improving");

@@ -19,6 +19,8 @@ public class ConfigurationPanel extends JPanel implements ActionListener{
 	// Constants
 	// ------------------------------------------------
 	
+	private static final long serialVersionUID = 4013119359363353214L;
+
 	public final static String BROWSE_ECLIPSE = "browse_eclipse";
 	
 	public final static String BROWSE_WORKSPACE = "browser_workspace";
