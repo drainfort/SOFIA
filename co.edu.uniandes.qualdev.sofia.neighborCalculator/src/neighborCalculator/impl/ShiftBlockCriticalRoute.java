@@ -45,19 +45,16 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
 		
 		int number = randomNumber(0, routes.size() - 1);
-		ArrayList<ArrayList<IOperation>> blocks = routes.get(number).getBlocks();
-			
-		number = randomNumber(0, blocks.size() - 1);
-	    ArrayList<IOperation> selectedBlock = blocks.get(number);
+        ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
+        int number2 = randomNumber(0, blocks.size() - 1);
+        ArrayList<IOperation> block = blocks.get(number2);
+        int number3= randomNumber(0, block.size()-1);
+        int number4= randomNumber(0, block.size()-1);
+        while(number4==number3)
+        	number4= randomNumber(0, block.size()-1);
+        IOperation initialNode= block.get(number3);
+        IOperation finalNode = block.get(number4);
 		
-		int j = randomNumber(0, 1);
-		IOperation initialNode = selectedBlock.get(j);
-		
-		if(j==1)
-			initialNode= selectedBlock.get(selectedBlock.size()-1);
-		
-		int i = randomNumber(1, selectedBlock.size()-1);
-		IOperation finalNode = selectedBlock.get(i);
 
 		OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
 		OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
@@ -69,66 +66,48 @@ public class ShiftBlockCriticalRoute implements INeighborCalculator {
 	@Override
 	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int size)
 			throws Exception {
+		
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
-		IStructure clone = currentGraph.cloneStructure();
-		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
-		int salida=0;
-		
-		while(neighborhood.size()<size){
-			int i= randomNumber(0, routes.size()-1);
-			ArrayList<ArrayList<IOperation>> blocks = routes.get(i).getBlocks();
-			int z= randomNumber(0, blocks.size()-1);
-			ArrayList<IOperation> selectedBlock = blocks.get(z);
-			if(selectedBlock.size()>2){
-				for(int j=1; j<selectedBlock.size()-1;i++){
+        IStructure clone = currentGraph.cloneStructure();
+        
+        // Obtaining all the critical paths of the current solutions
+        ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+        
+        System.out.println(routes);
+        
+        // Selecting one of the critical paths
+        int numberRoutes= routes.size();
+        System.out.println("rutas:"+numberRoutes);
+        int exit = 0;
+        while(neighborhood.size() < size){
+            
+            int number = randomNumber(0, routes.size() - 1);
+            ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
+            int number2 = randomNumber(0, blocks.size() - 1);
+            ArrayList<IOperation> block = blocks.get(number2);
+            int number3= randomNumber(0, block.size()-1);
+            int number4= randomNumber(0, block.size()-1);
+            while(number4==number3)
+            	number4= randomNumber(0, block.size()-1);
+            IOperation initialNode= block.get(number3);
+            IOperation finalNode = block.get(number4);
 
-					IOperation initial= selectedBlock.get(0);
-					IOperation finalOperation = selectedBlock.get(selectedBlock.size()-1);
-					IOperation temp = selectedBlock.get(j);
-
-					PairVO newPair = new PairVO(initial.getOperationIndex(), temp.getOperationIndex());
-					PairVO newPair2 = new PairVO(finalOperation.getOperationIndex(), temp.getOperationIndex());
-					if(!neighborhood.contains(newPair)){
-						neighborhood.add(newPair);
-						neighborhood.add(new PairVO(temp.getOperationIndex(), initial.getOperationIndex()));
-						salida=0;
-					}					
-					if(!neighborhood.contains(newPair2)){
-						neighborhood.add(newPair2);
-						neighborhood.add(new PairVO(temp.getOperationIndex(), finalOperation.getOperationIndex()));
-						salida=0;
-					}else{
-						salida++;
-						if(salida>=100){
-							//Collections.shuffle(neighborhood);
-							return neighborhood;
-						}
-					}
-				}
-			}
-			else{
-				IOperation initial= selectedBlock.get(0);
-				IOperation finalOperation = selectedBlock.get(selectedBlock.size()-1);
-				PairVO newPair = new PairVO(initial.getOperationIndex(), finalOperation.getOperationIndex());
-				PairVO newPair2 = new PairVO(finalOperation.getOperationIndex(), initial.getOperationIndex());
-				if(!neighborhood.contains(newPair)){
-					neighborhood.add(newPair);
-					neighborhood.add(newPair2);
-					salida=0;
-				}					
-				else{
-					salida++;
-					if(salida>=100){
-						//System.out.println(neighborhood);
-						return neighborhood;
-					}
-				}
-			}
-				
-			
-		}
-		
-		return neighborhood;
+            		            
+            OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
+            OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+            
+            PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+            if(!neighborhood.contains(temp)){
+                neighborhood.add(temp);
+                exit=0;
+            }else{
+                exit++;
+                if(exit>=100){
+                    return neighborhood;
+                }
+            }
+        }
+        return neighborhood;
 	}
 		
 	@Override
