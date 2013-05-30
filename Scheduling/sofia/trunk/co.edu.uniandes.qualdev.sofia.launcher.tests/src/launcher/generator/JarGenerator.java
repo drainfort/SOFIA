@@ -94,15 +94,15 @@ public class JarGenerator {
 		
 		if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.RANDOM_NEIGHBORHOOD)){
 			neighbors = RANDOM_NEIGHBORHOOD;
-		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ADJACENT)){
+		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ROUTE_ADJACENT_NEIGHBORHOOD)){
 			neighbors = CRITICAL_ADJACENT;
-		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ADJACENT_MACHINES)){
+		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ROUTE_ADJACENT_MACHINES_NEIGHBORHOOD)){
 			neighbors = CRITICAL_ADJACENT_MACHINES;
-		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK)){
+		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_RANDOM_NEIGHBORHOOD)){
 			neighbors = CRITICAL_BLOCK;
-		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_ADJACENT)){
+		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_ADJACENT_ON_END_NEIGHBORHOOD)){
 			neighbors = CRITICAL_BLOCK_ADJACENT;
-		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_ENDSTART)){
+		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_END_START_ANY_NEIGHBORHOOD)){
 			neighbors = CRITICAL_BLOCK_ENDSTART;
 		}
 		
