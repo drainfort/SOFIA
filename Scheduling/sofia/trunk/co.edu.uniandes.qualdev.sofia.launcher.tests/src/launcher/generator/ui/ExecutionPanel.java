@@ -19,6 +19,8 @@ public class ExecutionPanel extends JPanel implements ActionListener {
 	// Constants
 	// -----------------------------------------------------
 	
+	private static final long serialVersionUID = 7784995463210611021L;
+
 	public static final String GENERATE_JARS = "generate_jars";
 	
 	public static final String EXECUTE = "execute";
