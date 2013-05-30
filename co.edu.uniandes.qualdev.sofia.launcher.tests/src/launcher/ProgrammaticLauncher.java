@@ -41,11 +41,13 @@ public class ProgrammaticLauncher {
 	
 	// Neighborhoods
 	public static String RANDOM_NEIGHBORHOOD = "neighborCalculator.impl.Random";
-	public static String CRITICAL_ADJACENT= "neighborCalculator.impl.AdjacentShiftOnCriticalRoutes";
-	public static String CRITICAL_ADJACENT_MACHINES = "neighborCalculator.impl.AdjacentMachinesShiftOnCriticalRoutes";
-	public static String CRITICAL_BLOCK = "neighborCalculator.impl.ShiftBlockCriticalRoute";
-	public static String CRITICAL_BLOCK_ADJACENT = "neighborCalculator.impl.ShiftBlockADJCriticalRoute";
-	public static String CRITICAL_BLOCK_ENDSTART = "neighborCalculator.impl.ShiftBlockEndStartAnyCriticalRoute";
+	public static String API_NEIGHBORHOOD = "neighborCalculator.impl.Api";
+	public static String CRITICAL_ROUTE_ADJACENT_NEIGHBORHOOD= "neighborCalculator.impl.AdjacentShiftOnCriticalRoutes";
+	public static String CRITICAL_ROUTE_ADJACENT_MACHINES_NEIGHBORHOOD = "neighborCalculator.impl.AdjacentMachinesShiftOnCriticalRoutes";
+	public static String CRITICAL_BLOCK_RANDOM_NEIGHBORHOOD = "neighborCalculator.impl.ShiftRandomBlockCriticalRoute";
+	public static String CRITICAL_BLOCK_ADJACENT_ON_END_NEIGHBORHOOD = "neighborCalculator.impl.ShiftBlockAdjOnEnds";
+	public static String CRITICAL_BLOCK_END_START_ANY_NEIGHBORHOOD = "neighborCalculator.impl.ShiftBlockEndStartAnyCriticalRoute";
+	public static String CRITICAL_WEIGHTED_NODES_NEIGHBORHOOD = "neighborCalculator.impl.ShiftWeightedNodesCriticalRoute";
 	
 	// Modifiers
 	public static String RANDOM_MODFIER = "modifier.impl.RandomNeighbor";
@@ -117,16 +119,20 @@ public class ProgrammaticLauncher {
 		String neighborhoodCalculator = null;
 		if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.RANDOM_NEIGHBORHOOD)){
 			neighborhoodCalculator = RANDOM_NEIGHBORHOOD;
-		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ADJACENT)){
-			neighborhoodCalculator = CRITICAL_ADJACENT;
-		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ADJACENT_MACHINES)){
-			neighborhoodCalculator = CRITICAL_ADJACENT_MACHINES;
-		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK)){
-			neighborhoodCalculator = CRITICAL_BLOCK;
-		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_ADJACENT)){
-			neighborhoodCalculator = CRITICAL_BLOCK_ADJACENT;
-		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_ENDSTART)){
-			neighborhoodCalculator = CRITICAL_BLOCK_ENDSTART;
+		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.API_NEIGHBORHOOD)){
+			neighborhoodCalculator = API_NEIGHBORHOOD;
+		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ROUTE_ADJACENT_NEIGHBORHOOD)){
+			neighborhoodCalculator = CRITICAL_ROUTE_ADJACENT_NEIGHBORHOOD;
+		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ROUTE_ADJACENT_MACHINES_NEIGHBORHOOD)){
+			neighborhoodCalculator = CRITICAL_ROUTE_ADJACENT_MACHINES_NEIGHBORHOOD;
+		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_RANDOM_NEIGHBORHOOD)){
+			neighborhoodCalculator = CRITICAL_BLOCK_RANDOM_NEIGHBORHOOD;
+		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_ADJACENT_ON_END_NEIGHBORHOOD)){
+			neighborhoodCalculator = CRITICAL_BLOCK_ADJACENT_ON_END_NEIGHBORHOOD;
+		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_END_START_ANY_NEIGHBORHOOD)){
+			neighborhoodCalculator = CRITICAL_BLOCK_END_START_ANY_NEIGHBORHOOD;
+		}else if(algorithmDefinition.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_WEIGHTED_NODES_NEIGHBORHOOD)){
+			neighborhoodCalculator = CRITICAL_WEIGHTED_NODES_NEIGHBORHOOD;
 		}
 		
 		String modifier = null;
