@@ -72,6 +72,7 @@ public abstract class Control {
 	protected ExecutionResults obtainExecutionResults(IStructure S0, IGammaCalculator gammaCalculator, boolean printTable, boolean printSolution, boolean printInitialSolution) throws Exception {
 		S0.calculateCMatrix();
 		executionResults.setBestCmax(gammaCalculator.calculateGamma(S0));
+		executionResults.setInitialCmax(gammaCalculator.calculateGamma(So));
 		executionResults.setPrintTable(printTable);
 		executionResults.setPrintInitialSolution(printInitialSolution);
 		executionResults.setPrintFinalSolution(printSolution);
@@ -80,7 +81,6 @@ public abstract class Control {
 
 		if(printInitialSolution){
 			So.calculateCMatrix();
-			executionResults.setInitialCmax(gammaCalculator.calculateGamma(So));
 			generateGanttTasks(So, true);
 		}
 		if(printSolution){
