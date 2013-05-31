@@ -271,7 +271,7 @@ public class ChartPrinter {
 					machine =temp.getNameMachine();
 				}
 			}
-			pw.println("var parentTask"+j+1+ "= new GanttTaskInfo("+j+1+", \""+machine+"\", new Date(2010, 5, 2),"+executionResults.getBestCmax()+", 100, \"\");");
+			pw.println("var parentTask"+j+1+ "= new GanttTaskInfo("+j+1+", \""+machine+"\", new Date(2010, 5, 2),"+executionResults.getInitialCmax()+", 100, \"\");");
 			for(int i=0; i<myOperations.size();i++){
 				OperationIndexVO temp = myOperations.get(i);
 				pw.println("parentTask"+j+1+".addChildTask(new GanttTaskInfo("+j+1+i+", \""+temp.getNameJob()+"\", new Date(2010, 5, 2,"+temp.getInitialTime()*24+",0,0), "+(temp.getFinalTime()-temp.getInitialTime())+", 100, \"\"));");
