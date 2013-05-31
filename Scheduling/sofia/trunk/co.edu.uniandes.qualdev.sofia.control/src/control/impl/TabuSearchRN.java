@@ -40,7 +40,8 @@ public class TabuSearchRN extends Control {
 		this.So = initialSolution.cloneStructure();
 
 		int vectorSize = initialSolution.getTotalJobs() * initialSolution.getTotalStations() ;
-		int tabuSize = (Integer) params.get("tabulist-size");
+		double a = (Double) params.get("tabulist-size");
+		int tabuSize = (int)a;
 
 		IStructure current = initialSolution.cloneStructure();
 
