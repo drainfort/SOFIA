@@ -80,6 +80,7 @@ public abstract class Control {
 
 		if(printInitialSolution){
 			So.calculateCMatrix();
+			executionResults.setInitialCmax(gammaCalculator.calculateGamma(So));
 			generateGanttTasks(So, true);
 		}
 		if(printSolution){
