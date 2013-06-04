@@ -1,20 +1,8 @@
 package chart.printer;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
 import common.types.OperationIndexVO;
 import common.utils.ExecutionResults;
@@ -285,102 +273,6 @@ public class ChartPrinter {
 		pw.println("ganttChartControl.create(htmlDiv1);}");
 		
 	}
-
-
-	public void printGlobalResults(String resultsFilePath) {
-		System.out.println("resultsFilePath:  " + resultsFilePath);
-		Document document = new Document();
-		try {
-			File resultsFile = new File(resultsFilePath);
-			
-			if(!resultsFile.exists())
-				resultsFile.createNewFile();
-			
-			PdfWriter writer = PdfWriter.getInstance(document,
-					new FileOutputStream(resultsFile));
-			document.open();
-			
-			PdfPTable resultsTable = new PdfPTable(6);
-			Font fontbold = FontFactory.getFont("Times-Roman", 12, Font.BOLD);
-			
-			Phrase c1Phrase = new Phrase("Problem");
-			c1Phrase.setFont(fontbold);
-			PdfPCell c1 = new PdfPCell(c1Phrase);
-		    resultsTable.addCell(c1);
-		    
-		    PdfPCell c2 = new PdfPCell(new Phrase("Initial Solution"));
-		    c2.setHorizontalAlignment(Element.ALIGN_CENTER);
-		    resultsTable.addCell(c2);
-		    
-		    PdfPCell c3 = new PdfPCell(new Phrase("Optimal"));
-		    c3.setHorizontalAlignment(Element.ALIGN_CENTER);
-		    resultsTable.addCell(c3);
-		    
-		    PdfPCell c4 = new PdfPCell(new Phrase("Best Objective"));
-		    c4.setHorizontalAlignment(Element.ALIGN_CENTER);
-		    resultsTable.addCell(c4);
-		    
-		    PdfPCell c5 = new PdfPCell(new Phrase("Average Objective"));
-		    c5.setHorizontalAlignment(Element.ALIGN_CENTER);
-		    resultsTable.addCell(c5);
-		    
-		    PdfPCell c6 = new PdfPCell(new Phrase("Visited Neighbors"));
-		    c6.setHorizontalAlignment(Element.ALIGN_CENTER);
-		    resultsTable.addCell(c6);
-			
-			for (ArrayList<ExecutionResults> results : globalExecutionResults) {
-				String instanceName = results.get(0).getInstanceName();
-				String initialCMax = results.get(0).getInitialCmax() + ""; 
-				String optimalCMax = results.get(0).getOptimal() + ""; 
-				String neighbor =  results.get(0).getNumberOfVisitedNeighbors()+"";
-				
-				int bestCmax = Integer.MAX_VALUE;
-				int sumBestCMax = 0;
-				int iterations = 0;
-				for (ExecutionResults executionResults : results) {
-					if(bestCmax > executionResults.getBestCmax()){
-						bestCmax = executionResults.getBestCmax();
-					}
-					sumBestCMax += executionResults.getBestCmax();
-					iterations++;
-				}
-				String bestCMaxString = bestCmax + ""; 
-				if(bestCmax == results.get(0).getOptimal())bestCMaxString+="*";
-
-				PdfPCell instanceNameCell = new PdfPCell(new Phrase(instanceName));
-			    resultsTable.addCell(instanceNameCell);
-				
-				PdfPCell initialCMaxCell = new PdfPCell(new Phrase(initialCMax));
-				initialCMaxCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			    resultsTable.addCell(initialCMaxCell);
-			    
-			    PdfPCell optimalCMaxCell = new PdfPCell(new Phrase(optimalCMax));
-			    optimalCMaxCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			    resultsTable.addCell(optimalCMaxCell);
-				
-				PdfPCell bestCMaxCell = new PdfPCell(new Phrase(bestCMaxString));
-				bestCMaxCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			    resultsTable.addCell(bestCMaxCell);
-				
-				double average = sumBestCMax/iterations;
-				
-				PdfPCell averageCMaxCell = new PdfPCell(new Phrase(average+""));
-				averageCMaxCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			    resultsTable.addCell(averageCMaxCell);
-			    
-			    PdfPCell neighborCell = new PdfPCell(new Phrase(neighbor));
-			    neighborCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			    resultsTable.addCell(neighborCell);
-				
-			}
-			document.add(resultsTable);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			document.close();
-		}
-	}
 	
 	public void addResults(ArrayList<ExecutionResults> results) {
 		globalExecutionResults.add(results);
@@ -388,29 +280,5 @@ public class ChartPrinter {
 		printTable=globalExecutionResults.get(0).get(0).isPrintTable();
 		printInitialSolutions = globalExecutionResults.get(0).get(0).isPrintInitialSolution();
 		printSolutions = globalExecutionResults.get(0).get(0).isPrintFinalSolution();
-		
 	}
-	
-	// ------------------------------------------------------------
-	// Utilities
-	// ------------------------------------------------------------
-
-	/**
-	 * Utility method for creating <code>Date</code> objects.
-	 * 
-	 * @param day
-	 *            the date.
-	 * @param month
-	 *            the month.
-	 * @param year
-	 *            the year.
-	 * 
-	 * @return a date.
-	 */
-	private static Date date(final int hrs, final int min) {
-		@SuppressWarnings("deprecation")
-		final Date result0 = new Date(1, 1, 1, hrs, min);
-		return result0;
-	}
-
 }

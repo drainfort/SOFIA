@@ -2,17 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/gnujaxp.jar"/>
-	<classpathentry kind="lib" path="lib/jcommon-1.0.17.jar"/>
-	<classpathentry kind="lib" path="lib/jfreechart-1.0.14.jar"/>
-	<classpathentry kind="lib" path="lib/itext-pdfa-5.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/itext-xtra-5.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/itextpdf-5.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/bcmail-jdk15-146.jar"/>
-	<classpathentry kind="lib" path="lib/bcprov-jdk15-146.jar"/>
-	<classpathentry kind="lib" path="lib/bctsp-jdk15-146.jar"/>
-	<classpathentry kind="lib" path="lib/itext-asian.jar"/>
-	<classpathentry kind="lib" path="lib/itext-hyph-xml.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.common"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.structure"/>
 	<classpathentry kind="output" path="bin"/>
