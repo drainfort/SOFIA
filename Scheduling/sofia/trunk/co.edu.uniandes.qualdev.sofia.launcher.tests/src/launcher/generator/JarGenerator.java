@@ -227,7 +227,7 @@ public class JarGenerator {
 			pw.println("scheduling.gammaCalculator=gammaCalculator.impl.CMaxCalculator");
 			pw.println("scheduling.control=control.impl."+algo_class);
 			pw.println("scheduling.initialSolutionBuilder=initialSolBuilder.impl."+builder_class);
-			pw.println("scheduling.parametersLoader=control.impl."+algo_class+"ParameterLoader");
+			pw.println("scheduling.parametersLoader=control.impl."+algo_class+"ParametersLoader");
 
 			pw.println("# -------------------------------------------------");
 			pw.println("# Parameters required by the control component");
