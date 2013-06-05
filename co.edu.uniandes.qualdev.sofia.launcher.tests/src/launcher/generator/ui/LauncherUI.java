@@ -24,6 +24,8 @@ public class LauncherUI extends JFrame{
 	
 	private ExecutionPanel executionPanel;
 	
+	private JarGenerator jarsGenerator;
+	
 	// ----------------------------------------------------
 	// Constructor
 	// ----------------------------------------------------
@@ -44,16 +46,26 @@ public class LauncherUI extends JFrame{
 	// Methods
 	// ----------------------------------------------------
 	
-	public void generateJars(ArrayList<String> instancesToExecute, AlgorithmConfigurationVO algorithmDefinition){
+	public void generateJars(ArrayList<String> instancesToExecute,String instancesType, AlgorithmConfigurationVO algorithmDefinition){
 		String workspacePath = configurationPanel.getWorkspacePath();
 		String eclipsePath = configurationPanel.getEclipsePath();
 		
-		JarGenerator jarsGenerator = new JarGenerator(workspacePath, eclipsePath);
+		
+		ParametersDialog dialog = new ParametersDialog(this, instancesToExecute, instancesType, algorithmDefinition, false);
+		dialog.setLocationRelativeTo(this);
+		dialog.setVisible(true);
+		
+		
+		jarsGenerator = new JarGenerator(workspacePath, eclipsePath);
+		
+	}
+	
+	public void generateJars2(ArrayList<String> instancesToExecute, AlgorithmConfigurationVO algorithmDefinition){
 		jarsGenerator.generateJavaFiles(instancesToExecute, algorithmDefinition);
 	}
 	
 	public void execute(ArrayList<String> instancesToExecute, String instancesType, AlgorithmConfigurationVO algorithmDefinition){
-		ParametersDialog dialog = new ParametersDialog(this, instancesToExecute, instancesType, algorithmDefinition);
+		ParametersDialog dialog = new ParametersDialog(this, instancesToExecute, instancesType, algorithmDefinition, true);
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
 	}

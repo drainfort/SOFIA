@@ -80,7 +80,7 @@ public class ExecutionPanel extends JPanel implements ActionListener {
 		if(command.equals(GENERATE_JARS)){
 			ArrayList<String> instancesToExecute = problemPanel.getSelectedInstances();
 			AlgorithmConfigurationVO algorithmDefinition = algorithmDefinitionPanel.getAlgorithmDefinition();
-			launcher.generateJars(instancesToExecute, algorithmDefinition);
+			launcher.generateJars(instancesToExecute, problemPanel.getSelectedBenchmark(), algorithmDefinition);
 			
 		}else if(command.equals(EXECUTE)){
 			ArrayList<String> instancesToExecute = problemPanel.getSelectedInstances();

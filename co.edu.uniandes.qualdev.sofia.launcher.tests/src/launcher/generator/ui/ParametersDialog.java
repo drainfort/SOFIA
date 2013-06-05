@@ -47,13 +47,17 @@ public class ParametersDialog extends JDialog implements ActionListener{
 	private JButton acceptButton;
 	
 	private JButton cancelButton;
+	private boolean execute=true;
 	
+	private LauncherUI launcher=null;
 	// ------------------------------------------------------------------------------------------
 	// Constructor
 	// ------------------------------------------------------------------------------------------
 	
-	public ParametersDialog(LauncherUI launcherUI, ArrayList<String> instancesToExecute, String instancesType, AlgorithmConfigurationVO algorithmConfiguration){
+	public ParametersDialog(LauncherUI launcherUI, ArrayList<String> instancesToExecute, String instancesType, AlgorithmConfigurationVO algorithmConfiguration, boolean execute){
 		super( launcherUI, true );
+		launcher=launcherUI;
+		this.execute=execute;
 		this.algorithmConfiguration = algorithmConfiguration;
 		this.instancesToExecute = instancesToExecute;
 		this.instancesType = instancesType;
@@ -347,22 +351,28 @@ public class ParametersDialog extends JDialog implements ActionListener{
 					algorithmConfiguration.setAmountOfExecutionsPerInstance(amountOfExecutionsPerInstance);
 				}
 			}
+			if(execute){
 			
-			ProgrammaticLauncher launcher = new ProgrammaticLauncher();
-			try {
-				String fileName =  "./results/Om_TT/experiment-results-" + System.currentTimeMillis() + ".html";
-				launcher.launch(instancesToExecute, instancesType, algorithmConfiguration, fileName);
-				JOptionPane.showMessageDialog(this, "Results saved in: " + fileName);
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
+				ProgrammaticLauncher launcher = new ProgrammaticLauncher();
+				try {
+					String fileName =  "./results/Om_TT/experiment-results-" + System.currentTimeMillis() + ".html";
+					launcher.launch(instancesToExecute, instancesType, algorithmConfiguration, fileName);
+					JOptionPane.showMessageDialog(this, "Results saved in: " + fileName);
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 			}
-			this.dispose();
+			else{
+				this.launcher.generateJars2(instancesToExecute, algorithmConfiguration);
+				this.dispose();
+			}
 		}else if(command.equals(CANCEL)){
 			this.dispose();
 		}
