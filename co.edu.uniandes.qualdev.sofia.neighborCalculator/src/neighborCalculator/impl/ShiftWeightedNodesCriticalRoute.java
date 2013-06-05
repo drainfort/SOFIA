@@ -85,8 +85,24 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 	@Override
 	public ArrayList<PairVO> calculateCompleteNeighborhood(
 			IStructure currentStructure) throws Exception {
-		// TODO calculateCompleteNeighborhood for ShiftWeightedNodesCriticalRoute
-		return null;
+		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
+		IStructure clone = currentStructure.cloneStructure();
+		clone.getLongestRoutes();
+		ArrayList<int[]>temp = clone.getWeightedNodesCriticaRoute();
+		for(int i =0; i< temp.size();i++){
+			OperationIndexVO initialOperationIndex = new OperationIndexVO(temp.get(i)[0],temp.get(i)[1]);
+			
+			for(int j =0; j< temp.size();j++){
+				OperationIndexVO finalOperationIndex = new OperationIndexVO(temp.get(j)[0], temp.get(j)[1]);
+				PairVO pair = new PairVO(initialOperationIndex, finalOperationIndex);
+				if(!neighborhood.contains(pair)){
+					neighborhood.add(pair);
+				}
+			}
+		}
+		
+		
+		return neighborhood;
 	}
 	
 	// -----------------------------------------------
