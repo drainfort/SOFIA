@@ -293,7 +293,7 @@ public class JarGenerator {
 			        pw.println("		ArrayList<String[]> datos = new ArrayList<String[]>();");
 					
 			        pw.println("		String[] file"+a+"= {");
-			        pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+metaheuristic+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+instanceName.substring(0,4)+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
+			        pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+metaheuristic+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+instanceName.substring(0,5)+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
 			        pw.println("		datos.add(file"+a+");");
 							
 				    pw.println("			return datos;");
