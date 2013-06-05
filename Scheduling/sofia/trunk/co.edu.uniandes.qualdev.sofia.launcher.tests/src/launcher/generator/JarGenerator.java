@@ -205,7 +205,8 @@ public class JarGenerator {
 			builder_class = StochasticSPTNonDelay_CLASS;
 		}
 	
-		System.out.println(algorithmConfiguration.getInstanceType());
+		System.out.println("Tipo: "+algorithmConfiguration.getInstanceType());
+		System.out.println("Betas: "+algorithmConfiguration.getSelectedBetas());
 		printJavaFile(instancesIdentifiers, algorithm, neighbors, representation, modifier);
 		printConfigurationFile("./jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration, representation_class, algorithm_class, neighbors_class, modifier_class, builder_class);
 	}
