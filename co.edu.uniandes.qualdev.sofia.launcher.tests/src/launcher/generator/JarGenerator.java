@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
+import launcher.Launcher;
 import launcher.generator.vos.AlgorithmConfigurationVO;
 import launcher.generator.vos.ParameterVO;
 
@@ -204,7 +205,7 @@ public class JarGenerator {
 			builder_class = StochasticSPTNonDelay_CLASS;
 		}
 	
-		
+		System.out.println(algorithmConfiguration.getInstanceType());
 		printJavaFile(instancesIdentifiers, algorithm, neighbors, representation, modifier);
 		printConfigurationFile("./jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration, representation_class, algorithm_class, neighbors_class, modifier_class, builder_class);
 	}
@@ -278,14 +279,17 @@ public class JarGenerator {
 			        pw.println("	private Launcher launcher;");
 			        pw.println("	private String algorithmFile;");
 			        pw.println("	private String problemFile;");	
-			        pw.println("	private String resultsFile;");		
-			        pw.println("	private String instanceName;");
-			        pw.println("	public "+name+"(String pAlgorithmFile, String pProblemFile, String pResultsFile, String pInstanceName) {");
+			        pw.println("	private String currentBks;");	
+			        pw.println("	private String instanceName;");	
+			        pw.println("	private String instanceType;");				       
+			        
+			        pw.println("	public "+name+"(String pAlgorithmFile, String pProblemFile, String pCurrentBks, String pInstanceType, String pInstanceName) {");
 			        pw.println("			super();");
 			        pw.println("			algorithmFile = pAlgorithmFile;");
 			        pw.println("			problemFile = pProblemFile;");
-			        pw.println("			resultsFile = pResultsFile;");
+			        pw.println("			currentBks = pCurrentBks;");
 			        pw.println("			instanceName = pInstanceName;");
+			        pw.println("			instanceType = pInstanceType;");
 			        pw.println("	}");
 			
 			        pw.println("	@Parameters");
@@ -293,7 +297,7 @@ public class JarGenerator {
 			        pw.println("		ArrayList<String[]> datos = new ArrayList<String[]>();");
 					
 			        pw.println("		String[] file"+a+"= {");
-			        pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+metaheuristic+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+instanceName.substring(0,5)+"/"+instanceName+".properties\", \"./results/TT_"+instanceName+".pdf\", \""+instanceName+"\"};");
+			        pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+metaheuristic+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+instanceName.substring(0,5)+"/"+instanceName+".properties\", \"gamma.cmax.bks.om\", \"Taillard\",\""+instanceName+"\"};");
 			        pw.println("		datos.add(file"+a+");");
 							
 				    pw.println("			return datos;");
@@ -310,7 +314,7 @@ public class JarGenerator {
 				    pw.println("		try {");
 				    pw.println("			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();");
 				    pw.println("			for (int i = 0; i < 1; i++) {	");			
-				    pw.println("				results.add(launcher.launch(algorithmFile,problemFile, resultsFile, instanceName));");
+				    pw.println("				results.add(launcher.launch(algorithmFile,problemFile, currentBks, instanceType, instanceName));");
 				    pw.println("			}");
 					pw.println("			ChartPrinter.getInstance().addResults(results);");
 					pw.println("		} catch (Exception e) {");
