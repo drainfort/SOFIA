@@ -205,9 +205,18 @@ public class JarGenerator {
 			builder_class = StochasticSPTNonDelay_CLASS;
 		}
 	
-		System.out.println("Tipo: "+algorithmConfiguration.getInstanceType());
-		System.out.println("Betas: "+algorithmConfiguration.getSelectedBetas());
-		printJavaFile(instancesIdentifiers, algorithm, neighbors, representation, modifier);
+	    String problem =null;
+	    if(algorithmConfiguration.getSelectedBetas().size()==0){
+	    	problem = "gamma.cmax.bks.om";
+	    }else{
+	    	if(algorithmConfiguration.getSelectedBetas().contains("Travel times")){
+	    		if(algorithmConfiguration.getSelectedBetas().size()==1){
+	    			problem = "gamma.cmax.bks.om.tt";
+	    		}
+	    	}
+	    }
+		
+		printJavaFile(instancesIdentifiers, algorithm, neighbors, representation, modifier, algorithmConfiguration.getInstanceType(),problem );
 		printConfigurationFile("./jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration, representation_class, algorithm_class, neighbors_class, modifier_class, builder_class);
 	}
 	
@@ -250,7 +259,7 @@ public class JarGenerator {
 		
 	}
 	
-	private void printJavaFile(ArrayList<String> instances, String metaheuristic, String neighbors, String structure, String modifier){
+	private void printJavaFile(ArrayList<String> instances, String metaheuristic, String neighbors, String structure, String modifier, String instanceType, String betas){
 		FileWriter fichero = null;
         PrintWriter pw = null;
 		try
@@ -298,7 +307,7 @@ public class JarGenerator {
 			        pw.println("		ArrayList<String[]> datos = new ArrayList<String[]>();");
 					
 			        pw.println("		String[] file"+a+"= {");
-			        pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+metaheuristic+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+instanceName.substring(0,5)+"/"+instanceName+".properties\", \"gamma.cmax.bks.om\", \"Taillard\",\""+instanceName+"\"};");
+			        pw.println("			\"./data/Om-TT/Algorithm/"+structure+"/"+metaheuristic+"_"+neighbors+"_"+modifier+".properties\",\"./data/Om-TT/"+instanceName.substring(0,5)+"/"+instanceName+".properties\", \""+betas+"\", \""+instanceType+"\",\""+instanceName+"\"};");
 			        pw.println("		datos.add(file"+a+");");
 							
 				    pw.println("			return datos;");
