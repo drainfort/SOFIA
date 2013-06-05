@@ -103,58 +103,78 @@ public class JarGenerator {
 	
 	public void generateJavaFiles(ArrayList<String> instancesIdentifiers, AlgorithmConfigurationVO algorithmConfiguration){
 		String algorithm = null;
+		String algorithm_class =null;
 		
 		if(algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_COMPLETE_NEIGHBORHOOD)){
 			algorithm = TABU_SEARCH_COMPLETE_NEIGHBORHOOD;
+			algorithm_class = TABU_SEARCH_COMPLETE_NEIGHBORHOOD_CLASS;
 		}else if(algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_RESTRICTED_NEIGHBORHOOD)){
 			algorithm = TABU_SEARCH_RESTRICTED_NEIGHBORHOOD;
+			algorithm_class = TABU_SEARCH_RESTRICTED_NEIGHBORHOOD_CLASS;
 		}else if(algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.SIMULATED_ANNELING)){
 			algorithm = SIMULATED_ANNELING;
+			algorithm_class = SIMULATED_ANNELING_CLASS;
 		}else if(algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.GRASP)){
 			algorithm = GRASP;
+			algorithm_class = GRASP_CLASS;
 		}
 		
 		String neighbors = null;
+		String neighbors_class =null;
 		
 		if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.RANDOM_NEIGHBORHOOD)){
 			neighbors = RANDOM_NEIGHBORHOOD;
+			neighbors_class = RANDOM_NEIGHBORHOOD_CLASS;
 		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ROUTE_ADJACENT_NEIGHBORHOOD)){
 			neighbors = CRITICAL_ADJACENT;
+			neighbors_class = CRITICAL_ADJACENT_CLASS;
 		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_ROUTE_ADJACENT_MACHINES_NEIGHBORHOOD)){
 			neighbors = CRITICAL_ADJACENT_MACHINES;
+			neighbors_class = CRITICAL_ADJACENT_MACHINES_CLASS;
 		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_RANDOM_NEIGHBORHOOD)){
 			neighbors = CRITICAL_BLOCK;
+			neighbors_class = CRITICAL_BLOCK_CLASS;
 		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_ADJACENT_ON_END_NEIGHBORHOOD)){
 			neighbors = CRITICAL_BLOCK_ADJACENT;
+			neighbors_class = CRITICAL_BLOCK_ADJACENT_CLASS;
 		}else if(algorithmConfiguration.getNeighborhood().equals(AlgorithmConfigurationVO.CRITICAL_BLOCK_END_START_ANY_NEIGHBORHOOD)){
 			neighbors = CRITICAL_BLOCK_ENDSTART;
+			neighbors_class = CRITICAL_BLOCK_ENDSTART_CLASS;
 		}
 		
 		String modifier = null;
+		String modifier_class = null;
 		
 		if(algorithmConfiguration.getModifier().equals(AlgorithmConfigurationVO.RANDOM_MODFIER)){
 			modifier = RANDOM_MODFIER;
+			modifier_class = RANDOM_MODFIER_CLASS;
 		}else if(algorithmConfiguration.getModifier().equals(AlgorithmConfigurationVO.SWAP)){
 			modifier = SWAP;
+			modifier_class = SWAP_CLASS;
 		}else if(algorithmConfiguration.getModifier().equals(AlgorithmConfigurationVO.LEFT_INSERTION)){
 			modifier = LEFT_INSERTION;
+			modifier_class = LEFT_INSERTION_CLASS;
 		}else if(algorithmConfiguration.getModifier().equals(AlgorithmConfigurationVO.RIGHT_INSERTION)){
 			modifier = RIGHT_INSERTION;
+			modifier_class = RIGHT_INSERTION_CLASS;
 		}
 		
 		String representation = null;
+		String representation_class = null;
 		
 		if(algorithmConfiguration.getRepresentation().equals(AlgorithmConfigurationVO.VECTOR)){
 			representation = VECTOR;
+			representation_class = VECTOR_CLASS;
 		}else if(algorithmConfiguration.getRepresentation().equals(AlgorithmConfigurationVO.GRAPH)){
 			representation = GRAPH;
+			representation_class = GRAPH_CLASS;
 		}
 		
 		printJavaFile(instancesIdentifiers, algorithm, neighbors, representation, modifier);
-		printConfigurationFile("./jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration);
+		printConfigurationFile("./jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration, representation_class, algorithm_class, neighbors_class, modifier_class);
 	}
 	
-	private void printConfigurationFile(String filename, AlgorithmConfigurationVO algorithmConfiguration){
+	private void printConfigurationFile(String filename, AlgorithmConfigurationVO algorithmConfiguration, String structure_class, String algo_class, String neigh_class, String modifier_class){
 		FileWriter fichero = null;
         PrintWriter pw = null;
 		try
@@ -166,9 +186,9 @@ public class JarGenerator {
 			pw.println("# The algorithm configuration");
 			pw.println("# -------------------------------------------------");
 
-			pw.println("scheduling.structureFactory=structure.factory.impl.");
-			pw.println("scheduling.neighborCalculator=neighborCalculator.impl.");
-			pw.println("scheduling.modifier=modifier.impl.");
+			pw.println("scheduling.structureFactory=structure.factory.impl."+structure_class);
+			pw.println("scheduling.neighborCalculator=neighborCalculator.impl."+neigh_class);
+			pw.println("scheduling.modifier=modifier.impl."+modifier_class);
 			pw.println("scheduling.gammaCalculator=gammaCalculator.impl.");
 			pw.println("scheduling.control=control.impl.");
 			pw.println("scheduling.initialSolutionBuilder=initialSolBuilder.impl.");
