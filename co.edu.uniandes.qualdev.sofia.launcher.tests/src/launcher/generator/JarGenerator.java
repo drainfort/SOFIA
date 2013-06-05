@@ -128,7 +128,7 @@ public class JarGenerator {
 		}
 		
 		printJavaFile(instancesIdentifiers, algorithm, neighbors, representation, modifier);
-		printConfigurationFile(".jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration);
+		printConfigurationFile("./jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration);
 	}
 	
 	private void printConfigurationFile(String filename, AlgorithmConfigurationVO algorithmConfiguration){
@@ -158,7 +158,7 @@ public class JarGenerator {
 			
 			for(int i=0; i< algorithmConfiguration.getMetaheuristicParams().size();i++){
 				ParameterVO temp = algorithmConfiguration.getMetaheuristicParams().get(i);
-				pw.println("params."+ temp.getName()+"="+temp.getValue());
+				pw.println(temp.getName()+"="+temp.getValue());
 			}
 			pw.close();
 			fichero.close();
