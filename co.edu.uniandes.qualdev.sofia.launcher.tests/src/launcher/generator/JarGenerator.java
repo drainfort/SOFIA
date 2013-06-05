@@ -76,6 +76,18 @@ public class JarGenerator {
 	public static String LEFT_INSERTION_CLASS = "LeftInsertion";
 	public static String RIGHT_INSERTION_CLASS="RightInsertion";
 	
+	
+	// Initial solution builders classes
+	public final static String LPTNonDelay_CLASS = "LPTNonDelay";
+	public final static String LRPTNonDelay_CLASS = "LRPTNonDelay";
+	public final static String SPTNonDelay_CLASS = "SPTNonDelay";
+	public final static String SRPTNonDelay_CLASS = "SRPTNonDelay";
+	public final static String RandomDispatchingRule_CLASS = "RandomDispatchingRule";
+	public final static String BestDispatchingRule_CLASS = "BestDispatchingRule";
+	public final static String StochasticERM_CLASS = "StochasticERM";
+	public final static String StochasticLPTNonDelay_CLASS = "StochasticLPTNonDelay";
+	public final static String StochasticSPTNonDelay_CLASS = "StochasticSPTNonDelay";
+	
 	// -------------------------------------------------------------
 	// Attributes
 	// -------------------------------------------------------------
@@ -170,13 +182,34 @@ public class JarGenerator {
 			representation_class = GRAPH_CLASS;
 		}
 		
-		System.out.println(algorithmConfiguration.getInitialSolutionBuilder());
+		String builder_class = null;
+		
+		if(algorithmConfiguration.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.LPTNonDelay)){
+			builder_class = LPTNonDelay_CLASS;
+		}else if(algorithmConfiguration.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.LRPTNonDelay)){
+			builder_class = LRPTNonDelay_CLASS;
+		}else if(algorithmConfiguration.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.SPTNonDelay)){
+			builder_class = SPTNonDelay_CLASS;
+		}else if(algorithmConfiguration.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.SRPTNonDelay)){
+			builder_class = SRPTNonDelay_CLASS;
+		}else if(algorithmConfiguration.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.RandomDispatchingRule)){
+			builder_class = RandomDispatchingRule_CLASS;
+		}else if(algorithmConfiguration.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.BestDispatchingRule)){
+			builder_class = BestDispatchingRule_CLASS;
+		}else if(algorithmConfiguration.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.StochasticERM)){
+			builder_class = StochasticERM_CLASS;
+		}else if(algorithmConfiguration.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.StochasticLPTNonDelay)){
+			builder_class = StochasticLPTNonDelay_CLASS;
+		}else if(algorithmConfiguration.getInitialSolutionBuilder().equals(AlgorithmConfigurationVO.StochasticSPTNonDelay)){
+			builder_class = StochasticSPTNonDelay_CLASS;
+		}
+	
 		
 		printJavaFile(instancesIdentifiers, algorithm, neighbors, representation, modifier);
-		printConfigurationFile("./jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration, representation_class, algorithm_class, neighbors_class, modifier_class);
+		printConfigurationFile("./jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration, representation_class, algorithm_class, neighbors_class, modifier_class, builder_class);
 	}
 	
-	private void printConfigurationFile(String filename, AlgorithmConfigurationVO algorithmConfiguration, String structure_class, String algo_class, String neigh_class, String modifier_class){
+	private void printConfigurationFile(String filename, AlgorithmConfigurationVO algorithmConfiguration, String structure_class, String algo_class, String neigh_class, String modifier_class, String builder_class){
 		FileWriter fichero = null;
         PrintWriter pw = null;
 		try
@@ -193,7 +226,7 @@ public class JarGenerator {
 			pw.println("scheduling.modifier=modifier.impl."+modifier_class);
 			pw.println("scheduling.gammaCalculator=gammaCalculator.impl.CMaxCalculator");
 			pw.println("scheduling.control=control.impl."+algo_class);
-			pw.println("scheduling.initialSolutionBuilder=initialSolBuilder.impl.");
+			pw.println("scheduling.initialSolutionBuilder=initialSolBuilder.impl."+builder_class);
 			pw.println("scheduling.parametersLoader=control.impl."+algo_class+"ParameterLoader");
 
 			pw.println("# -------------------------------------------------");
