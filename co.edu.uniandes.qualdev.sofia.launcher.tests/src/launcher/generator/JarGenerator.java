@@ -34,6 +34,12 @@ public class JarGenerator {
 	public static String SIMULATED_ANNELING ="SA";
 	public static String GRASP = "GRASP";
 	public static String RANDOM_WALK = "RANDOM";
+	// Meta-heuristics Classes
+	public static String TABU_SEARCH_COMPLETE_NEIGHBORHOOD_CLASS = "TabuSearchCN";
+	public static String TABU_SEARCH_RESTRICTED_NEIGHBORHOOD_CLASS = "TabuSearchRN";
+	public static String SIMULATED_ANNELING_CLASS ="SimpleSimulatedAnnealing";
+	public static String GRASP_CLASS = "GRASP";
+	public static String RANDOM_WALK_CLASS = "RandomWalk";
 	
 	// Neighborhood algorithm
 	public static String RANDOM_NEIGHBORHOOD = "RDM";
@@ -42,16 +48,33 @@ public class JarGenerator {
 	public static String CRITICAL_BLOCK_ADJACENT="CR_BLQADJ";
 	public static String CRITICAL_BLOCK="CR_BLQ";
 	public static String CRITICAL_BLOCK_ENDSTART="CR_BLQENDSTART";
+	// Neighborhood algorithm Classes
+	public static String RANDOM_NEIGHBORHOOD_CLASS = "Random";
+	public static String CRITICAL_ADJACENT_CLASS="AdjacentShiftOnCriticalRoutes";
+	public static String CRITICAL_ADJACENT_MACHINES_CLASS = "AdjacentMachinesShiftOnCriticalRoutes";
+	public static String CRITICAL_BLOCK_ADJACENT_CLASS="ShiftBlockAdjOnEnds";
+	public static String CRITICAL_BLOCK_CLASS="ShiftRandomBlockCriticalRoute";
+	public static String CRITICAL_BLOCK_ENDSTART_CLASS="ShiftBlockEndStartAnyCriticalRoute";
 	
 	// Representation structure
 	public static String GRAPH = "Graph";
 	public static String VECTOR = "Vector";
+	
+	// Representation structure classes
+    public static String GRAPH_CLASS = "GraphFactory";
+    public static String VECTOR_CLASS = "VectorFactory";
 	
 	// Modifiers
 	public static String RANDOM_MODFIER = "RANDOM";
 	public static String SWAP = "SWAP";
 	public static String LEFT_INSERTION = "LEFTINSERTION";
 	public static String RIGHT_INSERTION="RIGHTINSERTION";
+	
+	// Modifiers classes
+	public static String RANDOM_MODFIER_CLASS = "RandomNeighbor";
+	public static String SWAP_CLASS = "Swap";
+	public static String LEFT_INSERTION_CLASS = "LeftInsertion";
+	public static String RIGHT_INSERTION_CLASS="RightInsertion";
 	
 	// -------------------------------------------------------------
 	// Attributes
@@ -144,12 +167,12 @@ public class JarGenerator {
 			pw.println("# -------------------------------------------------");
 
 			pw.println("scheduling.structureFactory=structure.factory.impl.");
-			pw.println("scheduling.neighborCalculator=neighborCalculator.");
-			pw.println("scheduling.modifier=modifier.");
-			pw.println("scheduling.gammaCalculator=gammaCalculator.");
-			pw.println("scheduling.control=control.");
-			pw.println("scheduling.initialSolutionBuilder=initialSolBuilder.");
-			pw.println("scheduling.parametersLoader=control.");
+			pw.println("scheduling.neighborCalculator=neighborCalculator.impl.");
+			pw.println("scheduling.modifier=modifier.impl.");
+			pw.println("scheduling.gammaCalculator=gammaCalculator.impl.");
+			pw.println("scheduling.control=control.impl.");
+			pw.println("scheduling.initialSolutionBuilder=initialSolBuilder.impl.");
+			pw.println("scheduling.parametersLoader=control.impl.");
 
 			pw.println("# -------------------------------------------------");
 			pw.println("# Parameters required by the control component");
