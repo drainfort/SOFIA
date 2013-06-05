@@ -143,7 +143,7 @@ public class JarGenerator {
 			pw.println("# The algorithm configuration");
 			pw.println("# -------------------------------------------------");
 
-			pw.println("scheduling.structureFactory=vector.factory.");
+			pw.println("scheduling.structureFactory=structure.factory.impl.");
 			pw.println("scheduling.neighborCalculator=neighborCalculator.");
 			pw.println("scheduling.modifier=modifier.");
 			pw.println("scheduling.gammaCalculator=gammaCalculator.");
