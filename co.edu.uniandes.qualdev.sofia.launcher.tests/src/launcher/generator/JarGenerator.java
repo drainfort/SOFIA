@@ -10,6 +10,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
 import launcher.generator.vos.AlgorithmConfigurationVO;
+import launcher.generator.vos.ParameterVO;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
@@ -127,6 +128,46 @@ public class JarGenerator {
 		}
 		
 		printJavaFile(instancesIdentifiers, algorithm, neighbors, representation, modifier);
+		printConfigurationFile(".jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration);
+	}
+	
+	private void printConfigurationFile(String filename, AlgorithmConfigurationVO algorithmConfiguration){
+		FileWriter fichero = null;
+        PrintWriter pw = null;
+		try
+        {
+			fichero = new FileWriter(new File(filename));
+			pw = new PrintWriter(fichero);
+			 
+			pw.println("# -------------------------------------------------");
+			pw.println("# The algorithm configuration");
+			pw.println("# -------------------------------------------------");
+
+			pw.println("scheduling.structureFactory=vector.factory.");
+			pw.println("scheduling.neighborCalculator=neighborCalculator.");
+			pw.println("scheduling.modifier=modifier.");
+			pw.println("scheduling.gammaCalculator=gammaCalculator.");
+			pw.println("scheduling.control=control.");
+			pw.println("scheduling.initialSolutionBuilder=initialSolBuilder.");
+			pw.println("scheduling.parametersLoader=control.");
+
+			pw.println("# -------------------------------------------------");
+			pw.println("# Parameters required by the control component");
+			pw.println("# -------------------------------------------------");
+
+			
+			for(int i=0; i< algorithmConfiguration.getMetaheuristicParams().size();i++){
+				ParameterVO temp = algorithmConfiguration.getMetaheuristicParams().get(i);
+				pw.println("params."+ temp.getName()+"="+temp.getValue());
+			}
+			pw.close();
+			fichero.close();
+        }
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void printJavaFile(ArrayList<String> instances, String metaheuristic, String neighbors, String structure, String modifier){
@@ -210,6 +251,7 @@ public class JarGenerator {
 					pw.println("	}");
 					pw.println("}");
 			        
+					pw.close();
 					fichero.close();
 					
 					compileFile(name);
