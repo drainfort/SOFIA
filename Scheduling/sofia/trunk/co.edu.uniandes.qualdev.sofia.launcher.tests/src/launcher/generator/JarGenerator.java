@@ -170,6 +170,8 @@ public class JarGenerator {
 			representation_class = GRAPH_CLASS;
 		}
 		
+		System.out.println(algorithmConfiguration.getInitialSolutionBuilder());
+		
 		printJavaFile(instancesIdentifiers, algorithm, neighbors, representation, modifier);
 		printConfigurationFile("./jars/data/Om-TT/Algorithm/"+representation+"/"+algorithm+"_"+neighbors+"_"+modifier+".properties", algorithmConfiguration, representation_class, algorithm_class, neighbors_class, modifier_class);
 	}
@@ -189,10 +191,10 @@ public class JarGenerator {
 			pw.println("scheduling.structureFactory=structure.factory.impl."+structure_class);
 			pw.println("scheduling.neighborCalculator=neighborCalculator.impl."+neigh_class);
 			pw.println("scheduling.modifier=modifier.impl."+modifier_class);
-			pw.println("scheduling.gammaCalculator=gammaCalculator.impl.");
-			pw.println("scheduling.control=control.impl.");
+			pw.println("scheduling.gammaCalculator=gammaCalculator.impl.CMaxCalculator");
+			pw.println("scheduling.control=control.impl."+algo_class);
 			pw.println("scheduling.initialSolutionBuilder=initialSolBuilder.impl.");
-			pw.println("scheduling.parametersLoader=control.impl.");
+			pw.println("scheduling.parametersLoader=control.impl."+algo_class+"ParameterLoader");
 
 			pw.println("# -------------------------------------------------");
 			pw.println("# Parameters required by the control component");
