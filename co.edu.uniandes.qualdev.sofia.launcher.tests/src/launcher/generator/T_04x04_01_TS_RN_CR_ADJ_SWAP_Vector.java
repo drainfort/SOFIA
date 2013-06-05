@@ -28,7 +28,7 @@ public class T_04x04_01_TS_RN_CR_ADJ_SWAP_Vector{
 	public static ArrayList<String[]> datos() {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 		String[] file1= {
-			"./data/Om-TT/Algorithm/Vector/TS_RN_CR_ADJ_SWAP.properties","./data/Om-TT/04x0/04x04_01.properties", "./results/TT_04x04_01.pdf", "04x04_01"};
+			"./data/Om-TT/Algorithm/Vector/TS_RN_CR_ADJ_SWAP.properties","./data/Om-TT/04x04/04x04_01.properties", "./results/TT_04x04_01.pdf", "04x04_01"};
 		datos.add(file1);
 			return datos;
 	}
