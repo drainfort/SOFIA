@@ -113,8 +113,35 @@ public class ShiftRandomBlockCriticalRoute implements INeighborCalculator {
 	@Override
 	public ArrayList<PairVO> calculateCompleteNeighborhood(
 			IStructure currentStructure) throws Exception {
-		// TODO calculateCompleteNeighborhood for ShiftBlockCriticalRoute
-		return null;
+		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
+		IStructure clone = currentStructure.cloneStructure();
+		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+		
+		for(int i=0; i< routes.size();i++){
+			ArrayList<ArrayList<IOperation>> blocks= routes.get(i).getBlocks();
+			
+			for(int j=0; j<blocks.size();j++){
+				ArrayList<IOperation> block = blocks.get(j);
+				for(int i1=0; i1<blocks.size();i1++){
+					IOperation initialNode= block.get(i1);  		            
+			        OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId()); 
+					for(int j1=i1; j1<blocks.size();j1++){
+						IOperation finalNode = block.get(j1);
+						OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+						PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+			            if(!neighborhood.contains(temp)){
+			                neighborhood.add(temp);
+			            }
+					}
+				}
+				
+			}
+			
+			
+		}
+		
+		return neighborhood;
+		
 	}
 	
 	// -----------------------------------------------

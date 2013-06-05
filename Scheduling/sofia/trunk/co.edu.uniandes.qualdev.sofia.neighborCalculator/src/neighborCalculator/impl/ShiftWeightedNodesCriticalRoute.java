@@ -89,10 +89,10 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 		IStructure clone = currentStructure.cloneStructure();
 		clone.getLongestRoutes();
 		ArrayList<int[]>temp = clone.getWeightedNodesCriticaRoute();
-		for(int i =0; i< temp.size();i++){
+		for(int i = 0; i< temp.size();i++){
 			OperationIndexVO initialOperationIndex = new OperationIndexVO(temp.get(i)[0],temp.get(i)[1]);
 			
-			for(int j =0; j< temp.size();j++){
+			for(int j = i ; j< temp.size();j++){
 				OperationIndexVO finalOperationIndex = new OperationIndexVO(temp.get(j)[0], temp.get(j)[1]);
 				PairVO pair = new PairVO(initialOperationIndex, finalOperationIndex);
 				if(!neighborhood.contains(pair)){
