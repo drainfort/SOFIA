@@ -49,14 +49,14 @@ public class LauncherUI extends JFrame{
 	public void generateJars(ArrayList<String> instancesToExecute,String instancesType, AlgorithmConfigurationVO algorithmDefinition){
 		String workspacePath = configurationPanel.getWorkspacePath();
 		String eclipsePath = configurationPanel.getEclipsePath();
-		
+		jarsGenerator = new JarGenerator(workspacePath, eclipsePath);
 		
 		ParametersDialog dialog = new ParametersDialog(this, instancesToExecute, instancesType, algorithmDefinition, false);
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
 		
 		
-		jarsGenerator = new JarGenerator(workspacePath, eclipsePath);
+		
 		
 	}
 	
