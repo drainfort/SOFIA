@@ -137,7 +137,7 @@ public class JarGenerator {
 			 for(int i=0; i<instances.size();i++){
 	            	int a=i+1; 
 	            	String instanceName = instances.get(i);
-					String name = "T_" + "_" + instanceName + "_" + metaheuristic + "_" + neighbors + "_" + modifier + "_" + structure;
+					String name = "T_" + instanceName + "_" + metaheuristic + "_" + neighbors + "_" + modifier + "_" + structure;
 			        fichero = new FileWriter(new File("./src/launcher/generator/"+name+".java"));
 			        
 			        pw = new PrintWriter(fichero);
@@ -280,7 +280,7 @@ public class JarGenerator {
 			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.neighborCalculator/bin\"/>");
 			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.initialSolBuilder/bin\"/>");
 			pw.println("<fileset dir=\"" + workspacePath + "co.edu.uniandes.qualdev.sofia.reports/bin\"/>");
-			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"gnujaxp.jar\"/>");
+			/*pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"gnujaxp.jar\"/>");
 			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"jcommon-1.0.17.jar\"/>");
 			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"jfreechart-1.0.14.jar\"/>");
 			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-pdfa-5.3.1.jar\"/>");
@@ -290,7 +290,7 @@ public class JarGenerator {
 			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"bcprov-jdk15-146.jar\"/>");
 			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"bctsp-jdk15-146.jar\"/>");
 			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-asian.jar\"/>");
-			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-hyph-xml.jar\"/>");
+			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.reports\\lib\" includes=\"itext-hyph-xml.jar\"/>");*/
 			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.instancesgenerator/bin\"/>");
 			pw.println("<fileset dir=\""+workspacePath+"co.edu.uniandes.qualdev.sofia.launcher/bin\"/>");
 			pw.println("<zipfileset dir=\""+workspacePathBackSlash+"co.edu.uniandes.qualdev.sofia.launcher\\lib\" includes=\"jcommon-1.0.17.jar\"/>");
