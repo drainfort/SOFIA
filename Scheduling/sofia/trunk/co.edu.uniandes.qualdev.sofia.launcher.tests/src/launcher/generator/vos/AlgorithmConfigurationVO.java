@@ -97,8 +97,6 @@ public class AlgorithmConfigurationVO {
 		selectedBetas = new ArrayList<String>();
 		reportConfiguration = new ArrayList<String>();
 		metaheuristicParams = new ArrayList<ParameterVO>();
-		//TODO Fix.. esta quemado
-		instanceType = TAILLARD;
 	}
 
 	// ----------------------------------------------------
