@@ -30,19 +30,18 @@ public class Launcher {
 	 * @return
 	 * @throws Exception
 	 */
-	public ExecutionResults launch(String algorithmFile, String problemFile, String resultsFile, String instanceName) throws Exception{
+	public ExecutionResults launch(String algorithmFile, String problemFile, String currentBks, String instanceType, String instanceName) throws Exception{
 		Properties algorithmConfiguration = loadProductConfiguration(new File(algorithmFile));
 		Properties problemConfiguration = loadProductConfiguration(new File(problemFile));
 		String iterative = algorithmConfiguration.getProperty("scheduling.control");
 		
 		SchedulingAlgorithm algorithm =  null;
-		//TODO Fix the nulls
+
 		if(iterative.equals("control.impl.GRASP") || iterative.equals("control.impl.GRASPERLS")){
-			algorithm = new MultiStartAlgorithm(algorithmConfiguration, problemConfiguration, null, "Yu");
+			algorithm = new MultiStartAlgorithm(algorithmConfiguration, problemConfiguration, currentBks, instanceType);
 		}else{
-			algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problemConfiguration, null, "Yu");
+			algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problemConfiguration, currentBks, instanceType);
 		}
-		
 		return algorithm.execute(instanceName);
 	}
 	
