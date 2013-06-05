@@ -104,19 +104,17 @@ public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 		
 		// Obtaining all the critical paths of the current solutions
 		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
-		
-		// Selecting one of the critical paths
-		int number = randomNumber(0, routes.size() - 1);
-		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
-		
-		for (int i = 0; i < selectedCriticalPath.size() - 1; i++) {
-			IOperation initialNode = selectedCriticalPath.get(i);
-			IOperation finalNode = selectedCriticalPath.get(i + 1);
-			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
-			OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
-		
-			PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
-			neighborhood.add(temp);
+		for(int j =0; j < routes.size();j++){
+			ArrayList<IOperation> selectedCriticalPath = routes.get(j).getRoute();
+			for (int i = 0; i < selectedCriticalPath.size() - 1; i++) {
+				IOperation initialNode = selectedCriticalPath.get(i);
+				IOperation finalNode = selectedCriticalPath.get(i + 1);
+				OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
+				OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+			
+				PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+				neighborhood.add(temp);
+			}
 		}
 		
 		return neighborhood;
