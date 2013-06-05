@@ -95,6 +95,36 @@ public class ShiftBlockAdjOnEnds implements INeighborCalculator{
 				IStructure currentStructure) throws Exception {
 			
 			ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
+			IStructure clone = currentStructure.cloneStructure();
+	        
+	        // Obtaining all the critical paths of the current solutions
+	        ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+	        
+	        for(int i=0; i< routes.size();i++){
+	        	
+	        	CriticalRoute selectedRoute = routes.get(i);
+	        	ArrayList<ArrayList<IOperation>> blocks= selectedRoute.getBlocks();
+	        	for(int j=0; j < blocks.size();j++){
+	        		ArrayList<IOperation> block = blocks.get(j);
+	        		IOperation initialNode1= block.get(0);
+		            IOperation finalNode1 = block.get(1);
+		            OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode1.getOperationIndex().getJobId(), initialNode1.getOperationIndex().getStationId());
+		            OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode1.getOperationIndex().getJobId(), finalNode1.getOperationIndex().getStationId());
+		            
+		            PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+		            neighborhood.add(temp);
+		            
+		            if(block.size()>2){
+			            IOperation    finalNode= block.get(block.size()-1);
+			            IOperation    initialNode = block.get(block.size()-2);
+			            initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
+			            finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+			            temp = new PairVO(initialOperationIndex, finalOperationIndex);
+			            neighborhood.add(temp);
+		            }
+	        	}
+	        	
+	        }
 
 			return neighborhood;
 		}
