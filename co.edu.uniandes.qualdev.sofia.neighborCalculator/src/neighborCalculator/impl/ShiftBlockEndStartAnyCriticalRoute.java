@@ -103,8 +103,48 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
 	@Override
 	public ArrayList<PairVO> calculateCompleteNeighborhood(
 			IStructure currentStructure) throws Exception {
-		// TODO calculateCompleteNeighborhood for ShiftBlockEndStartAnyCriticalRoute
-		return null;
+		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
+		IStructure clone = currentStructure.cloneStructure();
+        
+        // Obtaining all the critical paths of the current solutions
+        ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+        
+        for(int i=0; i< routes.size();i++){
+        	
+        	CriticalRoute selectedRoute = routes.get(i);
+        	ArrayList<ArrayList<IOperation>> blocks= selectedRoute.getBlocks();
+        	for(int j=0; j < blocks.size();j++){
+        		ArrayList<IOperation> block = blocks.get(0);
+        		IOperation initialNode1= block.get(0);
+        		for(int z=1; z< block.size(); z++){
+        			IOperation finalNode1 = block.get(z);
+        			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode1.getOperationIndex().getJobId(), initialNode1.getOperationIndex().getStationId());
+    	            OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode1.getOperationIndex().getJobId(), finalNode1.getOperationIndex().getStationId());
+    	            
+    	            PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+    	            if(!neighborhood.contains(temp)){
+    	            	neighborhood.add(temp);
+    	            }
+        		}
+        		
+        		initialNode1= block.get(block.size()-1);
+        		for(int z=0; z< block.size()-1 && block.size()>2; z++){
+        			IOperation finalNode1 = block.get(z);
+        			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode1.getOperationIndex().getJobId(), initialNode1.getOperationIndex().getStationId());
+    	            OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode1.getOperationIndex().getJobId(), finalNode1.getOperationIndex().getStationId());
+    	            
+    	            PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+    	            if(!neighborhood.contains(temp)){
+    	            	neighborhood.add(temp);
+    	            }
+        		}
+	            
+	            
+        	}
+        	
+        }
+
+		return neighborhood;
 	}
 	
 	// -----------------------------------------------
