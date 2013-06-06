@@ -267,7 +267,7 @@ public class JarGenerator {
 			 for(int i=0; i<instances.size();i++){
 	            	int a=i+1; 
 	            	String instanceName = instances.get(i);
-					String name = "T_" + instanceName + "_" + metaheuristic + "_" + neighbors + "_" + modifier + "_" + structure;
+					String name = "T_" + instanceName + "_" + metaheuristic + "_" + neighbors + "_" + modifier + "_" + structure+"_" + instanceType;
 			        fichero = new FileWriter(new File("./src/launcher/generator/"+name+".java"));
 			        
 			        pw = new PrintWriter(fichero);
