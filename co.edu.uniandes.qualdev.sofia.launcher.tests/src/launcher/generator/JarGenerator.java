@@ -428,6 +428,17 @@ public class JarGenerator {
 			e.printStackTrace();
 		}
 		
+	  /* File buildFile1 = new File("./src/launcher/generator/Refresh.xml");
+	   Project p1 = new Project();
+	   p1.setUserProperty("ant.file", buildFile1.getAbsolutePath());
+	   p1.setProperty("java.home", "C:\\Program Files (x86)\\Java\\jdk1.6.0_20");
+	   p1.init();
+	   ProjectHelper helper1 = ProjectHelper.getProjectHelper();
+	   p1.addReference("ant.projectHelper", helper1);
+	   helper1.parse(p1, buildFile1);
+	   p1.executeTarget(p1.getDefaultTarget());	*/
+		
+		
 	   File buildFile = new File("./src/launcher/generator/"+name+".xml");
 	   Project p = new Project();
 	   p.setUserProperty("ant.file", buildFile.getAbsolutePath());
