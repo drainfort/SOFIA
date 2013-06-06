@@ -116,7 +116,6 @@ public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 				neighborhood.add(temp);
 			}
 		}
-		
 		return neighborhood;
 	}
 	
