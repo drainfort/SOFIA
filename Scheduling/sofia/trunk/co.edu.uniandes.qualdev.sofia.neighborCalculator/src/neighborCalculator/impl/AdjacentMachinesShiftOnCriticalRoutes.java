@@ -121,8 +121,6 @@ public class AdjacentMachinesShiftOnCriticalRoutes implements INeighborCalculato
 		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
 		
 		// Selecting one of the critical paths
-		
-		
 		for(int j =0; j < routes.size();j++){
 			ArrayList<IOperation> selectedCriticalPath = routes.get(j).getRoute();		
 			for (int i = 0; i < selectedCriticalPath.size() - 1; i++) {
