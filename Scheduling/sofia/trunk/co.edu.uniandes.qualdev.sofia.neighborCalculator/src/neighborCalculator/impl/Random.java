@@ -75,8 +75,25 @@ public class Random implements INeighborCalculator{
 	@Override
 	public ArrayList<PairVO> calculateCompleteNeighborhood(
 			IStructure currentStructure) throws Exception {
-		// TODO calculateCompleteNeighborhood for RandomNeighborhood
-		return null;
+		ArrayList<PairVO> pairs = new ArrayList<PairVO>();
+		int totalJobs = currentStructure.getTotalJobs();
+		int totalStations = currentStructure.getTotalStations();
+		for(int i=0; i<totalJobs;i++){
+			for(int j=0; j<totalStations;j++){
+				OperationIndexVO first =new OperationIndexVO(i, j);
+				for(int ii=0; ii<totalJobs;ii++){
+					for(int jj=0; j<totalStations;jj++){
+						OperationIndexVO second =new OperationIndexVO(ii, jj);
+						PairVO pair = new PairVO(first, second);
+						if(!pairs.contains(pair)){
+							pairs.add(pair);
+			            }
+					}
+				}
+			}
+		}
+		
+		return pairs;
 	}
 	
 	// -----------------------------------------------
