@@ -84,6 +84,15 @@ public class SetupTimes extends SetupBeta {
 			if(reader!=null)reader.close();
 		}
 	}
+	
+	
+	public Float[][] getSMatrix() {
+		return SMatrix;
+	}
+
+	public void setSMatrix(Float[][] sMatrix) {
+		SMatrix = sMatrix;
+	}
 
 	@Override
 	public ArrayList<String> getInformationFiles() {
