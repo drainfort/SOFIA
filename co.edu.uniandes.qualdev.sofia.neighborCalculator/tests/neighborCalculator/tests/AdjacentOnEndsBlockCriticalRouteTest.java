@@ -160,7 +160,7 @@ public class AdjacentOnEndsBlockCriticalRouteTest {
 		Operation o43 = new Operation(10, 3, 2);
 		escenario[3][2]= o43;
 		Operation o44 = new Operation(10, 3, 3);
-		escenario[3][3]= o43;
+		escenario[3][3]= o44;
 		
 		
 		problem2.setProblem(escenario);
@@ -238,7 +238,7 @@ public class AdjacentOnEndsBlockCriticalRouteTest {
 		Operation o43 = new Operation(1, 3, 2);
 		escenario[3][2]= o43;
 		Operation o44 = new Operation(10, 3, 3);
-		escenario[3][3]= o43;
+		escenario[3][3]= o44;
 		
 		
 		problem2.setProblem(escenario);
@@ -269,11 +269,11 @@ public class AdjacentOnEndsBlockCriticalRouteTest {
 			ArrayList<PairVO> vecinos = neighbor.calculateCompleteNeighborhood(problem2);
 			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o12.getOperationIndex())));
 			assertTrue(vecinos.contains(new PairVO(o12.getOperationIndex(), o22.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o22.getOperationIndex(), o32.getOperationIndex())));
-			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o32.getOperationIndex(), o33.getOperationIndex())));
-			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o33.getOperationIndex(), o43.getOperationIndex())));
-			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o43.getOperationIndex(), o44.getOperationIndex())));
-			
+			assertTrue(vecinos.contains(new PairVO(o22.getOperationIndex(), o23.getOperationIndex())));
+			assertTrue(!vecinos.contains(new PairVO(o22.getOperationIndex(), o24.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o23.getOperationIndex(), o24.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o24.getOperationIndex(), o34.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o34.getOperationIndex(), o44.getOperationIndex())));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
