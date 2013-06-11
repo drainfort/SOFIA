@@ -81,9 +81,9 @@ public class Random implements INeighborCalculator{
 		for(int i=0; i<totalJobs;i++){
 			for(int j=0; j<totalStations;j++){
 				OperationIndexVO first =new OperationIndexVO(i, j);
-				for(int ii=0; ii<totalJobs;ii++){
-					for(int jj=0; j<totalStations;jj++){
-						OperationIndexVO second =new OperationIndexVO(ii, jj);
+				for(int z=0; z<totalJobs;z++){
+					for(int jj=0; jj<totalStations;jj++){
+						OperationIndexVO second =new OperationIndexVO(z, jj);
 						PairVO pair = new PairVO(first, second);
 						if(!pairs.contains(pair)){
 							pairs.add(pair);
