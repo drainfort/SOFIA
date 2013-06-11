@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import neighborCalculator.impl.AdjacentMachinesShiftOnCriticalRoutes;
 import neighborCalculator.impl.AdjacentShiftOnCriticalRoutes;
 
 import org.junit.Before;
@@ -27,7 +28,7 @@ public class AdjacentMachineCriticalRouteTest {
 	
 	private static Graph problemVector = new Graph(2,2);
 	private static Graph problem1 = new Graph(2,2);
-	private static AdjacentShiftOnCriticalRoutes neighbor = new AdjacentShiftOnCriticalRoutes();
+	private static AdjacentMachinesShiftOnCriticalRoutes neighbor = new AdjacentMachinesShiftOnCriticalRoutes();
 	
 	// -----------------------------------------------
 	// Setup scenarios
