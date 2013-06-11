@@ -139,11 +139,11 @@ public class AdjacentOnEndsBlockCriticalRouteTest {
 		Operation o21 = new Operation(5, 1, 0);
 		escenario[1][0]= o21;
 		Operation o22 = new Operation(10, 1, 1);
-		escenario[1][1]= o21;
+		escenario[1][1]= o22;
 		Operation o23 = new Operation(5, 1, 2);
-		escenario[1][2]= o21;
+		escenario[1][2]= o23;
 		Operation o24 = new Operation(5, 1, 3);
-		escenario[1][3]= o21;
+		escenario[1][3]= o24;
 				
 		Operation o31 = new Operation(5, 2, 0);
 		escenario[2][0]= o31;
@@ -217,11 +217,11 @@ public class AdjacentOnEndsBlockCriticalRouteTest {
 		Operation o21 = new Operation(5, 1, 0);
 		escenario[1][0]= o21;
 		Operation o22 = new Operation(10, 1, 1);
-		escenario[1][1]= o21;
+		escenario[1][1]= o22;
 		Operation o23 = new Operation(10, 1, 2);
-		escenario[1][2]= o21;
+		escenario[1][2]= o23;
 		Operation o24 = new Operation(10, 1, 3);
-		escenario[1][3]= o21;
+		escenario[1][3]= o24;
 				
 		Operation o31 = new Operation(5, 2, 0);
 		escenario[2][0]= o31;
