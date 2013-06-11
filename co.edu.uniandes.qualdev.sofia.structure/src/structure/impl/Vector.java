@@ -246,25 +246,79 @@ public class Vector extends AbstractStructure{
 		}else{
 			C = new int[getTotalJobs()][getTotalStations() + 1];
 			
-			for (int i = 0; i < vector.size(); i++) {
-				IOperation Cij = vector.get(i);
-				
-				int Ciminus1J = getCiminus1J(Cij, i) != null ? getCiminus1J(Cij, i).getFinalTime() : 0;
-				int CiJminus1 = getCiJminus1(Cij, i) != null ? getCiJminus1(Cij, i).getFinalTime() : 0;
-				
-				int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i), i);
-				int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
-				
-				int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
-				int finalTime = initialTime + Cij.getProcessingTime() + sumSetupBetas;
-				
-				Cij.setInitialTime(initialTime);
-				Cij.setFinalTime(finalTime);
-				
-				C[Cij.getOperationIndex().getJobId()][Cij
-						.getOperationIndex().getStationId()] = finalTime;
-				
+			// Arreglo con las operaciones sin programar
+			@SuppressWarnings("unchecked")
+			ArrayList<IOperation> operations = (ArrayList<IOperation>) vector.clone();
+			for (int i = 0; i < operations.size(); i++){
+				IOperation iOperation = operations.get(i);
+				int sumTTBetas = this.getTTBetas(null, i);
+				iOperation.setInitialTime(sumTTBetas);
 			}
+			
+			int operationsAmount = operations.size();
+			int index = 0;
+			
+			// Iteracion del algoritmo constructivo. Por cada iteración, programa una operacion
+			while(index < operationsAmount){
+				
+				// Calcula el menor tiempo de inicio
+				int minInitialTime = Integer.MAX_VALUE;
+				for (IOperation operation : operations) {
+					int currentInitialTime = operation.getInitialTime();
+					if(currentInitialTime < minInitialTime)
+						minInitialTime = currentInitialTime;
+				}
+				
+				// Selecciona la próxima operación a programar tomando la primera cuyo tiempo de inicio sea el mínimo posible. 
+				IOperation selectedOperation = null;
+				for (IOperation operation : operations) {
+					if(operation.getInitialTime() == minInitialTime){
+						selectedOperation = operation;
+						break;
+					}
+				}
+				
+				// Quita la operacion a programar, de las operaciones por programar
+				operations.remove(selectedOperation);
+				
+				// Calcula el C de la operación a decodificar.
+				int finalTimeToSchedule = selectedOperation.getInitialTime() + selectedOperation.getProcessingTime() ;
+				selectedOperation.setFinalTime(finalTimeToSchedule);
+				C[selectedOperation.getOperationIndex().getJobId()][selectedOperation.getOperationIndex().getStationId()] = finalTimeToSchedule;
+				
+				// Actualizando los tiempos de inicio de las operaciones que quedan por programar
+				for (int i = 0; i < operations.size(); i++){
+					IOperation iOperation = operations.get(i);
+					
+					int finalTimeLastJob = getLastJobTime(iOperation.getOperationIndex().getJobId());
+					int finalTimeLastStation = getLastStationTime(iOperation.getOperationIndex().getStationId());
+					int sumTTBetas = this.getTTBetas(getCiminus1J(iOperation, i), i);
+					
+					int initialTime = Math.max(finalTimeLastJob + sumTTBetas, finalTimeLastStation);
+					iOperation.setInitialTime(initialTime);
+				}
+			}
+			
+			
+//			for (int i = 0; i < vector.size(); i++) {
+//				IOperation Cij = vector.get(i);
+//				
+//				int Ciminus1J = getCiminus1J(Cij, i) != null ? getCiminus1J(Cij, i).getFinalTime() : 0;
+//				int CiJminus1 = getCiJminus1(Cij, i) != null ? getCiJminus1(Cij, i).getFinalTime() : 0;
+//				
+//				int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i), i);
+//				int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
+//				
+//				int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
+//				int finalTime = initialTime + Cij.getProcessingTime() + sumSetupBetas;
+//				
+//				Cij.setInitialTime(initialTime);
+//				Cij.setFinalTime(finalTime);
+//				
+//				C[Cij.getOperationIndex().getJobId()][Cij
+//						.getOperationIndex().getStationId()] = finalTime;
+//				
+//			}
 			
 			// Aplying TearDown betas
 			int[][] newC = applyTearDownBetas();
@@ -277,6 +331,27 @@ public class Vector extends AbstractStructure{
 		}
 	}
 	
+	private int getLastJobTime(int jobId) {
+		int max = -1;
+		for (int i = 0; i < C.length; i++) {
+			if(max < C[jobId][i]){
+				max = C[jobId][i];
+			}
+		}
+		return max;
+	}
+	
+	private int getLastStationTime(int stationId) {
+		
+		int max = -1;
+		for (int i = 0; i < C.length; i++) {
+			if(max < C[i][stationId]){
+				max = C[i][stationId];
+			}
+		}
+		return max;
+	}
+
 	@Override
 	public int[][] updateCMatrix(PairVO pair){
 		if(CCalculated){
