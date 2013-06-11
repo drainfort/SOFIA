@@ -95,7 +95,7 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 			for(int j = i ; j< temp.size();j++){
 				OperationIndexVO finalOperationIndex = new OperationIndexVO(temp.get(j)[0], temp.get(j)[1]);
 				PairVO pair = new PairVO(initialOperationIndex, finalOperationIndex);
-				if(!neighborhood.contains(pair)){
+				if(!neighborhood.contains(pair)&& !initialOperationIndex.equals(finalOperationIndex)){
 					neighborhood.add(pair);
 				}
 			}
