@@ -277,12 +277,10 @@ public class RandomBlockCriticalRouteTest {
 			assertTrue(vecinos.contains(new PairVO(o12.getOperationIndex(), o22.getOperationIndex())));
 			assertTrue(vecinos.contains(new PairVO(o22.getOperationIndex(), o23.getOperationIndex())));
 			assertTrue(vecinos.contains(new PairVO(o22.getOperationIndex(), o24.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o24.getOperationIndex(), o23.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o24.getOperationIndex(), o22.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o23.getOperationIndex(), o24.getOperationIndex())));
 			assertTrue(vecinos.contains(new PairVO(o24.getOperationIndex(), o34.getOperationIndex())));
 			assertTrue(vecinos.contains(new PairVO(o24.getOperationIndex(), o44.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o44.getOperationIndex(), o24.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o44.getOperationIndex(), o34.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o34.getOperationIndex(), o44.getOperationIndex())));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
