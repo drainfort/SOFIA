@@ -193,6 +193,7 @@ public class WeightedCompleteTest {
 			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problem2));
 			ArrayList<PairVO> vecinos = neighbor.calculateCompleteNeighborhood(problem2);
 			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o12.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o41.getOperationIndex())));
 			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o13.getOperationIndex())));
 			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o14.getOperationIndex())));
 			assertTrue(vecinos.contains(new PairVO(o41.getOperationIndex(), o12.getOperationIndex())));
