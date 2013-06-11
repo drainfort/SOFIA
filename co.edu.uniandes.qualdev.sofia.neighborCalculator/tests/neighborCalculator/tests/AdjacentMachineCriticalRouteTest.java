@@ -192,12 +192,12 @@ public class AdjacentMachineCriticalRouteTest {
 		try {
 			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problem2));
 			ArrayList<PairVO> vecinos = neighbor.calculateCompleteNeighborhood(problem2);
-			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o12.getOperationIndex())));
+			assertTrue(!vecinos.contains(new PairVO(o11.getOperationIndex(), o12.getOperationIndex())));
 			assertTrue(vecinos.contains(new PairVO(o12.getOperationIndex(), o22.getOperationIndex())));
 			assertTrue(vecinos.contains(new PairVO(o22.getOperationIndex(), o32.getOperationIndex())));
-			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o32.getOperationIndex(), o33.getOperationIndex())));
+			assertTrue(!neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o32.getOperationIndex(), o33.getOperationIndex())));
 			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o33.getOperationIndex(), o43.getOperationIndex())));
-			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o43.getOperationIndex(), o44.getOperationIndex())));
+			assertTrue(!neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o43.getOperationIndex(), o44.getOperationIndex())));
 			routes = newVector.getLongestRoutes();
 			System.out.println("rutas"+routes);
 		} catch (Exception e) {
