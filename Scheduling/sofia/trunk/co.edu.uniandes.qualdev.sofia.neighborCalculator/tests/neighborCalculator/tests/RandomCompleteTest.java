@@ -165,7 +165,7 @@ public class RandomCompleteTest {
 		Operation o43 = new Operation(10, 3, 2);
 		escenario[3][2]= o43;
 		Operation o44 = new Operation(10, 3, 3);
-		escenario[3][3]= o43;
+		escenario[3][3]= o44;
 		
 		
 		problem2.setProblem(escenario);
