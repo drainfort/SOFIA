@@ -114,7 +114,7 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
         	CriticalRoute selectedRoute = routes.get(i);
         	ArrayList<ArrayList<IOperation>> blocks= selectedRoute.getBlocks();
         	for(int j=0; j < blocks.size();j++){
-        		ArrayList<IOperation> block = blocks.get(0);
+        		ArrayList<IOperation> block = blocks.get(j);
         		IOperation initialNode1= block.get(0);
         		for(int z=1; z< block.size(); z++){
         			IOperation finalNode1 = block.get(z);
