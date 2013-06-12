@@ -86,7 +86,7 @@ public class CriticalRoute {
 		String respuesta="";
 		for(int i=0;i<route.size();i++)
 		{
-			respuesta+="/"+route.get(i).toString() + " /";
+			respuesta+="/"+route.get(i).toString() + " "+route.get(i).getFinalTime()+ " /";
 		}
 		return respuesta;
 	}
