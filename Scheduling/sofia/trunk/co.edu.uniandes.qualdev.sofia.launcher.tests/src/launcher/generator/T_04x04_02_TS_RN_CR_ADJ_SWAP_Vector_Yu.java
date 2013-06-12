@@ -11,26 +11,26 @@ import org.junit.runners.Parameterized.Parameters;
 import common.utils.ExecutionResults;
 import chart.printer.ChartPrinter;
 @RunWith(Parameterized.class)
-public class T_04x04_01_TS_RN_CR_ADJ_SWAP_Vector{
+public class T_04x04_02_TS_RN_CR_ADJ_SWAP_Vector_Yu{
 	private Launcher launcher;
 	private String algorithmFile;
 	private String problemFile;
 	private String currentBks;
 	private String instanceName;
 	private String instanceType;
-	public T_04x04_01_TS_RN_CR_ADJ_SWAP_Vector(String pAlgorithmFile, String pProblemFile, String pCurrentBks, String pInstanceType, String pInstanceName) {
+	public T_04x04_02_TS_RN_CR_ADJ_SWAP_Vector_Yu(String pAlgorithmFile, String pProblemFile, String pCurrentBks, String pInstanceType, String pInstanceName) {
 			super();
 			algorithmFile = pAlgorithmFile;
 			problemFile = pProblemFile;
 			currentBks = pCurrentBks;
-			instanceType = pInstanceType;
 			instanceName = pInstanceName;
+			instanceType = pInstanceType;
 	}
 	@Parameters
 	public static ArrayList<String[]> datos() {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 		String[] file1= {
-			"./data/Om-TT/Algorithm/Vector/TS_RN_CR_ADJ_SWAP.properties","./data/Om-TT/04x04/04x04_01.properties", "gamma.cmax.bks.om", "Taillard", "04x04_01"};
+			"./data/Om-TT/Algorithm/Vector/TS_RN_CR_ADJ_SWAP.properties","./data/Om-TT/04x04/04x04_02.properties", "gamma.cmax.bks.om.tt", "Yu","04x04_02"};
 		datos.add(file1);
 			return datos;
 	}
@@ -53,9 +53,9 @@ public class T_04x04_01_TS_RN_CR_ADJ_SWAP_Vector{
 	}
 	@After
 	public void tearDown(){
-		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/T_04x04_01_TS_RN_CR_ADJ_SWAP_Vector_consolidated.html");
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/T_04x04_02_TS_RN_CR_ADJ_SWAP_Vector_Yu_consolidated.html");
 	}
 	public static void main(String[] args) {
- 		JUnitCore.main("launcher.generator.T_04x04_01_TS_RN_CR_ADJ_SWAP_Vector");  
+ 		JUnitCore.main("launcher.generator.T_04x04_02_TS_RN_CR_ADJ_SWAP_Vector_Yu");  
 	}
 }
