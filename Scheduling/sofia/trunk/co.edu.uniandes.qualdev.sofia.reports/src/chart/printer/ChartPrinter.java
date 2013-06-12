@@ -3,6 +3,7 @@ package chart.printer;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import common.types.OperationIndexVO;
 import common.utils.ExecutionResults;
@@ -78,6 +79,7 @@ public class ChartPrinter {
 			"<div  style=\"width: 1000px; margin: 0 auto; padding: 80px 0 40px; font: 0.85em arial;\"><ul class=\"tabs\" persist=\"true\">");
 		if(printTable){		
 			pw.println("<li><a href=\"#\" rel=\"view1\">Overview Results</a></li>");
+			pw.println("<li><a href=\"#\" rel=\"view4\">Parameters</a></li>");
 		}
 		if(printSolutions){
 			pw.println("<li><a href=\"#\" rel=\"view2\">Gantt of best solutions</a></li>");
@@ -86,10 +88,15 @@ public class ChartPrinter {
 			pw.println("<li><a href=\"#\" rel=\"view3\">InitialSolutions</a></li>");
 		}
 		
+		
 		pw.println("</ul><div class=\"tabcontents\">");
 		if(printTable){	
 			pw.println("<div id=\"view1\" class=\"tabcontent\">");
 			printResultTable(pw);
+			
+			pw.println("<div id=\"view4\" class=\"tabcontent\">");
+			printParams(pw);
+			
 		}
 		if(printSolutions){
 			pw.println("<div id=\"view2\" class=\"tabcontent\"><table>");
@@ -117,6 +124,30 @@ public class ChartPrinter {
 		pw.println("</body></html>");
 	}
 
+
+	private void printParams(PrintWriter pw) {
+		
+		pw.println("<table id=\"roundTable\"><thead><tr>"+
+				"<th scope=\"col\" class=\"leftTopCorner\">Key</th>");
+		pw.println("<th scope=\"col\" class=\"rightTopCorner\">Value</th>");
+		
+		
+		pw.println("</tr></thead><tbody>");
+		ArrayList<ExecutionResults> results =globalExecutionResults.get(0);
+		Properties properties= results.get(0).getParameters();
+		String instanceName = results.get(0).getInstanceName();
+		for(String key : properties.stringPropertyNames()) {
+			  String value = properties.getProperty(key);
+			  pw.println("<tr>");
+			  pw.println("<td>"+key+"</td>");
+			  pw.println("<td>"+value+"</td>");
+			  pw.println("</tr>");
+		}
+			
+			
+		
+		pw.println("</tr></tbody></table></div>");
+	}
 
 	private void printResultTable(PrintWriter pw) {
 		pw.println("<table id=\"roundTable\"><thead>	<tr>"+
