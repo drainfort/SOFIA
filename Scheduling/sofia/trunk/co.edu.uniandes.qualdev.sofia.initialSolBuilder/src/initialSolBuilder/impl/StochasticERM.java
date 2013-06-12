@@ -309,7 +309,6 @@ public class StochasticERM implements IInitialSolBuilder{
 		
 	}
 
-	
 	@Override
 	public String getName(){
 		return name;
