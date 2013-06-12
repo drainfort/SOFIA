@@ -34,6 +34,8 @@ public interface IInitialSolBuilder {
 	public IStructure createInitialSolution(ArrayList<String> problemFiles,
 			ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator) throws Exception;
 	
+    public IStructure createInitialSolution(Integer [][] TMatrix,  Integer[][] TTMatrix, Integer[][]STMatrix, String structureFactory, IGammaCalculator gammaCalculator, IStructure structure) throws Exception;
+	
 	/**
 	 * Returns the name of the constructive algorithm responsible for the creation of
 	 * the initial solution

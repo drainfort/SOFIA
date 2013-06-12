@@ -4,8 +4,11 @@ import gammaCalculator.IGammaCalculator;
 import initialSolBuilder.IInitialSolBuilder;
 import java.util.ArrayList;
 
+import structure.IOperation;
 import structure.IStructure;
+import structure.factory.AbstractStructureFactory;
 import common.types.BetaVO;
+import common.types.OperationIndexVO;
 
 /**
  * Class that calculates returns the best dispatching rule for the current
@@ -70,6 +73,33 @@ public class RandomDispatchingRule implements IInitialSolBuilder{
 	@Override
 	public String getName() {
 		return name;
+	}
+	
+	
+	public IStructure createInitialSolution(Integer [][] TMatrix,  Integer[][] TTMatrix, Integer[][]STMatrix, String structureFactory, IGammaCalculator gammaCalculator, IStructure structure) throws Exception {
+ArrayList<IInitialSolBuilder> arrayClasses = new ArrayList<IInitialSolBuilder>();
+		
+		IInitialSolBuilder lpt = new LPTNonDelay();
+		IInitialSolBuilder lrpt = new LRPTNonDelay();
+		IInitialSolBuilder spt = new SPTNonDelay();
+		IInitialSolBuilder srpt = new SRPTNonDelay();
+//		IInitialSolBuilder afslpt = new AFSLPTNonDelay();
+//		IInitialSolBuilder afslrpt = new AFSLRPTNonDelay();
+//		IInitialSolBuilder afsspt = new AFSSPTNonDelay();
+//		IInitialSolBuilder afssrpt = new AFSSRPTNonDelay();
+		
+		arrayClasses.add(lpt);
+		arrayClasses.add(lrpt);
+		arrayClasses.add(spt);
+		arrayClasses.add(srpt);
+//		arrayClasses.add(afslpt);
+//		arrayClasses.add(afslrpt);
+//		arrayClasses.add(afsspt);
+//		arrayClasses.add(afssrpt);
+		
+		int number = randomNumber(0, arrayClasses.size()-1);
+		return arrayClasses.get(number).createInitialSolution(TMatrix, TTMatrix, STMatrix, structureFactory, gammaCalculator, structure);
+		
 	}
 	
 	// -----------------------------------------------
