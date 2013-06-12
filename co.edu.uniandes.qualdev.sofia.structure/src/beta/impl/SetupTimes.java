@@ -25,7 +25,7 @@ public class SetupTimes extends SetupBeta {
 
 	private Float[][] SMatrix;
 	
-	private ArrayList<String> informationFiles;
+	private ArrayList<String> informationFiles = new ArrayList<String>();
 
 	// --------------------------------------------------------
 	// Constructor
