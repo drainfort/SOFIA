@@ -77,7 +77,7 @@ public class RandomDispatchingRule implements IInitialSolBuilder{
 	
 	
 	public IStructure createInitialSolution(Integer [][] TMatrix,  Integer[][] TTMatrix, Integer[][]STMatrix, String structureFactory, IGammaCalculator gammaCalculator, IStructure structure) throws Exception {
-ArrayList<IInitialSolBuilder> arrayClasses = new ArrayList<IInitialSolBuilder>();
+		ArrayList<IInitialSolBuilder> arrayClasses = new ArrayList<IInitialSolBuilder>();
 		
 		IInitialSolBuilder lpt = new LPTNonDelay();
 		IInitialSolBuilder lrpt = new LRPTNonDelay();
