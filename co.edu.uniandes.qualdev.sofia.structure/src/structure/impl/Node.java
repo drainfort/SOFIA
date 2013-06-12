@@ -57,6 +57,7 @@ public class Node {
 		}else{
 			int ci = this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().calculateC() : 0;
 			int cj = this.getPreviousSequenceNode() != null ? this.getPreviousSequenceNode().calculateC() : 0;
+			int sumSetupBetas = onwerGraph.getSetupBetas(operation.getOperationIndex().getJobId(), operation.getOperationIndex().getStationId());
 
 			int initialTime = Math.max(ci + this.onwerGraph.getTTBetas(this.getOperation(), 
 					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ), cj);

@@ -18,6 +18,7 @@ import structure.IOperation;
 import structure.IStructure;
 
 import beta.Beta;
+import beta.SetupBeta;
 import beta.TTBeta;
 import beta.TearDownBeta;
 import beta.impl.TearDownTravelTime;
@@ -953,6 +954,20 @@ public class Graph extends AbstractStructure {
 		this.weightedNodesCriticaRoute = weightedNodesCriticaRoute;
 	}
 
+	public int getSetupBetas(int i, int j) {
+		int sumBetas = 0;
+		if(this.betas!=null){
+			Iterator<Beta> iterator = betas.values().iterator();
+			while (iterator.hasNext()) {
+				Beta beta = iterator.next();
+				if (beta instanceof SetupBeta){
+					sumBetas += ((SetupBeta) beta).getValue(i,j);
+				}
+			}
+		}
+		return sumBetas;
+	}
+	
 	// -------------------------------------------------
 	// TODO Metodos aun por arreglar...
 	// -------------------------------------------------
