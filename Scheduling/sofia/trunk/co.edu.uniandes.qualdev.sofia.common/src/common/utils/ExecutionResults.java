@@ -1,6 +1,7 @@
 package common.utils;
 
 import java.util.ArrayList;
+import java.util.Properties;
 
 import common.types.OperationIndexVO;
 
@@ -33,6 +34,8 @@ public class ExecutionResults {
 	private ArrayList<GanttTask> tasksInitialSolution;
 	
 	private ArrayList<OperationIndexVO> operationsInitialSolution;
+	
+	private Properties parameters;
 	
 	private int bestCmax;
 	
@@ -186,6 +189,14 @@ public class ExecutionResults {
 
 	public void setPrintFinalSolution(boolean printFinalSolution) {
 		this.printFinalSolution = printFinalSolution;
+	}
+
+	public Properties getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(Properties parameters) {
+		this.parameters = parameters;
 	}
 	
 	
