@@ -38,6 +38,7 @@ public class TrajectoryBasedAlgorithm extends SchedulingAlgorithm {
 		
 		results.setExecutionTime(finalExecutionTime-initialExecutionTime);
 		results.setInstanceName(instanceName);
+		results.setParameters(algorithmConfiguration);
 		
 		return results;
 	}
