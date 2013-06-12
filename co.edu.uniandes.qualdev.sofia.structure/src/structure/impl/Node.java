@@ -59,11 +59,11 @@ public class Node {
 			int cj = this.getPreviousSequenceNode() != null ? this.getPreviousSequenceNode().calculateC() : 0;
 			int sumSetupBetas = onwerGraph.getSetupBetas(operation.getOperationIndex().getJobId(), operation.getOperationIndex().getStationId());
 
-			int initialTime = Math.max(ci + this.onwerGraph.getTTBetas(this.getOperation(), 
+			int initialTime = Math.max(ci + sumSetupBetas + this.onwerGraph.getTTBetas(this.getOperation(), 
 					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ), cj);
 			this.operation.setInitialTime(initialTime);
 			
-			if(ci+  this.onwerGraph.getTTBetas(this.getOperation(), 
+			if(ci+ sumSetupBetas + this.onwerGraph.getTTBetas(this.getOperation(), 
 					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ) ==cj )
 				sameInitialTime = true;	
 			
