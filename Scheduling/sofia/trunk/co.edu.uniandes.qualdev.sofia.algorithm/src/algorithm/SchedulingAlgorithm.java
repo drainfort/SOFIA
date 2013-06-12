@@ -40,6 +40,8 @@ public abstract class SchedulingAlgorithm {
 	 */
 	protected IterativeAlgorithm iterativeAlgorithm;
 	
+	protected Properties algorithmConfiguration;
+	
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
@@ -60,6 +62,7 @@ public abstract class SchedulingAlgorithm {
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, Exception {
 		
+		this.algorithmConfiguration= algorithmConfiguration;
 
 		String structrureFactory = (String) algorithmConfiguration
 				.getProperty("scheduling.structureFactory");
