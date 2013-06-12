@@ -55,4 +55,13 @@ public class AFSSRPTNonDelay implements IInitialSolBuilder{
 	public String getName() {
 		return name;
 	}
+
+	@Override
+	public IStructure createInitialSolution(Integer[][] TMatrix,
+			Integer[][] TTMatrix, Integer[][] STMatrix,
+			String structureFactory, IGammaCalculator gammaCalculator,
+			IStructure structure) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
