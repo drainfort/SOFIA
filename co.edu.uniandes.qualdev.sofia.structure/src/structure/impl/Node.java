@@ -60,11 +60,11 @@ public class Node {
 			int sumSetupBetas = onwerGraph.getSetupBetas(operation.getOperationIndex().getJobId(), operation.getOperationIndex().getStationId());
 
 			int initialTime = Math.max(ci + sumSetupBetas + this.onwerGraph.getTTBetas(this.getOperation(), 
-					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ), cj);
+					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ), cj+sumSetupBetas);
 			this.operation.setInitialTime(initialTime);
 			
 			if(ci+ sumSetupBetas + this.onwerGraph.getTTBetas(this.getOperation(), 
-					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ) ==cj )
+					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ) ==cj+sumSetupBetas )
 				sameInitialTime = true;	
 			
 			int finalTime = initialTime + operation.getProcessingTime();
