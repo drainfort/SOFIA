@@ -976,7 +976,7 @@ public class Graph extends AbstractStructure {
 	 * Calculates the longest paths of the graph.
 	 * @throws Exception 
 	 */
-	public ArrayList<CriticalRoute> getLongestRoutes() throws Exception{
+	public ArrayList<CriticalRoute> getCriticalPaths() throws Exception{
 		int cmax = 0;
 		ArrayList<int[]> incidenciasCriticaRoute = new ArrayList<int[]>();
 		ArrayList<Node> cMaxNodes= new ArrayList<Node>();

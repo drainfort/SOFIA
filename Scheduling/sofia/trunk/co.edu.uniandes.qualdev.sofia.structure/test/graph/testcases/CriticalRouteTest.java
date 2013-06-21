@@ -70,7 +70,7 @@ public class CriticalRouteTest {
 		Graph newVector = (Graph) problemVector.cloneStructure();
 		ArrayList<CriticalRoute> routes;
 		try {
-			routes = newVector.getLongestRoutes();
+			routes = newVector.getCriticalPaths();
 			CriticalRoute route = routes.get(0);
 			System.out.println(routes);
 			Operation first =(Operation) route.getRoute().get(0);
@@ -110,7 +110,7 @@ public class CriticalRouteTest {
 		Graph newVector = (Graph) problem1.cloneStructure();
 		ArrayList<CriticalRoute> routes;
 		try {
-			routes = newVector.getLongestRoutes();
+			routes = newVector.getCriticalPaths();
 			System.out.println(routes);
 			assertTrue(routes.size()==4);
 		} catch (Exception e) {
