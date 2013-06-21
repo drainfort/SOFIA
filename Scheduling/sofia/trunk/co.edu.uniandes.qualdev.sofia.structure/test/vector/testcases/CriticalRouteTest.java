@@ -1,27 +1,32 @@
 package vector.testcases;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import common.types.OperationIndexVO;
 
 import structure.IOperation;
 import structure.impl.CriticalRoute;
 import structure.impl.Operation;
 import structure.impl.Vector;
 
-
+/**
+ * Test cases for the functionality of calculating the critical paths on the vector
+ * 
+ * @author Jaime Romero
+ * @author David Mendez-Acuna
+ */
 public class CriticalRouteTest {
 
 	// -----------------------------------------------
 	// Attributes
 	// -----------------------------------------------
 	
-	private static Vector problemVector = new Vector(2,2);
-	private static Vector problem1 = new Vector(2,2);
-	
+	private static Vector vectorScenario1 = new Vector(2,2);
+	private static Vector vectorScenario2 = new Vector(2,2);
 	
 	// -----------------------------------------------
 	// Setup scenarios
@@ -29,87 +34,61 @@ public class CriticalRouteTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		try {
-			
-			//Escenario 1
+		
+			//Building scenario 1
 			IOperation[][] problem = new IOperation[2][2]; 
+			problem[0][0] = new Operation(10, 0, 0);
+			problem[0][1] = new Operation(20, 0, 1);
+			problem[1][0] = new Operation(5, 1, 0);
+			problem[1][1] = new Operation(5, 1, 1);
 			
-			Operation o1 = new Operation(10, 0, 0);
-			problem[0][0]= o1;
+			vectorScenario1.setProblem(problem);
+			vectorScenario1.scheduleOperation(problem[0][0].getOperationIndex());
+			vectorScenario1.scheduleOperation(problem[1][1].getOperationIndex());
+			vectorScenario1.scheduleOperation(problem[1][0].getOperationIndex());
+			vectorScenario1.scheduleOperation(problem[0][1].getOperationIndex());
 			
-			Operation o4 = new Operation(5, 1, 1);
-			problem[1][1]= o4;
-			
-			Operation o3 = new Operation(5, 1, 0);
-			problem[1][0]= o3;
-			
-			Operation o2 = new Operation(20, 0, 1);
-			problem[0][1]= o2;
-			
-			problemVector.setProblem(problem);
-			problemVector.scheduleOperation(o1.getOperationIndex());
-			problemVector.scheduleOperation(o4.getOperationIndex());
-			problemVector.scheduleOperation(o3.getOperationIndex());
-			problemVector.scheduleOperation(o2.getOperationIndex());
-			
-			
-			
-			//Escenario 2
-			
+			//Building scenario 2
 			IOperation[][] secondEscenario = new IOperation[2][2];
-			Operation o11 = new Operation(10, 0, 0);
-			secondEscenario[0][0]= o11;
+			secondEscenario[0][0] = new Operation(10, 0, 0);
+			secondEscenario[1][1] = new Operation(10, 1, 1);
+			secondEscenario[0][1] = new Operation(20, 0, 1);
+			secondEscenario[1][0] = new Operation(20, 1, 0);
 			
-			Operation o41 = new Operation(10, 1, 1);
-			secondEscenario[1][1]= o41;
-			
-			Operation o21 = new Operation(20, 0, 1);
-			secondEscenario[0][1]= o21;
-			
-			Operation o31 = new Operation(20, 1, 0);
-			secondEscenario[1][0]= o31;
-			problem1.setProblem(secondEscenario);
-			
-			problem1.scheduleOperation(o11.getOperationIndex());
-			problem1.scheduleOperation(o41.getOperationIndex());
-			problem1.scheduleOperation(o31.getOperationIndex());
-			problem1.scheduleOperation(o21.getOperationIndex());
-			
-			
-			
-			
-		} catch (Exception e) {
-			fail("Fail loading the input processing times file ");
-		}
+			vectorScenario2.setProblem(secondEscenario);
+			vectorScenario2.scheduleOperation(secondEscenario[0][0].getOperationIndex());
+			vectorScenario2.scheduleOperation(secondEscenario[1][1].getOperationIndex());
+			vectorScenario2.scheduleOperation(secondEscenario[1][0].getOperationIndex());
+			vectorScenario2.scheduleOperation(secondEscenario[0][1].getOperationIndex());
 	}
 
 	// -----------------------------------------------
-	// Test clases
+	// Test cases
 	// -----------------------------------------------
 	
 	@Test
-	public void testClone1() throws InterruptedException {
+	public void testCriticalPathScenario1() throws InterruptedException {
 		
-		Vector newVector = (Vector) problemVector.cloneStructure();
-		ArrayList<CriticalRoute> routes = newVector.getLongestRoutes();
-		CriticalRoute route = routes.get(0);
+		Vector newVector = (Vector) vectorScenario1.cloneStructure();
+		ArrayList<CriticalRoute> routes = newVector.getCriticalPaths();
 		
-		System.out.println(routes);
-		Operation first =(Operation) route.getRoute().get(0);
-		Operation last = (Operation) route.getRoute().get(route.getRoute().size()-1);
-		System.out.println(first.getOperationIndex().getMachineId());
+		//Validation: The amount of critical paths is 1
+		Assert.assertEquals("The amount of criticap paths should be 1", 1, routes.size());
 		
-		assertTrue(first.getOperationIndex().getStationId()==0 && first.getOperationIndex().getJobId()==0);
-		assertTrue(last.getOperationIndex().getStationId()==1 && last.getOperationIndex().getJobId()==0);
+		//Validation: The only critical path is correct
+		CriticalRoute criticalPath = routes.get(0);
+		Assert.assertEquals("The size of the critical path should be 2", 2, criticalPath.getRoute().size());
+		Assert.assertEquals("The first operation of the critical path should be (0,0)", new OperationIndexVO(0, 0), criticalPath.getRoute().get(0).getOperationIndex());
+		Assert.assertEquals("The second operation of the critical path should be (0,1)", new OperationIndexVO(0, 1), criticalPath.getRoute().get(1).getOperationIndex());
 	}
+	
 	@Test
 	public void testClone2() throws InterruptedException {
 		
-		Vector newVector = (Vector) problem1.cloneStructure();
-		ArrayList<CriticalRoute> routes = newVector.getLongestRoutes();
-		System.out.println(routes);
-		assertTrue(routes.size()==4);
+		Vector newVector = (Vector) vectorScenario2.cloneStructure();
+		ArrayList<CriticalRoute> routes = newVector.getCriticalPaths();
+		
+		//Validation: The amount of critical paths is 4
+		Assert.assertEquals("The amount of criticap paths should be 4", 4, routes.size());
 	}
-
-
 }
