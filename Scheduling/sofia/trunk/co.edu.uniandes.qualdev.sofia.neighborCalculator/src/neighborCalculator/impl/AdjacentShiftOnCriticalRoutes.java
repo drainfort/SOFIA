@@ -39,7 +39,7 @@ public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
-		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
 		int number = randomNumber(0, routes.size() - 1);
@@ -62,7 +62,7 @@ public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
-		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
 		
@@ -103,7 +103,7 @@ public class AdjacentShiftOnCriticalRoutes implements INeighborCalculator {
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
-		ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
 		for(int j =0; j < routes.size();j++){
 			ArrayList<IOperation> selectedCriticalPath = routes.get(j).getRoute();
 			for (int i = 0; i < selectedCriticalPath.size() - 1; i++) {
