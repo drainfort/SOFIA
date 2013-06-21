@@ -76,7 +76,7 @@ public class RandomCompleteTest {
 		ArrayList<CriticalRoute> routes;
 		try {
 			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problemVector));
-			routes = newVector.getLongestRoutes();
+			routes = newVector.getCriticalPaths();
 			CriticalRoute route = routes.get(0);
 			System.out.println(routes);
 			Operation first =(Operation) route.getRoute().get(0);
@@ -118,7 +118,7 @@ public class RandomCompleteTest {
 		try {
 			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problem1));
 			neighbor.calculateCompleteNeighborhood(problem1).contains(new PairVO(o41.getOperationIndex(), o21.getOperationIndex()));
-			routes = newVector.getLongestRoutes();
+			routes = newVector.getCriticalPaths();
 			System.out.println(routes);
 			assertTrue(routes.size()==4);
 		} catch (Exception e) {
@@ -202,7 +202,7 @@ public class RandomCompleteTest {
 			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o32.getOperationIndex(), o33.getOperationIndex())));
 			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o33.getOperationIndex(), o43.getOperationIndex())));
 			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o43.getOperationIndex(), o44.getOperationIndex())));
-			routes = newVector.getLongestRoutes();
+			routes = newVector.getCriticalPaths();
 			System.out.println("rutas"+routes);
 		} catch (Exception e) {
 			e.printStackTrace();

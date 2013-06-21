@@ -39,7 +39,7 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 	@Override
 	public PairVO calculateNeighbor(IStructure currentGraph) throws Exception {
 		IStructure clone = currentGraph.cloneStructure();
-		clone.getLongestRoutes();
+		clone.getCriticalPaths();
 		ArrayList<int[]>temp = clone.getWeightedNodesCriticaRoute();
 		int i = 0;
 		int number = randomNumber(0,temp.size()-1); 
@@ -56,7 +56,7 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 		
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		IStructure clone = currentGraph.cloneStructure();
-		clone.getLongestRoutes();
+		clone.getCriticalPaths();
 		ArrayList<int[]>temp = clone.getWeightedNodesCriticaRoute();
 		int salida=0;
 		int i = 0;
@@ -87,7 +87,7 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 			IStructure currentStructure) throws Exception {
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		IStructure clone = currentStructure.cloneStructure();
-		clone.getLongestRoutes();
+		clone.getCriticalPaths();
 		ArrayList<int[]>temp = clone.getWeightedNodesCriticaRoute();
 		for(int i = 0; i< temp.size();i++){
 			OperationIndexVO initialOperationIndex = new OperationIndexVO(temp.get(i)[0],temp.get(i)[1]);

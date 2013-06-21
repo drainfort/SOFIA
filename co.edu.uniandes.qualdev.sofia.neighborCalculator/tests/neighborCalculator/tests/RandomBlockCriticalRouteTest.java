@@ -77,7 +77,7 @@ public class RandomBlockCriticalRouteTest {
 		Graph newVector = (Graph) problemVector.cloneStructure();
 		ArrayList<CriticalRoute> routes;
 		try {
-			routes = newVector.getLongestRoutes();
+			routes = newVector.getCriticalPaths();
 			CriticalRoute route = routes.get(0);
 			Operation first =(Operation) route.getRoute().get(0);
 			Operation last = (Operation) route.getRoute().get(route.getRoute().size()-1);
@@ -116,7 +116,7 @@ public class RandomBlockCriticalRouteTest {
 		ArrayList<CriticalRoute> routes;
 		try {
 			neighbor.calculateCompleteNeighborhood(problem1).contains(new PairVO(o41.getOperationIndex(), o21.getOperationIndex()));
-			routes = newVector.getLongestRoutes();
+			routes = newVector.getCriticalPaths();
 			assertTrue(routes.size()==4);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -189,7 +189,7 @@ public class RandomBlockCriticalRouteTest {
 		
 		try {
 			ArrayList<PairVO> vecinos = neighbor.calculateCompleteNeighborhood(problem2);
-			routes = newVector.getLongestRoutes();
+			routes = newVector.getCriticalPaths();
 			System.out.println(routes);
 			System.out.println(vecinos);
 			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o12.getOperationIndex())));
@@ -269,7 +269,7 @@ public class RandomBlockCriticalRouteTest {
 		Graph newVector = (Graph) problem2.cloneStructure();
 		ArrayList<CriticalRoute> routes;
 		try {
-			routes = newVector.getLongestRoutes();
+			routes = newVector.getCriticalPaths();
 			System.out.println("rutas"+routes);
 			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problem2));
 			ArrayList<PairVO> vecinos = neighbor.calculateCompleteNeighborhood(problem2);

@@ -22,7 +22,7 @@ public class ShiftBlockAdjOnEnds implements INeighborCalculator{
 			IStructure clone = currentStructure.cloneStructure();
 			
 			// Obtaining all the critical paths of the current solutions
-			ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+			ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
 			
 			int number = randomNumber(0, routes.size() - 1);
             ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
@@ -51,7 +51,7 @@ public class ShiftBlockAdjOnEnds implements INeighborCalculator{
 		        IStructure clone = currentStructure.cloneStructure();
 		        
 		        // Obtaining all the critical paths of the current solutions
-		        ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+		        ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
 		        
 //		        System.out.println(routes);
 		        
@@ -98,7 +98,7 @@ public class ShiftBlockAdjOnEnds implements INeighborCalculator{
 			IStructure clone = currentStructure.cloneStructure();
 	        
 	        // Obtaining all the critical paths of the current solutions
-	        ArrayList<CriticalRoute> routes = clone.getLongestRoutes();
+	        ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
 	        
 	        for(int i=0; i< routes.size();i++){
 	        	
