@@ -170,8 +170,8 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 				finalList.scheduleOperation(iOperation.getOperationIndex());  //OJO Para que se adiciona si se va a eliminar al final del ciclo? 
 																																//R:/ Para poder actualizar los tiempos en caso de que esa sea la siguiente a programar y poder decidir en las reglas de despacho
 				
-				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1);
-				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1);
+				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
+				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
 				
 				int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
 				int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
@@ -301,8 +301,8 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 						finalList.scheduleOperation(iOperation.getOperationIndex());  //OJO Para que se adiciona si se va a eliminar al final del ciclo? 
 																																		//R:/ Para poder actualizar los tiempos en caso de que esa sea la siguiente a programar y poder decidir en las reglas de despacho
 						
-						IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1);
-						IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1);
+						IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
+						IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
 						
 						int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
 						int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;

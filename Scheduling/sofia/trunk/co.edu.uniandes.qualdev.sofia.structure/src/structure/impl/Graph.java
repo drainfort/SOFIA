@@ -521,13 +521,13 @@ public class Graph extends AbstractStructure {
 	}
 
 	@Override
-	public IOperation getCiminus1J(IOperation Cij, int vectorPos) {
+	public IOperation getCiminus1J(IOperation Cij, int vectorPos, ArrayList<IOperation> vector) {
 		return nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousRouteNode() != null ? 
 				nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousRouteNode().getOperation() : null;
 	}
 
 	@Override
-	public IOperation getCiJminus1(IOperation Cij, int vectorPos) {
+	public IOperation getCiJminus1(IOperation Cij, int vectorPos, ArrayList<IOperation> vector) {
 		return nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousSequenceNode() != null ? 
 				nodes[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()].getPreviousSequenceNode().getOperation() : null;
 	}
@@ -595,7 +595,7 @@ public class Graph extends AbstractStructure {
 	}
 
 	@Override
-	public int getTTBetas(IOperation Cij, int predecessor) throws Exception{
+	public int getTTBetas(IOperation Cij, int predecessor, ArrayList<IOperation> vector) throws Exception{
 		throw new Exception("Operation not currently supported");
 	}
 

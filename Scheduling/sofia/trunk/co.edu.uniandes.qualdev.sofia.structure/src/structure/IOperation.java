@@ -33,4 +33,8 @@ public interface IOperation {
 	public int getJobRemainingTime();
 
 	public void setJobRemainingTime(int jobRemainingTime);
+
+	public void setScheduled(boolean b);
+	
+	public boolean isScheduled();
 }
