@@ -70,6 +70,7 @@ public class TabuSearchCN extends Control {
 		}
 
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateCompleteNeighborhood(current);
+		System.out.println("arrayNeighbors.size(): " + arrayNeighbors.size());
 		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
 			IStructure bestCandidate = null;
 			int gammaBestCandidate = Integer.MAX_VALUE;
