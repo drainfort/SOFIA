@@ -83,7 +83,7 @@ public class CriticalRouteTest {
 	}
 	
 	@Test
-	public void testClone2() throws InterruptedException {
+	public void testCriticalPathScenario2() throws InterruptedException {
 		
 		Vector newVector = (Vector) vectorScenario2.cloneStructure();
 		ArrayList<CriticalRoute> routes = newVector.getCriticalPaths();

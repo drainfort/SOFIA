@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import structure.IOperation;
-import structure.factory.AbstractStructureFactory;
 import structure.factory.impl.VectorFactory;
 import structure.impl.Vector;
 
