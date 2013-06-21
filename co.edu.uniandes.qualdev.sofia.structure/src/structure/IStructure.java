@@ -249,9 +249,9 @@ public interface IStructure {
 	 */
 	public int geFinalTime(OperationIndexVO operationIndex);
 	
-	public IOperation getCiminus1J(IOperation Cij, int vectorPos);
+	public IOperation getCiminus1J(IOperation Cij, int vectorPos, ArrayList<IOperation> vector);
 
-	public IOperation getCiJminus1(IOperation Cij, int vectorPos);
+	public IOperation getCiJminus1(IOperation Cij, int vectorPos, ArrayList<IOperation> vector);
 	
 	public IOperation getPosition(int pos) throws Exception;
 	
@@ -259,7 +259,7 @@ public interface IStructure {
 	
 	public int getTT(int initialPosition, int finalPosition) throws Exception;
 	
-	public int getTTBetas(IOperation Cij, int predecessor) throws Exception;
+	public int getTTBetas(IOperation Cij, int predecessor, ArrayList<IOperation> vector) throws Exception;
 	
 	public int getTTBetas(IOperation origin, IOperation destination) throws Exception;
 	

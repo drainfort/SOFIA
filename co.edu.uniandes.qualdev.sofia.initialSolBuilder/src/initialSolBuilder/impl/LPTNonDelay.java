@@ -160,8 +160,8 @@ public class LPTNonDelay implements IInitialSolBuilder{
 				
 				finalList.scheduleOperation(iOperation.getOperationIndex());
 				
-				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1);
-				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1);
+				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
+				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
 				
 				int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
 				int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
@@ -281,8 +281,8 @@ public class LPTNonDelay implements IInitialSolBuilder{
 				
 				finalList.scheduleOperation(iOperation.getOperationIndex());
 				
-				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1);
-				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1);
+				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
+				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
 				
 				int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
 				int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;

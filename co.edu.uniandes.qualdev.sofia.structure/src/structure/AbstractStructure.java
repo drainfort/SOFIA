@@ -137,9 +137,6 @@ public abstract class AbstractStructure  implements IStructure{
 	// Utilities
 	// ---------------------------------------------
 	
-
-	
-
 	/**
 	 * Loads an IOperation matrix from a file in the parameter
 	 * @param processingTimesFile File with the processing times of the problem

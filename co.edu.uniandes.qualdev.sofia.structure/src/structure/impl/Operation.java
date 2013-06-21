@@ -19,25 +19,7 @@ public class Operation implements IOperation{
 	
 	private int jobRemainingTime;
 	
-	/**
-	 * The longest path is already calculated
-	 */
-	private boolean longestPathCalculated = false;
-
-	/**
-	 * The longest path to the current node
-	 */
-	private Integer longestPath = 0;
-	
-	/**
-	 * ¿Qué es esto?
-	 */
-	private boolean sameInitialTime= false;
-	
-	/**
-	 * ¿Qué es esto?
-	 */
-	private int positionSort = -1;
+	private boolean scheduled;
 	
 	// -------------------------------------
 	// Constructor
@@ -118,5 +100,13 @@ public class Operation implements IOperation{
 
 	public void setJobRemainingTime(int jobRemainingTime) {
 		this.jobRemainingTime = jobRemainingTime;
+	}
+
+	public boolean isScheduled() {
+		return scheduled;
+	}
+
+	public void setScheduled(boolean scheduled) {
+		this.scheduled = scheduled;
 	}
 }
