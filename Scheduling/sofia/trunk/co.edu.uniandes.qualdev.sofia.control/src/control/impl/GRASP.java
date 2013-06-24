@@ -36,7 +36,7 @@ public class GRASP extends Control {
 	@Override
 	public ExecutionResults execute(IStructure initialSolution,
 			INeighborCalculator neighborCalculator, IModifier modifier,
-			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution)
+			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 
 		int numberOfVisitedNeighbors=0;
@@ -59,8 +59,19 @@ public class GRASP extends Control {
 		boolean optimalAchieved = false;
 		
 		if(optimal.intValue() >= bestGamma){
-			System.out.println("****Optimal CMax found!");
-			optimalAchieved = true;
+			if(optimal.intValue() >= bestGamma){
+				if(isOptimal){
+					System.out.println("optimal found!");
+					System.out.println();
+					optimalAchieved = true;
+				}
+				else{
+					maxNumberImprovements--;
+					if(maxNumberImprovements<=0){
+						optimalAchieved = true;
+					}
+				}
+			}
 		}else{
 			ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(initialSolution, (initialSolution.getTotalStations() * initialSolution.getTotalJobs()) - 1);
 			Integer k = arrayNeighbors.size();
@@ -77,17 +88,19 @@ public class GRASP extends Control {
 					bestGamma = gammaCandidate;
 					
 					if(optimal.intValue() >= bestGamma){
-						System.out.print(" ******* Optimal CMax found!");
-						optimalAchieved = true;
-					}
-					if( maxNumberImprovements!=0){
-						if(yuSolution>=bestGamma){
+						if(isOptimal){
+							System.out.println("optimal found!");
+							System.out.println();
+							optimalAchieved = true;
+						}
+						else{
 							maxNumberImprovements--;
 							if(maxNumberImprovements<=0){
 								optimalAchieved = true;
 							}
 						}
 					}
+					
 					k = arrayNeighbors.size();
 				}
 				k--;
