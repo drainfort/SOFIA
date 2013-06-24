@@ -233,13 +233,17 @@ public class ProgrammaticLauncher {
 		for (String instance : instancesToExecute) {
 			String problemFile = "./data/FilesIndex/" + instance.substring(0, 5) + "/" + instance + ".properties";
 			Properties problem = loadProductConfiguration(new File(problemFile));
-			
+			boolean hasOptimal = false;
+			if(instance.substring(0, 5).equals("04x04")||instance.substring(0, 5).equals("05x05")){
+				hasOptimal=true;
+			}
+		
 			SchedulingAlgorithm algorithm = null;
 			
 			if(!multiStart){
-				algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem, currentBks, instanceType);
+				algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem, currentBks, instanceType, hasOptimal);
 			}else{
-				algorithm = new MultiStartAlgorithm(algorithmConfiguration, problem, currentBks, instanceType);
+				algorithm = new MultiStartAlgorithm(algorithmConfiguration, problem, currentBks, instanceType, hasOptimal);
 			}
 			
 			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
