@@ -72,7 +72,6 @@ public class EnrichedSimulatedAnnealing extends Control {
 				if(maxNumberImprovements<=0){
 					optimalAchieved = true;
 				}
-				
 			}
 		}
 		

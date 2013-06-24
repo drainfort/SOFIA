@@ -29,7 +29,7 @@ public class SimpleSimulatedAnnealing extends Control {
 	@Override
 	public ExecutionResults execute(IStructure initialSolution,
 			INeighborCalculator neighborCalculator, IModifier modifier,
-			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution)
+			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 
 		executionResults = new ExecutionResults();
@@ -64,8 +64,17 @@ public class SimpleSimulatedAnnealing extends Control {
 		boolean optimalAchieved = false;
 		
 		if(optimal.intValue() >= XBestCMax){
-			System.out.println("Optimal CMax found!");
-			optimalAchieved = true;
+			if(isOptimal){
+				System.out.println("optimal found!");
+				System.out.println();
+				optimalAchieved = true;
+			}
+			else{
+				maxNumberImprovements--;
+				if(maxNumberImprovements<=0){
+					optimalAchieved = true;
+				}
+			}
 		}
 		
 		
@@ -104,17 +113,19 @@ public class SimpleSimulatedAnnealing extends Control {
 					System.out.println("CMax improvement: " + XBestCMax);
 					
 					if(optimal.intValue() >= XBestCMax){
-						System.out.println("Optimal CMax found!");
-						optimalAchieved = true;
-					}
-					if( maxNumberImprovements!=0){
-						if(yuSolution>=XBestCMax){
+						if(isOptimal){
+							System.out.println("optimal found!");
+							System.out.println();
+							optimalAchieved = true;
+						}
+						else{
 							maxNumberImprovements--;
 							if(maxNumberImprovements<=0){
 								optimalAchieved = true;
 							}
 						}
 					}
+
 				}
 				
 				k--;
