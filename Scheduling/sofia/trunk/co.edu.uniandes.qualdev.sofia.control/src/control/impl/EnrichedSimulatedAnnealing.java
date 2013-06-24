@@ -29,7 +29,7 @@ public class EnrichedSimulatedAnnealing extends Control {
 	@Override
 	public ExecutionResults execute(IStructure initialSolution,
 			INeighborCalculator neighborCalculator, IModifier modifier,
-			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution)
+			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 		
 		executionResults = new ExecutionResults();
