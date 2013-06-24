@@ -20,8 +20,8 @@ public class TrajectoryBasedAlgorithm extends SchedulingAlgorithm {
 	// Constructor
 	// -------------------------------------------
 	
-	public TrajectoryBasedAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks, String instanceType) throws InstantiationException, IllegalAccessException, ClassNotFoundException, Exception{
-		super(algorithmConfiguration, problemConfiguration, currentBks, instanceType);
+	public TrajectoryBasedAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks, String instanceType, boolean hasOptimal) throws InstantiationException, IllegalAccessException, ClassNotFoundException, Exception{
+		super(algorithmConfiguration, problemConfiguration, currentBks, instanceType,hasOptimal);
 	}
 	
 	// -------------------------------------------

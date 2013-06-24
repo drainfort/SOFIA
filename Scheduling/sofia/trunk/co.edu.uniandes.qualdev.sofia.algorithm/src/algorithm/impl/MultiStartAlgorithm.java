@@ -11,10 +11,10 @@ public class MultiStartAlgorithm extends SchedulingAlgorithm {
 
 	private int startsNumber;
 	
-	public MultiStartAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks, String instanceType)
+	public MultiStartAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks, String instanceType, boolean hasOptimal)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, Exception {
-		super(algorithmConfiguration, problemConfiguration, currentBks, instanceType);
+		super(algorithmConfiguration, problemConfiguration, currentBks, instanceType, hasOptimal);
 		
 		startsNumber = 500;
 	}
