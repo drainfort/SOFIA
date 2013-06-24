@@ -16,6 +16,7 @@ import beta.TearDownBeta;
 import beta.impl.TearDownTravelTime;
 
 import common.types.BetaVO;
+import common.types.NeighborInformation;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
 
@@ -46,6 +47,8 @@ public class Vector extends AbstractStructure{
 	
 	/** A matrix of the current solution. */
 	private int[][] A;
+	
+	private int[][] Cinterpretation;
 	
 	// -----------------------------------------------
 	// Constructor
@@ -234,6 +237,8 @@ public class Vector extends AbstractStructure{
 		throw new Exception("Operation not currently supported");
 	}
 	
+
+	
 	@Override
 	public int[][] calculateCMatrix() {
 		if(synch){
@@ -260,7 +265,7 @@ public class Vector extends AbstractStructure{
 				CSolution[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
 			}
 			
-			int [][] CIntepretation = new int[getTotalJobs()][getTotalStations() + 1];
+			Cinterpretation= new int[getTotalJobs()][getTotalStations() + 1];
 			
 			for (int i = 0; i < interpretation.size(); i++) {
 				IOperation Cij = interpretation.get(i);
@@ -277,11 +282,12 @@ public class Vector extends AbstractStructure{
 				Cij.setInitialTime(initialTime);
 				Cij.setFinalTime(finalTime);
 				
-				CIntepretation[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
+				Cinterpretation[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
 			}
 			
 			//TODO seleccionar la mejor
-			C = CIntepretation;
+			
+			C = CSolution;
 			
 			// Aplying TearDown betas
 			int[][] newC = applyTearDownBetas();
@@ -917,6 +923,14 @@ public class Vector extends AbstractStructure{
 	@Override
 	public boolean validateStructure() {
 		return true;
+	}
+
+	public int[][] getCinterpretation() {
+		return Cinterpretation;
+	}
+
+	public void setCinterpretation(int[][] cinterpretation) {
+		Cinterpretation = cinterpretation;
 	}
 		
 }
