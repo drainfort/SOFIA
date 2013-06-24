@@ -66,7 +66,6 @@ public class GRASP extends Control {
 					optimalAchieved = true;
 				}
 				else{
-					maxNumberImprovements--;
 					if(maxNumberImprovements<=0){
 						optimalAchieved = true;
 					}
