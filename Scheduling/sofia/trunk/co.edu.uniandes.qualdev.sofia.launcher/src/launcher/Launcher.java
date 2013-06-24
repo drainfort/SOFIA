@@ -34,13 +34,12 @@ public class Launcher {
 		Properties algorithmConfiguration = loadProductConfiguration(new File(algorithmFile));
 		Properties problemConfiguration = loadProductConfiguration(new File(problemFile));
 		String iterative = algorithmConfiguration.getProperty("scheduling.control");
-		
 		SchedulingAlgorithm algorithm =  null;
-
+		//TO DO arreglar true
 		if(iterative.equals("control.impl.GRASP") || iterative.equals("control.impl.GRASPERLS")){
-			algorithm = new MultiStartAlgorithm(algorithmConfiguration, problemConfiguration, currentBks, instanceType);
+			algorithm = new MultiStartAlgorithm(algorithmConfiguration, problemConfiguration, currentBks, instanceType, true);
 		}else{
-			algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problemConfiguration, currentBks, instanceType);
+			algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problemConfiguration, currentBks, instanceType, true);
 		}
 		return algorithm.execute(instanceName);
 	}
