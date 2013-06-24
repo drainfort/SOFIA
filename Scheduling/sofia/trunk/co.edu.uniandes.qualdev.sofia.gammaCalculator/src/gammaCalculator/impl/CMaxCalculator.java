@@ -26,7 +26,7 @@ public class CMaxCalculator implements IGammaCalculator {
 			int[][] CVector = ((Vector)vector).getCinterpretation();
 			int cmax2 = -1;
 			for (int i = 0; i < vector.getTotalJobs(); i++) {
-				if (CVector[i][vector.getTotalStations()] > cmax) {
+				if (CVector[i][vector.getTotalStations()] > cmax2) {
 					cmax2 = C[i][vector.getTotalStations()];
 				}
 			}
@@ -34,8 +34,7 @@ public class CMaxCalculator implements IGammaCalculator {
 				return cmax2;
 			}
 		}
-		
-				
+			
 		return cmax;
 	}
 
