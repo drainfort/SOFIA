@@ -32,7 +32,7 @@ public class IteratedTabuSearch extends Control {
 	@Override
 	public ExecutionResults execute(IStructure So,
 			INeighborCalculator neighborCalculator, IModifier modifier,
-			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution)
+			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 		executionResults = new ExecutionResults();
 		executionResults.setOptimal(optimal);
@@ -52,14 +52,16 @@ public class IteratedTabuSearch extends Control {
 		int GammaSb = 0;
 		
 		if (optimal.intValue() >= GammaSo) {
-			System.out.println("Optimal found in the constructive phase!");
-			optimalAchieved = true;
-			Sb = So.cloneStructure();
-			GammaSb = gammaCalculator.calculateGamma(Sb);
+			if(isOptimal){
+				System.out.println("Optimal found in the constructive phase!");
+				optimalAchieved = true;
+				Sb = So.cloneStructure();
+				GammaSb = gammaCalculator.calculateGamma(Sb);
+			}
 		}
 
 		if(!optimalAchieved){
-			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, yuSolution, GammaSo);
+			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, GammaSo);
 			int GammaSg = gammaCalculator.calculateGamma(Sg);
 			
 			if (optimal.intValue() >= GammaSg) {
@@ -81,7 +83,7 @@ public class IteratedTabuSearch extends Control {
 				System.out.println();
 				System.out.println("Perturbation** " + gammaCalculator.calculateGamma(Sa));
 				
-				IStructure Sv = improveByTabuSearch(Sa, neighborCalculator, modifier, gammaCalculator, params, optimal, yuSolution, GammaSg);
+				IStructure Sv = improveByTabuSearch(Sa, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, GammaSg);
 				
 				Sg = Sv.cloneStructure();
 				GammaSg = gammaCalculator.calculateGamma(Sg);
@@ -112,7 +114,7 @@ public class IteratedTabuSearch extends Control {
 	 */
 	private IStructure improveByTabuSearch(IStructure Sa,
 			INeighborCalculator neighborCalculator, IModifier modifier,
-			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution, int GammaInitialSolution)
+			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal, int GammaInitialSolution)
 			throws Exception{
 		executionResults.setOptimal(optimal);
 		
@@ -191,19 +193,22 @@ public class IteratedTabuSearch extends Control {
 					System.out.println("Improvement: " + GammaSb);
 					
 					if (optimal.intValue() >= GammaSb) {
-						optimalAchieved = true;
-						break;
-					}
-					
-					if( maxNumberImprovements != 0){
-						if(yuSolution>=GammaSb){
-							maxNumberImprovements--;
-							if(maxNumberImprovements<=0){
-								System.out.println("Yu improved " + (Integer)params.get("maxNumberImprovements") + " times during iterative phase!");
-								optimalAchieved = true;
+						if(isOptimal){
+							optimalAchieved = true;
+							break;
+						}
+						else{
+							if( maxNumberImprovements != 0){
+								maxNumberImprovements--;
+								if(maxNumberImprovements<=0){
+									System.out.println("Yu improved " + (Integer)params.get("maxNumberImprovements") + " times during iterative phase!");
+									optimalAchieved = true;
+								}
 							}
 						}
 					}
+					
+					
 				}
 				Sa = Skb.cloneStructure();
 
