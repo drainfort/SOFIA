@@ -57,7 +57,7 @@ public abstract class Control {
 	 */
 	abstract public ExecutionResults execute(IStructure initialSolution,
 			INeighborCalculator neighborCalculator, IModifier modifier,
-			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution) throws Exception;
+			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal) throws Exception;
 	
 	// -----------------------------------------------
 	// Methods
