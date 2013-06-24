@@ -123,7 +123,7 @@ public abstract class SchedulingAlgorithm {
 		HashMap<String, Integer> bkss = getBkss(problemConfiguration);
 		
 		// Initializes the problem according to the inputs
-		problem = new SchedulingProblem(problemFiles, betas, structrureFactory, bkss, currentBks);
+		problem = new SchedulingProblem(problemFiles, betas, structrureFactory, bkss, currentBks, hasOptimal);
 		
 		constructiveAlgorithm = new ConstructiveAlgorithm(initialSolutionBuilderClassName);
 		

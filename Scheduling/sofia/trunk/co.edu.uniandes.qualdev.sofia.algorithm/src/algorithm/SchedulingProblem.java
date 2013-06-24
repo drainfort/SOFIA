@@ -29,18 +29,21 @@ public class SchedulingProblem {
 	
 	private String currentBks;
 	
+	private boolean hasOptimal;
+	
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
 
 	public SchedulingProblem(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, String structrureFactory, 
-				HashMap<String, Integer> bkss, String currentBks) throws InstantiationException, IllegalAccessException, ClassNotFoundException, 
+				HashMap<String, Integer> bkss, String currentBks, boolean hasOptimal) throws InstantiationException, IllegalAccessException, ClassNotFoundException, 
 						Exception {
 		this.betas = betas;
 		this.problemFiles = problemFiles;
 		this.structrureFactory = structrureFactory;
 		this.bkss = bkss;
 		this.currentBks = currentBks;
+		this.setHasOptimal(hasOptimal);
 	}
 
 	// -----------------------------------------------
@@ -89,5 +92,13 @@ public class SchedulingProblem {
 	
 	public int getCurrentBksValue(){
 		return bkss.get(currentBks);
+	}
+
+	public boolean isHasOptimal() {
+		return hasOptimal;
+	}
+
+	public void setHasOptimal(boolean hasOptimal) {
+		this.hasOptimal = hasOptimal;
 	}
 }
