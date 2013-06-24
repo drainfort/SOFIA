@@ -30,7 +30,7 @@ public class CMaxCalculator implements IGammaCalculator {
 					cmax2 = C[i][vector.getTotalStations()];
 				}
 			}
-			if(cmax2>cmax){
+			if(cmax2<cmax){
 				return cmax2;
 			}
 		}
