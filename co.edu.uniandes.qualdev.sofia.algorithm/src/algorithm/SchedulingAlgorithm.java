@@ -58,7 +58,7 @@ public abstract class SchedulingAlgorithm {
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	public SchedulingAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks, String instanceType)
+	public SchedulingAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks, String instanceType, boolean hasOptimal)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, Exception {
 		
