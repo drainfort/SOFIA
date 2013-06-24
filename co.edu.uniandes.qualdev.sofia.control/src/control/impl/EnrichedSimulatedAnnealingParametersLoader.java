@@ -38,6 +38,11 @@ public class EnrichedSimulatedAnnealingParametersLoader implements IParametersLo
 		
 		params.put("printSolutions", Boolean.parseBoolean((String) algorithmConfiguration
 				.getProperty("report.gantt.bestsolutions")));
+		
+		if(algorithmConfiguration.getProperty("params.maxNumberImprovements")!=null){
+			System.out.println("entro");
+			params.put("maxNumberImprovements", Integer.parseInt(algorithmConfiguration.getProperty("params.maxNumberImprovements")));
+		}
 		return params;
 		
 	}
