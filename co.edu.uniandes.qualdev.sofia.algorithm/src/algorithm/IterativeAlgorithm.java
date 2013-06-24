@@ -104,7 +104,7 @@ public class IterativeAlgorithm {
 	public ExecutionResults execute(SchedulingProblem problem, IStructure initialSolution) throws Exception {
 		//TODO fix the 0
 		return control.execute(initialSolution, neighborCalculator, modifier, gammaCalculator,
-				parametersLoader.loadParameters(this.algorithmConfiguration),problem.getCurrentBksValue(), 0);
+				parametersLoader.loadParameters(this.algorithmConfiguration),problem.getCurrentBksValue(), true);
 	}
 
 	// -----------------------------------------------
