@@ -56,11 +56,23 @@ public class EnrichedSimulatedAnnealing extends Control {
 		executionResults.setOptimal(optimal);
 		
 		boolean optimalAchieved = false;
+		int maxNumberImprovements =0;
+		if(params.get("maxNumberImprovements")!=null){
+			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
+		}
 		
 		if(optimal.intValue() >= GammaSk){
-			System.out.println("optimal found!");
-			System.out.println();
-			optimalAchieved = true;
+			if(isOptimal){
+				System.out.println("optimal found!");
+				System.out.println();
+				optimalAchieved = true;
+			}
+			else{
+				maxNumberImprovements--;
+				if(maxNumberImprovements<=0){
+					optimalAchieved = true;
+				}
+			}
 		}
 		
 		int temperatureReductions = 0;
@@ -93,9 +105,18 @@ public class EnrichedSimulatedAnnealing extends Control {
 							&& (GammaS0 <= GammaSk)) {
 						System.out.println("currrent cmax: " + GammaSc);
 						
-						if(optimal.intValue() >= GammaSc){
-							System.out.println("optimal found!");
-							optimalAchieved = true;
+						if(optimal.intValue() >= GammaSk){
+							if(isOptimal){
+								System.out.println("optimal found!");
+								System.out.println();
+								optimalAchieved = true;
+							}
+							else{
+								maxNumberImprovements--;
+								if(maxNumberImprovements<=0){
+									optimalAchieved = true;
+								}
+							}
 						}
 						S0.clean();
 						S0 = null;
