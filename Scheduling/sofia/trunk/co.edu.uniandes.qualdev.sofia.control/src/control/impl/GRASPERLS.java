@@ -37,7 +37,7 @@ public class GRASPERLS extends Control {
 	@Override
 	public ExecutionResults execute(IStructure initialSolution,
 			INeighborCalculator neighborCalculator, IModifier modifier,
-			IGammaCalculator gammaCalculator, Properties params, Integer optimal, int yuSolution)
+			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 
 		executionResults = new ExecutionResults();
@@ -51,6 +51,10 @@ public class GRASPERLS extends Control {
 		
 		// Obtaining the parameters from the algorithm configuration.
 		executionResults.setOptimal(optimal);
+		int maxNumberImprovements =0;
+		if(params.get("maxNumberImprovements")!=null){
+			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
+		}
 		
 		
 		if(optimal.intValue() >= bestGamma){
