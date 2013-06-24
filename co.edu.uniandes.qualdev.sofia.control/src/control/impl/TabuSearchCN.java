@@ -47,15 +47,27 @@ public class TabuSearchCN extends Control {
 		// Initializes the best solution (XBest) as the first one (X)
 		IStructure best = current.cloneStructure();
 		int bestGamma = gammaCalculator.calculateGamma(best);
+		int maxNumberImprovements =0;
 		System.out.println("initial solution (XBestCMax): " + bestGamma);
-
+		if(params.get("maxNumberImprovements")!=null){
+			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
+		}
 		executionResults.setOptimal(optimal);
 
 		boolean optimalAchieved = false;
 
 		if (optimal.intValue() >= bestGamma) {
-			System.out.println("Optimal CMax found!");
-			optimalAchieved = true;
+			if(isOptimal){
+				System.out.println("optimal found!");
+				System.out.println();
+				optimalAchieved = true;
+			}
+			else{
+				maxNumberImprovements--;
+				if(maxNumberImprovements<=0){
+					optimalAchieved = true;
+				}
+			}
 		}
 
 		ArrayList<PairVO> arrayTabu = new ArrayList<PairVO>();
@@ -63,11 +75,9 @@ public class TabuSearchCN extends Control {
 
 		int iterations = vectorSize * 10000;
 		int nonimproving = (int) (iterations * (Double) params.get("non-improving"));
-		int maxNumberImprovements =0;
 		
-		if(params.get("maxNumberImprovements")!=null){
-			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
-		}
+		
+		
 
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateCompleteNeighborhood(current);
 		System.out.println("arrayNeighbors.size(): " + arrayNeighbors.size());
@@ -114,19 +124,18 @@ public class TabuSearchCN extends Control {
 					System.out.println("Improvement: " + bestGamma);
 
 					if (optimal.intValue() >= bestGamma) {
-						System.out.println("Optimal CMax found!");
-						optimalAchieved = true;
-					}
-					if( maxNumberImprovements!=0){
-						if(yuSolution>=bestGamma){
+						if(isOptimal){
+							System.out.println("optimal found!");
+							System.out.println();
+							optimalAchieved = true;
+						}
+						else{
 							maxNumberImprovements--;
 							if(maxNumberImprovements<=0){
-								System.out.println("Yu improved " + (Integer)params.get("maxNumberImprovements") + " times during iterative phase!");
 								optimalAchieved = true;
 							}
 						}
 					}
-
 				}
 				
 				current = bestCandidate.cloneStructure();

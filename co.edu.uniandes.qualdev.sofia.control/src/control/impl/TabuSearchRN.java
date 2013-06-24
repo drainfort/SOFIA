@@ -52,11 +52,25 @@ public class TabuSearchRN extends Control {
 
 		executionResults.setOptimal(optimal);
 
+		int maxNumberImprovements =0;
+		if(params.get("maxNumberImprovements")!=null){
+			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
+		}
+
 		boolean optimalAchieved = false;
 
 		if (optimal.intValue() >= bestGamma) {
-			System.out.println("Optimal CMax found!");
-			optimalAchieved = true;
+			if(isOptimal){
+				System.out.println("optimal found!");
+				System.out.println();
+				optimalAchieved = true;
+			}
+			else{
+				maxNumberImprovements--;
+				if(maxNumberImprovements<=0){
+					optimalAchieved = true;
+				}
+			}
 		}
 
 		ArrayList<PairVO> arrayTabu = new ArrayList<PairVO>();
@@ -64,12 +78,7 @@ public class TabuSearchRN extends Control {
 
 		int iterations = vectorSize * 10000;
 		int nonimproving = (int) (iterations * (Double) params.get("non-improving"));
-		int maxNumberImprovements =0;
 		
-		if(params.get("maxNumberImprovements")!=null){
-			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
-		}
-
 		// parameter
 		double percent = (Double) params.get("percent");
 		int neighborhodSize = (int) ((vectorSize * (vectorSize - 1)) / 2 * percent);
@@ -118,18 +127,19 @@ public class TabuSearchRN extends Control {
 					System.out.println("Improvement: " + bestGamma);
 
 					if (optimal.intValue() >= bestGamma) {
-						System.out.println("Optimal CMax found!");
-						optimalAchieved = true;
-					}
-					if( maxNumberImprovements!=0){
-						if(yuSolution>=bestGamma){
+						if(isOptimal){
+							System.out.println("optimal found!");
+							System.out.println();
+							optimalAchieved = true;
+						}
+						else{
 							maxNumberImprovements--;
 							if(maxNumberImprovements<=0){
-								System.out.println("Yu improved " + (Integer)params.get("maxNumberImprovements") + " times during iterative phase!");
 								optimalAchieved = true;
 							}
 						}
 					}
+					
 
 				}
 				
