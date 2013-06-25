@@ -48,11 +48,19 @@ public class Vector extends AbstractStructure{
 	/** A matrix of the current solution. */
 	private int[][] A;
 	
-	private int[][] Cinterpretation;
+	private int [][] CIntepretation;
 	
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
+
+	public int[][] getCIntepretation() {
+		return CIntepretation;
+	}
+
+	public void setCIntepretation(int[][] cIntepretation) {
+		CIntepretation = cIntepretation;
+	}
 
 	/**
 	 * Constructor of the class that initializes an empty structure
@@ -237,8 +245,6 @@ public class Vector extends AbstractStructure{
 		throw new Exception("Operation not currently supported");
 	}
 	
-
-	
 	@Override
 	public int[][] calculateCMatrix() {
 		if(synch){
@@ -265,7 +271,7 @@ public class Vector extends AbstractStructure{
 				CSolution[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
 			}
 			
-			Cinterpretation= new int[getTotalJobs()][getTotalStations() + 1];
+			CIntepretation = new int[getTotalJobs()][getTotalStations() + 1];
 			
 			for (int i = 0; i < interpretation.size(); i++) {
 				IOperation Cij = interpretation.get(i);
@@ -282,16 +288,17 @@ public class Vector extends AbstractStructure{
 				Cij.setInitialTime(initialTime);
 				Cij.setFinalTime(finalTime);
 				
-				Cinterpretation[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
+				CIntepretation[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
 			}
 			
 			//TODO seleccionar la mejor
+			C = CIntepretation;
+			int[][] newC = applyTearDownBetas();
+			if (newC != null)
+				CIntepretation = newC;
 			
 			C = CSolution;
-			
-			// Aplying TearDown betas
-			int[][] newC = applyTearDownBetas();
-
+			newC = applyTearDownBetas();
 			if (newC != null)
 				C = newC;
 			
@@ -923,14 +930,6 @@ public class Vector extends AbstractStructure{
 	@Override
 	public boolean validateStructure() {
 		return true;
-	}
-
-	public int[][] getCinterpretation() {
-		return Cinterpretation;
-	}
-
-	public void setCinterpretation(int[][] cinterpretation) {
-		Cinterpretation = cinterpretation;
 	}
 		
 }
