@@ -118,7 +118,8 @@ public class SimpleSimulatedAnnealing extends Control {
 							optimalAchieved = true;
 						}
 						else{
-							maxNumberImprovements--;
+							if (optimal.intValue() >XBestCMax)
+								maxNumberImprovements--;
 							if(maxNumberImprovements<=0){
 								optimalAchieved = true;
 							}

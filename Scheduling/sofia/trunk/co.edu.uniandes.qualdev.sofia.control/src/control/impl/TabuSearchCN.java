@@ -63,7 +63,6 @@ public class TabuSearchCN extends Control {
 				optimalAchieved = true;
 			}
 			else{
-				maxNumberImprovements--;
 				if(maxNumberImprovements<=0){
 					optimalAchieved = true;
 				}
@@ -130,6 +129,8 @@ public class TabuSearchCN extends Control {
 							optimalAchieved = true;
 						}
 						else{
+							if (optimal.intValue() >bestGamma)
+								maxNumberImprovements--;
 							if(maxNumberImprovements<=0){
 								optimalAchieved = true;
 							}
