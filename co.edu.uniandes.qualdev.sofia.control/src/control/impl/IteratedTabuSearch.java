@@ -198,11 +198,13 @@ public class IteratedTabuSearch extends Control {
 							break;
 						}
 						else{
-							maxNumberImprovements--;
+							if (optimal.intValue() >GammaSb)
+								maxNumberImprovements--;
 							if(maxNumberImprovements<=0){
-								System.out.println("Yu improved " + (Integer)params.get("maxNumberImprovements") + " times during iterative phase!");
+								//System.out.println("Yu improved " + (Integer)params.get("maxNumberImprovements") + " times during iterative phase!");
 								optimalAchieved = true;
 							}
+							
 							
 						}
 					}

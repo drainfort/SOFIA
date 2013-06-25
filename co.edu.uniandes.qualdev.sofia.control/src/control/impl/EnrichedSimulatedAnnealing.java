@@ -111,10 +111,12 @@ public class EnrichedSimulatedAnnealing extends Control {
 								optimalAchieved = true;
 							}
 							else{
-								maxNumberImprovements--;
+								if (optimal.intValue() >GammaSk)
+									maxNumberImprovements--;
 								if(maxNumberImprovements<=0){
 									optimalAchieved = true;
 								}
+								
 							}
 						}
 						S0.clean();
