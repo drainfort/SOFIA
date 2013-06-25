@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import neighborCalculator.impl.AdjacentShiftOnCriticalRoutes;
 import neighborCalculator.impl.ShiftBlockAdjOnEnds;
+import neighborCalculator.impl.ShiftBlockEndStartAnyCriticalRoute;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,7 @@ public class AmountAdjCRTest {
 	Vector vector;
 	private static AdjacentShiftOnCriticalRoutes neighbor = new AdjacentShiftOnCriticalRoutes();
 	private static ShiftBlockAdjOnEnds neighbor2 = new ShiftBlockAdjOnEnds();
+	private static ShiftBlockEndStartAnyCriticalRoute neighbor3 = new ShiftBlockEndStartAnyCriticalRoute();
 	
 	@Before
 	public void setupScenario() throws Exception {
@@ -78,6 +80,25 @@ public class AmountAdjCRTest {
 			
 			int number = vector.getCriticalPaths().get(0).getBlocks().size()*2;
 			assertTrue(number==neighbor2.calculateNeighborhood(vector, 100).size());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testCalculateAmountNeighbors3(){
+		
+		try {
+			int number =0; 
+			System.out.println(vector.getCriticalPaths().get(0).getBlocks());
+			for( int i=0; i<vector.getCriticalPaths().get(0).getBlocks().size();i++){
+				number+= (vector.getCriticalPaths().get(0).getBlocks().get(i).size()-1)*2;
+			}
+			System.out.println(number);
+			System.out.println(neighbor3.calculateNeighborhood(vector, 200).size());
+			assertTrue(number==neighbor3.calculateCompleteNeighborhood(vector).size());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
