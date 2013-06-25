@@ -47,7 +47,7 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 		
 		if(vector.getClass().equals(Vector.class)){
 			
-			int C2[][] = ((Vector)vector).getCinterpretation();
+			int C2[][] = ((Vector)vector).getCIntepretation();
 
 			ArrayList<OperationIndexVO> maxs2 = new ArrayList<OperationIndexVO>();
 			for (int i = 0; i < C2.length; i++) {
