@@ -3,6 +3,7 @@ package neighborCalculator.tests;
 import java.util.ArrayList;
 
 import neighborCalculator.impl.AdjacentShiftOnCriticalRoutes;
+import neighborCalculator.impl.ShiftBlockAdjOnEnds;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,7 @@ public class AmountAdjCRTest {
 
 	Vector vector;
 	private static AdjacentShiftOnCriticalRoutes neighbor = new AdjacentShiftOnCriticalRoutes();
+	private static ShiftBlockAdjOnEnds neighbor2 = new ShiftBlockAdjOnEnds();
 	
 	@Before
 	public void setupScenario() throws Exception {
@@ -68,6 +70,21 @@ public class AmountAdjCRTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testCalculateAmountNeighbors2(){
+		
+		try {
+			
+			int number = vector.getCriticalPaths().get(0).getBlocks().size()*2;
+			assertTrue(number==neighbor2.calculateNeighborhood(vector, 100).size());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
 
 
