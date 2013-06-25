@@ -58,6 +58,8 @@ public class AmountAdjCRTest {
 	public void testCalculateAmountNeighbors(){
 		
 		try {
+			//Numero de parejas adjacentes en un ruta critica es necesariamente el tamaño del arreglo -1
+			//Si se tiene un ruta 4 de nodos seria 1-2, 2-3, 3-4. (3 posibles vecinos)
 			int number = vector.getCriticalPaths().get(0).getRoute().size()-1;
 			assertTrue(number==neighbor.calculateNeighborhood(vector, 100).size());
 			
