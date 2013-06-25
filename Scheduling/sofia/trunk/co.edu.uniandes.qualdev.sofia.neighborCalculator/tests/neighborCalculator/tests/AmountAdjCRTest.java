@@ -2,6 +2,8 @@ package neighborCalculator.tests;
 
 import java.util.ArrayList;
 
+import neighborCalculator.impl.AdjacentShiftOnCriticalRoutes;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,10 +13,12 @@ import structure.impl.Vector;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.utils.MatrixUtils;
+import static org.junit.Assert.*;
 
 public class AmountAdjCRTest {
 
 	Vector vector;
+	private static AdjacentShiftOnCriticalRoutes neighbor = new AdjacentShiftOnCriticalRoutes();
 	
 	@Before
 	public void setupScenario() throws Exception {
@@ -42,27 +46,25 @@ public class AmountAdjCRTest {
 		vector = (Vector) VectorFactory.createNewInstance(
 				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
 		
-		vector.scheduleOperation(new OperationIndexVO(0, 1));
-		vector.scheduleOperation(new OperationIndexVO(1, 2));
-		vector.scheduleOperation(new OperationIndexVO(2, 3));
-		vector.scheduleOperation(new OperationIndexVO(3, 2));
-		vector.scheduleOperation(new OperationIndexVO(2, 1));
-		vector.scheduleOperation(new OperationIndexVO(1, 0));
-		vector.scheduleOperation(new OperationIndexVO(2, 0));
-		vector.scheduleOperation(new OperationIndexVO(0, 2));
-		vector.scheduleOperation(new OperationIndexVO(0, 3));
-		vector.scheduleOperation(new OperationIndexVO(3, 0));
-		vector.scheduleOperation(new OperationIndexVO(0, 0));
-		vector.scheduleOperation(new OperationIndexVO(1, 1));
-		vector.scheduleOperation(new OperationIndexVO(2, 2));
-		vector.scheduleOperation(new OperationIndexVO(3, 3));
-		vector.scheduleOperation(new OperationIndexVO(1, 3));
-		vector.scheduleOperation(new OperationIndexVO(3, 1));
+		for(int i=0; i<10;i++){
+			for(int j=0; j<10;j++){
+				vector.scheduleOperation(new OperationIndexVO(i, j));
+			}
+		}
+				
 	}
 	
 	@Test
 	public void testCalculateAmountNeighbors(){
 		
+		try {
+			int number = vector.getCriticalPaths().get(0).getRoute().size()-1;
+			assertTrue(number==neighbor.calculateNeighborhood(vector, 100).size());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 
