@@ -56,9 +56,7 @@ public class TabuSearchRN extends Control {
 		if(params.get("maxNumberImprovements")!=null){
 			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
 		}
-		System.out.println(isOptimal);
-		System.out.println(maxNumberImprovements);
-
+		
 		boolean optimalAchieved = false;
 
 		if (optimal.intValue() >= bestGamma) {
@@ -150,6 +148,7 @@ public class TabuSearchRN extends Control {
 
 				if (tabuIndex > tabuSize) {
 					arrayTabu.remove(0);
+					tabuIndex--;
 				}
 				arrayTabu.add(bestPairCandidate);
 				tabuIndex++;
