@@ -292,15 +292,15 @@ public class Vector extends AbstractStructure{
 			}
 			
 			//TODO seleccionar la mejor
-			C = CIntepretation;
-			int[][] newC = applyTearDownBetas();
-			if (newC != null)
-				CIntepretation = newC;
-			
 			C = CSolution;
-			newC = applyTearDownBetas();
+			int[][] newC = applyTearDownBetas(C);
 			if (newC != null)
 				C = newC;
+			
+			
+			int[][] newC2 = applyTearDownBetas(CIntepretation);
+			if (newC2 != null)
+				CIntepretation = newC2;
 			
 			synch = true;
 			return C;
@@ -422,7 +422,7 @@ public class Vector extends AbstractStructure{
 			}
 			
 			// Aplying TearDown betas
-			int[][] newC = applyTearDownBetas();
+			int[][] newC = applyTearDownBetas(C);
 
 			if (newC != null)
 				C = newC;
@@ -715,7 +715,7 @@ public class Vector extends AbstractStructure{
 		return rank;
 	}
 	
-	private int[][] applyTearDownBetas() {
+	private int[][] applyTearDownBetas(int [][] matrix) {
 		int[][] newC = null;
 		if (this.betas != null) {
 			Iterator<Beta> i = betas.values().iterator();
@@ -723,7 +723,7 @@ public class Vector extends AbstractStructure{
 				Beta beta = i.next();
 
 				if (beta instanceof TearDownBeta) {
-					 newC = ((TearDownTravelTime) beta).applyBeta(C);
+					 newC = ((TearDownTravelTime) beta).applyBeta(matrix);
 				}
 
 			}
