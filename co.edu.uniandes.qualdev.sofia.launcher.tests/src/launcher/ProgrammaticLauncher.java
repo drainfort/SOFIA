@@ -40,9 +40,9 @@ public class ProgrammaticLauncher {
 	public final static String GRASP = "control.impl.GRASPERLS";
 	
 	// Neighborhoods
-	public static String RANDOM_NEIGHBORHOOD = "neighborCalculator.impl.Random";
+	public static String RANDOM_NEIGHBORHOOD = "neighborCalculator.impl.N1_Random";
 	public static String API_NEIGHBORHOOD = "neighborCalculator.impl.Api";
-	public static String CRITICAL_ROUTE_ADJACENT_NEIGHBORHOOD= "neighborCalculator.impl.AdjacentShiftOnCriticalRoutes";
+	public static String CRITICAL_ROUTE_ADJACENT_NEIGHBORHOOD= "neighborCalculator.impl.N3_AdjacentInCriticalPaths";
 	public static String CRITICAL_ROUTE_ADJACENT_MACHINES_NEIGHBORHOOD = "neighborCalculator.impl.AdjacentMachinesShiftOnCriticalRoutes";
 	public static String CRITICAL_BLOCK_RANDOM_NEIGHBORHOOD = "neighborCalculator.impl.ShiftRandomBlockCriticalRoute";
 	public static String CRITICAL_BLOCK_ADJACENT_ON_END_NEIGHBORHOOD = "neighborCalculator.impl.ShiftBlockAdjOnEnds";
