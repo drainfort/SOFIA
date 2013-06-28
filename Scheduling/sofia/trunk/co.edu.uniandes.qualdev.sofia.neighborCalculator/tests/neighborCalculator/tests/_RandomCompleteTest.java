@@ -20,7 +20,7 @@ import structure.impl.Operation;
 import structure.impl.Vector;
 
 
-public class RandomCompleteTest {
+public class _RandomCompleteTest {
 
 	// -----------------------------------------------
 	// Attributes

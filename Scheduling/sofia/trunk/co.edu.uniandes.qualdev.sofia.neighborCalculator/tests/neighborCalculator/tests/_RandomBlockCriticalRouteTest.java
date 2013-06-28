@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import neighborCalculator.impl.AdjacentShiftOnCriticalRoutes;
-import neighborCalculator.impl.Random;
+import neighborCalculator.impl.ShiftBlockAdjOnEnds;
+import neighborCalculator.impl.ShiftBlockEndStartAnyCriticalRoute;
+import neighborCalculator.impl.ShiftRandomBlockCriticalRoute;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +22,7 @@ import structure.impl.Operation;
 import structure.impl.Vector;
 
 
-public class WeightedCompleteTest {
+public class _RandomBlockCriticalRouteTest {
 
 	// -----------------------------------------------
 	// Attributes
@@ -28,7 +30,7 @@ public class WeightedCompleteTest {
 	
 	private static Graph problemVector = new Graph(2,2);
 	private static Graph problem1 = new Graph(2,2);
-	private static Random neighbor = new Random();
+	private static ShiftRandomBlockCriticalRoute neighbor = new ShiftRandomBlockCriticalRoute();
 	
 	// -----------------------------------------------
 	// Setup scenarios
@@ -75,13 +77,10 @@ public class WeightedCompleteTest {
 		Graph newVector = (Graph) problemVector.cloneStructure();
 		ArrayList<CriticalRoute> routes;
 		try {
-			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problemVector));
 			routes = newVector.getCriticalPaths();
 			CriticalRoute route = routes.get(0);
-			System.out.println(routes);
 			Operation first =(Operation) route.getRoute().get(0);
 			Operation last = (Operation) route.getRoute().get(route.getRoute().size()-1);
-			System.out.println(first.getOperationIndex().getMachineId());
 			assertTrue(first.getOperationIndex().getStationId()==0 && first.getOperationIndex().getJobId()==0);
 			assertTrue(last.getOperationIndex().getStationId()==1 && last.getOperationIndex().getJobId()==0);
 		} catch (Exception e) {
@@ -116,10 +115,8 @@ public class WeightedCompleteTest {
 		Graph newVector = (Graph) problem1.cloneStructure();
 		ArrayList<CriticalRoute> routes;
 		try {
-			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problem1));
 			neighbor.calculateCompleteNeighborhood(problem1).contains(new PairVO(o41.getOperationIndex(), o21.getOperationIndex()));
 			routes = newVector.getCriticalPaths();
-			System.out.println(routes);
 			assertTrue(routes.size()==4);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -189,22 +186,101 @@ public class WeightedCompleteTest {
 		
 		Graph newVector = (Graph) problem2.cloneStructure();
 		ArrayList<CriticalRoute> routes;
+		
 		try {
-			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problem2));
 			ArrayList<PairVO> vecinos = neighbor.calculateCompleteNeighborhood(problem2);
+			routes = newVector.getCriticalPaths();
+			System.out.println(routes);
+			System.out.println(vecinos);
 			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o12.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o41.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o13.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o14.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o41.getOperationIndex(), o12.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o41.getOperationIndex(), o13.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o41.getOperationIndex(), o14.getOperationIndex())));
-			assertTrue(vecinos.contains(new PairVO(o23.getOperationIndex(), o32.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o12.getOperationIndex(), o22.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o22.getOperationIndex(), o32.getOperationIndex()))|| vecinos.contains(new PairVO(o32.getOperationIndex(), o22.getOperationIndex())));
 			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o32.getOperationIndex(), o33.getOperationIndex())));
 			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o33.getOperationIndex(), o43.getOperationIndex())));
 			assertTrue(neighbor.calculateCompleteNeighborhood(problem2).contains(new PairVO(o43.getOperationIndex(), o44.getOperationIndex())));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+
+	}
+	
+	@Test
+	public void testClone4() throws InterruptedException {
+		Graph problem2 = new Graph(4,4);
+		
+		IOperation[][] escenario = new IOperation[4][4];
+		Operation o11 = new Operation(5, 0, 0);
+		escenario[0][0]= o11;
+		Operation o12 = new Operation(10, 0, 1);
+		escenario[0][1]= o12;
+		Operation o13 = new Operation(5, 0, 2);
+		escenario[0][2]= o13;
+		Operation o14 = new Operation(5, 0, 3);
+		escenario[0][3]= o14;
+		
+		Operation o21 = new Operation(5, 1, 0);
+		escenario[1][0]= o21;
+		Operation o22 = new Operation(10, 1, 1);
+		escenario[1][1]= o22;
+		Operation o23 = new Operation(10, 1, 2);
+		escenario[1][2]= o23;
+		Operation o24 = new Operation(10, 1, 3);
+		escenario[1][3]= o24;
+				
+		Operation o31 = new Operation(5, 2, 0);
+		escenario[2][0]= o31;
+		Operation o32 = new Operation(5, 2, 1);
+		escenario[2][1]= o32;
+		Operation o33 = new Operation(5, 2, 2);
+		escenario[2][2]= o33;
+		Operation o34 = new Operation(5, 2, 3);
+		escenario[2][3]= o34;
+		Operation o41 = new Operation(5, 3, 0);
+		escenario[3][0]= o41;
+		Operation o42 = new Operation(5, 3, 1);
+		escenario[3][1]= o42;
+		Operation o43 = new Operation(1, 3, 2);
+		escenario[3][2]= o43;
+		Operation o44 = new Operation(10, 3, 3);
+		escenario[3][3]= o44;
+		
+		
+		problem2.setProblem(escenario);
+		
+		problem2.scheduleOperation(o11.getOperationIndex());
+		problem2.scheduleOperation(o12.getOperationIndex());
+		problem2.scheduleOperation(o13.getOperationIndex());
+		problem2.scheduleOperation(o14.getOperationIndex());
+		problem2.scheduleOperation(o21.getOperationIndex());
+		problem2.scheduleOperation(o22.getOperationIndex());
+		problem2.scheduleOperation(o23.getOperationIndex());
+		problem2.scheduleOperation(o24.getOperationIndex());
+		problem2.scheduleOperation(o31.getOperationIndex());
+		problem2.scheduleOperation(o32.getOperationIndex());
+		problem2.scheduleOperation(o33.getOperationIndex());
+		problem2.scheduleOperation(o34.getOperationIndex());
+		problem2.scheduleOperation(o41.getOperationIndex());
+		problem2.scheduleOperation(o42.getOperationIndex());
+		problem2.scheduleOperation(o43.getOperationIndex());
+		problem2.scheduleOperation(o44.getOperationIndex());
+		
+		Graph newVector = (Graph) problem2.cloneStructure();
+		ArrayList<CriticalRoute> routes;
+		try {
 			routes = newVector.getCriticalPaths();
 			System.out.println("rutas"+routes);
+			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problem2));
+			ArrayList<PairVO> vecinos = neighbor.calculateCompleteNeighborhood(problem2);
+			assertTrue(vecinos.contains(new PairVO(o11.getOperationIndex(), o12.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o12.getOperationIndex(), o22.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o22.getOperationIndex(), o23.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o22.getOperationIndex(), o24.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o23.getOperationIndex(), o24.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o24.getOperationIndex(), o34.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o24.getOperationIndex(), o44.getOperationIndex())));
+			assertTrue(vecinos.contains(new PairVO(o34.getOperationIndex(), o44.getOperationIndex())));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

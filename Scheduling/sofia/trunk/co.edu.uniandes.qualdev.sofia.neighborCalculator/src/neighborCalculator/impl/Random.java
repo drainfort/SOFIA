@@ -3,6 +3,7 @@ package neighborCalculator.impl;
 import java.util.ArrayList;
 
 import neighborCalculator.INeighborCalculator;
+import structure.IOperation;
 import structure.IStructure;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
@@ -73,22 +74,19 @@ public class Random implements INeighborCalculator{
 	}
 	
 	@Override
-	public ArrayList<PairVO> calculateCompleteNeighborhood(
-			IStructure currentStructure) throws Exception {
+	public ArrayList<PairVO> calculateCompleteNeighborhood(IStructure currentStructure) throws Exception {
 		ArrayList<PairVO> pairs = new ArrayList<PairVO>();
-		int totalJobs = currentStructure.getTotalJobs();
-		int totalStations = currentStructure.getTotalStations();
-		for(int i=0; i<totalJobs;i++){
-			for(int j=0; j<totalStations;j++){
-				OperationIndexVO first =new OperationIndexVO(i, j);
-				for(int z=0; z<totalJobs;z++){
-					for(int jj=0; jj<totalStations;jj++){
-						OperationIndexVO second =new OperationIndexVO(z, jj);
-						PairVO pair = new PairVO(first, second);
-						if(!pairs.contains(pair)){
-							pairs.add(pair);
-			            }
-					}
+		
+		ArrayList<IOperation> operations = currentStructure.getOperations();
+		for (int i = 0; i < operations.size(); i++) {
+			IOperation fistOperation = operations.get(i);
+			
+			for (int j = 0; j < operations.size(); j++) {
+				IOperation secondOperation = operations.get(i);
+				
+				if(i!=j){
+					PairVO pair = new PairVO(fistOperation.getOperationIndex(), secondOperation.getOperationIndex());
+					pairs.add(pair);
 				}
 			}
 		}
