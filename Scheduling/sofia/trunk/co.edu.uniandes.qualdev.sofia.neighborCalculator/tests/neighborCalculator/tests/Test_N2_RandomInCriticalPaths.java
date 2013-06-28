@@ -141,7 +141,4 @@ public class Test_N2_RandomInCriticalPaths {
         }
         return multi;
     }
-	
-	
-
 }

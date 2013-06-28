@@ -75,11 +75,7 @@ public class TabuSearchCN extends Control {
 		int iterations = vectorSize * 10000;
 		int nonimproving = (int) (iterations * (Double) params.get("non-improving"));
 		
-		
-		
-
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateCompleteNeighborhood(current);
-		System.out.println("arrayNeighbors.size(): " + arrayNeighbors.size());
 		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
 			IStructure bestCandidate = null;
 			int gammaBestCandidate = Integer.MAX_VALUE;
