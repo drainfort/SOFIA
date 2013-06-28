@@ -22,7 +22,7 @@ import structure.impl.Operation;
  * @author Jaime Romero
  * @author David Mendez-Acuna
  */
-public class _AdjacentCriticalRouteTest {
+public class Test_N3_AdjacentInCriticalPath {
 
 	// -----------------------------------------------
 	// Attributes
