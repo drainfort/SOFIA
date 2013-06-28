@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import neighborCalculator.impl.AdjacentShiftOnCriticalRoutes;
+import neighborCalculator.impl.N3_AdjacentInCriticalPaths;
 import neighborCalculator.impl.ShiftBlockAdjOnEnds;
 
 import org.junit.Before;

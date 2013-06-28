@@ -2,7 +2,7 @@ package neighborCalculator.tests;
 
 import java.util.ArrayList;
 
-import neighborCalculator.impl.AdjacentShiftOnCriticalRoutes;
+import neighborCalculator.impl.N3_AdjacentInCriticalPaths;
 import neighborCalculator.impl.ShiftBlockAdjOnEnds;
 import neighborCalculator.impl.ShiftBlockEndStartAnyCriticalRoute;
 
@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 public class _AmountAdjCRTest {
 
 	Vector vector;
-	private static AdjacentShiftOnCriticalRoutes neighbor = new AdjacentShiftOnCriticalRoutes();
+	private static N3_AdjacentInCriticalPaths neighbor = new N3_AdjacentInCriticalPaths();
 	private static ShiftBlockAdjOnEnds neighbor2 = new ShiftBlockAdjOnEnds();
 	private static ShiftBlockEndStartAnyCriticalRoute neighbor3 = new ShiftBlockEndStartAnyCriticalRoute();
 	

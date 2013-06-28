@@ -14,17 +14,19 @@ import neighborCalculator.INeighborCalculator;
 
 /**
  * Class that is able to calculate a neighbor of a solution using the algorithm
- * RandomInCriticalPath
+ * Adjacent Shift on a critical route described by Van Laarhoven et al. in 
+ * Van Laarhoven PJM, Aarts EHL, Lenstra JK. Job shop scheduling by simulated annealing. Operations Research 1992;40(1):113–25.
  * 
+ * @author Jaime Romero
  * @author David Mendez Acuna
  */
-public class N2_RandomInCriticalPath implements INeighborCalculator {
+public class N3_AdjacentInCriticalPaths implements INeighborCalculator {
 
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
 
-	public N2_RandomInCriticalPath() {
+	public N3_AdjacentInCriticalPaths() {
 
 	}
 
@@ -56,26 +58,34 @@ public class N2_RandomInCriticalPath implements INeighborCalculator {
 	@Override
 	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, int size)
 			throws Exception {
-	
-		int amount = 0;
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
 		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
-		for(int j =0; j < routes.size()  && amount < size;j++){
-			ArrayList<IOperation> selectedCriticalPath = routes.get(j).getRoute();
+		
+		int exit = 0;
+		while(neighborhood.size() < size){
+			//Selecting the critical route
+			int number = randomNumber(0, routes.size() - 1);
+			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 			
-			for (int i = 0; i < selectedCriticalPath.size()  && amount < size; i++) {
-				IOperation firstOperation = selectedCriticalPath.get(i);
-				
-				for (int i2 = 0; i2 < selectedCriticalPath.size() && amount < size; i2++) {
-					IOperation secondOperation = selectedCriticalPath.get(i2);
-					if(i!=i2){
-						PairVO temp = new PairVO(firstOperation.getOperationIndex(), secondOperation.getOperationIndex());
-						neighborhood.add(temp);
-						amount++;
-					}
+			// Selecting an adjacent pair of operations
+			int i = randomNumber(0, selectedCriticalPath.size() - 2);
+			IOperation initialNode = selectedCriticalPath.get(i);
+			IOperation finalNode = selectedCriticalPath.get(i + 1);
+			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
+			OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+			
+			// Adding the new neighbor to the array if it is not previously considered
+			PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+			if(!neighborhood.contains(temp)){
+				neighborhood.add(temp);
+				exit=0;
+			}else{
+				exit++;
+				if(exit>=100){
+					return neighborhood;
 				}
 			}
 		}
@@ -93,17 +103,14 @@ public class N2_RandomInCriticalPath implements INeighborCalculator {
 		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
 		for(int j =0; j < routes.size();j++){
 			ArrayList<IOperation> selectedCriticalPath = routes.get(j).getRoute();
+			for (int i = 0; i < selectedCriticalPath.size() - 1; i++) {
+				IOperation initialNode = selectedCriticalPath.get(i);
+				IOperation finalNode = selectedCriticalPath.get(i + 1);
+				OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
+				OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
 			
-			for (int i = 0; i < selectedCriticalPath.size(); i++) {
-				IOperation firstOperation = selectedCriticalPath.get(i);
-				
-				for (int i2 = 0; i2 < selectedCriticalPath.size(); i2++) {
-					IOperation secondOperation = selectedCriticalPath.get(i2);
-					if(i!=i2){
-						PairVO temp = new PairVO(firstOperation.getOperationIndex(), secondOperation.getOperationIndex());
-						neighborhood.add(temp);
-					}
-				}
+				PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+				neighborhood.add(temp);
 			}
 		}
 		return neighborhood;

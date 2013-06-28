@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import neighborCalculator.impl.AdjacentMachinesShiftOnCriticalRoutes;
-import neighborCalculator.impl.AdjacentShiftOnCriticalRoutes;
+import neighborCalculator.impl.N3_AdjacentInCriticalPaths;
 
 import org.junit.Before;
 import org.junit.Test;

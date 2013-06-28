@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import common.types.PairVO;
 
-import neighborCalculator.impl.N2_RandomInCriticalPath;
+import neighborCalculator.impl.N2_RandomInCriticalPaths;
 import structure.IOperation;
 import structure.impl.CriticalRoute;
 import structure.impl.Graph;
@@ -21,13 +21,13 @@ import structure.impl.Vector;
  * 
  * @author David Mendez-Acuna
  */
-public class Test_N2_RandomInCriticalPath {
+public class Test_N2_RandomInCriticalPaths {
 	
 	// -----------------------------------------------
 	// Attributes
 	// -----------------------------------------------
 	
-	private N2_RandomInCriticalPath neighborCalulator;
+	private N2_RandomInCriticalPaths neighborCalulator;
 	
 	private Graph graphScenario1;
 	
@@ -39,7 +39,7 @@ public class Test_N2_RandomInCriticalPath {
 	
 	@Before
 	public void setUpScenario1() throws Exception {
-		neighborCalulator = new N2_RandomInCriticalPath();
+		neighborCalulator = new N2_RandomInCriticalPaths();
 		
 		// Loading the scenario 1 for the graph
 		graphScenario1 = new Graph(2,2);
