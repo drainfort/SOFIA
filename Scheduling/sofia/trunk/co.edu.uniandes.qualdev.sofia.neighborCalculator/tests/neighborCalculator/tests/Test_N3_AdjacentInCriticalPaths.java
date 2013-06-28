@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import neighborCalculator.impl.AdjacentShiftOnCriticalRoutes;
+import neighborCalculator.impl.N3_AdjacentInCriticalPaths;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import structure.impl.Operation;
  * @author Jaime Romero
  * @author David Mendez-Acuna
  */
-public class Test_N3_AdjacentInCriticalPath {
+public class Test_N3_AdjacentInCriticalPaths {
 
 	// -----------------------------------------------
 	// Attributes
@@ -30,7 +30,7 @@ public class Test_N3_AdjacentInCriticalPath {
 	
 	private Graph scenario1;
 	private Graph problem1 = new Graph(2,2);
-	private static AdjacentShiftOnCriticalRoutes neighbor = new AdjacentShiftOnCriticalRoutes();
+	private static N3_AdjacentInCriticalPaths neighbor = new N3_AdjacentInCriticalPaths();
 	
 	// -----------------------------------------------
 	// Setup scenarios
