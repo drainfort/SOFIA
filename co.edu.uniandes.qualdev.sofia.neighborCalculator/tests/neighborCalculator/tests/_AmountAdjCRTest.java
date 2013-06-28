@@ -17,7 +17,7 @@ import common.types.OperationIndexVO;
 import common.utils.MatrixUtils;
 import static org.junit.Assert.*;
 
-public class AmountAdjCRTest {
+public class _AmountAdjCRTest {
 
 	Vector vector;
 	private static AdjacentShiftOnCriticalRoutes neighbor = new AdjacentShiftOnCriticalRoutes();
