@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import junit.framework.Assert;
 
+import neighborCalculator.impl.N1_Random;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import common.types.PairVO;
 
-import neighborCalculator.impl.Random;
 import structure.IOperation;
 import structure.impl.Graph;
 import structure.impl.Operation;
@@ -20,13 +21,13 @@ import structure.impl.Vector;
  * 
  * @author David Mendez-Acuna
  */
-public class N1_Random {
+public class Test_N1_Random {
 
 	// -----------------------------------------------
 	// Attributes
 	// -----------------------------------------------
 	
-	private Random neighborCalulator;
+	private N1_Random neighborCalulator;
 	
 	private Graph graphScenario1;
 	
@@ -38,7 +39,7 @@ public class N1_Random {
 	
 	@Before
 	public void setUpScenario1() throws Exception {
-		neighborCalulator = new Random();
+		neighborCalulator = new N1_Random();
 		
 		// Loading the scenario 1 for the graph
 		graphScenario1 = new Graph(2,2);
