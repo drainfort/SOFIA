@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import neighborCalculator.impl.AdjacentShiftOnCriticalRoutes;
-import neighborCalculator.impl.Random;
+import neighborCalculator.impl.N1_Random;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class _WeightedCompleteTest {
 	
 	private static Graph problemVector = new Graph(2,2);
 	private static Graph problem1 = new Graph(2,2);
-	private static Random neighbor = new Random();
+	private static N1_Random neighbor = new N1_Random();
 	
 	// -----------------------------------------------
 	// Setup scenarios

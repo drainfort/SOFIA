@@ -8,7 +8,7 @@ import structure.IStructure;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
 
-public class Random implements INeighborCalculator{
+public class N1_Random implements INeighborCalculator{
 
 	// -----------------------------------------------
 	// Methods
