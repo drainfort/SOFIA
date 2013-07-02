@@ -20,7 +20,7 @@ import structure.impl.Vector;
  * 
  * @author David Mendez-Acuna
  */
-public class CreateVectorFromAMatrixTest {
+public class Test_CreateVectorFromAMatrix {
 
 	// ----------------------------------------
 	// Attributes

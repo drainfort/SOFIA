@@ -12,7 +12,7 @@ import vector.scenarios.VectorScenariosFactory;
  * Test for the insertAfter functionality of the permutation list
  * @author David Mendez-Acuna
  */
-public class InsertOperationAfterTest {
+public class Test_InsertOperationAfter {
 
 	// ----------------------------------------
 	// Attributes

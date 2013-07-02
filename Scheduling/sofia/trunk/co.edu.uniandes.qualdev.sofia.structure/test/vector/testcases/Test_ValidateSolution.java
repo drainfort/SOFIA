@@ -13,7 +13,8 @@ import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.utils.MatrixUtils;
 
-public class ValidateSolution {
+//TODO ¿Qué vamos a hacer con este test?
+public class Test_ValidateSolution {
 
 //	// ----------------------------------------
 //		// Attributes

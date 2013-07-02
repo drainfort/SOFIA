@@ -18,7 +18,7 @@ import common.utils.MatrixUtils;
  * 
  * @author David Mendez-Acuna
  */
-public class CreateAMatrixFromVectorTest {
+public class Test_CreateAMatrixFromVector {
 
 	// ----------------------------------------
 	// Attributes

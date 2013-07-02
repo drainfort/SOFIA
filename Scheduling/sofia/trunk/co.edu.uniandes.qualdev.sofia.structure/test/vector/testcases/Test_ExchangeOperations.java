@@ -12,7 +12,7 @@ import vector.scenarios.VectorScenariosFactory;
  * Test for the exchange operations functionality of the permutation list
  * @author David Mendez-Acuna
  */
-public class ExchangeOperationsTest {
+public class Test_ExchangeOperations {
 
 	// ----------------------------------------
 	// Attributes

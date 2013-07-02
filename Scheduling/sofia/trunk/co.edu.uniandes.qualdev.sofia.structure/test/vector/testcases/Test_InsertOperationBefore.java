@@ -14,7 +14,7 @@ import common.types.OperationIndexVO;
 import structure.impl.Vector;
 import vector.scenarios.VectorScenariosFactory;
 
-public class InsertOperationBeforeTest {
+public class Test_InsertOperationBefore {
 
 	// ----------------------------------------
 	// Attributes
