@@ -166,8 +166,9 @@ public class Test_N3_AdjacentInCriticalPaths {
 		
 		long totalPairs = 0;
 		
-		ArrayList<CriticalPath> criticalRoutes = graphScenario1.getCriticalPaths();
-		System.out.println("graph " + criticalRoutes.size());
+		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
+		Graph newGraph = (Graph) graphScenario1.cloneStructure();
+		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
@@ -185,8 +186,9 @@ public class Test_N3_AdjacentInCriticalPaths {
 		
 		long totalPairs = 0;
 		
-		ArrayList<CriticalPath> criticalRoutes = graphScenario2.getCriticalPaths();
-		System.out.println("graph " + criticalRoutes.size());
+		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
+		Graph newGraph = (Graph) graphScenario2.cloneStructure();
+		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
