@@ -1,6 +1,5 @@
 package graph.testcases;
 
-import static org.junit.Assert.*;
 import graph.scenarios.GraphScenariosFactory;
 
 import org.junit.Assert;
@@ -17,7 +16,7 @@ import structure.impl.Graph;
  * @author Rubby Casallas
  * @author David Mendez-Acuna
  */
-public class GraphTestCalculateMatrixC {
+public class Test_CalculateCMatrix {
 
 	// -----------------------------------------------
 	// Attributes
@@ -30,13 +29,8 @@ public class GraphTestCalculateMatrixC {
 	// -----------------------------------------------
 
 	@Before
-	public void setupScenario1() {
-		try {
-			problem = GraphScenariosFactory.buildSimple04x04Solution();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail("Fail loading the input processing times file ");
-		}
+	public void setupScenarios() throws Exception {
+		problem = GraphScenariosFactory.buildSimple04x04Solution();
 	}
 
 	// -----------------------------------------------

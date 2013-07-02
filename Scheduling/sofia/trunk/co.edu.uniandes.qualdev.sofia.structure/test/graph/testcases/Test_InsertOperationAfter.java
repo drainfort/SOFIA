@@ -18,7 +18,7 @@ import structure.impl.Node;
  * @author Rubby Casallas
  * @author David Mendez-Acuna
  */
-public class GraphTestInsertOperationAfter {
+public class Test_InsertOperationAfter {
 
 	// -----------------------------------------------
 	// Attributes
@@ -31,12 +31,8 @@ public class GraphTestInsertOperationAfter {
 	// -----------------------------------------------
 
 	@Before
-	public void setupScenario1() {
-		try {
-			problem = GraphScenariosFactory.buildDummySolution(4, 4);
-		} catch (Exception e) {
-			fail("Fail loading the input processing times file ");
-		}
+	public void setupScenarios() {
+		problem = GraphScenariosFactory.buildDummySolution(4, 4);
 	}
 
 	// -----------------------------------------------
