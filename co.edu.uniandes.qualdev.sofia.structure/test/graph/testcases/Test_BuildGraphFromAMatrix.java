@@ -2,6 +2,7 @@ package graph.testcases;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -21,7 +22,7 @@ import structure.impl.Graph;
  * @author Rubby Casallas
  * @author David Mendez-Acuna
  */
-public class GraphTestBuildGraphFromAMatrix {
+public class Test_BuildGraphFromAMatrix {
 
 	// -----------------------------------------------
 	// Attributes
@@ -38,19 +39,13 @@ public class GraphTestBuildGraphFromAMatrix {
 	// -----------------------------------------------
 
 	@Before
-	public void setupScenario1() {
-		try {
+	public void setupScenarios() throws InstantiationException, IllegalAccessException, ClassNotFoundException, Exception {
 			Integer[][] A = MatrixUtils.loadMatrix(AMatrixFile);
 			ArrayList<String> problemFiles = new ArrayList<String>();
 			problemFiles.add(TMatrixFile);
 			ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
 			
- 			problem = (Graph) GraphFactory.createNewInstance("structure.factory.impl.GraphFactory").createSolutionStructure(A, problemFiles, betas);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail("Fail loading the input processing times file ");
-		}
+ 			problem = (Graph) GraphFactory.createNewInstance("structure.factory.impl.GraphFactory").createSolutionStructure(A, problemFiles, betas);			
 	}
 
 	// -----------------------------------------------
@@ -118,5 +113,4 @@ public class GraphTestBuildGraphFromAMatrix {
 		Assert.assertEquals("Job id incorrect.", 3, sequence.get(2).intValue());
 		Assert.assertEquals("Job id incorrect.", 0, sequence.get(3).intValue());
 	}
-	
 }

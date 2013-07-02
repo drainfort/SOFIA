@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import structure.impl.Graph;
 
-public class GraphTestClone {
+public class Test_Clone {
 
 	// -----------------------------------------------
 	// Attributes
@@ -21,12 +21,8 @@ public class GraphTestClone {
 	// -----------------------------------------------
 	
 	@Before
-	public void setUp() throws Exception {
-		try {
-			problem = GraphScenariosFactory.buildDummySolution(4, 4);
-		} catch (Exception e) {
-			fail("Fail loading the input processing times file ");
-		}
+	public void setUpScenarios() throws Exception {
+		problem = GraphScenariosFactory.buildDummySolution(4, 4);
 	}
 
 	// -----------------------------------------------
@@ -34,7 +30,7 @@ public class GraphTestClone {
 	// -----------------------------------------------
 	
 	@Test
-	public void testClone1() throws InterruptedException {
+	public void testClone() throws InterruptedException {
 		//Scenario.drawGraphPredecessor(problem);
 		Graph newGraph = (Graph)problem.cloneStructure();
 		

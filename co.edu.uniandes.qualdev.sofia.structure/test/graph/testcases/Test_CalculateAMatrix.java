@@ -7,9 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import common.types.OperationIndexVO;
-import common.utils.MatrixUtils;
-
 import structure.impl.Graph;
 
 /**
@@ -17,7 +14,7 @@ import structure.impl.Graph;
  * @author Rubby Casallas
  * @author David Mendez-Acuna
  */
-public class GraphTestCalculateMatrixA {
+public class Test_CalculateAMatrix {
 
 	// -----------------------------------------------
 	// Attributes
@@ -30,13 +27,8 @@ public class GraphTestCalculateMatrixA {
 	// -----------------------------------------------
 
 	@Before
-	public void setupScenario1() {
-		try {
-			problem = GraphScenariosFactory.buildSimple04x04Solution();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail("Fail loading the input processing times file ");
-		}
+	public void setupScenarios() throws Exception {
+		problem = GraphScenariosFactory.buildSimple04x04Solution();
 	}
 
 	// -----------------------------------------------
