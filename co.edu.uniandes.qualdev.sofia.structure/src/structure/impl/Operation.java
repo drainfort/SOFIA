@@ -43,8 +43,10 @@ public class Operation implements IOperation{
 	// Methods
 	// -------------------------------------
 	
+	/**
+	 * Returns an exact copy of the current operation.
+	 */
 	public IOperation clone(){
-		
 		Operation clone = new Operation(this.getOperationIndex().getJobId(), this.getOperationIndex().getStationId(), this.getOperationIndex().getMachineId());
 		clone.processingTime = this.processingTime;
 		clone.operationIndex = this.operationIndex;
@@ -54,8 +56,24 @@ public class Operation implements IOperation{
 		return clone;
 	}
 	
+	/**
+	 * Returns the string representation of an operation.
+	 */
 	public String toString(){
 		return "<" + this.operationIndex.getJobId() + "," + this.operationIndex.getStationId() + "," + this.operationIndex.getMachineId() + ">";
+	}
+	
+	/**
+	 * Compares two operations and return true if equals. False otherwise. 
+	 */
+	public boolean equals(Object toCompare){
+		Operation operationToCompare = (Operation) toCompare;
+		
+		boolean answer = this.getOperationIndex().getJobId() == operationToCompare.getOperationIndex().getJobId() &&
+				this.getOperationIndex().getStationId() == operationToCompare.getOperationIndex().getStationId() &&
+						this.getOperationIndex().getMachineId() == operationToCompare.getOperationIndex().getMachineId();
+		
+		return answer;
 	}
 	
 	// -------------------------------------

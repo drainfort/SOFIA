@@ -740,12 +740,12 @@ public class Vector extends AbstractStructure{
 	 * Returns the collection of critical paths of the current solution
 	 * @return criticalPaths. Collection of critical paths of the current solution. 
 	 */
-	public ArrayList<CriticalRoute> getCriticalPaths(){
-		ArrayList<CriticalRoute> routes = new ArrayList<CriticalRoute>();
+	public ArrayList<CriticalPath> getCriticalPaths(){
+		ArrayList<CriticalPath> routes = new ArrayList<CriticalPath>();
 		ArrayList<IOperation> finalNodes = getLastOperation();
 		
 		for(int i=0; i < finalNodes.size();i++ ){
-			CriticalRoute temp= new CriticalRoute();
+			CriticalPath temp= new CriticalPath();
 			temp.addNodeBegin(finalNodes.get(i));
 			routes.addAll(getLongestRoute(temp));
 		}		
@@ -781,8 +781,8 @@ public class Vector extends AbstractStructure{
 	 * @param criticalPath The collection of critical paths associated with the node
 	 * @return
 	 */
-	private ArrayList<CriticalRoute> getLongestRoute(CriticalRoute route){
-		ArrayList<CriticalRoute> routes = new ArrayList<CriticalRoute>();
+	private ArrayList<CriticalPath> getLongestRoute(CriticalPath route){
+		ArrayList<CriticalPath> routes = new ArrayList<CriticalPath>();
 		IOperation lastOperation= route.getRoute().get(0);
 		ArrayList<IOperation> operationsStation = getOperationsBeforeByStation(lastOperation.getOperationIndex());
 		ArrayList<IOperation> operationsJob = getOperationsBeforeByJob(lastOperation.getOperationIndex());
@@ -798,16 +798,16 @@ public class Vector extends AbstractStructure{
 					
 				}
 				else if(operationBeforeByJob.getFinalTime()==operationBeforeByStation.getFinalTime()){
-					CriticalRoute clone = new CriticalRoute();
+					CriticalPath clone = new CriticalPath();
 					for(int j=0; j<route.getRoute().size();j++){
 						IOperation node = route.getRoute().get(j);
 						clone.getRoute().add(node);
 					}
 					route.addNodeBegin(operationBeforeByJob);
 					clone.addNodeBegin(operationBeforeByStation);
-					ArrayList<CriticalRoute> temp1 = getLongestRoute(route);
+					ArrayList<CriticalPath> temp1 = getLongestRoute(route);
 					
-					ArrayList<CriticalRoute> temp2 = getLongestRoute(clone);
+					ArrayList<CriticalPath> temp2 = getLongestRoute(clone);
 					
 					temp1.addAll(temp2);
 					operationsJob=null;

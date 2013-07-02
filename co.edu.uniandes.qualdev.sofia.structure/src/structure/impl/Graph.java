@@ -976,7 +976,7 @@ public class Graph extends AbstractStructure {
 	 * Calculates the longest paths of the graph.
 	 * @throws Exception 
 	 */
-	public ArrayList<CriticalRoute> getCriticalPaths() throws Exception{
+	public ArrayList<CriticalPath> getCriticalPaths() throws Exception{
 		int cmax = 0;
 		ArrayList<int[]> incidenciasCriticaRoute = new ArrayList<int[]>();
 		ArrayList<Node> cMaxNodes= new ArrayList<Node>();
@@ -1007,11 +1007,11 @@ public class Graph extends AbstractStructure {
 			}
 		}
 
-		ArrayList<CriticalRoute> totalRoutes = new ArrayList<CriticalRoute>();
+		ArrayList<CriticalPath> totalRoutes = new ArrayList<CriticalPath>();
 
 		for(int i=0; i< cMaxNodes.size();i++){
-			ArrayList<CriticalRoute> criticalRoutes = new ArrayList<CriticalRoute>();
-			CriticalRoute firstRoute = new CriticalRoute();
+			ArrayList<CriticalPath> criticalRoutes = new ArrayList<CriticalPath>();
+			CriticalPath firstRoute = new CriticalPath();
 			criticalRoutes.add(firstRoute);
 			cMaxNodes.get(i).getCriticalRoutes(criticalRoutes, incidenciasCriticaRoute );
 			totalRoutes.addAll(criticalRoutes);
