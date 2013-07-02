@@ -13,7 +13,7 @@ import org.junit.Test;
 import common.types.PairVO;
 
 import structure.IOperation;
-import structure.impl.CriticalRoute;
+import structure.impl.CriticalPath;
 import structure.impl.Graph;
 import structure.impl.Node;
 import structure.impl.Operation;
@@ -73,11 +73,11 @@ public class _WeightedCompleteTest {
 
 		
 		Graph newVector = (Graph) problemVector.cloneStructure();
-		ArrayList<CriticalRoute> routes;
+		ArrayList<CriticalPath> routes;
 		try {
 			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problemVector));
 			routes = newVector.getCriticalPaths();
-			CriticalRoute route = routes.get(0);
+			CriticalPath route = routes.get(0);
 			System.out.println(routes);
 			Operation first =(Operation) route.getRoute().get(0);
 			Operation last = (Operation) route.getRoute().get(route.getRoute().size()-1);
@@ -114,7 +114,7 @@ public class _WeightedCompleteTest {
 		problem1.scheduleOperation(o21.getOperationIndex());
 		
 		Graph newVector = (Graph) problem1.cloneStructure();
-		ArrayList<CriticalRoute> routes;
+		ArrayList<CriticalPath> routes;
 		try {
 			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problem1));
 			neighbor.calculateCompleteNeighborhood(problem1).contains(new PairVO(o41.getOperationIndex(), o21.getOperationIndex()));
@@ -188,7 +188,7 @@ public class _WeightedCompleteTest {
 		problem2.scheduleOperation(o44.getOperationIndex());
 		
 		Graph newVector = (Graph) problem2.cloneStructure();
-		ArrayList<CriticalRoute> routes;
+		ArrayList<CriticalPath> routes;
 		try {
 			System.out.println("vecinos"+neighbor.calculateCompleteNeighborhood(problem2));
 			ArrayList<PairVO> vecinos = neighbor.calculateCompleteNeighborhood(problem2);

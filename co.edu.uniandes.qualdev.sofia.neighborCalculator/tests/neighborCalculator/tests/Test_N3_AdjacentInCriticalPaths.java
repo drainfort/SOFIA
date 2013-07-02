@@ -12,7 +12,7 @@ import org.junit.Test;
 import common.types.PairVO;
 
 import structure.IOperation;
-import structure.impl.CriticalRoute;
+import structure.impl.CriticalPath;
 import structure.impl.Graph;
 import structure.impl.Operation;
 import structure.impl.Vector;
@@ -166,10 +166,10 @@ public class Test_N3_AdjacentInCriticalPaths {
 		
 		long totalPairs = 0;
 		
-		ArrayList<CriticalRoute> criticalRoutes = graphScenario1.getCriticalPaths();
+		ArrayList<CriticalPath> criticalRoutes = graphScenario1.getCriticalPaths();
 		System.out.println("graph " + criticalRoutes.size());
 		
-		for (CriticalRoute criticalRoute : criticalRoutes) {
+		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			
 			int n = currentRoute.size() - 1;
@@ -185,10 +185,10 @@ public class Test_N3_AdjacentInCriticalPaths {
 		
 		long totalPairs = 0;
 		
-		ArrayList<CriticalRoute> criticalRoutes = graphScenario2.getCriticalPaths();
+		ArrayList<CriticalPath> criticalRoutes = graphScenario2.getCriticalPaths();
 		System.out.println("graph " + criticalRoutes.size());
 		
-		for (CriticalRoute criticalRoute : criticalRoutes) {
+		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			
 			int n = currentRoute.size() - 1;
@@ -204,10 +204,10 @@ public class Test_N3_AdjacentInCriticalPaths {
 		
 		long totalPairs = 0;
 		
-		ArrayList<CriticalRoute> criticalRoutes = vectorScenario1.getCriticalPaths();
+		ArrayList<CriticalPath> criticalRoutes = vectorScenario1.getCriticalPaths();
 		System.out.println("vector " + criticalRoutes.size());
 		
-		for (CriticalRoute criticalRoute : criticalRoutes) {
+		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			
 			int n = currentRoute.size() - 1;
@@ -223,10 +223,10 @@ public class Test_N3_AdjacentInCriticalPaths {
 		
 		long totalPairs = 0;
 		
-		ArrayList<CriticalRoute> criticalRoutes = vectorScenario2.getCriticalPaths();
+		ArrayList<CriticalPath> criticalRoutes = vectorScenario2.getCriticalPaths();
 		System.out.println("vector " + criticalRoutes.size());
 		
-		for (CriticalRoute criticalRoute : criticalRoutes) {
+		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			
 			int n = currentRoute.size() - 1;

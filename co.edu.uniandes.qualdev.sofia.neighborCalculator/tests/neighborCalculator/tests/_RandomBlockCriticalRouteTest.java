@@ -15,7 +15,7 @@ import org.junit.Test;
 import common.types.PairVO;
 
 import structure.IOperation;
-import structure.impl.CriticalRoute;
+import structure.impl.CriticalPath;
 import structure.impl.Graph;
 import structure.impl.Node;
 import structure.impl.Operation;
@@ -75,10 +75,10 @@ public class _RandomBlockCriticalRouteTest {
 
 		
 		Graph newVector = (Graph) problemVector.cloneStructure();
-		ArrayList<CriticalRoute> routes;
+		ArrayList<CriticalPath> routes;
 		try {
 			routes = newVector.getCriticalPaths();
-			CriticalRoute route = routes.get(0);
+			CriticalPath route = routes.get(0);
 			Operation first =(Operation) route.getRoute().get(0);
 			Operation last = (Operation) route.getRoute().get(route.getRoute().size()-1);
 			assertTrue(first.getOperationIndex().getStationId()==0 && first.getOperationIndex().getJobId()==0);
@@ -113,7 +113,7 @@ public class _RandomBlockCriticalRouteTest {
 		problem1.scheduleOperation(o21.getOperationIndex());
 		
 		Graph newVector = (Graph) problem1.cloneStructure();
-		ArrayList<CriticalRoute> routes;
+		ArrayList<CriticalPath> routes;
 		try {
 			neighbor.calculateCompleteNeighborhood(problem1).contains(new PairVO(o41.getOperationIndex(), o21.getOperationIndex()));
 			routes = newVector.getCriticalPaths();
@@ -185,7 +185,7 @@ public class _RandomBlockCriticalRouteTest {
 		problem2.scheduleOperation(o44.getOperationIndex());
 		
 		Graph newVector = (Graph) problem2.cloneStructure();
-		ArrayList<CriticalRoute> routes;
+		ArrayList<CriticalPath> routes;
 		
 		try {
 			ArrayList<PairVO> vecinos = neighbor.calculateCompleteNeighborhood(problem2);
@@ -267,7 +267,7 @@ public class _RandomBlockCriticalRouteTest {
 		problem2.scheduleOperation(o44.getOperationIndex());
 		
 		Graph newVector = (Graph) problem2.cloneStructure();
-		ArrayList<CriticalRoute> routes;
+		ArrayList<CriticalPath> routes;
 		try {
 			routes = newVector.getCriticalPaths();
 			System.out.println("rutas"+routes);
