@@ -242,8 +242,7 @@ public class Test_N3_AdjacentInCriticalPaths {
 	// Utilities
 	// -----------------------------------------------
 	
-	public static long factorial(int N)
-    {
+	public static long factorial(int N){
         long multi = 1;
         for (int i = 1; i <= N; i++) {
             multi = multi * i;
