@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import structure.IOperation;
 import structure.IStructure;
-import structure.impl.CriticalRoute;
+import structure.impl.CriticalPath;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
@@ -43,7 +43,7 @@ public class AdjacentMachinesShiftOnCriticalRoutes implements INeighborCalculato
 		
 		while(!found){
 			// Obtaining all the critical paths of the current solutions
-			ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
+			ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 			
 			// Selecting one of the critical paths
 			int number = randomNumber(0, routes.size() - 1);
@@ -70,7 +70,7 @@ public class AdjacentMachinesShiftOnCriticalRoutes implements INeighborCalculato
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
-		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
+		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
 		int number = randomNumber(0, routes.size() - 1);
@@ -118,7 +118,7 @@ public class AdjacentMachinesShiftOnCriticalRoutes implements INeighborCalculato
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
-		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
+		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
 		for(int j =0; j < routes.size();j++){

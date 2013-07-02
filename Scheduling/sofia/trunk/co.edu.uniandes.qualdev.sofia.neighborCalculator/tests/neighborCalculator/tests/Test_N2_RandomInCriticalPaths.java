@@ -11,7 +11,7 @@ import common.types.PairVO;
 
 import neighborCalculator.impl.N2_RandomInCriticalPaths;
 import structure.IOperation;
-import structure.impl.CriticalRoute;
+import structure.impl.CriticalPath;
 import structure.impl.Graph;
 import structure.impl.Operation;
 import structure.impl.Vector;
@@ -87,10 +87,10 @@ public class Test_N2_RandomInCriticalPaths {
 		
 		long totalPairs = 0;
 		
-		ArrayList<CriticalRoute> criticalRoutes = graphScenario1.getCriticalPaths();
+		ArrayList<CriticalPath> criticalRoutes = graphScenario1.getCriticalPaths();
 		System.out.println("graph " + criticalRoutes.size());
 		
-		for (CriticalRoute criticalRoute : criticalRoutes) {
+		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			
 			int n = currentRoute.size();
@@ -113,10 +113,10 @@ public class Test_N2_RandomInCriticalPaths {
 		
 		long totalPairs = 0;
 		
-		ArrayList<CriticalRoute> criticalRoutes = vectorScenario1.getCriticalPaths();
+		ArrayList<CriticalPath> criticalRoutes = vectorScenario1.getCriticalPaths();
 		System.out.println("vector " + criticalRoutes.size());
 		
-		for (CriticalRoute criticalRoute : criticalRoutes) {
+		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			
 			int n = currentRoute.size();

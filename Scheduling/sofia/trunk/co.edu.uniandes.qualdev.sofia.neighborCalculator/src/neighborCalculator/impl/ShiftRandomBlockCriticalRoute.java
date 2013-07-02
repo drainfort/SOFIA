@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import structure.IOperation;
 import structure.IStructure;
-import structure.impl.CriticalRoute;
+import structure.impl.CriticalPath;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
@@ -42,7 +42,7 @@ public class ShiftRandomBlockCriticalRoute implements INeighborCalculator {
 	@Override
 	public PairVO calculateNeighbor(IStructure currentGraph) throws Exception {
 		IStructure clone = currentGraph.cloneStructure();
-		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
+		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		int number = randomNumber(0, routes.size() - 1);
         ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
@@ -71,7 +71,7 @@ public class ShiftRandomBlockCriticalRoute implements INeighborCalculator {
         IStructure clone = currentGraph.cloneStructure();
         
         // Obtaining all the critical paths of the current solutions
-        ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
+        ArrayList<CriticalPath> routes = clone.getCriticalPaths();
         
 //        System.out.println(routes);
         
@@ -115,7 +115,7 @@ public class ShiftRandomBlockCriticalRoute implements INeighborCalculator {
 			IStructure currentStructure) throws Exception {
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		IStructure clone = currentStructure.cloneStructure();
-		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
+		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		for(int i=0; i< routes.size();i++){
 			ArrayList<ArrayList<IOperation>> blocks= routes.get(i).getBlocks();

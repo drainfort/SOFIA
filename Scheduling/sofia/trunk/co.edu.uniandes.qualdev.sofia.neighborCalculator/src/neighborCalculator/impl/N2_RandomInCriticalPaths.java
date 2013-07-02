@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import structure.IOperation;
 import structure.IStructure;
-import structure.impl.CriticalRoute;
+import structure.impl.CriticalPath;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
@@ -37,7 +37,7 @@ public class N2_RandomInCriticalPaths implements INeighborCalculator {
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
-		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
+		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
 		int number = randomNumber(0, routes.size() - 1);
@@ -62,7 +62,7 @@ public class N2_RandomInCriticalPaths implements INeighborCalculator {
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
-		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
+		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		for(int j =0; j < routes.size()  && amount < size;j++){
 			ArrayList<IOperation> selectedCriticalPath = routes.get(j).getRoute();
 			
@@ -90,7 +90,7 @@ public class N2_RandomInCriticalPaths implements INeighborCalculator {
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
-		ArrayList<CriticalRoute> routes = clone.getCriticalPaths();
+		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		for(int j =0; j < routes.size();j++){
 			ArrayList<IOperation> selectedCriticalPath = routes.get(j).getRoute();
 			
