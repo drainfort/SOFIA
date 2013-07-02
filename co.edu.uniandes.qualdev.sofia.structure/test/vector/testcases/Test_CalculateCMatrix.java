@@ -12,7 +12,7 @@ import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.utils.MatrixUtils;
 
-public class CalculateCMatrix {
+public class Test_CalculateCMatrix {
 
 	// ----------------------------------------
 	// Attributes
@@ -30,10 +30,7 @@ public class CalculateCMatrix {
 		ArrayList<String> problemFiles = new ArrayList<String>();
 
 		String TFile = "./data/T-04x04-01.txt";
-		Integer[][] T = MatrixUtils.loadMatrix(TFile);
-		
 		String TTFile = "./data/TT-04x04-01.txt";
-		Integer[][] TT = MatrixUtils.loadMatrix(TTFile);
 		
 		problemFiles.add(TFile);
 		problemFiles.add(TTFile);
