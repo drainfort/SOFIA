@@ -86,9 +86,9 @@ public class Test_N2_RandomInCriticalPaths {
 		ArrayList<PairVO> neighborhood = neighborCalulator.calculateCompleteNeighborhood(graphScenario1);
 		
 		long totalPairs = 0;
-		
-		ArrayList<CriticalPath> criticalRoutes = graphScenario1.getCriticalPaths();
-		System.out.println("graph " + criticalRoutes.size());
+		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
+		Graph newGraph = (Graph) graphScenario1.cloneStructure();
+		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
@@ -133,8 +133,7 @@ public class Test_N2_RandomInCriticalPaths {
 	// Utilities
 	// -----------------------------------------------
 	
-	public static long factorial(int N)
-    {
+	public static long factorial(int N) {
         long multi = 1;
         for (int i = 1; i <= N; i++) {
             multi = multi * i;
