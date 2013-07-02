@@ -115,7 +115,7 @@ public class Node {
 	}
 	
 	
-	public ArrayList<CriticalRoute> getCriticalRoutes(ArrayList<CriticalRoute> criticalRoutes, ArrayList<int[]> incidencias)throws Exception{
+	public ArrayList<CriticalPath> getCriticalRoutes(ArrayList<CriticalPath> criticalRoutes, ArrayList<int[]> incidencias)throws Exception{
 		//Caso Base
 		for(int i=0; i<criticalRoutes.size();i++)
 		{
@@ -129,9 +129,9 @@ public class Node {
 		}
 		else{
 			if(sameInitialTime){
-				ArrayList<CriticalRoute> temp = new ArrayList<CriticalRoute>();
+				ArrayList<CriticalPath> temp = new ArrayList<CriticalPath>();
 				for(int i=0; i<criticalRoutes.size();i++){
-					CriticalRoute clone = new CriticalRoute();
+					CriticalPath clone = new CriticalPath();
 					for(int j=0; j<criticalRoutes.get(i).getRoute().size();j++){
 						IOperation node = criticalRoutes.get(i).getRoute().get(j);
 						int	position = ((node.getOperationIndex().getJobId())*this.onwerGraph.getTotalJobs())+node.getOperationIndex().getStationId();

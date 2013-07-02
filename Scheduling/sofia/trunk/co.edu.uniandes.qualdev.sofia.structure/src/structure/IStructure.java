@@ -3,7 +3,7 @@ package structure;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import structure.impl.CriticalRoute;
+import structure.impl.CriticalPath;
 
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
@@ -315,7 +315,7 @@ public interface IStructure {
 
 	public ArrayList<IOperation> getVector() throws Exception;
 	
-	public ArrayList<CriticalRoute> getCriticalPaths() throws Exception;
+	public ArrayList<CriticalPath> getCriticalPaths() throws Exception;
 	
 	public ArrayList<int[]> getWeightedNodesCriticaRoute();
 	
