@@ -9,13 +9,6 @@ import neighborCalculator.impl.N1_Random;
 import org.junit.Before;
 import org.junit.Test;
 
-import choco.Choco;
-import choco.cp.model.CPModel;
-import choco.cp.solver.CPSolver;
-import choco.kernel.model.Model;
-import choco.kernel.model.variables.integer.IntegerVariable;
-import choco.kernel.solver.Solver;
-
 import common.types.PairVO;
 
 import structure.IOperation;

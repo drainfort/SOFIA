@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import neighborCalculator.impl.N3_AdjacentInCriticalPaths;
 import neighborCalculator.impl.ShiftBlockAdjOnEnds;
 import neighborCalculator.impl.ShiftBlockEndStartAnyCriticalRoute;
-import neighborCalculator.impl.ShiftRandomBlockCriticalRoute;
+import neighborCalculator.impl.N5_RandomInCriticalBlock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import structure.impl.Operation;
 import structure.impl.Vector;
 
 
-public class _RandomBlockCriticalRouteTest {
+public class Test_N5_RandomInCriticalBlock {
 
 	// -----------------------------------------------
 	// Attributes
@@ -30,7 +30,8 @@ public class _RandomBlockCriticalRouteTest {
 	
 	private static Graph problemVector = new Graph(2,2);
 	private static Graph problem1 = new Graph(2,2);
-	private static ShiftRandomBlockCriticalRoute neighbor = new ShiftRandomBlockCriticalRoute();
+	
+	private static N5_RandomInCriticalBlock neighbor = new N5_RandomInCriticalBlock();
 	
 	// -----------------------------------------------
 	// Setup scenarios
