@@ -9,6 +9,13 @@ import neighborCalculator.impl.N1_Random;
 import org.junit.Before;
 import org.junit.Test;
 
+import choco.Choco;
+import choco.cp.model.CPModel;
+import choco.cp.solver.CPSolver;
+import choco.kernel.model.Model;
+import choco.kernel.model.variables.integer.IntegerVariable;
+import choco.kernel.solver.Solver;
+
 import common.types.PairVO;
 
 import structure.IOperation;
@@ -88,9 +95,9 @@ public class Test_N1_Random {
 		int n = graphScenario1.getOperations().size();
 		int r = 2;
 		
-		long nCr = (factorial(n))/factorial(n-r);
+		long nPr = (factorial(n))/factorial(n-r);
 		
-		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", nCr, neighborhood.size());
+		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", nPr, neighborhood.size());
 	}
 	
 	/**
