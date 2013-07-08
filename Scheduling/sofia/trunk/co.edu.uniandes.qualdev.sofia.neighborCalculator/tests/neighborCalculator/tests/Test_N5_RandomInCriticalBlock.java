@@ -168,8 +168,7 @@ private Graph graphScenario1;
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(graphScenario1);
 		long totalPairs = 0;
 		
-		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
-		Graph newGraph = (Graph) graphScenario1.cloneStructure();
+		Graph newGraph = (Graph) graphScenario1;
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
