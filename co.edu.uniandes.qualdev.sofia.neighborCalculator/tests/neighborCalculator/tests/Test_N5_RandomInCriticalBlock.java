@@ -1,12 +1,9 @@
 package neighborCalculator.tests;
 
-import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
 import junit.framework.Assert;
-
-import neighborCalculator.impl.N3_AdjacentInCriticalPaths;
 import neighborCalculator.impl.N5_RandomInCriticalBlock;
 
 import org.junit.Before;
@@ -32,7 +29,7 @@ public class Test_N5_RandomInCriticalBlock {
 	// Attributes
 	// -----------------------------------------------
 	
-private Graph graphScenario1;
+	private Graph graphScenario1;
 	
 	private Vector vectorScenario1;
 	
@@ -173,39 +170,221 @@ private Graph graphScenario1;
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
-			ArrayList<ArrayList<IOperation>> setOfSameMachines = new ArrayList<ArrayList<IOperation>>();
+			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
 			
 			for (int i = 0; i < currentRoute.size(); i++) {
 				IOperation operationI = currentRoute.get(i);
 				
-				if(!alreadyConsidered(setOfSameMachines, operationI)){
+				if(!alreadyConsidered(blocks, operationI)){
 					ArrayList<IOperation> Block = new ArrayList<IOperation>();
 					Block.add(operationI);
 					
+					// Including the machine blocks
 					boolean finish = false;
 					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
 						IOperation operationJ = currentRoute.get(j);
 						
-						//TODO Esto esta mal. Supongo que hay que construir dos arreglos diferentes. Uno para los bloques de máquina y otro para los bloques de job.
-						if((operationI.getOperationIndex().getStationId() == operationJ.getOperationIndex().getStationId()) || 
-								(operationI.getOperationIndex().getStationId() == operationJ.getOperationIndex().getStationId())){
+						if((operationI.getOperationIndex().getStationId() == operationJ.getOperationIndex().getStationId())){
 							Block.add(operationJ);
 						}else{
 							finish = true;
 						}
 					}
-					setOfSameMachines.add(Block);
+					
+					// Including the job blocks
+					finish = false;
+					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
+						IOperation operationJ = currentRoute.get(j);
+						
+						if((operationI.getOperationIndex().getJobId() == operationJ.getOperationIndex().getJobId())){
+							Block.add(operationJ);
+						}else{
+							finish = true;
+						}
+					}
+					blocks.add(Block);
 				}
 			}
 			
 			int n = 0;
-			for (int i = 0; i < setOfSameMachines.size(); i++) {
-				ArrayList<IOperation> currentArray = setOfSameMachines.get(i);
-				if(currentArray.size() > 1){
-					for (int j = 0; j < currentArray.size(); j++) {
-						n += currentArray.size() - 1;
+			for (int i = 0; i < blocks.size(); i++) {
+				ArrayList<IOperation> currentArray = blocks.get(i);
+				long nPr = (factorial(currentArray.size()))/factorial(currentArray.size()-2);
+				n += nPr;
+			}
+			totalPairs += n;
+		}
+		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
+	}
+	
+	@Test
+	public void testRandomInCriticalBlockTestScenario1Vector() throws Exception {
+		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(vectorScenario1);
+		long totalPairs = 0;
+		
+		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
+		Vector newVector = (Vector) vectorScenario1.cloneStructure();
+		ArrayList<CriticalPath> criticalRoutes = newVector.getCriticalPaths();
+		
+		for (CriticalPath criticalRoute : criticalRoutes) {
+			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
+			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
+			
+			for (int i = 0; i < currentRoute.size(); i++) {
+				IOperation operationI = currentRoute.get(i);
+				
+				if(!alreadyConsidered(blocks, operationI)){
+					ArrayList<IOperation> Block = new ArrayList<IOperation>();
+					Block.add(operationI);
+					
+					// Including the machine blocks
+					boolean finish = false;
+					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
+						IOperation operationJ = currentRoute.get(j);
+						
+						if((operationI.getOperationIndex().getStationId() == operationJ.getOperationIndex().getStationId())){
+							Block.add(operationJ);
+						}else{
+							finish = true;
+						}
 					}
+					
+					// Including the job blocks
+					finish = false;
+					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
+						IOperation operationJ = currentRoute.get(j);
+						
+						if((operationI.getOperationIndex().getJobId() == operationJ.getOperationIndex().getJobId())){
+							Block.add(operationJ);
+						}else{
+							finish = true;
+						}
+					}
+					blocks.add(Block);
 				}
+			}
+			
+			int n = 0;
+			for (int i = 0; i < blocks.size(); i++) {
+				ArrayList<IOperation> currentArray = blocks.get(i);
+				long nPr = (factorial(currentArray.size()))/factorial(currentArray.size()-2);
+				n += nPr;
+			}
+			totalPairs += n;
+		}
+		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
+	}
+	
+	@Test
+	public void testRandomInCriticalBlockTestScenario2Graph() throws Exception {
+		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(graphScenario2);
+		long totalPairs = 0;
+		
+		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
+		Graph newGraph = (Graph) graphScenario2.cloneStructure();
+		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
+		
+		for (CriticalPath criticalRoute : criticalRoutes) {
+			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
+			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
+			
+			for (int i = 0; i < currentRoute.size(); i++) {
+				IOperation operationI = currentRoute.get(i);
+				
+				if(!alreadyConsidered(blocks, operationI)){
+					ArrayList<IOperation> Block = new ArrayList<IOperation>();
+					Block.add(operationI);
+					
+					// Including the machine blocks
+					boolean finish = false;
+					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
+						IOperation operationJ = currentRoute.get(j);
+						
+						if((operationI.getOperationIndex().getStationId() == operationJ.getOperationIndex().getStationId())){
+							Block.add(operationJ);
+						}else{
+							finish = true;
+						}
+					}
+					
+					// Including the job blocks
+					finish = false;
+					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
+						IOperation operationJ = currentRoute.get(j);
+						
+						if((operationI.getOperationIndex().getJobId() == operationJ.getOperationIndex().getJobId())){
+							Block.add(operationJ);
+						}else{
+							finish = true;
+						}
+					}
+					blocks.add(Block);
+				}
+			}
+			
+			int n = 0;
+			for (int i = 0; i < blocks.size(); i++) {
+				ArrayList<IOperation> currentArray = blocks.get(i);
+				long nPr = (factorial(currentArray.size()))/factorial(currentArray.size()-2);
+				n += nPr;
+			}
+			totalPairs += n;
+		}
+		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
+	}
+	
+	@Test
+	public void testRandomInCriticalBlockTestScenario2Vector() throws Exception {
+		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(vectorScenario2);
+		long totalPairs = 0;
+		
+		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
+		Vector newVector = (Vector) vectorScenario2.cloneStructure();
+		ArrayList<CriticalPath> criticalRoutes = newVector.getCriticalPaths();
+		
+		for (CriticalPath criticalRoute : criticalRoutes) {
+			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
+			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
+			
+			for (int i = 0; i < currentRoute.size(); i++) {
+				IOperation operationI = currentRoute.get(i);
+				
+				if(!alreadyConsidered(blocks, operationI)){
+					ArrayList<IOperation> Block = new ArrayList<IOperation>();
+					Block.add(operationI);
+					
+					// Including the machine blocks
+					boolean finish = false;
+					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
+						IOperation operationJ = currentRoute.get(j);
+						
+						if((operationI.getOperationIndex().getStationId() == operationJ.getOperationIndex().getStationId())){
+							Block.add(operationJ);
+						}else{
+							finish = true;
+						}
+					}
+					
+					// Including the job blocks
+					finish = false;
+					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
+						IOperation operationJ = currentRoute.get(j);
+						
+						if((operationI.getOperationIndex().getJobId() == operationJ.getOperationIndex().getJobId())){
+							Block.add(operationJ);
+						}else{
+							finish = true;
+						}
+					}
+					blocks.add(Block);
+				}
+			}
+			
+			int n = 0;
+			for (int i = 0; i < blocks.size(); i++) {
+				ArrayList<IOperation> currentArray = blocks.get(i);
+				long nPr = (factorial(currentArray.size()))/factorial(currentArray.size()-2);
+				n += nPr;
 			}
 			totalPairs += n;
 		}
@@ -228,6 +407,14 @@ private Graph graphScenario1;
 		}
 		return false;
 	}
+	
+	public static long factorial(int N){
+        long multi = 1;
+        for (int i = 1; i <= N; i++) {
+            multi = multi * i;
+        }
+        return multi;
+    }
 		
 //	@Test
 //	public void testClone1() throws InterruptedException {
