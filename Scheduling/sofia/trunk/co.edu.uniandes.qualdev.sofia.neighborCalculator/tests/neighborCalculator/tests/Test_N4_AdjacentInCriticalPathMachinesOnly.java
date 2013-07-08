@@ -165,8 +165,7 @@ public class Test_N4_AdjacentInCriticalPathMachinesOnly {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(graphScenario1);
 		long totalPairs = 0;
 		
-		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
-		Graph newGraph = (Graph) graphScenario1.cloneStructure();
+		Graph newGraph = (Graph) graphScenario1;
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
@@ -213,8 +212,7 @@ public class Test_N4_AdjacentInCriticalPathMachinesOnly {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(vectorScenario1);
 		long totalPairs = 0;
 		
-		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
-		Vector newVector = (Vector) vectorScenario1.cloneStructure();
+		Vector newVector = (Vector) vectorScenario1;
 		ArrayList<CriticalPath> criticalRoutes = newVector.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
@@ -261,8 +259,7 @@ public class Test_N4_AdjacentInCriticalPathMachinesOnly {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(graphScenario2);
 		long totalPairs = 0;
 		
-		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
-		Graph newGraph = (Graph) graphScenario2.cloneStructure();
+		Graph newGraph = (Graph) graphScenario2;
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
@@ -306,9 +303,8 @@ public class Test_N4_AdjacentInCriticalPathMachinesOnly {
 	public void testAdjacentInCriticaPathMachinesOnlyTestScenario2Vector() throws Exception {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(vectorScenario2);
 		long totalPairs = 0;
-		
-		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
-		Vector newVector = (Vector) vectorScenario2.cloneStructure();
+	
+		Vector newVector = (Vector) vectorScenario2;
 		ArrayList<CriticalPath> criticalRoutes = newVector.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
