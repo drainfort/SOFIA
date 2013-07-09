@@ -114,14 +114,13 @@ public class ShiftBlockAdjOnEnds implements INeighborCalculator{
 		            PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
 		            neighborhood.add(temp);
 		            
-		            if(block.size()>2){
-			            IOperation    finalNode= block.get(block.size()-1);
-			            IOperation    initialNode = block.get(block.size()-2);
-			            initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
-			            finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
-			            temp = new PairVO(initialOperationIndex, finalOperationIndex);
-			            neighborhood.add(temp);
-		            }
+		            IOperation    finalNode= block.get(block.size()-1);
+		            IOperation    initialNode = block.get(block.size()-2);
+		            initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
+		            finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+		            temp = new PairVO(initialOperationIndex, finalOperationIndex);
+		            neighborhood.add(temp);
+		            
 	        	}
 	        	
 	        }
