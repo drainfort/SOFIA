@@ -166,7 +166,7 @@ public class Test_N3_AdjacentInCriticalPaths {
 		
 		long totalPairs = 0;
 		
-		Graph newGraph = (Graph) graphScenario1;
+		Graph newGraph = (Graph) graphScenario1.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
@@ -185,7 +185,7 @@ public class Test_N3_AdjacentInCriticalPaths {
 		
 		long totalPairs = 0;
 		
-		Graph newGraph = (Graph) graphScenario2;
+		Graph newGraph = (Graph) graphScenario2.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {

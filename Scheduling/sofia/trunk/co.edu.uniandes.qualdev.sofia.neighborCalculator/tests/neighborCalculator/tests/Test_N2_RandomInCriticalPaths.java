@@ -86,7 +86,7 @@ public class Test_N2_RandomInCriticalPaths {
 		ArrayList<PairVO> neighborhood = neighborCalulator.calculateCompleteNeighborhood(graphScenario1);
 		
 		long totalPairs = 0;
-		Graph newGraph = (Graph) graphScenario1;
+		Graph newGraph = (Graph) graphScenario1.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
