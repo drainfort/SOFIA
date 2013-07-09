@@ -125,7 +125,7 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
 				for(int i1=0; i1<block.size();i1++){
 					IOperation initialNode= block.get(i1);  		            
 			        OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId()); 
-					for(int j1=i1; j1<block.size();j1++){
+					for(int j1=0; j1<block.size();j1++){
 						IOperation finalNode = block.get(j1);
 						OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
 						PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
