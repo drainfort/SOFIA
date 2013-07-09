@@ -979,7 +979,7 @@ public class Graph extends AbstractStructure {
 	public ArrayList<CriticalPath> getCriticalPaths() throws Exception{
 		int cmax = 0;
 		restartC();
-		clean();
+		//clean();
 		ArrayList<int[]> incidenciasCriticaRoute = new ArrayList<int[]>();
 		ArrayList<Node> cMaxNodes= new ArrayList<Node>();
 		for (int i = 0; i < totalJobs; i++) {
