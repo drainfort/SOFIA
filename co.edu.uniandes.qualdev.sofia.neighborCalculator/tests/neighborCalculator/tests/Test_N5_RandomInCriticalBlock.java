@@ -167,42 +167,8 @@ public class Test_N5_RandomInCriticalBlock {
 		Graph newGraph = (Graph) graphScenario1.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		for (CriticalPath criticalRoute : criticalRoutes) {
-			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
-			
-			for (int i = 0; i < currentRoute.size(); i++) {
-				IOperation operationI = currentRoute.get(i);
-				
-				if(!alreadyConsidered(blocks, operationI)){
-					ArrayList<IOperation> Block = new ArrayList<IOperation>();
-					Block.add(operationI);
-					
-					// Including the machine blocks
-					boolean finish = false;
-					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
-						IOperation operationJ = currentRoute.get(j);
-						
-						if((operationI.getOperationIndex().getStationId() == operationJ.getOperationIndex().getStationId())){
-							Block.add(operationJ);
-						}else{
-							finish = true;
-						}
-					}
-					
-					// Including the job blocks
-					finish = false;
-					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
-						IOperation operationJ = currentRoute.get(j);
-						
-						if((operationI.getOperationIndex().getJobId() == operationJ.getOperationIndex().getJobId())){
-							Block.add(operationJ);
-						}else{
-							finish = true;
-						}
-					}
-					blocks.add(Block);
-				}
-			}
+			blocks.addAll(criticalRoute.getBlocks());
 			
 			int n = 0;
 			for (int i = 0; i < blocks.size(); i++) {
@@ -224,43 +190,8 @@ public class Test_N5_RandomInCriticalBlock {
 		ArrayList<CriticalPath> criticalRoutes = newVector.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
-			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
-			ArrayList<ArrayList<IOperation>> blocks1 = new ArrayList<ArrayList<IOperation>>();
-			blocks1.addAll(criticalRoute.getBlocks());
-			for (int i = 0; i < currentRoute.size(); i++) {
-				IOperation operationI = currentRoute.get(i);
-				
-				if(!alreadyConsidered(blocks, operationI)){
-					ArrayList<IOperation> Block = new ArrayList<IOperation>();
-					Block.add(operationI);
-					
-					// Including the machine blocks
-					boolean finish = false;
-					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
-						IOperation operationJ = currentRoute.get(j);
-						
-						if((operationI.getOperationIndex().getStationId() == operationJ.getOperationIndex().getStationId())){
-							Block.add(operationJ);
-						}else{
-							finish = true;
-						}
-					}
-					
-					// Including the job blocks
-					finish = false;
-					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
-						IOperation operationJ = currentRoute.get(j);
-						
-						if((operationI.getOperationIndex().getJobId() == operationJ.getOperationIndex().getJobId())){
-							Block.add(operationJ);
-						}else{
-							finish = true;
-						}
-					}
-					blocks.add(Block);
-				}
-			}
+			blocks.addAll(criticalRoute.getBlocks());
 			int n = 0;
 			for (int i = 0; i < blocks.size(); i++) {
 				ArrayList<IOperation> currentArray = blocks.get(i);
@@ -279,47 +210,11 @@ public class Test_N5_RandomInCriticalBlock {
 		
 		Graph newGraph = (Graph) graphScenario2.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
-		System.out.println(criticalRoutes);
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
-			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
-			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
-			ArrayList<ArrayList<IOperation>> blocks1 = new ArrayList<ArrayList<IOperation>>();
-			blocks1.addAll(criticalRoute.getBlocks());
-			for (int i = 0; i < currentRoute.size(); i++) {
-				IOperation operationI = currentRoute.get(i);
-				
-				if(!alreadyConsidered(blocks, operationI)){
-					ArrayList<IOperation> Block = new ArrayList<IOperation>();
-					Block.add(operationI);
-					
-					// Including the machine blocks
-					boolean finish = false;
-					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
-						IOperation operationJ = currentRoute.get(j);
-						
-						if((operationI.getOperationIndex().getStationId() == operationJ.getOperationIndex().getStationId())){
-							Block.add(operationJ);
-						}else{
-							finish = true;
-						}
-					}
-					
-					// Including the job blocks
-					finish = false;
-					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
-						IOperation operationJ = currentRoute.get(j);
-						
-						if((operationI.getOperationIndex().getJobId() == operationJ.getOperationIndex().getJobId())){
-							Block.add(operationJ);
-						}else{
-							finish = true;
-						}
-					}
-					blocks.add(Block);
-				}
-			}
 			
+			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
+			blocks.addAll(criticalRoute.getBlocks());
 			int n = 0;
 			for (int i = 0; i < blocks.size(); i++) {
 				ArrayList<IOperation> currentArray = blocks.get(i);
@@ -327,10 +222,6 @@ public class Test_N5_RandomInCriticalBlock {
 				n += nPr;
 			}
 			totalPairs += n;
-			System.out.println(blocks1);
-			System.out.println(blocks);
-			System.out.println(totalPairs);
-			System.out.println(neighborhood.size());
 		}
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
@@ -339,64 +230,21 @@ public class Test_N5_RandomInCriticalBlock {
 	public void testRandomInCriticalBlockTestScenario2Vector() throws Exception {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(vectorScenario2);
 		long totalPairs = 0;
-		System.out.println("\nSegunda prueba");
 		Vector newVector = (Vector) vectorScenario2;
 		ArrayList<CriticalPath> criticalRoutes = newVector.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
-			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
-			ArrayList<ArrayList<IOperation>> blocks1 = new ArrayList<ArrayList<IOperation>>();
-			blocks1.addAll(criticalRoute.getBlocks());
-			for (int i = 0; i < currentRoute.size(); i++) {
-				IOperation operationI = currentRoute.get(i);
-				
-				if(!alreadyConsidered(blocks, operationI)){
-					ArrayList<IOperation> Block = new ArrayList<IOperation>();
-					Block.add(operationI);
-					
-					// Including the machine blocks
-					boolean finish = false;
-					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
-						IOperation operationJ = currentRoute.get(j);
-						
-						if((operationI.getOperationIndex().getStationId() == operationJ.getOperationIndex().getStationId())){
-							Block.add(operationJ);
-						}else{
-							finish = true;
-						}
-					}
-					
-					// Including the job blocks
-					finish = false;
-					for (int j = i + 1; j < currentRoute.size() && !finish; j++) {
-						IOperation operationJ = currentRoute.get(j);
-						
-						if((operationI.getOperationIndex().getJobId() == operationJ.getOperationIndex().getJobId())){
-							Block.add(operationJ);
-						}else{
-							finish = true;
-						}
-					}
-					blocks.add(Block);
-				}
-			}
-			
+			blocks.addAll(criticalRoute.getBlocks());
 			int n = 0;
-			for (int i = 0; i < blocks1.size(); i++) {
-				ArrayList<IOperation> currentArray = blocks1.get(i);
+			for (int i = 0; i < blocks.size(); i++) {
+				ArrayList<IOperation> currentArray = blocks.get(i);
 				long nPr = (factorial(currentArray.size()))/factorial(currentArray.size()-2);
 				n += nPr;
 			}
 			totalPairs += n;
-			System.out.println(blocks1);
-			System.out.println(blocks);
 		}
-		
-		
-		
-		System.out.println(totalPairs);
-		System.out.println(neighborhood.size());
+
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
 	

@@ -224,6 +224,7 @@ public class Test_N3_AdjacentInCriticalPaths {
 		long totalPairs = 0;
 		
 		ArrayList<CriticalPath> criticalRoutes = vectorScenario2.getCriticalPaths();
+		System.out.println(criticalRoutes);
 		System.out.println("vector " + criticalRoutes.size());
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
