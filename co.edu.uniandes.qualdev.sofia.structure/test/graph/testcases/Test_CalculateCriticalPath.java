@@ -75,7 +75,7 @@ public class Test_CalculateCriticalPath {
 	public void testCriticalPathScenario1() throws Exception {
 		Graph newGraph = (Graph) graphScenario1.cloneStructure();
 		ArrayList<CriticalPath> routes = newGraph.getCriticalPaths();
-		
+		//System.out.println(routes);
 		//Validation: The amount of critical paths is 1
 		Assert.assertEquals("The amount of criticap paths should be 1", 1, routes.size());
 		
