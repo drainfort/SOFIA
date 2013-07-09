@@ -165,8 +165,9 @@ public class Test_N4_AdjacentInCriticalPathMachinesOnly {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(graphScenario1);
 		long totalPairs = 0;
 		
-		Graph newGraph = (Graph) graphScenario1;
+		Graph newGraph = (Graph) graphScenario1.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
+		
 		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			ArrayList<ArrayList<IOperation>> setOfSameMachines = new ArrayList<ArrayList<IOperation>>();
@@ -258,7 +259,7 @@ public class Test_N4_AdjacentInCriticalPathMachinesOnly {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(graphScenario2);
 		long totalPairs = 0;
 		
-		Graph newGraph = (Graph) graphScenario2;
+		Graph newGraph = (Graph) graphScenario2.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
