@@ -346,7 +346,8 @@ public class Test_N5_RandomInCriticalBlock {
 		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
-			
+			ArrayList<ArrayList<IOperation>> blocks1 = new ArrayList<ArrayList<IOperation>>();
+			blocks1.addAll(criticalRoute.getBlocks());
 			for (int i = 0; i < currentRoute.size(); i++) {
 				IOperation operationI = currentRoute.get(i);
 				
@@ -387,7 +388,12 @@ public class Test_N5_RandomInCriticalBlock {
 				long nPr = (factorial(currentArray.size()))/factorial(currentArray.size()-2);
 				n += nPr;
 			}
+			System.out.println(blocks1);
+			System.out.println(blocks);
+			
 			totalPairs += n;
+			System.out.println(totalPairs);
+			System.out.println(neighborhood.size());
 		}
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
