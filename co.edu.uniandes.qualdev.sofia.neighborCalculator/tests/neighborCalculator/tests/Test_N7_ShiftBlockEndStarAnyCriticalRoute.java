@@ -166,9 +166,13 @@ public class Test_N7_ShiftBlockEndStarAnyCriticalRoute {
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
-			int number = criticalRoute.getBlocks().size()*2;
-			totalPairs += number;
+			
+			for( int i=0; i<criticalRoute.getBlocks().size();i++){
+				totalPairs+= (criticalRoute.getBlocks().get(i).size()-1)*2;
+			}
+
 		}
+
 		
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
@@ -187,8 +191,11 @@ public class Test_N7_ShiftBlockEndStarAnyCriticalRoute {
 		System.out.println("vector " + criticalRoutes.size());
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
-			int number = criticalRoute.getBlocks().size()*2;
-			totalPairs += number;
+			
+			for( int i=0; i<criticalRoute.getBlocks().size();i++){
+				totalPairs+= (criticalRoute.getBlocks().get(i).size()-1)*2;
+			}
+
 		}
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
@@ -202,8 +209,11 @@ public class Test_N7_ShiftBlockEndStarAnyCriticalRoute {
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
-			int number = criticalRoute.getBlocks().size()*2;
-			totalPairs += number;
+			
+			for( int i=0; i<criticalRoute.getBlocks().size();i++){
+				totalPairs+= (criticalRoute.getBlocks().get(i).size()-1)*2;
+			}
+
 		}
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
@@ -216,8 +226,11 @@ public class Test_N7_ShiftBlockEndStarAnyCriticalRoute {
 		ArrayList<CriticalPath> criticalRoutes = newVector.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
-			int number = criticalRoute.getBlocks().size()*2;
-			totalPairs += number;
+			
+			for( int i=0; i<criticalRoute.getBlocks().size();i++){
+				totalPairs+= (criticalRoute.getBlocks().get(i).size()-1)*2;
+			}
+
 		}
 
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());

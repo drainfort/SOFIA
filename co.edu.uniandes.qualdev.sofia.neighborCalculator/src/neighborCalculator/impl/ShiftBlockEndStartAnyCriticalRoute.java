@@ -122,24 +122,20 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
     	            OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode1.getOperationIndex().getJobId(), finalNode1.getOperationIndex().getStationId());
     	            
     	            PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
-    	            if(!neighborhood.contains(temp)){
-    	            	neighborhood.add(temp);
-    	            }
+    	            neighborhood.add(temp);
+    	            
         		}
         		
         		initialNode1= block.get(block.size()-1);
-        		for(int z=0; z< block.size()-1 && block.size()>2; z++){
+        		for(int z=0; z< block.size()-1; z++){
         			IOperation finalNode1 = block.get(z);
         			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode1.getOperationIndex().getJobId(), initialNode1.getOperationIndex().getStationId());
     	            OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode1.getOperationIndex().getJobId(), finalNode1.getOperationIndex().getStationId());
     	            
     	            PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
-    	            if(!neighborhood.contains(temp)){
-    	            	neighborhood.add(temp);
-    	            }
+    	            neighborhood.add(temp);
         		}
-	            
-	            
+
         	}
         	
         }
