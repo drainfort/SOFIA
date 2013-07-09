@@ -222,14 +222,14 @@ public class Test_N5_RandomInCriticalBlock {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(vectorScenario1);
 		long totalPairs = 0;
 		
-		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
-		Vector newVector = (Vector) vectorScenario1.cloneStructure();
+		Vector newVector = (Vector) vectorScenario1;
 		ArrayList<CriticalPath> criticalRoutes = newVector.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
-			
+			ArrayList<ArrayList<IOperation>> blocks1 = new ArrayList<ArrayList<IOperation>>();
+			blocks1.addAll(criticalRoute.getBlocks());
 			for (int i = 0; i < currentRoute.size(); i++) {
 				IOperation operationI = currentRoute.get(i);
 				
@@ -263,14 +263,18 @@ public class Test_N5_RandomInCriticalBlock {
 					blocks.add(Block);
 				}
 			}
-			
+			System.out.println(criticalRoute);
+			System.out.println(blocks);
+			System.out.println(blocks1);
 			int n = 0;
 			for (int i = 0; i < blocks.size(); i++) {
 				ArrayList<IOperation> currentArray = blocks.get(i);
 				long nPr = (factorial(currentArray.size()))/factorial(currentArray.size()-2);
+				System.out.println(nPr);
 				n += nPr;
 			}
 			totalPairs += n;
+			System.out.println(totalPairs);
 		}
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
@@ -280,8 +284,7 @@ public class Test_N5_RandomInCriticalBlock {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(graphScenario2);
 		long totalPairs = 0;
 		
-		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
-		Graph newGraph = (Graph) graphScenario2.cloneStructure();
+		Graph newGraph = (Graph) graphScenario2;
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
@@ -338,8 +341,7 @@ public class Test_N5_RandomInCriticalBlock {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(vectorScenario2);
 		long totalPairs = 0;
 		
-		//TODO ¿Por qué hay que clonar la estructura para que el cálculo de rutas críticas funcione de manera correcta?
-		Vector newVector = (Vector) vectorScenario2.cloneStructure();
+		Vector newVector = (Vector) vectorScenario2;
 		ArrayList<CriticalPath> criticalRoutes = newVector.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
