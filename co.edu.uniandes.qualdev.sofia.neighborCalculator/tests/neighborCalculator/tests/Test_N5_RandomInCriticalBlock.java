@@ -167,8 +167,8 @@ public class Test_N5_RandomInCriticalBlock {
 		
 		Graph newGraph = (Graph) graphScenario1;
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
-		
 		for (CriticalPath criticalRoute : criticalRoutes) {
+			System.out.println("hola");
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
 			
@@ -213,6 +213,9 @@ public class Test_N5_RandomInCriticalBlock {
 				n += nPr;
 			}
 			totalPairs += n;
+			System.out.println(blocks);
+			System.out.println(totalPairs);
+			System.out.println("gggggggggggggg");
 		}
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
