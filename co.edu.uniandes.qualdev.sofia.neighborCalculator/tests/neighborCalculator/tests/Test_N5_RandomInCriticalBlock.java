@@ -339,7 +339,7 @@ public class Test_N5_RandomInCriticalBlock {
 	public void testRandomInCriticalBlockTestScenario2Vector() throws Exception {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(vectorScenario2);
 		long totalPairs = 0;
-		
+		System.out.println("\nSegunda prueba");
 		Vector newVector = (Vector) vectorScenario2;
 		ArrayList<CriticalPath> criticalRoutes = newVector.getCriticalPaths();
 		
@@ -383,18 +383,20 @@ public class Test_N5_RandomInCriticalBlock {
 			}
 			
 			int n = 0;
-			for (int i = 0; i < blocks.size(); i++) {
-				ArrayList<IOperation> currentArray = blocks.get(i);
+			for (int i = 0; i < blocks1.size(); i++) {
+				ArrayList<IOperation> currentArray = blocks1.get(i);
 				long nPr = (factorial(currentArray.size()))/factorial(currentArray.size()-2);
 				n += nPr;
 			}
+			totalPairs += n;
 			System.out.println(blocks1);
 			System.out.println(blocks);
-			
-			totalPairs += n;
-			System.out.println(totalPairs);
-			System.out.println(neighborhood.size());
 		}
+		
+		
+		
+		System.out.println(totalPairs);
+		System.out.println(neighborhood.size());
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
 	
