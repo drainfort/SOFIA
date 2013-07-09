@@ -129,7 +129,7 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
 						IOperation finalNode = block.get(j1);
 						OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
 						PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
-			            if(!neighborhood.contains(temp)&& !initialOperationIndex.equals(finalOperationIndex)){
+			            if(!initialOperationIndex.equals(finalOperationIndex)){
 			                neighborhood.add(temp);
 			            }
 					}
