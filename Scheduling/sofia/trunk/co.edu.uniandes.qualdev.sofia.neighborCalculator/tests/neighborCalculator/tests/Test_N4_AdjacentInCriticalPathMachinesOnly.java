@@ -167,7 +167,6 @@ public class Test_N4_AdjacentInCriticalPathMachinesOnly {
 		
 		Graph newGraph = (Graph) graphScenario1;
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
-		
 		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			ArrayList<ArrayList<IOperation>> setOfSameMachines = new ArrayList<ArrayList<IOperation>>();
