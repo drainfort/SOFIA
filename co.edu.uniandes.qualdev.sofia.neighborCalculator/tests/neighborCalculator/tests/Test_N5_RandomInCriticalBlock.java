@@ -164,11 +164,10 @@ public class Test_N5_RandomInCriticalBlock {
 	public void testRandomInCriticalBlockTestScenario1Graph() throws Exception {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(graphScenario1);
 		long totalPairs = 0;
-		
-		Graph newGraph = (Graph) graphScenario1;
+		System.out.println(neighborhood);
+		Graph newGraph = (Graph) graphScenario1.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		for (CriticalPath criticalRoute : criticalRoutes) {
-			System.out.println("hola");
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
 			
@@ -213,9 +212,6 @@ public class Test_N5_RandomInCriticalBlock {
 				n += nPr;
 			}
 			totalPairs += n;
-			System.out.println(blocks);
-			System.out.println(totalPairs);
-			System.out.println("gggggggggggggg");
 		}
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
@@ -287,7 +283,7 @@ public class Test_N5_RandomInCriticalBlock {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(graphScenario2);
 		long totalPairs = 0;
 		
-		Graph newGraph = (Graph) graphScenario2;
+		Graph newGraph = (Graph) graphScenario2.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
