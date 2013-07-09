@@ -164,7 +164,6 @@ public class Test_N5_RandomInCriticalBlock {
 	public void testRandomInCriticalBlockTestScenario1Graph() throws Exception {
 		ArrayList<PairVO> neighborhood = neighbor.calculateCompleteNeighborhood(graphScenario1);
 		long totalPairs = 0;
-		System.out.println(neighborhood);
 		Graph newGraph = (Graph) graphScenario1.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
 		for (CriticalPath criticalRoute : criticalRoutes) {
@@ -262,18 +261,13 @@ public class Test_N5_RandomInCriticalBlock {
 					blocks.add(Block);
 				}
 			}
-			System.out.println(criticalRoute);
-			System.out.println(blocks);
-			System.out.println(blocks1);
 			int n = 0;
 			for (int i = 0; i < blocks.size(); i++) {
 				ArrayList<IOperation> currentArray = blocks.get(i);
 				long nPr = (factorial(currentArray.size()))/factorial(currentArray.size()-2);
-				System.out.println(nPr);
 				n += nPr;
 			}
 			totalPairs += n;
-			System.out.println(totalPairs);
 		}
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
@@ -285,11 +279,13 @@ public class Test_N5_RandomInCriticalBlock {
 		
 		Graph newGraph = (Graph) graphScenario2.cloneStructure();
 		ArrayList<CriticalPath> criticalRoutes = newGraph.getCriticalPaths();
+		System.out.println(criticalRoutes);
 		
 		for (CriticalPath criticalRoute : criticalRoutes) {
 			ArrayList<IOperation> currentRoute = criticalRoute.getRoute();
 			ArrayList<ArrayList<IOperation>> blocks = new ArrayList<ArrayList<IOperation>>();
-			
+			ArrayList<ArrayList<IOperation>> blocks1 = new ArrayList<ArrayList<IOperation>>();
+			blocks1.addAll(criticalRoute.getBlocks());
 			for (int i = 0; i < currentRoute.size(); i++) {
 				IOperation operationI = currentRoute.get(i);
 				
@@ -331,6 +327,10 @@ public class Test_N5_RandomInCriticalBlock {
 				n += nPr;
 			}
 			totalPairs += n;
+			System.out.println(blocks1);
+			System.out.println(blocks);
+			System.out.println(totalPairs);
+			System.out.println(neighborhood.size());
 		}
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", totalPairs, neighborhood.size());
 	}
