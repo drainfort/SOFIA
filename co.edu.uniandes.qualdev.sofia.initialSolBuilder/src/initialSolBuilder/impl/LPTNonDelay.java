@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import structure.IOperation;
 import structure.IStructure;
 import structure.factory.AbstractStructureFactory;
+import structure.impl.Vector;
 
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
