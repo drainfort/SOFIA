@@ -63,13 +63,13 @@ public class N3_AdjacentInCriticalPaths implements INeighborCalculator {
 		
 		// Obtaining all the critical paths of the current solutions
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
-		
+		System.out.println(routes);
 		int exit = 0;
 		while(neighborhood.size() < size){
 			//Selecting the critical route
 			int number = randomNumber(0, routes.size() - 1);
 			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
-			
+
 			// Selecting an adjacent pair of operations
 			int i = randomNumber(0, selectedCriticalPath.size() - 2);
 			IOperation initialNode = selectedCriticalPath.get(i);
@@ -88,6 +88,7 @@ public class N3_AdjacentInCriticalPaths implements INeighborCalculator {
 					return neighborhood;
 				}
 			}
+			
 		}
 		return neighborhood;
 	}
