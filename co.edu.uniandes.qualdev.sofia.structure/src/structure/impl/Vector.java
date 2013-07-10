@@ -319,7 +319,7 @@ public class Vector extends AbstractStructure{
 	
 	private void decodeSolution(){
 		// Arreglo con las operaciones sin programar
-		vectorDecodNonDelay = (ArrayList<IOperation>) vectorDecodSimple.clone();
+		vectorDecodNonDelay = (ArrayList<IOperation>) getOperations().clone();
 		
 		for (int i = 0; i < vectorDecodNonDelay.size(); i++){
 			IOperation iOperation = vectorDecodNonDelay.get(i);
