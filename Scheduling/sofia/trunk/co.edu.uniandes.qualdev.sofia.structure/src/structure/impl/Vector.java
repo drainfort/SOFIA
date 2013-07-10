@@ -2,6 +2,8 @@ package structure.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -383,6 +385,7 @@ public class Vector extends AbstractStructure{
 			}
 			index++;
 		}
+		
 	}
 	
 	private int getLastJobTime(int jobId, int[][] C) {
@@ -772,9 +775,11 @@ public class Vector extends AbstractStructure{
 	 * @return lastOperations. A collection of IOperations such that its C value is the biggest one.
 	 */
 	public ArrayList<IOperation> getLastOperation(){
+		sortArray(getOperations());
 		synch=false;
 		calculateCMatrix();
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
+		//System.out.println("Operaciones:  "+getOperations());
 		int lastTime=0;
 		for(int i=0; i< getOperations().size();i++){
 			IOperation temp= getOperations().get(i);
@@ -791,7 +796,7 @@ public class Vector extends AbstractStructure{
 		}
 		return operations;
 	}
-	
+		
 	/**
 	 * Complete the critical path in the parameter according to the initial nodes it contains
 	 * @param criticalPath The collection of critical paths associated with the node
@@ -900,6 +905,20 @@ public class Vector extends AbstractStructure{
 				
 		}
 		return operations;
+	}
+	
+	public void sortArray(ArrayList<IOperation> vector){
+		//System.out.println("vectorUnsorted"+vector);
+		Collections.sort(vector, new Comparator<IOperation>() {
+			@Override
+			public int compare(IOperation o1, IOperation o2) {
+				int a = o1.getFinalTime();
+				int b = o2.getFinalTime();
+				return (a>b ? 1 : (a==b ? 0 : -1));
+
+			}
+		});
+		//System.out.println("vectorSorted"+vector);
 	}
 	
 	// -------------------------------------------------
