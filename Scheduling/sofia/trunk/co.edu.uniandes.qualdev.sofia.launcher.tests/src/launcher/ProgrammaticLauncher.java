@@ -43,8 +43,8 @@ public class ProgrammaticLauncher {
 	public static String RANDOM_NEIGHBORHOOD = "neighborCalculator.impl.N1_Random";
 	public static String API_NEIGHBORHOOD = "neighborCalculator.impl.Api";
 	public static String CRITICAL_ROUTE_ADJACENT_NEIGHBORHOOD= "neighborCalculator.impl.N3_AdjacentInCriticalPaths";
-	public static String CRITICAL_ROUTE_ADJACENT_MACHINES_NEIGHBORHOOD = "neighborCalculator.impl.AdjacentMachinesShiftOnCriticalRoutes";
-	public static String CRITICAL_BLOCK_RANDOM_NEIGHBORHOOD = "neighborCalculator.impl.ShiftRandomBlockCriticalRoute";
+	public static String CRITICAL_ROUTE_ADJACENT_MACHINES_NEIGHBORHOOD = "neighborCalculator.impl.N4_AdjacentInCriticalPathMachinesOnly";
+	public static String CRITICAL_BLOCK_RANDOM_NEIGHBORHOOD = "neighborCalculator.impl.N5_RandomInCriticalBlock";
 	public static String CRITICAL_BLOCK_ADJACENT_ON_END_NEIGHBORHOOD = "neighborCalculator.impl.ShiftBlockAdjOnEnds";
 	public static String CRITICAL_BLOCK_END_START_ANY_NEIGHBORHOOD = "neighborCalculator.impl.ShiftBlockEndStartAnyCriticalRoute";
 	public static String CRITICAL_WEIGHTED_NODES_NEIGHBORHOOD = "neighborCalculator.impl.ShiftWeightedNodesCriticalRoute";
