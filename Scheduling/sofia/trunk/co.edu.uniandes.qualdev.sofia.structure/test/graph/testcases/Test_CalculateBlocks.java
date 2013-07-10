@@ -204,7 +204,6 @@ public class Test_CalculateBlocks {
 		Assert.assertTrue("Most have the block 3,2 - 3,3",blocks.contains(operations5));
 		
 	}
-
 	
 }
 
