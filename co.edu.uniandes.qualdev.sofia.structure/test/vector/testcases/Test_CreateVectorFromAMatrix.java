@@ -68,7 +68,7 @@ public class Test_CreateVectorFromAMatrix {
 	 */
 	@Test
 	public void testCreateVectorFromMatrix(){
-		ArrayList<IOperation> arrayList = vector.getVector();
+		ArrayList<IOperation> arrayList = vector.getOperations();
 		
 		Assert.assertEquals("The job should be 0", arrayList.get(0).getOperationIndex().getJobId(), 0);
 		Assert.assertEquals("The station should be 1", arrayList.get(0).getOperationIndex().getStationId(), 1);
