@@ -40,7 +40,9 @@ public class Vector extends AbstractStructure{
 	private ArrayList<IOperation> solution = null;
 	
 	/** ArrayList with the permutation list interpreted according to the defined algorithm */
-	private ArrayList<IOperation> interpretation = null;
+	private ArrayList<IOperation> vectorDecodNonDelay = null;
+	
+	private ArrayList<IOperation> vectorDecodSimple = null;
 
 	/** Flag that indicates if the structure indicators are up to date according to the state of the structure. */
 	private boolean synch;
@@ -69,7 +71,8 @@ public class Vector extends AbstractStructure{
 		super(totalJobs, totalStations);
 		
 		solution = new ArrayList<IOperation>();
-		interpretation = new ArrayList<IOperation>();
+		vectorDecodNonDelay = new ArrayList<IOperation>();
+		vectorDecodSimple = new ArrayList<IOperation>();
 		synch = false;
 	}
 	
@@ -80,7 +83,8 @@ public class Vector extends AbstractStructure{
 		super(processingTimesFile, pBetas);
 		
 		solution = new ArrayList<IOperation>();
-		interpretation = new ArrayList<IOperation>();
+		vectorDecodNonDelay = new ArrayList<IOperation>();
+		vectorDecodSimple = new ArrayList<IOperation>();
 		synch = false;
 	}
 
@@ -273,13 +277,13 @@ public class Vector extends AbstractStructure{
 			
 			CIntepretation = new int[getTotalJobs()][getTotalStations() + 1];
 			
-			for (int i = 0; i < interpretation.size(); i++) {
-				IOperation Cij = interpretation.get(i);
+			for (int i = 0; i < vectorDecodNonDelay.size(); i++) {
+				IOperation Cij = vectorDecodNonDelay.get(i);
 				
-				int Ciminus1J = getCiminus1J(Cij, i, interpretation) != null ? getCiminus1J(Cij, i, interpretation).getFinalTime() : 0;
-				int CiJminus1 = getCiJminus1(Cij, i, interpretation) != null ? getCiJminus1(Cij, i, interpretation).getFinalTime() : 0;
+				int Ciminus1J = getCiminus1J(Cij, i, vectorDecodNonDelay) != null ? getCiminus1J(Cij, i, vectorDecodNonDelay).getFinalTime() : 0;
+				int CiJminus1 = getCiJminus1(Cij, i, vectorDecodNonDelay) != null ? getCiJminus1(Cij, i, vectorDecodNonDelay).getFinalTime() : 0;
 				
-				int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, interpretation), i, interpretation);
+				int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vectorDecodNonDelay), i, vectorDecodNonDelay);
 				int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
 				
 				int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
@@ -309,16 +313,16 @@ public class Vector extends AbstractStructure{
 	
 	private void decodeSolution(){
 		// Arreglo con las operaciones sin programar
-		interpretation = (ArrayList<IOperation>) solution.clone();
+		vectorDecodNonDelay = (ArrayList<IOperation>) vectorDecodSimple.clone();
 		
-		for (int i = 0; i < interpretation.size(); i++){
-			IOperation iOperation = interpretation.get(i);
-			int sumTTBetas = this.getTTBetas(null, i, interpretation);
+		for (int i = 0; i < vectorDecodNonDelay.size(); i++){
+			IOperation iOperation = vectorDecodNonDelay.get(i);
+			int sumTTBetas = this.getTTBetas(null, i, vectorDecodNonDelay);
 			iOperation.setInitialTime(sumTTBetas);
 			iOperation.setScheduled(false);
 		}
 		
-		int operationsAmount = interpretation.size();
+		int operationsAmount = vectorDecodNonDelay.size();
 		int index = 0;
 		
 		// Iteracion del algoritmo constructivo. Por cada iteración, programa una operacion
@@ -326,8 +330,8 @@ public class Vector extends AbstractStructure{
 			
 			// Calcula el menor tiempo de inicio
 			int minInitialTime = Integer.MAX_VALUE;
-			for (int i = index; i < interpretation.size(); i++) {
-				IOperation operation = interpretation.get(i);
+			for (int i = index; i < vectorDecodNonDelay.size(); i++) {
+				IOperation operation = vectorDecodNonDelay.get(i);
 				int currentInitialTime = operation.getInitialTime();
 				if(currentInitialTime < minInitialTime)
 					minInitialTime = currentInitialTime;
@@ -335,8 +339,8 @@ public class Vector extends AbstractStructure{
 			
 			// Selecciona la próxima operación a programar tomando la primera cuyo tiempo de inicio sea el mínimo posible. 
 			IOperation selectedOperation = null;
-			for (int i = index; i < interpretation.size(); i++) {
-				IOperation operation = interpretation.get(i);
+			for (int i = index; i < vectorDecodNonDelay.size(); i++) {
+				IOperation operation = vectorDecodNonDelay.get(i);
 				if(operation.getInitialTime() == minInitialTime){
 					selectedOperation = operation;
 					break;
@@ -346,12 +350,12 @@ public class Vector extends AbstractStructure{
 			selectedOperation.setScheduled(true);
 			
 			// Hace los intercambios propios de la interpretación
-			if(selectedOperation != interpretation.get(index)){
-				IOperation operationAtIndex = interpretation.get(index);
-				int indexOfSelected = interpretation.indexOf(selectedOperation);
+			if(selectedOperation != vectorDecodNonDelay.get(index)){
+				IOperation operationAtIndex = vectorDecodNonDelay.get(index);
+				int indexOfSelected = vectorDecodNonDelay.indexOf(selectedOperation);
 				
-				interpretation.set(index, selectedOperation);
-				interpretation.set(indexOfSelected, operationAtIndex);
+				vectorDecodNonDelay.set(index, selectedOperation);
+				vectorDecodNonDelay.set(indexOfSelected, operationAtIndex);
 			}
 			
 			// Calcula el C de la operación a decodificar.
@@ -359,16 +363,16 @@ public class Vector extends AbstractStructure{
 			selectedOperation.setFinalTime(finalTimeToSchedule);
 			
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
-			for (int i = index + 1; i < interpretation.size(); i++){
-				IOperation iOperation = interpretation.get(i);
+			for (int i = index + 1; i < vectorDecodNonDelay.size(); i++){
+				IOperation iOperation = vectorDecodNonDelay.get(i);
 				
-				IOperation lastJobSchedule = getCiminus1J(iOperation, i, interpretation);
+				IOperation lastJobSchedule = getCiminus1J(iOperation, i, vectorDecodNonDelay);
 				int finalTimeLastJob = lastJobSchedule != null ? lastJobSchedule.getFinalTime() : 0;
 				
-				IOperation lastStationSchedule = getCiJminus1(iOperation, i, interpretation);
+				IOperation lastStationSchedule = getCiJminus1(iOperation, i, vectorDecodNonDelay);
 				int finalTimeLastStation = lastStationSchedule != null ? lastStationSchedule.getFinalTime() : 0;
 				
-				int sumTTBetas = this.getTTBetas(getCiminus1J(iOperation, i, interpretation), i, interpretation);
+				int sumTTBetas = this.getTTBetas(getCiminus1J(iOperation, i, vectorDecodNonDelay), i, vectorDecodNonDelay);
 				
 				int initialTime = Math.max(finalTimeLastJob + sumTTBetas, finalTimeLastStation);
 				iOperation.setInitialTime(initialTime);
@@ -470,8 +474,8 @@ public class Vector extends AbstractStructure{
 	
 	@Override
 	public int geInitialTime(OperationIndexVO operationIndex) {
-		for (int i = 0; i < interpretation.size(); i++) {
-			IOperation operation = interpretation.get(i);
+		for (int i = 0; i < solution.size(); i++) {
+			IOperation operation = solution.get(i);
 			if (operation.getOperationIndex().getJobId() == operation
 					.getOperationIndex().getStationId()) {
 				return operation.getInitialTime();
@@ -482,8 +486,8 @@ public class Vector extends AbstractStructure{
 
 	@Override
 	public int geFinalTime(OperationIndexVO operationIndex) {
-		for (int i = 0; i < interpretation.size(); i++) {
-			IOperation operation = interpretation.get(i);
+		for (int i = 0; i < solution.size(); i++) {
+			IOperation operation = solution.get(i);
 			if (operation.getOperationIndex().getJobId() == operation
 					.getOperationIndex().getStationId()) {
 				return operation.getFinalTime();
@@ -608,12 +612,12 @@ public class Vector extends AbstractStructure{
 	@Override
 	public void scheduleOperation(OperationIndexVO operationIndexVO) {
 		operationsMatrix[operationIndexVO.getJobId()][operationIndexVO.getStationId()].setScheduled(true);
-		solution.add(operationsMatrix[operationIndexVO.getJobId()][operationIndexVO.getStationId()]);
+		vectorDecodSimple.add(operationsMatrix[operationIndexVO.getJobId()][operationIndexVO.getStationId()]);
 		int maxAmountOfJobs = -1;
 		int maxAmountOfStations = -1;
 		int maxAmountOfMachinesPerStation = -1;
 		
-		for (IOperation operation : solution) {
+		for (IOperation operation : vectorDecodSimple) {
 			if((operation.getOperationIndex().getJobId() + 1) > maxAmountOfJobs)
 				maxAmountOfJobs = (operation.getOperationIndex().getJobId() + 1);
 			if((operation.getOperationIndex().getStationId() + 1) > maxAmountOfStations)
@@ -629,7 +633,7 @@ public class Vector extends AbstractStructure{
 	public void removeOperationFromSchedule(OperationIndexVO operationIndex) {
 		IOperation toRemove = this.getOperationByOperationIndex(operationIndex);
 		toRemove.setScheduled(false);
-		solution.remove(toRemove);
+		vectorDecodSimple.remove(toRemove);
 		synch = false;
 	}
 	
@@ -658,12 +662,19 @@ public class Vector extends AbstractStructure{
 			}
 			clone.solution = clonedSolution;
 			
+			ArrayList<IOperation> clonedDecSimple = new ArrayList<IOperation>();
+			for (IOperation operation : vectorDecodSimple) {
+				IOperation cloneOperation = operation.clone();
+				clonedDecSimple.add(cloneOperation);
+			}
+			clone.vectorDecodSimple = clonedDecSimple;
+			
 			ArrayList<IOperation> clonedInterpretation = new ArrayList<IOperation>();
-			for (IOperation operation : interpretation) {
+			for (IOperation operation : vectorDecodNonDelay) {
 				IOperation cloneOperation = operation.clone();
 				clonedInterpretation.add(cloneOperation);
 			}
-			clone.interpretation = clonedInterpretation;
+			clone.vectorDecodNonDelay = clonedInterpretation;
 			
 			// Clone betas
 			if (this.betas != null) {
@@ -704,7 +715,7 @@ public class Vector extends AbstractStructure{
 		
 		int index = getPositionByOperationIndex(operationIndex);
 		for (int i = index; i >= 0; i--) {
-			IOperation currentOperation = interpretation.get(i);
+			IOperation currentOperation = vectorDecodNonDelay.get(i);
 			if(comparisonJob == currentOperation.getOperationIndex().getJobId()
 					^ comparisonStation == currentOperation.getOperationIndex().getStationId()){
 				rank++;
@@ -760,15 +771,15 @@ public class Vector extends AbstractStructure{
 		calculateCMatrix();
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		int lastTime=0;
-		for(int i=0; i< interpretation.size();i++){
-			IOperation temp= interpretation.get(i);
+		for(int i=0; i< vectorDecodNonDelay.size();i++){
+			IOperation temp= vectorDecodNonDelay.get(i);
 			if(temp.getFinalTime()>lastTime){
 				lastTime= temp.getFinalTime();
 			}
 		}
 		
-		for(int i=0; i< interpretation.size();i++){
-			IOperation temp= interpretation.get(i);
+		for(int i=0; i< vectorDecodNonDelay.size();i++){
+			IOperation temp= vectorDecodNonDelay.get(i);
 			if(temp.getFinalTime()==lastTime){
 				operations.add(temp);
 			}
@@ -853,7 +864,7 @@ public class Vector extends AbstractStructure{
 	 */
 	private ArrayList<IOperation> getOperationsBeforeByStation(OperationIndexVO operation){
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
-		for(IOperation op : interpretation){
+		for(IOperation op : vectorDecodNonDelay){
 			if(op.getOperationIndex().getStationId()==operation.getStationId()){
 				if(!op.getOperationIndex().equals(operation)){
 					operations.add(op);
@@ -873,7 +884,7 @@ public class Vector extends AbstractStructure{
 	 */
 	private ArrayList<IOperation> getOperationsBeforeByJob(OperationIndexVO operation){
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
-		for(IOperation op : interpretation){
+		for(IOperation op : vectorDecodNonDelay){
 			if(op.getOperationIndex().getJobId()==operation.getJobId()){
 				if(!op.getOperationIndex().equals(operation)){
 					operations.add(op);
@@ -931,5 +942,31 @@ public class Vector extends AbstractStructure{
 	public boolean validateStructure() {
 		return true;
 	}
+
+	public ArrayList<IOperation> getSolution() {
+		return solution;
+	}
+
+	public void setSolution(ArrayList<IOperation> solution) {
+		this.solution = solution;
+	}
+
+	public ArrayList<IOperation> getVectorDecodNonDelay() {
+		return vectorDecodNonDelay;
+	}
+
+	public void setVectorDecodNonDelay(ArrayList<IOperation> vectorDecodNonDelay) {
+		this.vectorDecodNonDelay = vectorDecodNonDelay;
+	}
+
+	public ArrayList<IOperation> getVectorDecodSimple() {
+		return vectorDecodSimple;
+	}
+
+	public void setVectorDecodSimple(ArrayList<IOperation> vectorDecodSimple) {
+		this.vectorDecodSimple = vectorDecodSimple;
+	}
+	
+	
 		
 }
