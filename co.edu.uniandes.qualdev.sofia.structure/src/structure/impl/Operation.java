@@ -41,7 +41,6 @@ public class Operation implements IOperation{
 	 */
 	public IOperation clone(){
 		Operation clone = new Operation(this.operationIndex);
-		clone.operationIndex = this.operationIndex;
 		clone.initialTime = this.initialTime;
 		clone.finalTime = this.finalTime;
 		
