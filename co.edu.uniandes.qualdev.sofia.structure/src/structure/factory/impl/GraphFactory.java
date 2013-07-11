@@ -90,8 +90,8 @@ public class GraphFactory extends AbstractStructureFactory {
 			
 			
 			for (int k = 0; k < (routearray.length - 1); k++) {
-				OperationIndexVO start = new OperationIndexVO(i, routearray[k]);
-				OperationIndexVO end = new OperationIndexVO(i, routearray[k + 1]);
+				OperationIndexVO start = new OperationIndexVO(0, i, routearray[k]);
+				OperationIndexVO end = new OperationIndexVO(0, i, routearray[k + 1]);
 				
 				((Graph)graph).createRouteArc(start, end);
 			}
@@ -140,8 +140,8 @@ public class GraphFactory extends AbstractStructureFactory {
 					((Graph)graph).getNode(sequencearray[0], i));
 
 			for (int k = 0; k < (sequencearray.length - 1); k++) {
-				OperationIndexVO start = new OperationIndexVO(sequencearray[k], i);
-				OperationIndexVO end = new OperationIndexVO(sequencearray[k + 1], i);
+				OperationIndexVO start = new OperationIndexVO(0, sequencearray[k], i);
+				OperationIndexVO end = new OperationIndexVO(0, sequencearray[k + 1], i);
 				((Graph)graph).createSequenceArc(start, end);
 			}
 
