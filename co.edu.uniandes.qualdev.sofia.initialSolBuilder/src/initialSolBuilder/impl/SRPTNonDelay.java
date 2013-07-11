@@ -92,8 +92,8 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			for (int j = 0; j < T[0].length; j++) {
 				IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
 				OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
+				currentOperationIndex.setProcessingTime(T[i][j]);
 				currentIOperation.setOperationIndex(currentOperationIndex);
-				currentIOperation.setProcessingTime(T[i][j]);
 				operations.add(currentIOperation);
 			}
 		}
@@ -106,7 +106,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 				IOperation operationJ = operations.get(j);
 				
 				if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()){
-					remainingTime += operationJ.getProcessingTime();
+					remainingTime += operationJ.getOperationIndex().getProcessingTime();
 				}
 			}
 			operationI.setJobRemainingTime(remainingTime);
@@ -201,7 +201,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 					IOperation operationJ = operations.get(j);
 					
 					if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()){
-						remainingTime += operationJ.getProcessingTime();
+						remainingTime += operationJ.getOperationIndex().getProcessingTime();
 					}
 				}
 				operationI.setJobRemainingTime(remainingTime);
@@ -233,8 +233,8 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			for (int j = 0; j < T[0].length; j++) {
 				IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
 				OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
+				currentOperationIndex.setProcessingTime(T[i][j]);
 				currentIOperation.setOperationIndex(currentOperationIndex);
-				currentIOperation.setProcessingTime(T[i][j]);
 				operations.add(currentIOperation);
 			}
 		}
@@ -247,7 +247,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 				IOperation operationJ = operations.get(j);
 				
 				if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()){
-					remainingTime += operationJ.getProcessingTime();
+					remainingTime += operationJ.getOperationIndex().getProcessingTime();
 				}
 			}
 			operationI.setJobRemainingTime(remainingTime);
@@ -342,7 +342,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 					IOperation operationJ = operations.get(j);
 					
 					if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()){
-						remainingTime += operationJ.getProcessingTime();
+						remainingTime += operationJ.getOperationIndex().getProcessingTime();
 					}
 				}
 				operationI.setJobRemainingTime(remainingTime);
