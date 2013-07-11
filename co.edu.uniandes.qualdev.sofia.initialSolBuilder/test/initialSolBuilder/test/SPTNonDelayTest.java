@@ -84,4 +84,6 @@ public class SPTNonDelayTest {
 		Assert.assertEquals("Rank A[0][0] is not correct", A[3][2], 1);
 		Assert.assertEquals("Rank A[0][0] is not correct", A[3][3], 2);
 	}
+	
+	//TODO Falta un caso de prueba. Hay que revisar que la matriz C es correcta. 
 }

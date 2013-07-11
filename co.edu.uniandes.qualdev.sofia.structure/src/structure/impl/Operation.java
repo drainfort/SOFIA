@@ -60,7 +60,7 @@ public class Operation implements IOperation{
 	 * Returns the string representation of an operation.
 	 */
 	public String toString(){
-		return "<" + this.operationIndex.getJobId() + "," + this.operationIndex.getStationId() + "," + this.operationIndex.getMachineId() + ">";
+		return "<" + this.operationIndex.getJobId() + "," + this.operationIndex.getStationId() + "," + this.operationIndex.getMachineId() + ">"+ this.finalTime;
 	}
 	
 	/**

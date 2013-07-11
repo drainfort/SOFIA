@@ -17,11 +17,10 @@ public class CMaxCalculator implements IGammaCalculator {
 		//printMatrix(C);
 		int cmax = calculateGammaMatrix(vector.calculateCMatrix(), vector.getTotalJobs(), vector.getTotalStations());
 		
-		if(vector.getClass().equals(Vector.class)){
-			int[][] CVector = ((Vector)vector).getCIntepretation();
-			//printMatrix(CVector);
+		if(vector instanceof Vector){
+			int[][] CIntepretation = ((Vector)vector).getCIntepretation();
 			
-			int cmax2 = calculateGammaMatrix(CVector, vector.getTotalJobs(), vector.getTotalStations());;
+			int cmax2 = calculateGammaMatrix(CIntepretation, vector.getTotalJobs(), vector.getTotalStations());;
 			if(cmax2<cmax){
 				((Vector)vector).setSolution(((Vector)vector).getVectorDecodNonDelay());
 			    cmax = cmax2;
@@ -35,7 +34,7 @@ public class CMaxCalculator implements IGammaCalculator {
 		return cmax;
 	}
 	
-	public int calculateGammaMatrix(int[][] C, int jobs, int stations){
+	private int calculateGammaMatrix(int[][] C, int jobs, int stations){
 		int cmax = -1;
 		for (int i = 0; i < jobs; i++) {
 			if (C[i][stations] > cmax) {

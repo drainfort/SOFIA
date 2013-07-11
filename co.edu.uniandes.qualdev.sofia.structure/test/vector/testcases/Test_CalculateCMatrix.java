@@ -72,5 +72,7 @@ public class Test_CalculateCMatrix {
 		int[][] C = vector.calculateCMatrix();
 		
 		MatrixUtils.printMatrix(C);
+		
+		//TODO Esta prueba no sirve. Hay que hacer las aserciones para la validación completa. 
 	}
 }
