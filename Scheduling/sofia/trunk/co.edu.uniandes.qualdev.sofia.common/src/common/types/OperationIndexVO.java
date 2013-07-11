@@ -56,6 +56,13 @@ public class OperationIndexVO {
 		machineId = 0;
 		this.processingTime = processingTime;
 	}
+	
+	public OperationIndexVO(int job, int station) {
+		jobId = job;
+		stationId = station;
+		machineId = 0;
+		this.processingTime = 0;
+	}
 
 	/**
 	 * Constructor of the class
