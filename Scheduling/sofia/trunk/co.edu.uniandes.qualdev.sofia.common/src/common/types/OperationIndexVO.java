@@ -23,12 +23,6 @@ public class OperationIndexVO {
 	/** Reference to the machine */
 	private int machineId;
 
-	/** Initial time of the operation */
-	private int initialTime;
-
-	/** Initial time of the operation */
-	private int finalTime;
-
 	/** Processing time of the operation */
 	private int processingTime;
 	
@@ -50,10 +44,11 @@ public class OperationIndexVO {
 	 * @param station
 	 *            Station index
 	 */
-	public OperationIndexVO(int job, int station) {
+	public OperationIndexVO( int processingTime, int job, int station) {
 		jobId = job;
 		stationId = station;
 		machineId = 0;
+		this.processingTime = processingTime;
 	}
 
 	/**
@@ -66,10 +61,11 @@ public class OperationIndexVO {
 	 * @param machine
 	 *            Machine index
 	 */
-	public OperationIndexVO(int job, int station, int machine) {
+	public OperationIndexVO(int processingTime,int job, int station, int machine) {
 		jobId = job;
 		stationId = station;
 		machineId = machine;
+		this.processingTime = processingTime;
 	}
 
 	// --------------------------------------------
@@ -104,22 +100,6 @@ public class OperationIndexVO {
 
 	public String toString() {
 		return ("<" + jobId + "," + stationId + "," + machineId + ">");
-	}
-
-	public int getInitialTime() {
-		return initialTime;
-	}
-
-	public void setInitialTime(int initialTime) {
-		this.initialTime = initialTime;
-	}
-
-	public int getFinalTime() {
-		return finalTime;
-	}
-
-	public void setFinalTime(int finalTime) {
-		this.finalTime = finalTime;
 	}
 
 	public int getMachineId() {
