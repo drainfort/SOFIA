@@ -26,6 +26,7 @@ public abstract class AbstractStructure  implements IStructure{
 	/**
 	 * Matrix with the operations of the problem
 	 */
+	//TODO OperationIndex
 	protected IOperation[][] operationsMatrix;
 	
 	/**
@@ -70,7 +71,7 @@ public abstract class AbstractStructure  implements IStructure{
 	public AbstractStructure(int totalJobs, int totalStations){
 		this.totalJobs = totalJobs;
 		this.totalStations = totalStations;
-		
+		//TODO cambiar el constructor
 		operationsMatrix = new IOperation[this.totalJobs][this.totalStations];
 		
 		for (int i = 0; i < this.totalJobs; i++) {
