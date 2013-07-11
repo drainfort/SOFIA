@@ -621,6 +621,7 @@ public class Vector extends AbstractStructure{
 	public void scheduleOperation(OperationIndexVO operationIndexVO) {
 		OperationIndexVO newOperationIndex = operationsMatrix[operationIndexVO.getJobId()][operationIndexVO.getStationId()];
 		Operation newOperation = new Operation(newOperationIndex);
+		newOperation.setScheduled(true);
 		getOperations().add(newOperation);
 		int maxAmountOfJobs = -1;
 		int maxAmountOfStations = -1;
