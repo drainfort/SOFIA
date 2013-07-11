@@ -274,7 +274,7 @@ public class Vector extends AbstractStructure{
 				int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
 				
 				int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
-				int finalTime = initialTime + Cij.getProcessingTime() + sumSetupBetas;
+				int finalTime = initialTime + Cij.getOperationIndex().getProcessingTime() + sumSetupBetas;
 				
 				Cij.setInitialTime(initialTime);
 				Cij.setFinalTime(finalTime);
@@ -294,7 +294,7 @@ public class Vector extends AbstractStructure{
 				int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
 				
 				int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
-				int finalTime = initialTime + Cij.getProcessingTime() + sumSetupBetas;
+				int finalTime = initialTime + Cij.getOperationIndex().getProcessingTime() + sumSetupBetas;
 				
 				Cij.setInitialTime(initialTime);
 				Cij.setFinalTime(finalTime);
@@ -366,7 +366,7 @@ public class Vector extends AbstractStructure{
 			}
 			
 			// Calcula el C de la operación a decodificar.
-			int finalTimeToSchedule = selectedOperation.getInitialTime() + selectedOperation.getProcessingTime() ;
+			int finalTimeToSchedule = selectedOperation.getInitialTime() + selectedOperation.getOperationIndex().getProcessingTime() ;
 			selectedOperation.setFinalTime(finalTimeToSchedule);
 			
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
@@ -424,7 +424,7 @@ public class Vector extends AbstractStructure{
 				int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vectorDecodSimple), i, vectorDecodSimple);
 				
 				int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
-				int finalTime = initialTime + + Cij.getProcessingTime();
+				int finalTime = initialTime + + Cij.getOperationIndex().getProcessingTime();
 				
 				Cij.setInitialTime(initialTime);
 				Cij.setFinalTime(finalTime);
@@ -452,7 +452,7 @@ public class Vector extends AbstractStructure{
 		{
 			for(int j=0; j<matrix[i].length;j++)
 			{
-				matrix[i][j] = CMatrix[i][j] - getOperationByOperationIndex(new OperationIndexVO(i, j)).getProcessingTime();
+				matrix[i][j] = CMatrix[i][j] - getOperationByOperationIndex(new OperationIndexVO(0,i, j)).getOperationIndex().getProcessingTime();
 			}
 		}
 		return matrix;
@@ -464,7 +464,7 @@ public class Vector extends AbstractStructure{
 		
 		for (int i = 0; i < totalJobs; i++) {
 			for (int j = 0; j < totalStations; j++) {
-				A[i][j] = calculateRank(new OperationIndexVO(i, j));
+				A[i][j] = calculateRank(new OperationIndexVO(0,i, j));
 			}
 		}
 		return A;
@@ -619,8 +619,8 @@ public class Vector extends AbstractStructure{
 	
 	@Override
 	public void scheduleOperation(OperationIndexVO operationIndexVO) {
-		operationsMatrix[operationIndexVO.getJobId()][operationIndexVO.getStationId()].setScheduled(true);
-		getOperations().add(operationsMatrix[operationIndexVO.getJobId()][operationIndexVO.getStationId()]);
+		OperationIndexVO newOperation = operationsMatrix[operationIndexVO.getJobId()][operationIndexVO.getStationId()];
+		getOperations().add(new Operation(newOperation));
 		int maxAmountOfJobs = -1;
 		int maxAmountOfStations = -1;
 		int maxAmountOfMachinesPerStation = -1;
