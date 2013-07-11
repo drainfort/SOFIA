@@ -97,8 +97,8 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 			for (int j = 0; j < T[0].length; j++) {
 				IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
 				OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
+				currentOperationIndex.setProcessingTime(T[i][j]);
 				currentIOperation.setOperationIndex(currentOperationIndex);
-				currentIOperation.setProcessingTime(T[i][j]);
 				operations.add(currentIOperation);
 			}
 		}
@@ -130,7 +130,7 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 			for (IOperation operation : operations) {
 				if(operation.getInitialTime() == minInitialTime){
 					operationsMinInitialTime.add(operation);
-					int currentProcessingTime = operation.getProcessingTime();
+					int currentProcessingTime = operation.getOperationIndex().getProcessingTime();
 					if(currentProcessingTime > maxProcessingTime)
 						maxProcessingTime = currentProcessingTime;
 					if(currentProcessingTime < minProcessingTime)
@@ -145,7 +145,7 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 			while(i<operationsMinInitialTime.size()){
 				IOperation operation = operationsMinInitialTime.get(i);
 
-				if(operation.getProcessingTime() > upperBoundRCL)
+				if(operation.getOperationIndex().getProcessingTime() > upperBoundRCL)
 					operationsMinInitialTime.remove(operation);					
 				else
 					i++;
@@ -228,8 +228,8 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 					for (int j = 0; j < T[0].length; j++) {
 						IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
 						OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
+						currentOperationIndex.setProcessingTime(T[i][j]);
 						currentIOperation.setOperationIndex(currentOperationIndex);
-						currentIOperation.setProcessingTime(T[i][j]);
 						operations.add(currentIOperation);
 					}
 				}
@@ -261,7 +261,7 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 					for (IOperation operation : operations) {
 						if(operation.getInitialTime() == minInitialTime){
 							operationsMinInitialTime.add(operation);
-							int currentProcessingTime = operation.getProcessingTime();
+							int currentProcessingTime = operation.getOperationIndex().getProcessingTime();
 							if(currentProcessingTime > maxProcessingTime)
 								maxProcessingTime = currentProcessingTime;
 							if(currentProcessingTime < minProcessingTime)
@@ -276,7 +276,7 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 					while(i<operationsMinInitialTime.size()){
 						IOperation operation = operationsMinInitialTime.get(i);
 
-						if(operation.getProcessingTime() > upperBoundRCL)
+						if(operation.getOperationIndex().getProcessingTime() > upperBoundRCL)
 							operationsMinInitialTime.remove(operation);					
 						else
 							i++;

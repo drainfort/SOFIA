@@ -98,13 +98,13 @@ public class StochasticERM implements IInitialSolBuilder{
 			for (int j = 0; j < T[0].length; j++) {
 				IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
 				OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
+				currentOperationIndex.setProcessingTime(T[i][j]);
 				currentIOperation.setOperationIndex(currentOperationIndex);
-				currentIOperation.setProcessingTime(T[i][j]);
 				
 				if(travelTimesIncluded)
 					currentIOperation.setInitialTime(TT[0][j + 1]);
 				
-				currentIOperation.setFinalTime(currentIOperation.getProcessingTime()+currentIOperation.getInitialTime());
+				currentIOperation.setFinalTime(currentIOperation.getOperationIndex().getProcessingTime()+currentIOperation.getInitialTime());
 				operations.add(currentIOperation);
 			}
 		}
@@ -179,7 +179,7 @@ public class StochasticERM implements IInitialSolBuilder{
 				}
 				
 				int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-				int finalTime = initialTime + iOperation.getProcessingTime() + setupTime;
+				int finalTime = initialTime + iOperation.getOperationIndex().getProcessingTime() + setupTime;
 				
 				iOperation.setInitialTime(initialTime);
 				iOperation.setFinalTime(finalTime);
@@ -215,13 +215,13 @@ public class StochasticERM implements IInitialSolBuilder{
 					for (int j = 0; j < T[0].length; j++) {
 						IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
 						OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
+						currentOperationIndex.setProcessingTime(T[i][j]);
 						currentIOperation.setOperationIndex(currentOperationIndex);
-						currentIOperation.setProcessingTime(T[i][j]);
 						
 						if(travelTimesIncluded)
 							currentIOperation.setInitialTime(TT[0][j + 1]);
 						
-						currentIOperation.setFinalTime(currentIOperation.getProcessingTime()+currentIOperation.getInitialTime());
+						currentIOperation.setFinalTime(currentIOperation.getOperationIndex().getProcessingTime()+currentIOperation.getInitialTime());
 						operations.add(currentIOperation);
 					}
 				}
@@ -296,7 +296,7 @@ public class StochasticERM implements IInitialSolBuilder{
 						}
 						
 						int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-						int finalTime = initialTime + iOperation.getProcessingTime() + setupTime;
+						int finalTime = initialTime + iOperation.getOperationIndex().getProcessingTime() + setupTime;
 						
 						iOperation.setInitialTime(initialTime);
 						iOperation.setFinalTime(finalTime);
