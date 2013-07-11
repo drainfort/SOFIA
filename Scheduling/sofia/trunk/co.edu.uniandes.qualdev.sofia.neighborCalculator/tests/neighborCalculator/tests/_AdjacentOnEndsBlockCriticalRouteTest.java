@@ -10,6 +10,7 @@ import neighborCalculator.impl.ShiftBlockAdjOnEnds;
 import org.junit.Before;
 import org.junit.Test;
 
+import common.types.OperationIndexVO;
 import common.types.PairVO;
 
 import structure.IOperation;
@@ -51,25 +52,25 @@ public class _AdjacentOnEndsBlockCriticalRouteTest {
 	@Test
 	public void testClone1() throws InterruptedException {
 		
-		IOperation[][] problem = new IOperation[2][2]; 
+		OperationIndexVO[][] problem = new OperationIndexVO[2][2]; 
 		
-		Operation o1 = new Operation(10, 0, 0);
+		OperationIndexVO o1 = new OperationIndexVO(10, 0, 0);
 		problem[0][0]= o1;
 		
-		Operation o4 = new Operation(5, 1, 1);
+		OperationIndexVO o4 = new OperationIndexVO(5, 1, 1);
 		problem[1][1]= o4;
 		
-		Operation o3 = new Operation(5, 1, 0);
+		OperationIndexVO o3 = new OperationIndexVO(5, 1, 0);
 		problem[1][0]= o3;
 		
-		Operation o2 = new Operation(20, 0, 1);
+		OperationIndexVO o2 = new OperationIndexVO(20, 0, 1);
 		problem[0][1]= o2;
 		
 		problemVector.setProblem(problem);
-		problemVector.scheduleOperation(o1.getOperationIndex());
-		problemVector.scheduleOperation(o4.getOperationIndex());
-		problemVector.scheduleOperation(o3.getOperationIndex());
-		problemVector.scheduleOperation(o2.getOperationIndex());
+		problemVector.scheduleOperation(o1);
+		problemVector.scheduleOperation(o4);
+		problemVector.scheduleOperation(o3);
+		problemVector.scheduleOperation(o2);
 
 		
 		Graph newVector = (Graph) problemVector.cloneStructure();
@@ -91,29 +92,29 @@ public class _AdjacentOnEndsBlockCriticalRouteTest {
 	@Test
 	public void testClone2() throws InterruptedException {
 		
-		IOperation[][] secondEscenario = new IOperation[2][2];
-		Operation o11 = new Operation(10, 0, 0);
+		OperationIndexVO[][] secondEscenario = new OperationIndexVO[2][2];
+		OperationIndexVO o11 = new OperationIndexVO(10, 0, 0);
 		secondEscenario[0][0]= o11;
 		
-		Operation o41 = new Operation(10, 1, 1);
+		OperationIndexVO o41 = new OperationIndexVO(10, 1, 1);
 		secondEscenario[1][1]= o41;
 		
-		Operation o21 = new Operation(20, 0, 1);
+		OperationIndexVO o21 = new OperationIndexVO(20, 0, 1);
 		secondEscenario[0][1]= o21;
 		
-		Operation o31 = new Operation(20, 1, 0);
+		OperationIndexVO o31 = new OperationIndexVO(20, 1, 0);
 		secondEscenario[1][0]= o31;
 		problem1.setProblem(secondEscenario);
 		
-		problem1.scheduleOperation(o11.getOperationIndex());
-		problem1.scheduleOperation(o41.getOperationIndex());
-		problem1.scheduleOperation(o31.getOperationIndex());
-		problem1.scheduleOperation(o21.getOperationIndex());
+		problem1.scheduleOperation(o11);
+		problem1.scheduleOperation(o41);
+		problem1.scheduleOperation(o31);
+		problem1.scheduleOperation(o21);
 		
 		Graph newVector = (Graph) problem1.cloneStructure();
 		ArrayList<CriticalPath> routes;
 		try {
-			neighbor.calculateCompleteNeighborhood(problem1).contains(new PairVO(o41.getOperationIndex(), o21.getOperationIndex()));
+			neighbor.calculateCompleteNeighborhood(problem1).contains(new PairVO(o41, o21));
 			routes = newVector.getCriticalPaths();
 			assertTrue(routes.size()==4);
 		} catch (Exception e) {
