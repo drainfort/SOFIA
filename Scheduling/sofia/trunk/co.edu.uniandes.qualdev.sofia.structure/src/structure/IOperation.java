@@ -18,9 +18,6 @@ public interface IOperation {
 
 	public void setOperationIndex(OperationIndexVO operationIndex);
 	
-	public int getProcessingTime();
-
-	public void setProcessingTime(int processingTime);
 	
 	public int getInitialTime();
 
