@@ -21,6 +21,7 @@ import common.types.BetaVO;
 import common.types.NeighborInformation;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.MatrixUtils;
 
 /**
  * Implementation of a graph
@@ -313,6 +314,8 @@ public class Vector extends AbstractStructure{
 			if (newC2 != null)
 				CIntepretation = newC2;
 			
+			MatrixUtils.printMatrix(C);
+			MatrixUtils.printMatrix(CIntepretation);
 			synch = true;
 			return C;
 		}
@@ -320,7 +323,14 @@ public class Vector extends AbstractStructure{
 	
 	private void decodeSolution(){
 		// Arreglo con las operaciones sin programar
-		vectorDecodNonDelay = (ArrayList<IOperation>)vectorDecodSimple.clone();
+		vectorDecodNonDelay = new ArrayList<IOperation>();
+		for (int i = 0; i < vectorDecodSimple.size(); i++){
+			IOperation iOperation = new Operation(vectorDecodSimple.get(i).getOperationIndex());
+			vectorDecodNonDelay.add(iOperation);
+
+		}
+		
+		//vectorDecodNonDelay = (ArrayList<IOperation>) vectorDecodSimple.clone();
 		
 		for (int i = 0; i < vectorDecodNonDelay.size(); i++){
 			IOperation iOperation = vectorDecodNonDelay.get(i);
@@ -663,27 +673,27 @@ public class Vector extends AbstractStructure{
 			clone.totalJobs = this.totalJobs;
 			clone.totalStations = this.totalStations;
 			clone.maxMachinesPerStation = this.maxMachinesPerStation;
-
-			ArrayList<IOperation> clonedSolution = new ArrayList<IOperation>();
-			for (IOperation operation : solution) {
-				IOperation cloneOperation = operation.clone();
-				clonedSolution.add(cloneOperation);
-			}
-			clone.solution = clonedSolution;
 			
-			ArrayList<IOperation> clonedVectorDecSimple = new ArrayList<IOperation>();
-			for (IOperation operation : vectorDecodSimple) {
-				IOperation cloneOperation = operation.clone();
-				clonedVectorDecSimple.add(cloneOperation);
-			}
-			clone.vectorDecodSimple = clonedVectorDecSimple;
 			
-			ArrayList<IOperation> clonedInterpretation = new ArrayList<IOperation>();
-			for (IOperation operation : vectorDecodNonDelay) {
-				IOperation cloneOperation = operation.clone();
-				clonedInterpretation.add(cloneOperation);
+			//Revisar
+			if(this.solutionActive){
+				ArrayList<IOperation> clonedVectorDecSimple = new ArrayList<IOperation>();
+				for (IOperation operation : vectorDecodNonDelay) {
+					IOperation cloneOperation = operation.clone();
+					clonedVectorDecSimple.add(cloneOperation);
+				}
+				
+				clone.vectorDecodSimple = clonedVectorDecSimple;
 			}
-			clone.vectorDecodNonDelay = clonedInterpretation;
+			else{
+				ArrayList<IOperation> clonedVectorDecSimple = new ArrayList<IOperation>();
+				for (IOperation operation : vectorDecodSimple) {
+					IOperation cloneOperation = operation.clone();
+					clonedVectorDecSimple.add(cloneOperation);
+				}
+				
+				clone.vectorDecodSimple = clonedVectorDecSimple;
+			}			
 			
 			// Clone betas
 			if (this.betas != null) {
@@ -778,11 +788,13 @@ public class Vector extends AbstractStructure{
 	 */
 	public ArrayList<IOperation> getLastOperation(){
 		//sortArray(getOperations());
-		System.out.println(getOperations());
 		synch=false;
 		calculateCMatrix();
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
-		//System.out.println("Operaciones:  "+getOperations());
+		System.out.println("normal"+vectorDecodSimple);
+		System.out.println("inter"+vectorDecodNonDelay);
+		System.out.println("Operaciones:  "+getOperations());
+		System.out.println(solutionActive);
 		int lastTime=0;
 		for(int i=0; i< getOperations().size();i++){
 			IOperation temp= getOperations().get(i);
