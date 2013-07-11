@@ -73,7 +73,7 @@ public class Vector extends AbstractStructure{
 	 */
 	public Vector(int totalJobs, int totalStations){
 		super(totalJobs, totalStations);
-		
+		//TODO en algun lado  hay que armar las IOperation apuntando a los operationIndex de la matrix de STRUCTURE
 		solution = new ArrayList<IOperation>();
 		vectorDecodNonDelay = new ArrayList<IOperation>();
 		vectorDecodSimple = new ArrayList<IOperation>();
