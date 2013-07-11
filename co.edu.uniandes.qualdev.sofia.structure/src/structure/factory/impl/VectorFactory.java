@@ -40,7 +40,7 @@ public class VectorFactory extends AbstractStructureFactory {
 			for (int i = 0; i < jobsNumber; i++) {
 				for (int j = 0; j < totalStations; j++) {
 					if (A[i][j].intValue() == currentRank) {
-						solutionVector.scheduleOperation(new OperationIndexVO(i,j));
+						solutionVector.scheduleOperation(new OperationIndexVO(0,i,j));
 						operationsAmount++;
 
 						if (operationsAmount >= jobsNumber * totalStations) {
