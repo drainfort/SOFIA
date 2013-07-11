@@ -227,7 +227,7 @@ public interface IStructure {
 	 * 
 	 * @return problem
 	 */
-	public IOperation[][] getProblem();
+	public OperationIndexVO[][] getProblem();
 	
 	/**
 	 * Returns the initial time of the operation identified by the operation
