@@ -67,7 +67,7 @@ public class Node {
 					this.getPreviousRouteNode() != null ? this.getPreviousRouteNode().getOperation() : null ) ==cj )
 				sameInitialTime = true;	
 			
-			int finalTime = initialTime + operation.getProcessingTime()+ sumSetupBetas;
+			int finalTime = initialTime + operation.getOperationIndex().getProcessingTime()+ sumSetupBetas;
 			this.operation.setFinalTime(finalTime);
 
 			cCalculated = true;
@@ -76,7 +76,7 @@ public class Node {
 	}
 	
 	public int calculateInitialTime() throws Exception {
-		return this.calculateC() - this.operation.getProcessingTime();
+		return this.calculateC() - this.operation.getOperationIndex().getProcessingTime();
 	}
 	
 	public void restartC() {
