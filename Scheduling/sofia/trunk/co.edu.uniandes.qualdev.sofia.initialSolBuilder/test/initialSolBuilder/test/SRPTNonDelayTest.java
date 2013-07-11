@@ -9,7 +9,10 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import structure.IStructure;
+
 import common.types.BetaVO;
+import common.utils.MatrixUtils;
 
 /**
  * Test cases for the SRPTNonDelay constructive algorithm
@@ -27,6 +30,8 @@ public class SRPTNonDelayTest {
 	private SRPTNonDelay testRule;
 	
 	private int[][] constructiveInitialSolution;
+	
+	private IStructure solution;
 	
 	// ------------------------------------------
 	// Scenarios
@@ -52,7 +57,8 @@ public class SRPTNonDelayTest {
 		BetaVO tearDownTravelTimes = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", tearDownTravelTimeFiles, true);
 		betas.add(tearDownTravelTimes);
 		
-		constructiveInitialSolution = testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null).calculateAMatrix();
+		solution = testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null);
+		constructiveInitialSolution = solution.calculateAMatrix();
 		
 	}
 	
@@ -63,6 +69,8 @@ public class SRPTNonDelayTest {
 	@Test
 	public void testLPTNonDelay04x04_1() throws Exception{
 		int[][] A = constructiveInitialSolution;
+		
+		
 		
 		// Asserts
 		Assert.assertEquals("Rank A[0][0] is not correct", A[0][0], 4);
@@ -84,5 +92,12 @@ public class SRPTNonDelayTest {
 		Assert.assertEquals("Rank A[0][0] is not correct", A[3][1], 2);
 		Assert.assertEquals("Rank A[0][0] is not correct", A[3][2], 4);
 		Assert.assertEquals("Rank A[0][0] is not correct", A[3][3], 3);
+	}
+	
+	//TODO Falta un caso de prueba. Hay que revisar que la matriz C es correcta. 
+	@Test
+	public void testCMatrixLPTNonDelay04x04_1() throws Exception{
+		int[][] C = solution.calculateCMatrix();
+		MatrixUtils.printMatrix(C);
 	}
 }

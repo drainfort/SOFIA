@@ -261,6 +261,7 @@ public class Vector extends AbstractStructure{
 			return C;
 		}else{
 			decodeSolution();
+			
 			int [][] CSolution = new int[getTotalJobs()][getTotalStations() + 1];
 			
 			for (int i = 0; i < vectorDecodSimple.size(); i++) {
@@ -319,7 +320,7 @@ public class Vector extends AbstractStructure{
 	
 	private void decodeSolution(){
 		// Arreglo con las operaciones sin programar
-		vectorDecodNonDelay = (ArrayList<IOperation>) getOperations().clone();
+		vectorDecodNonDelay = (ArrayList<IOperation>)vectorDecodSimple.clone();
 		
 		for (int i = 0; i < vectorDecodNonDelay.size(); i++){
 			IOperation iOperation = vectorDecodNonDelay.get(i);
@@ -775,7 +776,8 @@ public class Vector extends AbstractStructure{
 	 * @return lastOperations. A collection of IOperations such that its C value is the biggest one.
 	 */
 	public ArrayList<IOperation> getLastOperation(){
-		sortArray(getOperations());
+		//sortArray(getOperations());
+		System.out.println(getOperations());
 		synch=false;
 		calculateCMatrix();
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
