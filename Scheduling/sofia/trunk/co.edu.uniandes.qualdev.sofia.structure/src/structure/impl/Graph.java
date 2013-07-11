@@ -72,7 +72,7 @@ public class Graph extends AbstractStructure {
 
 		for (int i = 0; i < totalJobs; i++) {
 			for (int j = 0; j < totalStations; j++) {
-				nodes[i][j] = new Node(operationsMatrix[i][j], this);
+				nodes[i][j] = new Node(new Operation(operationsMatrix[i][j]), this);
 			}
 		}
 
@@ -94,7 +94,7 @@ public class Graph extends AbstractStructure {
 
 		for (int i = 0; i < totalJobs; i++) {
 			for (int j = 0; j < totalStations; j++) {
-				nodes[i][j] = new Node(operationsMatrix[i][j], this);
+				nodes[i][j] = new Node(new Operation(operationsMatrix[i][j]), this);
 			}
 		}
 
@@ -185,8 +185,8 @@ public class Graph extends AbstractStructure {
 			initialNode.setPreviousRouteNode(null);
 
 			for (int k = 0; k < (routearray.length - 1); k++) {
-				OperationIndexVO start = new OperationIndexVO(jobId, routearray[k]);
-				OperationIndexVO end = new OperationIndexVO(jobId,
+				OperationIndexVO start = new OperationIndexVO(0, jobId, routearray[k]);
+				OperationIndexVO end = new OperationIndexVO(0, jobId,
 						routearray[k + 1]);
 				this.createRouteArc(start, end);
 			}
@@ -215,9 +215,9 @@ public class Graph extends AbstractStructure {
 			initialMachineOperation.setPreviousSequenceNode(null);
 
 			for (int k = 0; k < (seqarray.length - 1); k++) {
-				OperationIndexVO start = new OperationIndexVO(seqarray[k],
+				OperationIndexVO start = new OperationIndexVO(0, seqarray[k],
 						machineId);
-				OperationIndexVO end = new OperationIndexVO(seqarray[k + 1],
+				OperationIndexVO end = new OperationIndexVO(0, seqarray[k + 1],
 						machineId);
 				this.createSequenceArc(start, end);
 			}
@@ -287,8 +287,8 @@ public class Graph extends AbstractStructure {
 			initialNode.setPreviousRouteNode(null);
 
 			for (int k = 0; k < (routearray.length - 1); k++) {
-				OperationIndexVO start = new OperationIndexVO(jobId, routearray[k]);
-				OperationIndexVO end = new OperationIndexVO(jobId,
+				OperationIndexVO start = new OperationIndexVO(0, jobId, routearray[k]);
+				OperationIndexVO end = new OperationIndexVO(0, jobId,
 						routearray[k + 1]);
 				this.createRouteArc(start, end);
 			}
@@ -333,9 +333,9 @@ public class Graph extends AbstractStructure {
 			initialMachineOperation.setPreviousSequenceNode(null);
 
 			for (int k = 0; k < (seqarray.length - 1); k++) {
-				OperationIndexVO start = new OperationIndexVO(seqarray[k],
+				OperationIndexVO start = new OperationIndexVO(0, seqarray[k],
 						machineId);
-				OperationIndexVO end = new OperationIndexVO(seqarray[k + 1],
+				OperationIndexVO end = new OperationIndexVO(0, seqarray[k + 1],
 						machineId);
 				this.createSequenceArc(start, end);
 			}
@@ -396,8 +396,8 @@ public class Graph extends AbstractStructure {
 			initialNode.setPreviousRouteNode(null);
 
 			for (int k = 0; k < (routearray.length - 1); k++) {
-				OperationIndexVO start = new OperationIndexVO(jobId, routearray[k]);
-				OperationIndexVO end = new OperationIndexVO(jobId,
+				OperationIndexVO start = new OperationIndexVO(0, jobId, routearray[k]);
+				OperationIndexVO end = new OperationIndexVO(0, jobId,
 						routearray[k + 1]);
 				this.createRouteArc(start, end);
 			}
@@ -442,9 +442,9 @@ public class Graph extends AbstractStructure {
 			initialStationNode.setPreviousSequenceNode(null);
 
 			for (int k = 0; k < (seqarray.length - 1); k++) {
-				OperationIndexVO start = new OperationIndexVO(seqarray[k],
+				OperationIndexVO start = new OperationIndexVO(0, seqarray[k],
 						machineId);
-				OperationIndexVO end = new OperationIndexVO(seqarray[k + 1],
+				OperationIndexVO end = new OperationIndexVO(0, seqarray[k + 1],
 						machineId);
 				this.createSequenceArc(start, end);
 			}
@@ -551,7 +551,7 @@ public class Graph extends AbstractStructure {
 		// Put the nodes in an array
 		for (int i = 0; i < totalJobs; i++) {
 			for (int j = 0; j < totalStations; j++) {
-				operations.add(operationsMatrix[i][j]);
+				operations.add(new Operation(operationsMatrix[i][j]));
 			}
 		}
 
@@ -662,7 +662,16 @@ public class Graph extends AbstractStructure {
 	}
 
 	private IOperation getOperation(int job, int station) {
-		return operationsMatrix[job][station];
+		
+		for (int i = 0; i < this.totalJobs; i++) {
+			for (int j = 0; j < this.totalStations; j++) {
+				Node temp = nodes[i][j];
+				OperationIndexVO index = temp.getOperation().getOperationIndex();
+				if(index.getJobId()==job && index.getStationId()==station)
+					return temp.getOperation();
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -688,7 +697,16 @@ public class Graph extends AbstractStructure {
 	@Override
 	public IOperation getOperationByOperationIndex(
 			OperationIndexVO operationIndex) {
-		return operationsMatrix[operationIndex.getJobId()][operationIndex.getStationId()];
+		
+		for (int i = 0; i < this.totalJobs; i++) {
+			for (int j = 0; j < this.totalStations; j++) {
+				Node temp = nodes[i][j];
+				OperationIndexVO index = temp.getOperation().getOperationIndex();
+				if(index.getJobId()==operationIndex.getJobId() && index.getStationId()==operationIndex.getStationId())
+					return temp.getOperation();
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -727,7 +745,7 @@ public class Graph extends AbstractStructure {
 		if(route.size() == 0){
 			initialJobNodesArray[operationIndex.getJobId()] = graphNode;
 		}else{
-			OperationIndexVO start = new OperationIndexVO(operationIndex.getJobId(), route.get(route.size()-1));
+			OperationIndexVO start = new OperationIndexVO(0,operationIndex.getJobId(), route.get(route.size()-1));
 			this.createRouteArc(start, operationIndex); 
 		}
 
@@ -735,7 +753,7 @@ public class Graph extends AbstractStructure {
 		if(sequence.size() == 0){
 			initialStationNodesArray[operationIndex.getStationId()] = graphNode;
 		}else{
-			OperationIndexVO start = new OperationIndexVO(sequence.get(sequence.size()-1), operationIndex.getStationId());
+			OperationIndexVO start = new OperationIndexVO(0,sequence.get(sequence.size()-1), operationIndex.getStationId());
 			this.createSequenceArc(start, operationIndex); 
 		}
 	}
@@ -777,7 +795,7 @@ public class Graph extends AbstractStructure {
 		newGraph.totalJobs = this.getTotalJobs();
 		newGraph.totalStations = this.getTotalStations();
 		newGraph.nodes = new Node[newGraph.totalJobs][newGraph.totalStations];
-		newGraph.operationsMatrix = new IOperation[newGraph.totalJobs][newGraph.totalStations];
+		newGraph.operationsMatrix = new OperationIndexVO[newGraph.totalJobs][newGraph.totalStations];
 
 		newGraph.initialJobNodesArray = new Node[newGraph.totalJobs];
 		newGraph.initialStationNodesArray = new Node[newGraph.totalStations];
@@ -799,8 +817,8 @@ public class Graph extends AbstractStructure {
 			for (int j = 0; j < newGraph.totalStations; j++) {
 				IOperation op = this.getOperation(i, j);
 				if (op != null)
-					newGraph.operationsMatrix[i][j] = new Operation(this.operationsMatrix[i][j].getProcessingTime(), i, j);
-				newGraph.nodes[i][j] = new Node(newGraph.operationsMatrix[i][j], this);
+					newGraph.operationsMatrix[i][j] = this.operationsMatrix[i][j];
+				newGraph.nodes[i][j] = new Node(new Operation(this.operationsMatrix[i][j]), this);
 			}
 		}
 
@@ -814,14 +832,14 @@ public class Graph extends AbstractStructure {
 						ni = this.getNode(i, j).getNextRouteNode().getOperation().getOperationIndex().getJobId();
 						nj = this.getNode(i, j).getNextRouteNode().getOperation().getOperationIndex().getStationId();
 
-						newGraph.createRouteArc(new OperationIndexVO(i, j), new OperationIndexVO(ni, nj));
+						newGraph.createRouteArc(new OperationIndexVO(0, i, j), new OperationIndexVO(0, ni, nj));
 					}
 
 					if (this.getNode(i, j).getNextSequenceNode() != null) {
 						ni = this.getNode(i, j).getNextSequenceNode().getOperation().getOperationIndex().getJobId();
 						nj = this.getNode(i, j).getNextSequenceNode().getOperation().getOperationIndex().getStationId();
 
-						newGraph.createSequenceArc(new OperationIndexVO(i, j), new OperationIndexVO(ni, nj));
+						newGraph.createSequenceArc(new OperationIndexVO(0, i, j), new OperationIndexVO(0, ni, nj));
 					}
 				}
 			}
@@ -878,8 +896,8 @@ public class Graph extends AbstractStructure {
 
 			for (int j = 0; j < numJobs; j++) {
 				if (operationsMatrix[i][j] != null) {
-					matrix += " | [" + operationsMatrix[i][j].getOperationIndex().getJobId() + ","
-							+ operationsMatrix[i][j].getOperationIndex().getStationId() + "]"
+					matrix += " | [" + operationsMatrix[i][j].getJobId() + ","
+							+ operationsMatrix[i][j].getStationId() + "]"
 							+ operationsMatrix[i][j].getProcessingTime();
 				} else {
 					matrix += " | [ " + " ]";
