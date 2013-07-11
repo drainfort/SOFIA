@@ -52,6 +52,7 @@ public class VectorFactory extends AbstractStructureFactory {
 			currentRank++;
 		}
 		
+
 		return solutionVector;
 	}
 

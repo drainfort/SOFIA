@@ -28,7 +28,7 @@ public class Operation implements IOperation{
 	}
 
 	public Operation(OperationIndexVO operationIndex){
-		operationIndex = operationIndex;
+		this.operationIndex = operationIndex;
 	}
 	
 	
