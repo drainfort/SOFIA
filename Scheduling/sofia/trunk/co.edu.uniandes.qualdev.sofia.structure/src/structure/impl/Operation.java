@@ -10,9 +10,7 @@ public class Operation implements IOperation{
 	// -------------------------------------
 	
 	private OperationIndexVO operationIndex;
-	
-	private int processingTime;
-	
+		
 	private int initialTime;
 	
 	private int finalTime;
@@ -29,15 +27,10 @@ public class Operation implements IOperation{
 		
 	}
 
-	public Operation(int processingTime, int job, int station){
-		this.processingTime = processingTime;
-		operationIndex = new OperationIndexVO(job, station);
+	public Operation(OperationIndexVO operationIndex){
+		operationIndex = operationIndex;
 	}
 	
-	public Operation(int processingTime, int job, int station, int machine){
-		this.processingTime = processingTime;
-		operationIndex = new OperationIndexVO(job, station, machine);
-	}
 	
 	// -------------------------------------
 	// Methods
@@ -47,8 +40,7 @@ public class Operation implements IOperation{
 	 * Returns an exact copy of the current operation.
 	 */
 	public IOperation clone(){
-		Operation clone = new Operation(this.getOperationIndex().getJobId(), this.getOperationIndex().getStationId(), this.getOperationIndex().getMachineId());
-		clone.processingTime = this.processingTime;
+		Operation clone = new Operation(this.operationIndex);
 		clone.operationIndex = this.operationIndex;
 		clone.initialTime = this.initialTime;
 		clone.finalTime = this.finalTime;
@@ -86,14 +78,6 @@ public class Operation implements IOperation{
 
 	public void setOperationIndex(OperationIndexVO operationIndex) {
 		this.operationIndex = operationIndex;
-	}
-
-	public int getProcessingTime() {
-		return processingTime;
-	}
-
-	public void setProcessingTime(int processingTime) {
-		this.processingTime = processingTime;
 	}
 	
 	public int getInitialTime() {

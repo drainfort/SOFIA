@@ -9,6 +9,7 @@ import java.util.Map;
 
 import structure.impl.Operation;
 import common.types.BetaVO;
+import common.types.OperationIndexVO;
 
 import beta.Beta;
 
@@ -26,8 +27,7 @@ public abstract class AbstractStructure  implements IStructure{
 	/**
 	 * Matrix with the operations of the problem
 	 */
-	//TODO OperationIndex
-	protected IOperation[][] operationsMatrix;
+	protected OperationIndexVO[][] operationsMatrix;
 	
 	/**
 	 * C matrix of the current solution
@@ -72,11 +72,11 @@ public abstract class AbstractStructure  implements IStructure{
 		this.totalJobs = totalJobs;
 		this.totalStations = totalStations;
 		//TODO cambiar el constructor
-		operationsMatrix = new IOperation[this.totalJobs][this.totalStations];
+		operationsMatrix = new OperationIndexVO[this.totalJobs][this.totalStations];
 		
 		for (int i = 0; i < this.totalJobs; i++) {
 			for (int j = 0; j < this.totalStations; j++) {
-				operationsMatrix[i][j] = new Operation(0, i, j);
+				operationsMatrix[i][j] = new OperationIndexVO(0,i, j);
 			}
 		}
 	}
@@ -118,11 +118,11 @@ public abstract class AbstractStructure  implements IStructure{
 	// ---------------------------------------------
 	
 	@Override
-	public IOperation[][] getProblem(){
+	public OperationIndexVO[][] getProblem(){
 		return operationsMatrix;
 	}
 	
-	public void setProblem(IOperation[][] problem){
+	public void setProblem(OperationIndexVO[][] problem){
 		operationsMatrix=problem;
 	}
 	
@@ -130,7 +130,7 @@ public abstract class AbstractStructure  implements IStructure{
 		this.betas = betas;
 	}
 	
-	public void setOperation(int job, int station, Operation nOperation){
+	public void setOperation(int job, int station, OperationIndexVO nOperation){
 		operationsMatrix[job][station]=nOperation;
 	}
 	
@@ -144,9 +144,9 @@ public abstract class AbstractStructure  implements IStructure{
 	 * @return
 	 * @throws Exception
 	 */
-	private IOperation[][] loadProblemMatrix(String processingTimesFile)
+	private OperationIndexVO[][] loadProblemMatrix(String processingTimesFile)
 			throws Exception {
-		IOperation[][] problemMatrix = null;
+		OperationIndexVO[][] problemMatrix = null;
 
 		BufferedReader reader = null;
 		try {
@@ -159,7 +159,7 @@ public abstract class AbstractStructure  implements IStructure{
 			String matrixWidthString = reader.readLine();
 			Integer matrixWidth = Integer.parseInt(matrixWidthString);
 
-			problemMatrix = new IOperation[matrixHeight][matrixWidth];
+			problemMatrix = new OperationIndexVO[matrixHeight][matrixWidth];
 
 			for (int i = 0; i < matrixHeight; i++) {
 				String currentLine = reader.readLine();
@@ -179,7 +179,7 @@ public abstract class AbstractStructure  implements IStructure{
 					}
 
 					if (currentNumber != -1) {
-						Operation operation = new Operation(currentNumber, i, j);
+						OperationIndexVO operation = new OperationIndexVO(currentNumber, i, j);
 						problemMatrix[i][j] = operation;
 					}
 					currentLine = currentLine.substring(
