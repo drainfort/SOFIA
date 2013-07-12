@@ -25,6 +25,9 @@ public class CMaxCalculator implements IGammaCalculator {
 				((Vector)vector).setNonDelayActive(true);
 			    cmax = cmax2;
 			}
+			else{
+				((Vector)vector).setNonDelayActive(false);
+			}
 		}
 			
 		return cmax;
