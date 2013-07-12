@@ -22,14 +22,9 @@ public class CMaxCalculator implements IGammaCalculator {
 			
 			int cmax2 = calculateGammaMatrix(CIntepretation, vector.getTotalJobs(), vector.getTotalStations());;
 			if(cmax2<cmax){
-				System.out.println("Nondelay");
-				((Vector)vector).setSolution(((Vector)vector).getVectorDecodNonDelay());
+				((Vector)vector).setSolutionActive(true);
 			    cmax = cmax2;
 			}
-			else{
-			    ((Vector)vector).setSolution(((Vector)vector).getVectorDecodSimple());
-			}
-			((Vector)vector).setSolutionActive(true);
 		}
 			
 		return cmax;
