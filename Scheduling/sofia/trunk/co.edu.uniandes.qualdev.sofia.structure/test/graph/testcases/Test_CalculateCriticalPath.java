@@ -39,32 +39,32 @@ public class Test_CalculateCriticalPath {
 		//Building the graphScenario1
 		graphScenario1 = new Graph(2,2);
 		
-		IOperation[][] problem = new IOperation[2][2]; 
-		problem[0][0] = new Operation(10, 0, 0);
-		problem[0][1] = new Operation(20, 0, 1);
-		problem[1][0] = new Operation(5, 1, 0);
-		problem[1][1] = new Operation(5, 1, 1);
+		OperationIndexVO[][] problem = new OperationIndexVO[2][2]; 
+		problem[0][0] = new OperationIndexVO(10, 0, 0);
+		problem[0][1] = new OperationIndexVO(20, 0, 1);
+		problem[1][0] = new OperationIndexVO(5, 1, 0);
+		problem[1][1] = new OperationIndexVO(5, 1, 1);
 		
 		graphScenario1.setProblem(problem);
-		graphScenario1.scheduleOperation(problem[0][0].getOperationIndex());
-		graphScenario1.scheduleOperation(problem[1][1].getOperationIndex());
-		graphScenario1.scheduleOperation(problem[1][0].getOperationIndex());
-		graphScenario1.scheduleOperation(problem[0][1].getOperationIndex());
+		graphScenario1.scheduleOperation(problem[0][0]);
+		graphScenario1.scheduleOperation(problem[1][1]);
+		graphScenario1.scheduleOperation(problem[1][0]);
+		graphScenario1.scheduleOperation(problem[0][1]);
 		
 		//Building the graphScenario2
 		graphScenario2 = new Graph(2,2);
 		
-		IOperation[][] secondEscenario = new IOperation[2][2];
-		secondEscenario[0][0] = new Operation(10, 0, 0);
-		secondEscenario[1][1] = new Operation(10, 1, 1);
-		secondEscenario[0][1] = new Operation(20, 0, 1);
-		secondEscenario[1][0] = new Operation(20, 1, 0);
+		OperationIndexVO[][] secondEscenario = new OperationIndexVO[2][2];
+		secondEscenario[0][0] = new OperationIndexVO(10, 0, 0);
+		secondEscenario[1][1] = new OperationIndexVO(10, 1, 1);
+		secondEscenario[0][1] = new OperationIndexVO(20, 0, 1);
+		secondEscenario[1][0] = new OperationIndexVO(20, 1, 0);
 		
 		graphScenario2.setProblem(secondEscenario);
-		graphScenario2.scheduleOperation(secondEscenario[0][0].getOperationIndex());
-		graphScenario2.scheduleOperation(secondEscenario[1][1].getOperationIndex());
-		graphScenario2.scheduleOperation(secondEscenario[1][0].getOperationIndex());
-		graphScenario2.scheduleOperation(secondEscenario[0][1].getOperationIndex());
+		graphScenario2.scheduleOperation(secondEscenario[0][0]);
+		graphScenario2.scheduleOperation(secondEscenario[1][1]);
+		graphScenario2.scheduleOperation(secondEscenario[1][0]);
+		graphScenario2.scheduleOperation(secondEscenario[0][1]);
 	}
 
 	// -----------------------------------------------

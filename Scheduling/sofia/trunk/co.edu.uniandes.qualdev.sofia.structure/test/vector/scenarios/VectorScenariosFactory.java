@@ -1,5 +1,7 @@
 package vector.scenarios;
 
+import common.types.OperationIndexVO;
+
 import structure.impl.Operation;
 import structure.impl.Vector;
 
@@ -23,16 +25,16 @@ public class VectorScenariosFactory {
 	public static Vector buildDummySolution(){
 		Vector vector = new Vector(3, 3);
 		
-		Operation o1 = new Operation(0, 0, 0);
+		Operation o1 = new Operation(new OperationIndexVO(0, 0, 0));
 		vector.scheduleOperation(o1.getOperationIndex());
 		
-		Operation o2 = new Operation(0, 0, 1);
+		Operation o2 = new Operation(new OperationIndexVO(0, 0, 1));
 		vector.scheduleOperation(o2.getOperationIndex());
 		
-		Operation o3 = new Operation(0, 1, 0);
+		Operation o3 = new Operation(new OperationIndexVO(0, 1, 0));
 		vector.scheduleOperation(o3.getOperationIndex());
 		
-		Operation o4 = new Operation(0, 1, 1);
+		Operation o4 = new Operation(new OperationIndexVO(0, 1, 1));
 		vector.scheduleOperation(o4.getOperationIndex());
 		
 		return vector;
