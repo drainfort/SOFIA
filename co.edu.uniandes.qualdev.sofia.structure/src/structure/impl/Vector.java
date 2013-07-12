@@ -254,7 +254,7 @@ public class Vector extends AbstractStructure{
 		if(synch){
 			return C;
 		}else{
-			decodeSolution();
+			
 			
 			int [][] CSolution = new int[getTotalJobs()][getTotalStations() + 1];
 			
@@ -275,6 +275,8 @@ public class Vector extends AbstractStructure{
 				
 				CSolution[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
 			}
+			
+			decodeSolution();
 			
 			CIntepretation = new int[getTotalJobs()][getTotalStations() + 1];
 			
@@ -307,8 +309,6 @@ public class Vector extends AbstractStructure{
 			if (newC2 != null)
 				CIntepretation = newC2;
 			
-			MatrixUtils.printMatrix(C);
-			MatrixUtils.printMatrix(CIntepretation);
 			synch = true;
 			return C;
 		}
