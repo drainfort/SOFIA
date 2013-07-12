@@ -9,6 +9,7 @@ import structure.impl.Graph;
 import structure.impl.Job;
 import structure.impl.Machine;
 import structure.impl.Station;
+import structure.impl.Vector;
 import common.types.OperationIndexVO;
 import common.utils.ExecutionResults;
 import common.utils.GanttTask;
@@ -103,8 +104,12 @@ public abstract class Control {
 
 		ArrayList<GanttTask> tasksFinalSolution = new ArrayList<GanttTask>();
 		ArrayList<OperationIndexVO> operationIndexesFinalSolution = new ArrayList<OperationIndexVO>();
-		
-		for (IOperation operation : solution.getOperations()) {
+		ArrayList<IOperation> operations = solution.getOperations();
+		if(solution instanceof Vector){
+			if(((Vector)solution).isNonDelayActive())
+				operations = ((Vector)solution).getVectorDecodNonDelay();
+		}
+		for (IOperation operation : operations) {
 			if (operation!=null && !machineNotDefinedInGantt(tasksFinalSolution, operation.getOperationIndex().getStationId())) {
 				GanttTask task = new GanttTask();
 				task.setStationIdentifier(operation.getOperationIndex().getStationId());
