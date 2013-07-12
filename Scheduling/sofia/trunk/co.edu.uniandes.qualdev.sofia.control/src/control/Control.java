@@ -109,6 +109,7 @@ public abstract class Control {
 			if(((Vector)solution).isNonDelayActive())
 				operations = ((Vector)solution).getVectorDecodNonDelay();
 		}
+		
 		for (IOperation operation : operations) {
 			if (operation!=null && !machineNotDefinedInGantt(tasksFinalSolution, operation.getOperationIndex().getStationId())) {
 				GanttTask task = new GanttTask();
