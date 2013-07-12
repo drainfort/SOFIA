@@ -764,13 +764,18 @@ public class Vector extends AbstractStructure{
 	 * @return criticalPaths. Collection of critical paths of the current solution. 
 	 */
 	public ArrayList<CriticalPath> getCriticalPaths(){
+		
+		ArrayList<IOperation> solution = vectorDecodSimple;
+		if(isNonDelayActive())
+			solution = vectorDecodNonDelay;
+		
 		ArrayList<CriticalPath> routes = new ArrayList<CriticalPath>();
-		ArrayList<IOperation> finalNodes = getLastOperation();
+		ArrayList<IOperation> finalNodes = getLastOperation(solution);
 		
 		for(int i=0; i < finalNodes.size();i++ ){
 			CriticalPath temp= new CriticalPath();
 			temp.addNodeBegin(finalNodes.get(i));
-			routes.addAll(getLongestRoute(temp));
+			routes.addAll(getLongestRoute(temp, solution));
 		}		
 		return routes;
 	}
@@ -779,25 +784,24 @@ public class Vector extends AbstractStructure{
 	 * Returns the collection of operations such that their C value is the biggest one.
 	 * @return lastOperations. A collection of IOperations such that its C value is the biggest one.
 	 */
-	public ArrayList<IOperation> getLastOperation(){
-		//sortArray(getOperations());
+	public ArrayList<IOperation> getLastOperation(ArrayList<IOperation> solution){
 		synch=false;
 		calculateCMatrix();
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		System.out.println("normal"+vectorDecodSimple);
 		System.out.println("inter"+vectorDecodNonDelay);
-		System.out.println("Operaciones:  "+getOperations());
 		System.out.println(nonDelayActive);
+		
 		int lastTime=0;
-		for(int i=0; i< getOperations().size();i++){
-			IOperation temp= getOperations().get(i);
+		for(int i=0; i< solution.size();i++){
+			IOperation temp= solution.get(i);
 			if(temp.getFinalTime()>lastTime){
 				lastTime= temp.getFinalTime();
 			}
 		}
 		
-		for(int i=0; i< getOperations().size();i++){
-			IOperation temp= getOperations().get(i);
+		for(int i=0; i< solution.size();i++){
+			IOperation temp= solution.get(i);
 			if(temp.getFinalTime()==lastTime){
 				operations.add(temp);
 			}
@@ -810,11 +814,11 @@ public class Vector extends AbstractStructure{
 	 * @param criticalPath The collection of critical paths associated with the node
 	 * @return
 	 */
-	private ArrayList<CriticalPath> getLongestRoute(CriticalPath route){
+	private ArrayList<CriticalPath> getLongestRoute(CriticalPath route, ArrayList<IOperation> solution){
 		ArrayList<CriticalPath> routes = new ArrayList<CriticalPath>();
 		IOperation lastOperation= route.getRoute().get(0);
-		ArrayList<IOperation> operationsStation = getOperationsBeforeByStation(lastOperation.getOperationIndex());
-		ArrayList<IOperation> operationsJob = getOperationsBeforeByJob(lastOperation.getOperationIndex());
+		ArrayList<IOperation> operationsStation = getOperationsBeforeByStation(lastOperation.getOperationIndex(), solution);
+		ArrayList<IOperation> operationsJob = getOperationsBeforeByJob(lastOperation.getOperationIndex(), solution);
 		if(!operationsJob.isEmpty()){
 			IOperation operationBeforeByJob = operationsJob.get(operationsJob.size()-1);
 			if(!operationsStation.isEmpty()){
@@ -823,7 +827,7 @@ public class Vector extends AbstractStructure{
 					route.addNodeBegin(operationBeforeByJob);
 					operationsJob=null;
 					operationsStation=null;
-					return getLongestRoute(route);
+					return getLongestRoute(route, solution);
 					
 				}
 				else if(operationBeforeByJob.getFinalTime()==operationBeforeByStation.getFinalTime()){
@@ -834,9 +838,9 @@ public class Vector extends AbstractStructure{
 					}
 					route.addNodeBegin(operationBeforeByJob);
 					clone.addNodeBegin(operationBeforeByStation);
-					ArrayList<CriticalPath> temp1 = getLongestRoute(route);
+					ArrayList<CriticalPath> temp1 = getLongestRoute(route, solution);
 					
-					ArrayList<CriticalPath> temp2 = getLongestRoute(clone);
+					ArrayList<CriticalPath> temp2 = getLongestRoute(clone, solution);
 					
 					temp1.addAll(temp2);
 					operationsJob=null;
@@ -847,7 +851,7 @@ public class Vector extends AbstractStructure{
 					route.addNodeBegin(operationBeforeByStation);
 					operationsJob=null;
 					operationsStation=null;
-					return getLongestRoute(route);
+					return getLongestRoute(route, solution);
 					
 				}
 			}
@@ -855,7 +859,7 @@ public class Vector extends AbstractStructure{
 				route.addNodeBegin( operationBeforeByJob);
 				operationsJob=null;
 				operationsStation=null;
-				return getLongestRoute(route);
+				return getLongestRoute(route, solution);
 			}
 		}
 		else{
@@ -864,7 +868,7 @@ public class Vector extends AbstractStructure{
 					route.addNodeBegin(operationBeforeByStation);
 					operationsJob=null;
 					operationsStation=null;
-					return getLongestRoute(route);
+					return getLongestRoute(route, solution);
 			}
 			else{
 				routes.add(route);
@@ -880,9 +884,9 @@ public class Vector extends AbstractStructure{
 	 * @param operation Reference operation
 	 * @return
 	 */
-	private ArrayList<IOperation> getOperationsBeforeByStation(OperationIndexVO operation){
+	private ArrayList<IOperation> getOperationsBeforeByStation(OperationIndexVO operation, ArrayList<IOperation> solution){
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
-		for(IOperation op : getOperations()){
+		for(IOperation op : solution){
 			if(op.getOperationIndex().getStationId()==operation.getStationId()){
 				if(!op.getOperationIndex().equals(operation)){
 					operations.add(op);
@@ -900,9 +904,9 @@ public class Vector extends AbstractStructure{
 	 * @param operation Reference operation
 	 * @return
 	 */
-	private ArrayList<IOperation> getOperationsBeforeByJob(OperationIndexVO operation){
+	private ArrayList<IOperation> getOperationsBeforeByJob(OperationIndexVO operation, ArrayList<IOperation> solution){
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
-		for(IOperation op : getOperations()){
+		for(IOperation op : solution){
 			if(op.getOperationIndex().getJobId()==operation.getJobId()){
 				if(!op.getOperationIndex().equals(operation)){
 					operations.add(op);
