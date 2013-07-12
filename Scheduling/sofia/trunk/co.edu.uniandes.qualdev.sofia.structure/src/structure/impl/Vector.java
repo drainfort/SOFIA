@@ -308,7 +308,7 @@ public class Vector extends AbstractStructure{
 			int[][] newC2 = applyTearDownBetas(CIntepretation);
 			if (newC2 != null)
 				CIntepretation = newC2;
-			
+		
 			synch = true;
 			return C;
 		}
@@ -666,27 +666,24 @@ public class Vector extends AbstractStructure{
 			clone.totalJobs = this.totalJobs;
 			clone.totalStations = this.totalStations;
 			clone.maxMachinesPerStation = this.maxMachinesPerStation;
+			clone.nonDelayActive=this.nonDelayActive;
 			
-			
-			//Revisar
-			if(this.nonDelayActive){
-				ArrayList<IOperation> clonedVectorDecSimple = new ArrayList<IOperation>();
-				for (IOperation operation : vectorDecodNonDelay) {
-					IOperation cloneOperation = operation.clone();
-					clonedVectorDecSimple.add(cloneOperation);
-				}
-				
-				clone.vectorDecodSimple = clonedVectorDecSimple;
+			ArrayList<IOperation> clonedVectorDecSimple = new ArrayList<IOperation>();
+			for (IOperation operation : vectorDecodSimple) {
+				IOperation cloneOperation = operation.clone();
+				clonedVectorDecSimple.add(cloneOperation);
 			}
-			else{
-				ArrayList<IOperation> clonedVectorDecSimple = new ArrayList<IOperation>();
-				for (IOperation operation : vectorDecodSimple) {
-					IOperation cloneOperation = operation.clone();
-					clonedVectorDecSimple.add(cloneOperation);
-				}
-				
-				clone.vectorDecodSimple = clonedVectorDecSimple;
-			}			
+			
+			clone.vectorDecodSimple = clonedVectorDecSimple;
+			
+			ArrayList<IOperation> clonedVectorDecNonDelay= new ArrayList<IOperation>();
+			for (IOperation operation : vectorDecodNonDelay) {
+				IOperation cloneOperation = operation.clone();
+				clonedVectorDecNonDelay.add(cloneOperation);
+			}
+			
+			clone.vectorDecodNonDelay = clonedVectorDecNonDelay;
+					
 			
 			// Clone betas
 			if (this.betas != null) {
@@ -788,9 +785,6 @@ public class Vector extends AbstractStructure{
 		synch=false;
 		calculateCMatrix();
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
-		System.out.println("normal"+vectorDecodSimple);
-		System.out.println("inter"+vectorDecodNonDelay);
-		System.out.println(nonDelayActive);
 		
 		int lastTime=0;
 		for(int i=0; i< solution.size();i++){
