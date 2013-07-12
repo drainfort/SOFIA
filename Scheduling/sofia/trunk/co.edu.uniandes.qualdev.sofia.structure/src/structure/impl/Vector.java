@@ -38,9 +38,6 @@ public class Vector extends AbstractStructure{
 	// -----------------------------------------------
 	// Attributes
 	// -----------------------------------------------
-
-	/** ArrayList with the permutation list  */
-	private ArrayList<IOperation> solution = null;
 	
 	/** ArrayList with the permutation list interpreted according to the defined algorithm */
 	private ArrayList<IOperation> vectorDecodNonDelay = null;
@@ -75,7 +72,6 @@ public class Vector extends AbstractStructure{
 	public Vector(int totalJobs, int totalStations){
 		super(totalJobs, totalStations);
 		//TODO en algun lado  hay que armar las IOperation apuntando a los operationIndex de la matrix de STRUCTURE
-		solution = new ArrayList<IOperation>();
 		vectorDecodNonDelay = new ArrayList<IOperation>();
 		vectorDecodSimple = new ArrayList<IOperation>();
 		synch = false;
@@ -87,7 +83,6 @@ public class Vector extends AbstractStructure{
 	public Vector(String processingTimesFile, ArrayList<BetaVO> pBetas) throws Exception {
 		super(processingTimesFile, pBetas);
 		
-		solution = new ArrayList<IOperation>();
 		vectorDecodNonDelay = new ArrayList<IOperation>();
 		vectorDecodSimple = new ArrayList<IOperation>();
 		synch = false;
@@ -234,9 +229,7 @@ public class Vector extends AbstractStructure{
 	
 	@Override
 	public ArrayList<IOperation> getOperations(){
-		if(!solutionActive)
-			return vectorDecodSimple;
-		return solution;
+		return vectorDecodSimple;
 	}
 	
 	@Override
@@ -941,7 +934,7 @@ public class Vector extends AbstractStructure{
 	// -------------------------------------------------
 
 	public ArrayList<IOperation> getVector(){
-		return solution;
+		return vectorDecodSimple;
 	}
 	
 	@Override
@@ -1005,21 +998,5 @@ public class Vector extends AbstractStructure{
 	public void setSolutionActive(boolean solutionActive) {
 		this.solutionActive = solutionActive;
 	}
-
-	public ArrayList<IOperation> getSolution() {
-		return solution;
-	}
-
-	public void setSolution(ArrayList<IOperation> solutionT) {
-		ArrayList<IOperation> clonedSolution = new ArrayList<IOperation>();
-		for (IOperation operation : solutionT) {
-			IOperation cloneOperation = operation.clone();
-			clonedSolution.add(cloneOperation);
-		}
-		
-		this.solution = clonedSolution;
-	}
-	
-	
 		
 }
