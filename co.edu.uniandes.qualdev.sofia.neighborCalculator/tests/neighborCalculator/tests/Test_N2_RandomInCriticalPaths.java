@@ -7,13 +7,13 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import common.types.OperationIndexVO;
 import common.types.PairVO;
 
 import neighborCalculator.impl.N2_RandomInCriticalPaths;
 import structure.IOperation;
 import structure.impl.CriticalPath;
 import structure.impl.Graph;
-import structure.impl.Operation;
 import structure.impl.Vector;
 
 /**
@@ -44,32 +44,32 @@ public class Test_N2_RandomInCriticalPaths {
 		// Loading the scenario 1 for the graph
 		graphScenario1 = new Graph(2,2);
 		
-		IOperation[][] problemGraph = new IOperation[2][2]; 
-		problemGraph[0][0] = new Operation(10, 0, 0);
-		problemGraph[0][1] = new Operation(20, 0, 1);
-		problemGraph[1][0] = new Operation(5, 1, 0);
-		problemGraph[1][1] = new Operation(5, 1, 1);
+		OperationIndexVO[][] problemGraph = new OperationIndexVO[2][2]; 
+		problemGraph[0][0] = new OperationIndexVO(10, 0, 0);
+		problemGraph[0][1] = new OperationIndexVO(20, 0, 1);
+		problemGraph[1][0] = new OperationIndexVO(5, 1, 0);
+		problemGraph[1][1] = new OperationIndexVO(5, 1, 1);
 		
 		graphScenario1.setProblem(problemGraph);
-		graphScenario1.scheduleOperation(problemGraph[0][0].getOperationIndex());
-		graphScenario1.scheduleOperation(problemGraph[1][1].getOperationIndex());
-		graphScenario1.scheduleOperation(problemGraph[1][0].getOperationIndex());
-		graphScenario1.scheduleOperation(problemGraph[0][1].getOperationIndex());
+		graphScenario1.scheduleOperation(problemGraph[0][0]);
+		graphScenario1.scheduleOperation(problemGraph[1][1]);
+		graphScenario1.scheduleOperation(problemGraph[1][0]);
+		graphScenario1.scheduleOperation(problemGraph[0][1]);
 		
 		// Loading the scenario 1 for the vector
 		vectorScenario1 = new Vector(2,2);
 		
-		IOperation[][] problemVector = new IOperation[2][2]; 
-		problemVector[0][0] = new Operation(10, 0, 0);
-		problemVector[0][1] = new Operation(20, 0, 1);
-		problemVector[1][0] = new Operation(5, 1, 0);
-		problemVector[1][1] = new Operation(5, 1, 1);
+		OperationIndexVO[][] problemVector = new OperationIndexVO[2][2]; 
+		problemVector[0][0] = new OperationIndexVO(10, 0, 0);
+		problemVector[0][1] = new OperationIndexVO(20, 0, 1);
+		problemVector[1][0] = new OperationIndexVO(5, 1, 0);
+		problemVector[1][1] = new OperationIndexVO(5, 1, 1);
 		
 		vectorScenario1.setProblem(problemVector);
-		vectorScenario1.scheduleOperation(problemVector[0][0].getOperationIndex());
-		vectorScenario1.scheduleOperation(problemVector[1][1].getOperationIndex());
-		vectorScenario1.scheduleOperation(problemVector[1][0].getOperationIndex());
-		vectorScenario1.scheduleOperation(problemVector[0][1].getOperationIndex());
+		vectorScenario1.scheduleOperation(problemVector[0][0]);
+		vectorScenario1.scheduleOperation(problemVector[1][1]);
+		vectorScenario1.scheduleOperation(problemVector[1][0]);
+		vectorScenario1.scheduleOperation(problemVector[0][1]);
 	}
 	
 	
