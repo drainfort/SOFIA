@@ -52,7 +52,7 @@ public class Vector extends AbstractStructure{
 	
 	private int [][] CIntepretation;
 	
-	private boolean solutionActive = false;
+	private boolean nonDelayActive = false;
 	
 	// -----------------------------------------------
 	// Constructor
@@ -669,7 +669,7 @@ public class Vector extends AbstractStructure{
 			
 			
 			//Revisar
-			if(this.solutionActive){
+			if(this.nonDelayActive){
 				ArrayList<IOperation> clonedVectorDecSimple = new ArrayList<IOperation>();
 				for (IOperation operation : vectorDecodNonDelay) {
 					IOperation cloneOperation = operation.clone();
@@ -787,7 +787,7 @@ public class Vector extends AbstractStructure{
 		System.out.println("normal"+vectorDecodSimple);
 		System.out.println("inter"+vectorDecodNonDelay);
 		System.out.println("Operaciones:  "+getOperations());
-		System.out.println(solutionActive);
+		System.out.println(nonDelayActive);
 		int lastTime=0;
 		for(int i=0; i< getOperations().size();i++){
 			IOperation temp= getOperations().get(i);
@@ -916,7 +916,6 @@ public class Vector extends AbstractStructure{
 	}
 	
 	public void sortArray(ArrayList<IOperation> vector){
-		//System.out.println("vectorUnsorted"+vector);
 		Collections.sort(vector, new Comparator<IOperation>() {
 			@Override
 			public int compare(IOperation o1, IOperation o2) {
@@ -926,7 +925,6 @@ public class Vector extends AbstractStructure{
 
 			}
 		});
-		//System.out.println("vectorSorted"+vector);
 	}
 	
 	// -------------------------------------------------
@@ -991,12 +989,12 @@ public class Vector extends AbstractStructure{
 		this.vectorDecodSimple = vectorDecodSimple;
 	}
 
-	public boolean isSolutionActive() {
-		return solutionActive;
+	public boolean isNonDelayActive() {
+		return nonDelayActive;
 	}
 
-	public void setSolutionActive(boolean solutionActive) {
-		this.solutionActive = solutionActive;
+	public void setNonDelayActive(boolean nonDelayActive) {
+		this.nonDelayActive = nonDelayActive;
 	}
 		
 }
