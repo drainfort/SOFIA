@@ -43,7 +43,7 @@ public class Operation implements IOperation{
 		Operation clone = new Operation(this.operationIndex);
 		clone.initialTime = this.initialTime;
 		clone.finalTime = this.finalTime;
-		
+		clone.scheduled = this.scheduled;
 		return clone;
 	}
 	
