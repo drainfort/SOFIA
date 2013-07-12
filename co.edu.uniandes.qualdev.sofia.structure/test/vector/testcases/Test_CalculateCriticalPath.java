@@ -38,32 +38,32 @@ public class Test_CalculateCriticalPath {
 			//Building scenario 1
 			vectorScenario1 = new Vector(2,2);
 		
-			IOperation[][] problem = new IOperation[2][2]; 
-			problem[0][0] = new Operation(10, 0, 0);
-			problem[0][1] = new Operation(20, 0, 1);
-			problem[1][0] = new Operation(5, 1, 0);
-			problem[1][1] = new Operation(5, 1, 1);
+			OperationIndexVO[][] problem = new OperationIndexVO[2][2]; 
+			problem[0][0] = new OperationIndexVO(10, 0, 0);
+			problem[0][1] = new OperationIndexVO(20, 0, 1);
+			problem[1][0] = new OperationIndexVO(5, 1, 0);
+			problem[1][1] = new OperationIndexVO(5, 1, 1);
 			
 			vectorScenario1.setProblem(problem);
-			vectorScenario1.scheduleOperation(problem[0][0].getOperationIndex());
-			vectorScenario1.scheduleOperation(problem[1][1].getOperationIndex());
-			vectorScenario1.scheduleOperation(problem[1][0].getOperationIndex());
-			vectorScenario1.scheduleOperation(problem[0][1].getOperationIndex());
+			vectorScenario1.scheduleOperation(problem[0][0]);
+			vectorScenario1.scheduleOperation(problem[1][1]);
+			vectorScenario1.scheduleOperation(problem[1][0]);
+			vectorScenario1.scheduleOperation(problem[0][1]);
 			
 			//Building scenario 2
 			vectorScenario2 = new Vector(2,2);
 			
-			IOperation[][] secondEscenario = new IOperation[2][2];
-			secondEscenario[0][0] = new Operation(10, 0, 0);
-			secondEscenario[1][1] = new Operation(10, 1, 1);
-			secondEscenario[0][1] = new Operation(20, 0, 1);
-			secondEscenario[1][0] = new Operation(20, 1, 0);
+			OperationIndexVO[][] secondEscenario = new OperationIndexVO[2][2];
+			secondEscenario[0][0] = new OperationIndexVO(10, 0, 0);
+			secondEscenario[1][1] = new OperationIndexVO(10, 1, 1);
+			secondEscenario[0][1] = new OperationIndexVO(20, 0, 1);
+			secondEscenario[1][0] = new OperationIndexVO(20, 1, 0);
 			
 			vectorScenario2.setProblem(secondEscenario);
-			vectorScenario2.scheduleOperation(secondEscenario[0][0].getOperationIndex());
-			vectorScenario2.scheduleOperation(secondEscenario[1][1].getOperationIndex());
-			vectorScenario2.scheduleOperation(secondEscenario[1][0].getOperationIndex());
-			vectorScenario2.scheduleOperation(secondEscenario[0][1].getOperationIndex());
+			vectorScenario2.scheduleOperation(secondEscenario[0][0]);
+			vectorScenario2.scheduleOperation(secondEscenario[1][1]);
+			vectorScenario2.scheduleOperation(secondEscenario[1][0]);
+			vectorScenario2.scheduleOperation(secondEscenario[0][1]);
 	}
 
 	// -----------------------------------------------

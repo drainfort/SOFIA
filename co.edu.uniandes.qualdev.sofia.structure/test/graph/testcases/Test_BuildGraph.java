@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import common.types.OperationIndexVO;
+
 import structure.IOperation;
 import structure.impl.Graph;
 
@@ -38,7 +40,7 @@ public class Test_BuildGraph {
 
 	@Test
 	public void testProecessingTimes(){
-		IOperation[][] problemMatrix = problem.getProblem();
+		OperationIndexVO[][] problemMatrix = problem.getProblem();
 		
 		Assert.assertEquals(34, problemMatrix[0][0].getProcessingTime());
 		Assert.assertEquals(2, problemMatrix[0][1].getProcessingTime());

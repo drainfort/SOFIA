@@ -39,70 +39,70 @@ public class Test_CalculateBlocks {
 		//Building the graphScenario1
 		graphScenario1 = new Graph(2,2);
 		
-		IOperation[][] problem = new IOperation[2][2]; 
-		problem[0][0] = new Operation(10, 0, 0);
-		problem[0][1] = new Operation(20, 0, 1);
-		problem[1][0] = new Operation(5, 1, 0);
-		problem[1][1] = new Operation(5, 1, 1);
+		OperationIndexVO[][] problem = new OperationIndexVO[2][2]; 
+		problem[0][0] = new OperationIndexVO(10, 0, 0);
+		problem[0][1] = new OperationIndexVO(20, 0, 1);
+		problem[1][0] = new OperationIndexVO(5, 1, 0);
+		problem[1][1] = new OperationIndexVO(5, 1, 1);
 		
 		graphScenario1.setProblem(problem);
-		graphScenario1.scheduleOperation(problem[0][0].getOperationIndex());
-		graphScenario1.scheduleOperation(problem[1][1].getOperationIndex());
-		graphScenario1.scheduleOperation(problem[1][0].getOperationIndex());
-		graphScenario1.scheduleOperation(problem[0][1].getOperationIndex());
+		graphScenario1.scheduleOperation(problem[0][0]);
+		graphScenario1.scheduleOperation(problem[1][1]);
+		graphScenario1.scheduleOperation(problem[1][0]);
+		graphScenario1.scheduleOperation(problem[0][1]);
 		
 		//Building the graphScenario2
 		graphScenario2 = new Graph(2,2);
 		
-		IOperation[][] secondEscenario = new IOperation[2][2];
-		secondEscenario[0][0] = new Operation(10, 0, 0);
-		secondEscenario[1][1] = new Operation(10, 1, 1);
-		secondEscenario[0][1] = new Operation(20, 0, 1);
-		secondEscenario[1][0] = new Operation(20, 1, 0);
+		OperationIndexVO[][] secondEscenario = new OperationIndexVO[2][2];
+		secondEscenario[0][0] = new OperationIndexVO(10, 0, 0);
+		secondEscenario[1][1] = new OperationIndexVO(10, 1, 1);
+		secondEscenario[0][1] = new OperationIndexVO(20, 0, 1);
+		secondEscenario[1][0] = new OperationIndexVO(20, 1, 0);
 		
 		graphScenario2.setProblem(secondEscenario);
-		graphScenario2.scheduleOperation(secondEscenario[0][0].getOperationIndex());
-		graphScenario2.scheduleOperation(secondEscenario[1][1].getOperationIndex());
-		graphScenario2.scheduleOperation(secondEscenario[1][0].getOperationIndex());
-		graphScenario2.scheduleOperation(secondEscenario[0][1].getOperationIndex());
+		graphScenario2.scheduleOperation(secondEscenario[0][0]);
+		graphScenario2.scheduleOperation(secondEscenario[1][1]);
+		graphScenario2.scheduleOperation(secondEscenario[1][0]);
+		graphScenario2.scheduleOperation(secondEscenario[0][1]);
 		
 		graphScenario3 = new Graph(4,4);
 		
-		IOperation[][] problemGraphScenario3 = new IOperation[4][4];
-		problemGraphScenario3[0][0] = new Operation(5, 0, 0);
-		problemGraphScenario3[0][1] = new Operation(10, 0, 1);
-		problemGraphScenario3[0][2] = new Operation(5, 0, 2);
-		problemGraphScenario3[0][3] = new Operation(5, 0, 3);
-		problemGraphScenario3[1][0] = new Operation(5, 1, 0);
-		problemGraphScenario3[1][1] = new Operation(10, 1, 1);
-		problemGraphScenario3[1][2] = new Operation(5, 1, 2);
-		problemGraphScenario3[1][3] = new Operation(5, 1, 3);
-		problemGraphScenario3[2][0] = new Operation(5, 2, 0);
-		problemGraphScenario3[2][1] = new Operation(10, 2, 1);
-		problemGraphScenario3[2][2] = new Operation(10, 2, 2);
-		problemGraphScenario3[2][3] = new Operation(5, 2, 3);
-		problemGraphScenario3[3][0] = new Operation(5, 3, 0);
-		problemGraphScenario3[3][1] = new Operation(5, 3, 1);
-		problemGraphScenario3[3][2] = new Operation(10, 3, 2);
-		problemGraphScenario3[3][3] = new Operation(10, 3, 3);
+		OperationIndexVO[][] problemGraphScenario3 = new OperationIndexVO[4][4];
+		problemGraphScenario3[0][0] = new OperationIndexVO(5, 0, 0);
+		problemGraphScenario3[0][1] = new OperationIndexVO(10, 0, 1);
+		problemGraphScenario3[0][2] = new OperationIndexVO(5, 0, 2);
+		problemGraphScenario3[0][3] = new OperationIndexVO(5, 0, 3);
+		problemGraphScenario3[1][0] = new OperationIndexVO(5, 1, 0);
+		problemGraphScenario3[1][1] = new OperationIndexVO(10, 1, 1);
+		problemGraphScenario3[1][2] = new OperationIndexVO(5, 1, 2);
+		problemGraphScenario3[1][3] = new OperationIndexVO(5, 1, 3);
+		problemGraphScenario3[2][0] = new OperationIndexVO(5, 2, 0);
+		problemGraphScenario3[2][1] = new OperationIndexVO(10, 2, 1);
+		problemGraphScenario3[2][2] = new OperationIndexVO(10, 2, 2);
+		problemGraphScenario3[2][3] = new OperationIndexVO(5, 2, 3);
+		problemGraphScenario3[3][0] = new OperationIndexVO(5, 3, 0);
+		problemGraphScenario3[3][1] = new OperationIndexVO(5, 3, 1);
+		problemGraphScenario3[3][2] = new OperationIndexVO(10, 3, 2);
+		problemGraphScenario3[3][3] = new OperationIndexVO(10, 3, 3);
 		
 		graphScenario3.setProblem(problemGraphScenario3);
-		graphScenario3.scheduleOperation(problemGraphScenario3[0][0].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[0][1].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[0][2].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[0][3].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[1][0].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[1][1].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[1][2].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[1][3].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[2][0].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[2][1].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[2][2].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[2][3].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[3][0].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[3][1].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[3][2].getOperationIndex());
-		graphScenario3.scheduleOperation(problemGraphScenario3[3][3].getOperationIndex());
+		graphScenario3.scheduleOperation(problemGraphScenario3[0][0]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[0][1]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[0][2]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[0][3]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[1][0]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[1][1]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[1][2]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[1][3]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[2][0]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[2][1]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[2][2]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[2][3]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[3][0]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[3][1]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[3][2]);
+		graphScenario3.scheduleOperation(problemGraphScenario3[3][3]);
 	}
 
 	// -----------------------------------------------
@@ -120,8 +120,8 @@ public class Test_CalculateBlocks {
 		Assert.assertEquals("The amount of blocks should be 1", 1, blocks.size());
 		
 		ArrayList<IOperation> operations1 = new ArrayList<IOperation>();
-		operations1.add(new Operation(10,0,0));
-		operations1.add(new Operation(30,0,1));
+		operations1.add(new Operation(new OperationIndexVO(10,0,0)));
+		operations1.add(new Operation(new OperationIndexVO(30,0,1)));
 		
 		Assert.assertTrue("Most have the block 0,0 - 0,1",blocks.contains(operations1));
 		
@@ -142,23 +142,23 @@ public class Test_CalculateBlocks {
 		
 		//Validation: The given critical paths are correct
 		ArrayList<IOperation> operations1 = new ArrayList<IOperation>();
-		operations1.add(new Operation(10,1,1));
-		operations1.add(new Operation(30,0,1));
+		operations1.add(new Operation(new OperationIndexVO(10,1,1)));
+		operations1.add(new Operation(new OperationIndexVO(30,0,1)));
 		Assert.assertTrue("Most have the block 1,1 - 0,1",blocks.contains(operations1));
 		
 		ArrayList<IOperation> operations2 = new ArrayList<IOperation>();
-		operations2.add(new Operation(10,0,0));
-		operations2.add(new Operation(30,1,0));
+		operations2.add(new Operation(new OperationIndexVO(10,0,0)));
+		operations2.add(new Operation(new OperationIndexVO(30,1,0)));
 		Assert.assertTrue("Most have the block 0,0 - 0,1",blocks.contains(operations2));
 		
 		ArrayList<IOperation> operations3 = new ArrayList<IOperation>();
-		operations3.add(new Operation(10,0,0));
-		operations3.add(new Operation(30,1,0));
+		operations3.add(new Operation(new OperationIndexVO(10,0,0)));
+		operations3.add(new Operation(new OperationIndexVO(30,1,0)));
 		Assert.assertTrue("Most have the block 0,0 - 1,0",blocks.contains(operations3));
 		
 		ArrayList<IOperation> operations4 = new ArrayList<IOperation>();
-		operations4.add(new Operation(10,1,1));
-		operations4.add(new Operation(30,1,0));
+		operations4.add(new Operation(new OperationIndexVO(10,1,1)));
+		operations4.add(new Operation(new OperationIndexVO(30,1,0)));
 		Assert.assertTrue("Most have the block 1,1 - 1,0",blocks.contains(operations3));
 		
 	}
@@ -178,29 +178,29 @@ public class Test_CalculateBlocks {
 		
 		//Validation: The given critical paths are correct
 		ArrayList<IOperation> operations1 = new ArrayList<IOperation>();
-		operations1.add(new Operation(10,0,0));
-		operations1.add(new Operation(30,0,1));
+		operations1.add(new Operation(new OperationIndexVO(10,0,0)));
+		operations1.add(new Operation(new OperationIndexVO(30,0,1)));
 		Assert.assertTrue("Most have the block 0,0 - 0,1",blocks.contains(operations1));
 		
 		ArrayList<IOperation> operations2 = new ArrayList<IOperation>();
-		operations2.add(new Operation(10,0,1));
-		operations2.add(new Operation(30,1,1));
-		operations2.add(new Operation(30,2,1));
+		operations2.add(new Operation(new OperationIndexVO(10,0,1)));
+		operations2.add(new Operation(new OperationIndexVO(30,1,1)));
+		operations2.add(new Operation(new OperationIndexVO(30,2,1)));
 		Assert.assertTrue("Most have the block 0,1 - 1,1 - 2,1",blocks.contains(operations2));
 		
 		ArrayList<IOperation> operations3 = new ArrayList<IOperation>();
-		operations3.add(new Operation(10,2,1));
-		operations3.add(new Operation(30,2,2));
+		operations3.add(new Operation(new OperationIndexVO(10,2,1)));
+		operations3.add(new Operation(new OperationIndexVO(30,2,2)));
 		Assert.assertTrue("Most have the block 2,1 - 2,2",blocks.contains(operations3));
 		
 		ArrayList<IOperation> operations4 = new ArrayList<IOperation>();
-		operations4.add(new Operation(10,2,2));
-		operations4.add(new Operation(30,3,2));
+		operations4.add(new Operation(new OperationIndexVO(10,2,2)));
+		operations4.add(new Operation(new OperationIndexVO(30,3,2)));
 		Assert.assertTrue("Most have the block 2,2 - 3,2",blocks.contains(operations3));
 		
 		ArrayList<IOperation> operations5 = new ArrayList<IOperation>();
-		operations5.add(new Operation(10,3,2));
-		operations5.add(new Operation(30,3,3));
+		operations5.add(new Operation(new OperationIndexVO(10,3,2)));
+		operations5.add(new Operation(new OperationIndexVO(30,3,3)));
 		Assert.assertTrue("Most have the block 3,2 - 3,3",blocks.contains(operations5));
 		
 	}
