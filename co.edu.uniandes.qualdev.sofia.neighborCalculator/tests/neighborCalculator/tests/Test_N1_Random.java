@@ -1,5 +1,7 @@
 package neighborCalculator.tests;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 
 import junit.framework.Assert;
@@ -12,7 +14,9 @@ import org.junit.Test;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
 
+import structure.impl.CriticalPath;
 import structure.impl.Graph;
+import structure.impl.Operation;
 import structure.impl.Vector;
 
 /**
@@ -107,6 +111,93 @@ public class Test_N1_Random {
 		
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", nCr, neighborhood.size());
 	}
+	
+	
+	
+	@Test
+	public void testEscenario() throws InterruptedException {
+		Graph problem2 = new Graph(4,4);
+		
+		OperationIndexVO[][] escenario = new OperationIndexVO[4][4];
+		OperationIndexVO o11 = new OperationIndexVO(5, 0, 0);
+		escenario[0][0]= o11;
+		OperationIndexVO o12 = new OperationIndexVO(10, 0, 1);
+		escenario[0][1]= o12;
+		OperationIndexVO o13 = new OperationIndexVO(5, 0, 2);
+		escenario[0][2]= o13;
+		OperationIndexVO o14 = new OperationIndexVO(5, 0, 3);
+		escenario[0][3]= o14;
+		
+		OperationIndexVO o21 = new OperationIndexVO(5, 1, 0);
+		escenario[1][0]= o21;
+		OperationIndexVO o22 = new OperationIndexVO(10, 1, 1);
+		escenario[1][1]= o22;
+		OperationIndexVO o23 = new OperationIndexVO(5, 1, 2);
+		escenario[1][2]= o23;
+		OperationIndexVO o24 = new OperationIndexVO(5, 1, 3);
+		escenario[1][3]= o24;
+				
+		OperationIndexVO o31 = new OperationIndexVO(5, 2, 0);
+		escenario[2][0]= o31;
+		OperationIndexVO o32 = new OperationIndexVO(10, 2, 1);
+		escenario[2][1]= o32;
+		OperationIndexVO o33 = new OperationIndexVO(10, 2, 2);
+		escenario[2][2]= o33;
+		OperationIndexVO o34 = new OperationIndexVO(5, 2, 3);
+		escenario[2][3]= o34;
+		OperationIndexVO o41 = new OperationIndexVO(5, 3, 0);
+		escenario[3][0]= o41;
+		OperationIndexVO o42 = new OperationIndexVO(5, 3, 1);
+		escenario[3][1]= o42;
+		OperationIndexVO o43 = new OperationIndexVO(10, 3, 2);
+		escenario[3][2]= o43;
+		OperationIndexVO o44 = new OperationIndexVO(10, 3, 3);
+		escenario[3][3]= o44;
+		
+		
+		problem2.setProblem(escenario);
+		
+		problem2.scheduleOperation(o11);
+		problem2.scheduleOperation(o12);
+		problem2.scheduleOperation(o13);
+		problem2.scheduleOperation(o14);
+		problem2.scheduleOperation(o21);
+		problem2.scheduleOperation(o22);
+		problem2.scheduleOperation(o23);
+		problem2.scheduleOperation(o24);
+		problem2.scheduleOperation(o31);
+		problem2.scheduleOperation(o32);
+		problem2.scheduleOperation(o33);
+		problem2.scheduleOperation(o34);
+		problem2.scheduleOperation(o41);
+		problem2.scheduleOperation(o42);
+		problem2.scheduleOperation(o43);
+		problem2.scheduleOperation(o44);
+		
+		Graph newVector = (Graph) problem2.cloneStructure();
+		ArrayList<CriticalPath> routes;
+		try {
+			System.out.println("vecinos"+neighborCalulator.calculateCompleteNeighborhood(problem2));
+			ArrayList<PairVO> vecinos = neighborCalulator.calculateCompleteNeighborhood(problem2);
+			assertTrue(vecinos.contains(new PairVO(o11, o12)));
+			assertTrue(vecinos.contains(new PairVO(o11, o13)));
+			assertTrue(vecinos.contains(new PairVO(o11, o14)));
+			assertTrue(vecinos.contains(new PairVO(o41, o12)));
+			assertTrue(vecinos.contains(new PairVO(o41, o13)));
+			assertTrue(vecinos.contains(new PairVO(o41, o14)));
+			assertTrue(vecinos.contains(new PairVO(o23, o32)));
+			assertTrue(neighborCalulator.calculateCompleteNeighborhood(problem2).contains(new PairVO(o32, o33)));
+			assertTrue(neighborCalulator.calculateCompleteNeighborhood(problem2).contains(new PairVO(o33, o43)));
+			assertTrue(neighborCalulator.calculateCompleteNeighborhood(problem2).contains(new PairVO(o43, o44)));
+			routes = newVector.getCriticalPaths();
+			System.out.println("rutas"+routes);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+
+	}
+	
 	
 	// -----------------------------------------------
 	// Utilities
