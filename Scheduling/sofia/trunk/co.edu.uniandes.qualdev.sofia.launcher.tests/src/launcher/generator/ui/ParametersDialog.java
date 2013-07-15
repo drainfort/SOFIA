@@ -197,7 +197,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//T0
 			JLabel labT0 = new JLabel("T0");
-			JTextField txtT0 = new JTextField();
+			JTextField txtT0 = new JTextField("50");
 			panelParameters.add(labT0);
 			panelParameters.add(txtT0);
 			
@@ -206,7 +206,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Tf
 			JLabel labTf = new JLabel("Tf");
-			JTextField txtTf = new JTextField();
+			JTextField txtTf = new JTextField("0.5");
 			panelParameters.add(labTf);
 			panelParameters.add(txtTf);
 			
@@ -215,7 +215,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//boltzmann
 			JLabel labBoltzmann = new JLabel("boltzmann");
-			JTextField txtBoltzmann = new JTextField();
+			JTextField txtBoltzmann = new JTextField("10");
 			panelParameters.add(labBoltzmann);
 			panelParameters.add(txtBoltzmann);
 			
@@ -224,7 +224,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//k
 			JLabel labK = new JLabel("k");
-			JTextField txtK = new JTextField();
+			JTextField txtK = new JTextField("1000");
 			panelParameters.add(labK);
 			panelParameters.add(txtK);
 			
@@ -233,7 +233,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//coolingFactor
 			JLabel labCoolingFactor = new JLabel("coolingFactor");
-			JTextField txtcoolingFactor = new JTextField();
+			JTextField txtcoolingFactor = new JTextField("0.95");
 			panelParameters.add(labCoolingFactor);
 			panelParameters.add(txtcoolingFactor);
 			
@@ -242,7 +242,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Non-improving
 			JLabel labNonImproving = new JLabel("non-improving");
-			JTextField txtNonImproving = new JTextField();
+			JTextField txtNonImproving = new JTextField("50");
 			panelParameters.add(labNonImproving);
 			panelParameters.add(txtNonImproving);
 			
@@ -251,7 +251,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Restarts
 			JLabel labRestarts = new JLabel("restarts");
-			JTextField txtRestarts = new JTextField();
+			JTextField txtRestarts = new JTextField("0");
 			panelParameters.add(labRestarts);
 			panelParameters.add(txtRestarts);
 			
