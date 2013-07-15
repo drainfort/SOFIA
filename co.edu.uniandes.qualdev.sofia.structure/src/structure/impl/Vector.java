@@ -109,7 +109,6 @@ public class Vector extends AbstractStructure{
 		
 		IOperation initialOperation = this.getOperationByOperationIndex(initialOperationIndex);
 		IOperation finalOperation = this.getOperationByOperationIndex(finalOperationIndex);
-		
 		getOperations().set(initialOperationPosition, finalOperation);
 		getOperations().set(finalOperationPosition, initialOperation);
 		synch = false;
@@ -779,7 +778,6 @@ public class Vector extends AbstractStructure{
 			temp1.addNodeBegin(finalNodes.get(i));
 			routes.addAll(getCriticalRoute(cmatrix, temp1));
 		}	
-		
 		return routes;
 	}
 	
@@ -792,18 +790,18 @@ public class Vector extends AbstractStructure{
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		
 		int lastTime=0;
-		for(int i=0; i< CMatrix.length;i++){
+		for(int i=0; i< totalJobs;i++){
 			
-			for(int j=0; j<CMatrix[i].length;j++){
+			for(int j=0; j<totalStations;j++){
 				if(CMatrix[i][j]>lastTime){
 					lastTime=CMatrix[i][j];
 				}
 			}
 		}
 		
-		for(int i=0; i< CMatrix.length;i++){
+		for(int i=0; i< totalJobs;i++){
 			
-			for(int j=0; j<CMatrix[i].length;j++){
+			for(int j=0; j<totalStations;j++){
 				if(CMatrix[i][j]==lastTime){
 					IOperation temp= new Operation(new OperationIndexVO(i, j));
 					temp.setFinalTime(lastTime);
