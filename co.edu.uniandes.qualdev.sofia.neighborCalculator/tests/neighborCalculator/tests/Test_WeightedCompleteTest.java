@@ -16,7 +16,7 @@ import structure.impl.CriticalPath;
 import structure.impl.Graph;
 import structure.impl.Operation;
 
-public class _WeightedCompleteTest {
+public class Test_WeightedCompleteTest {
 
 	// -----------------------------------------------
 	// Attributes
