@@ -179,6 +179,7 @@ public class ChartPrinter {
 			}
 			String bestCMaxString = bestCmax + ""; 
 			if(bestCmax == results.get(0).getOptimal())bestCMaxString+="*";
+			if(bestCmax<results.get(0).getOptimal())bestCMaxString+="**";
 			double average = sumBestCMax/iterations;
 			
 			if(i ==globalExecutionResults.size()-1){
