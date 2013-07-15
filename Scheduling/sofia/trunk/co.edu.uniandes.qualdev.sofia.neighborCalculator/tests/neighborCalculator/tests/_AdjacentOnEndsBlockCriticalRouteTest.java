@@ -27,8 +27,6 @@ public class _AdjacentOnEndsBlockCriticalRouteTest {
 	// Attributes
 	// -----------------------------------------------
 	
-	private static Graph problemVector = new Graph(2,2);
-	private static Graph problem1 = new Graph(2,2);
 	private static ShiftBlockAdjOnEnds neighbor = new ShiftBlockAdjOnEnds();
 	
 	// -----------------------------------------------
@@ -51,6 +49,8 @@ public class _AdjacentOnEndsBlockCriticalRouteTest {
 	
 	@Test
 	public void testClone1() throws InterruptedException {
+		
+		Graph problemVector = new Graph(2,2);
 		
 		OperationIndexVO[][] problem = new OperationIndexVO[2][2]; 
 		
@@ -91,6 +91,8 @@ public class _AdjacentOnEndsBlockCriticalRouteTest {
 	}
 	@Test
 	public void testClone2() throws InterruptedException {
+		
+		Graph problem1 = new Graph(2,2);
 		
 		OperationIndexVO[][] secondEscenario = new OperationIndexVO[2][2];
 		OperationIndexVO o11 = new OperationIndexVO(10, 0, 0);
