@@ -761,19 +761,25 @@ public class Vector extends AbstractStructure{
 	 * @return criticalPaths. Collection of critical paths of the current solution. 
 	 */
 	public ArrayList<CriticalPath> getCriticalPaths(){
-		
-		ArrayList<IOperation> solution = vectorDecodSimple;
+		synch=false;
+		calculateCMatrix();
+		int [][] cmatrix = C;
 		if(isNonDelayActive())
-			solution = vectorDecodNonDelay;
+			cmatrix = CIntepretation;
 		
 		ArrayList<CriticalPath> routes = new ArrayList<CriticalPath>();
-		ArrayList<IOperation> finalNodes = getLastOperation(solution);
+		ArrayList<IOperation> finalNodes = getLastOperation(cmatrix);
 		
 		for(int i=0; i < finalNodes.size();i++ ){
-			CriticalPath temp= new CriticalPath();
-			temp.addNodeBegin(finalNodes.get(i));
-			routes.addAll(getLongestRoute(temp, solution));
-		}		
+			//CriticalPath temp= new CriticalPath();
+			//temp.addNodeBegin(finalNodes.get(i));
+			//routes.addAll(getLongestRoute(temp, solution));
+			
+			CriticalPath temp1= new CriticalPath();
+			temp1.addNodeBegin(finalNodes.get(i));
+			routes.addAll(getCriticalRoute(cmatrix, temp1));
+		}	
+		
 		return routes;
 	}
 	
@@ -781,23 +787,28 @@ public class Vector extends AbstractStructure{
 	 * Returns the collection of operations such that their C value is the biggest one.
 	 * @return lastOperations. A collection of IOperations such that its C value is the biggest one.
 	 */
-	public ArrayList<IOperation> getLastOperation(ArrayList<IOperation> solution){
-		synch=false;
-		calculateCMatrix();
+	public ArrayList<IOperation> getLastOperation(int[][]CMatrix){
+		
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		
 		int lastTime=0;
-		for(int i=0; i< solution.size();i++){
-			IOperation temp= solution.get(i);
-			if(temp.getFinalTime()>lastTime){
-				lastTime= temp.getFinalTime();
+		for(int i=0; i< CMatrix.length;i++){
+			
+			for(int j=0; j<CMatrix[i].length;j++){
+				if(CMatrix[i][j]>lastTime){
+					lastTime=CMatrix[i][j];
+				}
 			}
 		}
 		
-		for(int i=0; i< solution.size();i++){
-			IOperation temp= solution.get(i);
-			if(temp.getFinalTime()==lastTime){
-				operations.add(temp);
+		for(int i=0; i< CMatrix.length;i++){
+			
+			for(int j=0; j<CMatrix[i].length;j++){
+				if(CMatrix[i][j]==lastTime){
+					IOperation temp= new Operation(new OperationIndexVO(i, j));
+					temp.setFinalTime(lastTime);
+					operations.add(temp);
+				}
 			}
 		}
 		return operations;
@@ -923,6 +934,109 @@ public class Vector extends AbstractStructure{
 
 			}
 		});
+	}
+	
+	public ArrayList<CriticalPath> getCriticalRoute(int [][] matrizC, CriticalPath route){
+		ArrayList<CriticalPath> routes = new ArrayList<CriticalPath>();
+		IOperation lastOperation = route.getRoute().get(0);
+		
+		ArrayList<IOperation> operationsStation = getOperationsBeforeByStation(matrizC, lastOperation);
+		ArrayList<IOperation> operationsJob = getOperationsBeforeByJob(matrizC, lastOperation);
+		if(!operationsJob.isEmpty()){
+			IOperation operationBeforeByJob = operationsJob.get(operationsJob.size()-1);
+			if(!operationsStation.isEmpty()){
+				IOperation operationBeforeByStation = operationsStation.get(operationsStation.size()-1);
+				if(operationBeforeByJob.getFinalTime()>operationBeforeByStation.getFinalTime()){
+					route.addNodeBegin(operationBeforeByJob);
+					operationsJob=null;
+					operationsStation=null;
+					return getCriticalRoute(matrizC, route);
+					
+				}
+				else if(operationBeforeByJob.getFinalTime()==operationBeforeByStation.getFinalTime()){
+					CriticalPath clone = new CriticalPath();
+					for(int j=0; j<route.getRoute().size();j++){
+						IOperation node = route.getRoute().get(j);
+						clone.getRoute().add(node);
+					}
+					route.addNodeBegin(operationBeforeByJob);
+					clone.addNodeBegin(operationBeforeByStation);
+					ArrayList<CriticalPath> temp1 = getCriticalRoute(matrizC, route);
+					
+					ArrayList<CriticalPath> temp2 = getCriticalRoute(matrizC, clone);
+					
+					temp1.addAll(temp2);
+					operationsJob=null;
+					operationsStation=null;
+					return temp1;
+				}
+				else{
+					route.addNodeBegin(operationBeforeByStation);
+					operationsJob=null;
+					operationsStation=null;
+					return getCriticalRoute(matrizC, route);
+					
+				}
+			}
+			else{
+				route.addNodeBegin( operationBeforeByJob);
+				operationsJob=null;
+				operationsStation=null;
+				return getCriticalRoute(matrizC, route);
+			}
+		}
+		else{
+			if(!operationsStation.isEmpty()){
+					IOperation operationBeforeByStation = operationsStation.get(operationsStation.size()-1);
+					route.addNodeBegin(operationBeforeByStation);
+					operationsJob=null;
+					operationsStation=null;
+					return getCriticalRoute(matrizC, route);
+			}
+			else{
+				routes.add(route);
+				operationsJob=null;
+				operationsStation=null;
+				return routes;	
+			}
+		}
+		
+	}
+	
+	public ArrayList<IOperation> getOperationsBeforeByJob(int [][] matrizC, IOperation operation){
+	
+		ArrayList<IOperation> operations = new ArrayList<IOperation>();
+		int jobid = operation.getOperationIndex().getJobId();
+		int finalTime = operation.getFinalTime();
+		
+		for(int i=0; i < this.totalStations; i++){
+			int cValue= matrizC[jobid][i];
+			if(cValue < finalTime){
+				IOperation temp = new Operation(new OperationIndexVO(jobid, i));
+				temp.setFinalTime(cValue);
+				operations.add(temp);
+			}
+		}
+		sortArray(operations);
+		return operations;
+	}
+	
+	public ArrayList<IOperation> getOperationsBeforeByStation(int [][] matrizC, IOperation operation){
+		
+		ArrayList<IOperation> operations = new ArrayList<IOperation>();
+		int stationid = operation.getOperationIndex().getStationId();
+		int finalTime = operation.getFinalTime();
+		
+		for(int i=0; i < this.totalJobs; i++){
+			int cValue= matrizC[i][stationid];
+			if(cValue < finalTime){
+				IOperation temp = new Operation(new OperationIndexVO(i, stationid));
+				temp.setFinalTime(cValue);
+				operations.add(temp);
+			}
+		}
+		sortArray(operations);
+		return operations;
 	}
 	
 	// -------------------------------------------------
