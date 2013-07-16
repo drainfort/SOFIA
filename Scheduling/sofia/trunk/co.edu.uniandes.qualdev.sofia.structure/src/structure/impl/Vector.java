@@ -87,6 +87,17 @@ public class Vector extends AbstractStructure{
 		vectorDecodSimple = new ArrayList<IOperation>();
 		synch = false;
 	}
+	
+	/**
+	 * Constructor of the class
+	 */
+	public Vector(String processingTimesFile, String mVector, ArrayList<BetaVO> pBetas) throws Exception {
+		super(processingTimesFile, mVector, pBetas);
+		
+		vectorDecodNonDelay = new ArrayList<IOperation>();
+		vectorDecodSimple = new ArrayList<IOperation>();
+		synch = false;
+	}
 
 	// -------------------------------------------------
 	// Neighbor methods
