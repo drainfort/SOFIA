@@ -3,12 +3,14 @@ package vector.testcases;
 import java.util.ArrayList;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import structure.factory.impl.VectorFactory;
 import structure.impl.Vector;
 
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
+import common.utils.MatrixUtils;
 
 public class Test_ParallelMachines {
 
@@ -63,6 +65,11 @@ public class Test_ParallelMachines {
 			vector.scheduleOperation(new OperationIndexVO(3, 3));
 			vector.scheduleOperation(new OperationIndexVO(1, 3));
 			vector.scheduleOperation(new OperationIndexVO(3, 1));*/
+		}
+		
+		@Test
+		public void testCalculateCMatrix(){
+			
 		}
 	
 }
