@@ -47,7 +47,7 @@ public class Test_ParallelMachines {
 			vector = (Vector) VectorFactory.createNewInstance(
 					"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
 			
-			vector.scheduleOperation(new OperationIndexVO(0, 1));
+			/*vector.scheduleOperation(new OperationIndexVO(0, 1));
 			vector.scheduleOperation(new OperationIndexVO(1, 2));
 			vector.scheduleOperation(new OperationIndexVO(2, 3));
 			vector.scheduleOperation(new OperationIndexVO(3, 2));
@@ -62,7 +62,7 @@ public class Test_ParallelMachines {
 			vector.scheduleOperation(new OperationIndexVO(2, 2));
 			vector.scheduleOperation(new OperationIndexVO(3, 3));
 			vector.scheduleOperation(new OperationIndexVO(1, 3));
-			vector.scheduleOperation(new OperationIndexVO(3, 1));
+			vector.scheduleOperation(new OperationIndexVO(3, 1));*/
 		}
 	
 }
