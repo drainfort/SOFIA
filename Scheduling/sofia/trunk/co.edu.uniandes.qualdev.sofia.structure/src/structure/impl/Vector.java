@@ -632,25 +632,36 @@ public class Vector extends AbstractStructure{
 	
 	@Override
 	public void scheduleOperation(OperationIndexVO operationIndexVO) {
-		OperationIndexVO newOperationIndex = operationsMatrix[operationIndexVO.getJobId()][operationIndexVO.getStationId()];
+		OperationIndexVO newOperationIndex = operationsMatrix[operationIndexVO.getJobId()][operationIndexVO.getMachineId()];
 		Operation newOperation = new Operation(newOperationIndex);
-		newOperation.setScheduled(true);
-		getOperations().add(newOperation);
-		int maxAmountOfJobs = -1;
-		int maxAmountOfStations = -1;
-		int maxAmountOfMachinesPerStation = -1;
-		for (IOperation operation : getOperations()) {
-			if((operation.getOperationIndex().getJobId() + 1) > maxAmountOfJobs)
-				maxAmountOfJobs = (operation.getOperationIndex().getJobId() + 1);
-			if((operation.getOperationIndex().getStationId() + 1) > maxAmountOfStations)
-				maxAmountOfStations = (operation.getOperationIndex().getStationId() + 1);
-			if((operation.getOperationIndex().getMachineId() + 1) > maxAmountOfMachinesPerStation)
-				maxAmountOfMachinesPerStation = (operation.getOperationIndex().getMachineId() + 1);
+		if(canSchedule(operationIndexVO)){
+			newOperation.setScheduled(true);
+			getOperations().add(newOperation);
+			int maxAmountOfJobs = -1;
+			int maxAmountOfStations = -1;
+			int maxAmountOfMachinesPerStation = -1;
+			for (IOperation operation : getOperations()) {
+				if((operation.getOperationIndex().getJobId() + 1) > maxAmountOfJobs)
+					maxAmountOfJobs = (operation.getOperationIndex().getJobId() + 1);
+				if((operation.getOperationIndex().getStationId() + 1) > maxAmountOfStations)
+					maxAmountOfStations = (operation.getOperationIndex().getStationId() + 1);
+				if((operation.getOperationIndex().getMachineId() + 1) > maxAmountOfMachinesPerStation)
+					maxAmountOfMachinesPerStation = (operation.getOperationIndex().getMachineId() + 1);
+			}
 		}
 		
 		synch = false;
 	}
 	
+	private boolean canSchedule(OperationIndexVO operationIndexVO) {
+		for(int i=0; i<getOperations().size();i++){
+			OperationIndexVO temp = getOperations().get(i).getOperationIndex();
+			if(temp.getJobId()== operationIndexVO.getJobId() && operationIndexVO.getStationId()== temp.getStationId())
+				return false;
+		}
+		return true;
+	}
+
 	@Override
 	public void removeOperationFromSchedule(OperationIndexVO operationIndex) {
 		IOperation toRemove = this.getOperationByOperationIndex(operationIndex);
