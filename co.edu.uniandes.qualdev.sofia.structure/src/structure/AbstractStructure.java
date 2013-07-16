@@ -81,6 +81,13 @@ public abstract class AbstractStructure  implements IStructure{
 		}
 	}
 	
+	public AbstractStructure(String processingTimesFile, String mVector, ArrayList<BetaVO> pBetas)throws Exception{
+		betas = new HashMap<String, Beta>();
+		
+		operationsMatrix = loadParallelProblemMatrix(processingTimesFile, mVector);
+	}
+	
+
 	/**
 	 * Constructor of the class. It is able to create a structure
 	 * with the problem: Operations with processing times + betas.
@@ -146,6 +153,61 @@ public abstract class AbstractStructure  implements IStructure{
 	 */
 	private OperationIndexVO[][] loadProblemMatrix(String processingTimesFile)
 			throws Exception {
+		OperationIndexVO[][] problemMatrix = null;
+
+		BufferedReader reader = null;
+		try {
+			File file = new File(processingTimesFile);
+			reader = new BufferedReader(new FileReader(file));
+
+			String matrixHeightString = reader.readLine();
+			Integer matrixHeight = Integer.parseInt(matrixHeightString);
+
+			String matrixWidthString = reader.readLine();
+			Integer matrixWidth = Integer.parseInt(matrixWidthString);
+
+			problemMatrix = new OperationIndexVO[matrixHeight][matrixWidth];
+
+			for (int i = 0; i < matrixHeight; i++) {
+				String currentLine = reader.readLine();
+				for (int j = 0; j < matrixWidth; j++) {
+
+					int numerito = currentLine.substring(1,
+							currentLine.length() - 1).indexOf("|") + 1;
+					if (numerito == 0)
+						numerito = currentLine.length() - 1;
+					String currentNumberString = currentLine.substring(1,
+							numerito);
+					int currentNumber = 0;
+					if (!currentNumberString.equals(" ")) {
+						currentNumber = Integer.parseInt(currentNumberString);
+					} else {
+						currentNumber = -1;
+					}
+
+					if (currentNumber != -1) {
+						OperationIndexVO operation = new OperationIndexVO(currentNumber, i, j);
+						problemMatrix[i][j] = operation;
+					}
+					currentLine = currentLine.substring(
+							currentLine.substring(1, currentLine.length() - 1)
+									.indexOf("|") + 1, currentLine.length());
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (reader != null)
+				reader.close();
+		}
+
+		return problemMatrix;
+	}
+	
+	private OperationIndexVO[][] loadParallelProblemMatrix(
+			String processingTimesFile, String mVector)  throws Exception {
 		OperationIndexVO[][] problemMatrix = null;
 
 		BufferedReader reader = null;
