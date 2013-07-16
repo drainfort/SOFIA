@@ -46,6 +46,8 @@ public abstract class AbstractStructure  implements IStructure{
 	 */
 	protected String processingTimesFile;
 	
+	protected String MVectorFile;
+	
 	/**
 	 * Amount of jobs in the system
 	 */
@@ -55,6 +57,11 @@ public abstract class AbstractStructure  implements IStructure{
 	 * Amount of machines in the system
 	 */
 	protected int totalStations = 0;
+	
+	/**
+	 * Amount of machines in the system
+	 */
+	protected int totalMachines = 0;
 
 	/**
 	 * Max amount of machines per station in the system
@@ -86,6 +93,14 @@ public abstract class AbstractStructure  implements IStructure{
 		betas = new HashMap<String, Beta>();
 		
 		operationsMatrix = loadParallelProblemMatrix(processingTimesFile, mVector);
+		
+		totalJobs = operationsMatrix.length;
+		totalMachines = operationsMatrix[0].length;
+		
+		this.processingTimesFile = processingTimesFile;
+		this.MVectorFile = mVector;
+		loadBetas(pBetas);
+		
 	}
 	
 
@@ -227,7 +242,7 @@ public abstract class AbstractStructure  implements IStructure{
 				if(line.charAt(i)!='|')
 					numberStations.add(Integer.parseInt(""+line.charAt(i)));
 			}
-			
+			totalStations =numberStations.size();
 			System.out.println(numberStations);
 			
 			
