@@ -69,41 +69,7 @@ public class Test_ParallelMachines {
 		
 		@Test
 		public void testCalculateCMatrix(){
-			ArrayList<String> problemFiles = new ArrayList<String>();
 
-			String TFile = "./data/04x04x02/1-T/T-04x04x02-01.txt";
-			String TTFile = "./data/04x04x02/2-TT/TT-04x04x02-01.txt";
-			String MFile = "./data/04x04x02/4-M/M-04x04x02-01.txt";
-			
-			problemFiles.add(TFile);
-			problemFiles.add(TTFile);
-			problemFiles.add(MFile);
-
-			ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
-			ArrayList<String> informationFiles = new ArrayList<String>();
-			informationFiles.add(TTFile);
-
-			BetaVO TTBeta = new BetaVO("TravelTimes", "beta.impl.TravelTimes", informationFiles, true);
-			BetaVO TearDownTT = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", informationFiles, true);
-			betas.add(TTBeta);
-			betas.add(TearDownTT);
-
-			try {
-				vector = (Vector) VectorFactory.createNewInstance(
-						"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	
 }
