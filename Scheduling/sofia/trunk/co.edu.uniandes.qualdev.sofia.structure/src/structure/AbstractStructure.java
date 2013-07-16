@@ -10,6 +10,7 @@ import java.util.Map;
 import structure.impl.Operation;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
+import common.utils.MatrixUtils;
 
 import beta.Beta;
 
@@ -258,7 +259,7 @@ public abstract class AbstractStructure  implements IStructure{
 					}
 
 					if (currentNumber != -1) {
-						OperationIndexVO operation = new OperationIndexVO(currentNumber, i, currentStation+1,j);
+						OperationIndexVO operation = new OperationIndexVO(currentNumber, i, currentStation,j);
 						numberMachinesStation++;
 						problemMatrix[i][j] = operation;
 						System.out.println(operation);
