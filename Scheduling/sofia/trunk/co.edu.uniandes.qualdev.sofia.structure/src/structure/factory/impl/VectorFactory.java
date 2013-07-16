@@ -68,7 +68,7 @@ public class VectorFactory extends AbstractStructureFactory {
 		else{
 			IStructure solutionVector = new Vector(problemFiles.get(0), problemFiles.get(2) , betas);
 			
-			return null;
+			return solutionVector;
 		}
 	}
 	
