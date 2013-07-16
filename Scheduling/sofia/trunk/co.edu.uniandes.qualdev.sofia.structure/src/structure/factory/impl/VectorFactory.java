@@ -66,7 +66,6 @@ public class VectorFactory extends AbstractStructureFactory {
 			return solutionVector;
 		}
 		else{
-			System.out.println("entro");
 			IStructure solutionVector = new Vector(problemFiles.get(0), problemFiles.get(2) , betas);
 			
 			return null;

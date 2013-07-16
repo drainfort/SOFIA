@@ -211,10 +211,25 @@ public abstract class AbstractStructure  implements IStructure{
 		OperationIndexVO[][] problemMatrix = null;
 
 		BufferedReader reader = null;
+		BufferedReader reader2 = null;
 		try {
 			File file = new File(processingTimesFile);
+			File file2 = new File(mVector);
 			reader = new BufferedReader(new FileReader(file));
-
+			reader2 = new BufferedReader(new FileReader(file2));
+			
+			String line = reader2.readLine();
+			line.replace("|", ";");
+			ArrayList<Integer> numberStations = new ArrayList<Integer>();
+			for(int i=0; i< line.length();i++ )
+			{
+				if(line.charAt(i)!='|')
+					numberStations.add(Integer.parseInt(""+line.charAt(i)));
+			}
+			
+			System.out.println(numberStations);
+			
+			
 			String matrixHeightString = reader.readLine();
 			Integer matrixHeight = Integer.parseInt(matrixHeightString);
 
@@ -222,9 +237,11 @@ public abstract class AbstractStructure  implements IStructure{
 			Integer matrixWidth = Integer.parseInt(matrixWidthString);
 
 			problemMatrix = new OperationIndexVO[matrixHeight][matrixWidth];
-
+			
 			for (int i = 0; i < matrixHeight; i++) {
 				String currentLine = reader.readLine();
+				int currentStation =0;
+				int numberMachinesStation = 1;
 				for (int j = 0; j < matrixWidth; j++) {
 
 					int numerito = currentLine.substring(1,
@@ -241,8 +258,16 @@ public abstract class AbstractStructure  implements IStructure{
 					}
 
 					if (currentNumber != -1) {
-						OperationIndexVO operation = new OperationIndexVO(currentNumber, i, j);
+						OperationIndexVO operation = new OperationIndexVO(currentNumber, i, currentStation+1,j);
+						numberMachinesStation++;
 						problemMatrix[i][j] = operation;
+						System.out.println(operation);
+					}
+					
+					if(numberMachinesStation>numberStations.get(currentStation))
+					{
+						currentStation++;
+						numberMachinesStation = 1;
 					}
 					currentLine = currentLine.substring(
 							currentLine.substring(1, currentLine.length() - 1)
@@ -256,8 +281,10 @@ public abstract class AbstractStructure  implements IStructure{
 		} finally {
 			if (reader != null)
 				reader.close();
+			if (reader2 != null)
+				reader2.close();
 		}
-
+		
 		return problemMatrix;
 	}
 	
