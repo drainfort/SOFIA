@@ -49,22 +49,33 @@ public class Test_ParallelMachines {
 			vector = (Vector) VectorFactory.createNewInstance(
 					"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
 			
-			/*vector.scheduleOperation(new OperationIndexVO(0, 1));
-			vector.scheduleOperation(new OperationIndexVO(1, 2));
-			vector.scheduleOperation(new OperationIndexVO(2, 3));
-			vector.scheduleOperation(new OperationIndexVO(3, 2));
-			vector.scheduleOperation(new OperationIndexVO(2, 1));
-			vector.scheduleOperation(new OperationIndexVO(1, 0));
-			vector.scheduleOperation(new OperationIndexVO(2, 0));
-			vector.scheduleOperation(new OperationIndexVO(0, 2));
-			vector.scheduleOperation(new OperationIndexVO(0, 3));
-			vector.scheduleOperation(new OperationIndexVO(3, 0));
-			vector.scheduleOperation(new OperationIndexVO(0, 0));
-			vector.scheduleOperation(new OperationIndexVO(1, 1));
-			vector.scheduleOperation(new OperationIndexVO(2, 2));
-			vector.scheduleOperation(new OperationIndexVO(3, 3));
-			vector.scheduleOperation(new OperationIndexVO(1, 3));
-			vector.scheduleOperation(new OperationIndexVO(3, 1));*/
+			vector.scheduleOperation(new OperationIndexVO(0, 0, 0, 0));
+			vector.scheduleOperation(new OperationIndexVO(0, 0, 0, 1));
+			vector.scheduleOperation(new OperationIndexVO(0, 0, 1, 3));
+			vector.scheduleOperation(new OperationIndexVO(0, 0, 1, 2));
+			vector.scheduleOperation(new OperationIndexVO(0, 0, 2, 4));
+			vector.scheduleOperation(new OperationIndexVO(0, 0, 2, 5));
+			vector.scheduleOperation(new OperationIndexVO(0, 0, 3, 6));
+			vector.scheduleOperation(new OperationIndexVO(0, 0, 3, 7));
+			
+			vector.scheduleOperation(new OperationIndexVO(0, 1, 0, 1));
+			vector.scheduleOperation(new OperationIndexVO(0, 1, 1, 2));
+			vector.scheduleOperation(new OperationIndexVO(0, 1, 2, 5));
+			vector.scheduleOperation(new OperationIndexVO(0, 1, 3, 7));
+			
+			vector.scheduleOperation(new OperationIndexVO(0, 2, 0, 0));
+			vector.scheduleOperation(new OperationIndexVO(0, 2, 1, 3));
+			vector.scheduleOperation(new OperationIndexVO(0, 2, 2, 4));
+			vector.scheduleOperation(new OperationIndexVO(0, 2, 3, 6));
+
+			vector.scheduleOperation(new OperationIndexVO(0, 3, 0, 1));
+			vector.scheduleOperation(new OperationIndexVO(0, 3, 1, 2));
+			vector.scheduleOperation(new OperationIndexVO(0, 3, 2, 5));
+			vector.scheduleOperation(new OperationIndexVO(0, 3, 3, 7));
+			
+			System.out.println(vector.getVector());
+			MatrixUtils.printMatrix(vector.calculateCMatrix());
+			MatrixUtils.printMatrix(vector.getCIntepretation());
 		}
 		
 		@Test
