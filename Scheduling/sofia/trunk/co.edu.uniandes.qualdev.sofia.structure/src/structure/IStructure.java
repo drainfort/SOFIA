@@ -274,7 +274,7 @@ public interface IStructure {
 	 *            Object of the class OperationIndexVO with the information of an
 	 *            operation
 	 */
-	public void scheduleOperation(OperationIndexVO operationIndexVO);
+	public boolean scheduleOperation(OperationIndexVO operationIndexVO);
 	
 	/**
 	 * Removes the operation defined by the parameter from the current schedule

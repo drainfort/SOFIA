@@ -643,10 +643,11 @@ public class Vector extends AbstractStructure{
 	// -------------------------------------------------
 	
 	@Override
-	public void scheduleOperation(OperationIndexVO operationIndexVO) {
+	public boolean scheduleOperation(OperationIndexVO operationIndexVO) {
 		OperationIndexVO newOperationIndex = operationsMatrix[operationIndexVO.getJobId()][operationIndexVO.getMachineId()];
 		Operation newOperation = new Operation(newOperationIndex);
-		if(canSchedule(operationIndexVO)){
+		boolean schedule = canSchedule(operationIndexVO);
+		if(schedule){
 			newOperation.setScheduled(true);
 			getOperations().add(newOperation);
 			int maxAmountOfJobs = -1;
@@ -660,9 +661,11 @@ public class Vector extends AbstractStructure{
 				if((operation.getOperationIndex().getMachineId() + 1) > maxAmountOfMachinesPerStation)
 					maxAmountOfMachinesPerStation = (operation.getOperationIndex().getMachineId() + 1);
 			}
+			
 		}
 		
 		synch = false;
+		return schedule;
 	}
 	
 	private boolean canSchedule(OperationIndexVO operationIndexVO) {
