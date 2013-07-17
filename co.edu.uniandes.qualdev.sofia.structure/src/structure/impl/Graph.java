@@ -735,7 +735,7 @@ public class Graph extends AbstractStructure {
 	// -------------------------------------------------
 
 	@Override
-	public void scheduleOperation(OperationIndexVO operationIndex) {
+	public boolean scheduleOperation(OperationIndexVO operationIndex) {
 		Vector<Integer> route = (Vector<Integer>) this.getJobRoute(operationIndex.getJobId());
 		Vector<Integer> sequence = (Vector<Integer>) this.getStationSequence(operationIndex.getStationId());
 
@@ -756,6 +756,8 @@ public class Graph extends AbstractStructure {
 			OperationIndexVO start = new OperationIndexVO(0,sequence.get(sequence.size()-1), operationIndex.getStationId());
 			this.createSequenceArc(start, operationIndex); 
 		}
+		
+		return true;
 	}
 
 	@Override
