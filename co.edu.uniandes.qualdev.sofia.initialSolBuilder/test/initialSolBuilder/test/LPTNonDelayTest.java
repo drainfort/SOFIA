@@ -7,6 +7,9 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import structure.factory.impl.VectorFactory;
+import structure.impl.Vector;
+
 import common.types.BetaVO;
 
 import initialSolBuilder.impl.LPTNonDelay;
@@ -87,4 +90,32 @@ public class LPTNonDelayTest {
 	}
 	
 	//TODO Falta un caso de prueba. Hay que revisar que la matriz C es correcta. 
+	
+	
+	@Test
+	public void testLPTNonDelay04x04x02_1() throws Exception{
+		ArrayList<String> problemFiles = new ArrayList<String>();
+
+		String TFile = "./data/04x04x02/1-T/T-04x04x02-01.txt";
+		String TTFile = "./data/04x04x02/2-TT/TT-04x04x02-01.txt";
+		String MFile = "./data/04x04x02/4-M/M-04x04x02-01.txt";
+		
+		problemFiles.add(TFile);
+		problemFiles.add(TTFile);
+		problemFiles.add(MFile);
+
+		ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
+		ArrayList<String> informationFiles = new ArrayList<String>();
+		informationFiles.add(TTFile);
+
+		BetaVO TTBeta = new BetaVO("TravelTimes", "beta.impl.TravelTimes", informationFiles, true);
+		BetaVO TearDownTT = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", informationFiles, true);
+		betas.add(TTBeta);
+		betas.add(TearDownTT);
+
+		Vector vector = (Vector) VectorFactory.createNewInstance(
+				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
+		
+		
+	}
 }
