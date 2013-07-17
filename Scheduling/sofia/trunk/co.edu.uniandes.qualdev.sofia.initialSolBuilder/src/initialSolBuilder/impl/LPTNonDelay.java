@@ -88,20 +88,23 @@ public class LPTNonDelay implements IInitialSolBuilder{
 		// Esta es la lista de permutacion que se va a retornar.
 		// Arranca vacía y en cada iteración se le agrega una operación.
 		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas);
-
+		OperationIndexVO[][] problem = finalList.getProblem();
+		
 		// Arreglo con las operaciones sin programar
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		for (int i = 0; i < T.length; i++) {
 			for (int j = 0; j < T[0].length; j++) {
-				IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
-				OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
-				currentOperationIndex.setProcessingTime(T[i][j]);
-				currentIOperation.setOperationIndex(currentOperationIndex);
 				
+				IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
+				OperationIndexVO temp = problem [i][j];
+				System.out.println(temp);
+				OperationIndexVO currentOperationIndex = new OperationIndexVO(temp.getProcessingTime(), temp.getJobId(), temp.getStationId(), temp.getMachineId());
+				currentIOperation.setOperationIndex(currentOperationIndex);
 				operations.add(currentIOperation);
 			}
 		}
 		
+		System.out.println(operations);
 		if(travelTimesIncluded){
 			// Para las operaciones sin programar actualiza los tiempos de inicio de la operacion.
 			for (IOperation operation : operations) {
