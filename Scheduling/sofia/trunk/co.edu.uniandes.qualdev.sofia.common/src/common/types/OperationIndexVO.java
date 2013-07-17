@@ -53,7 +53,7 @@ public class OperationIndexVO {
 	public OperationIndexVO( int processingTime, int job, int station) {
 		jobId = job;
 		stationId = station;
-		machineId = 0;
+		machineId = station;
 		this.processingTime = processingTime;
 	}
 	
