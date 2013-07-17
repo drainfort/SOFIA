@@ -156,8 +156,9 @@ public class LPTNonDelay implements IInitialSolBuilder{
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
 			}
 			
-			System.out.println(finalList.getOperations());
+			
 			finalList.calculateCMatrix();
+			System.out.println(finalList.getOperations());
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
