@@ -113,10 +113,8 @@ public class LPTNonDelayTest {
 		betas.add(TTBeta);
 		betas.add(TearDownTT);
 
-		Vector vector = (Vector) VectorFactory.createNewInstance(
-				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
+		Vector vector= (Vector) testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null);
 		
-		testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null);
-		
+		Assert.assertEquals("El vector deberia tener un tamaño de 16", vector.getOperations().size(), 16);
 	}
 }
