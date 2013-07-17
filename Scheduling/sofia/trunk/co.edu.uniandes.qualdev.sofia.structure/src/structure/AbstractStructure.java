@@ -242,9 +242,7 @@ public abstract class AbstractStructure  implements IStructure{
 				if(line.charAt(i)!='|')
 					numberStations.add(Integer.parseInt(""+line.charAt(i)));
 			}
-			totalStations =numberStations.size();
-			System.out.println(numberStations);
-			
+			totalStations =numberStations.size();		
 			
 			String matrixHeightString = reader.readLine();
 			Integer matrixHeight = Integer.parseInt(matrixHeightString);
@@ -277,7 +275,6 @@ public abstract class AbstractStructure  implements IStructure{
 						OperationIndexVO operation = new OperationIndexVO(currentNumber, i, currentStation,j);
 						numberMachinesStation++;
 						problemMatrix[i][j] = operation;
-						System.out.println(operation);
 					}
 					
 					if(numberMachinesStation>numberStations.get(currentStation))
