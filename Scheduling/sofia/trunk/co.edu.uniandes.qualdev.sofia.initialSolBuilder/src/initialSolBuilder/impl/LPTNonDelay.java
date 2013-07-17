@@ -141,11 +141,10 @@ public class LPTNonDelay implements IInitialSolBuilder{
 			for (int i = 0; i < operationsMinInitialTime.size(); i++) {
 				IOperation operation = operationsMinInitialTime.get(i);
 				
-				int currentProcessingTime = T[operation.getOperationIndex().getJobId()][operation.getOperationIndex().getStationId()];
+				int currentProcessingTime = T[operation.getOperationIndex().getJobId()][operation.getOperationIndex().getMachineId()];
 				if(currentProcessingTime > maxProcessingTime){
 					maxProcessingTime = currentProcessingTime;
 					selectedOperation = operation;
-					
 				}
 			}
 			// Quita la operacion a programar, de las operaciones por programar
