@@ -107,7 +107,7 @@ public class Vector extends AbstractStructure{
 	public void exchangeOperations(int initialOperationPosition, int finalOperationPosition) {
 		IOperation firstOperation = getOperations().get(initialOperationPosition);
 		IOperation secondOperation = getOperations().get(finalOperationPosition);
-		
+				
 		getOperations().set(initialOperationPosition, secondOperation);
 		getOperations().set(finalOperationPosition, firstOperation);
 		synch = false;
@@ -120,8 +120,20 @@ public class Vector extends AbstractStructure{
 		
 		IOperation initialOperation = this.getOperationByOperationIndex(initialOperationIndex);
 		IOperation finalOperation = this.getOperationByOperationIndex(finalOperationIndex);
-		getOperations().set(initialOperationPosition, finalOperation);
-		getOperations().set(finalOperationPosition, initialOperation);
+		
+		if(initialOperationPosition==-1 && finalOperationPosition!=-1){
+			getOperations().remove(finalOperationPosition);
+			getOperations().set(finalOperationPosition, initialOperation);
+		}
+		else if(initialOperationPosition!=-1 && finalOperationPosition==-1){
+			getOperations().remove(initialOperationPosition);
+			getOperations().set(initialOperationPosition, finalOperation);
+		}
+		else if(initialOperationPosition!=-1 && finalOperationPosition!=-1){
+			getOperations().set(initialOperationPosition, finalOperation);
+			getOperations().set(finalOperationPosition, initialOperation);
+		}
+		
 		synch = false;
 	}
 	
