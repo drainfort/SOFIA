@@ -117,7 +117,7 @@ public class SPTNonDelay implements IInitialSolBuilder{
 			int minInitialTime = Integer.MAX_VALUE;
 			for (IOperation operation : operations) {
 				int currentInitialTime = operation.getInitialTime();
-				if(currentInitialTime < minInitialTime)
+				if(currentInitialTime < minInitialTime && currentInitialTime>-1)
 					minInitialTime = currentInitialTime;
 			}
 			
@@ -137,7 +137,7 @@ public class SPTNonDelay implements IInitialSolBuilder{
 			for (int i = 0; i < operationsMinInitialTime.size(); i++) {
 				IOperation operation = operationsMinInitialTime.get(i);
 				
-				int currentProcessingTime = T[operation.getOperationIndex().getJobId()][operation.getOperationIndex().getStationId()];
+				int currentProcessingTime = T[operation.getOperationIndex().getJobId()][operation.getOperationIndex().getMachineId()];
 				if(currentProcessingTime < minProcessingTime){
 					minProcessingTime = currentProcessingTime;
 					selectedOperation = operation;
@@ -154,35 +154,41 @@ public class SPTNonDelay implements IInitialSolBuilder{
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
 				
-				finalList.scheduleOperation(iOperation.getOperationIndex());
+				boolean canBeScheduled = finalList.scheduleOperation(iOperation.getOperationIndex());
 				
-				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
-				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
-				
-				int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
-				int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
-				int travelTime = 0;
-				int setupTime = 0;
-				
-				// When the problem includes travel times but not setup times
-				if(travelTimesIncluded && !setupTimesIncluded){
-					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+				if(canBeScheduled){
+					IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
+					IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
+					
+					int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
+					int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
+					int travelTime = 0;
+					int setupTime = 0;
+					
+					// When the problem includes travel times but not setup times
+					if(travelTimesIncluded && !setupTimesIncluded){
+						travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+					}
+					// When the problem includes setup times but not travel times
+					else if(setupTimesIncluded && !travelTimesIncluded){
+						setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+					}
+					// When the problems includes both travel times and setup times
+					else if(setupTimesIncluded && travelTimesIncluded){
+						travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+						setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+					}
+					
+					int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
+					int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()] + setupTime;
+					iOperation.setInitialTime(initialTime);
+					iOperation.setFinalTime(finalTime);
+					finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
 				}
-				// When the problem includes setup times but not travel times
-				else if(setupTimesIncluded && !travelTimesIncluded){
-					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+				else{
+					iOperation.setInitialTime(-1);
+					iOperation.setFinalTime(-1);
 				}
-				// When the problems includes both travel times and setup times
-				else if(setupTimesIncluded && travelTimesIncluded){
-					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
-					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
-				}
-				
-				int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()] + setupTime;
-				iOperation.setInitialTime(initialTime);
-				iOperation.setFinalTime(finalTime);
-				finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
 			}
 			index++;
 		}
