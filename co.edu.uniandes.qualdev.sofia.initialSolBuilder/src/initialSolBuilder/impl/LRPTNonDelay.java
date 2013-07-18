@@ -159,10 +159,11 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 				}
 			}
 			//operations.remove(selectedOperation);
-			removeAll(operations, selectedOperation);
-			
-			if(selectedOperation!=null)
+
+			if(selectedOperation!=null){
+				removeAll(operations, selectedOperation);
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
+			}
 			
 			finalList.calculateCMatrix();
 
@@ -170,7 +171,6 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 			for (IOperation iOperation : operations) {
 				
 				boolean canBeScheduled = finalList.scheduleOperation(iOperation.getOperationIndex());
-				
 				if(canBeScheduled){
 					IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
 					IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
@@ -221,6 +221,7 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 				}
 				operationI.setJobRemainingTime(remainingTime);
 			}
+			System.out.println(finalList.getOperations());
 			index++;
 		}
 		
