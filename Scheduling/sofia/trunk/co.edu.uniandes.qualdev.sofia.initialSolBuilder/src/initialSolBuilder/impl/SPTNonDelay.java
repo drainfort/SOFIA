@@ -89,12 +89,16 @@ public class SPTNonDelay implements IInitialSolBuilder{
 		// Arranca vacía y en cada iteración se le agrega una operación.
 		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas);
 
+		OperationIndexVO[][] problem = finalList.getProblem();
+		
+		// Arreglo con las operaciones sin programar
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		for (int i = 0; i < T.length; i++) {
 			for (int j = 0; j < T[0].length; j++) {
+				
 				IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
-				OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
-				currentOperationIndex.setProcessingTime(T[i][j]);
+				OperationIndexVO temp = problem [i][j];
+				OperationIndexVO currentOperationIndex = new OperationIndexVO(temp.getProcessingTime(), temp.getJobId(), temp.getStationId(), temp.getMachineId());
 				currentIOperation.setOperationIndex(currentOperationIndex);
 				operations.add(currentIOperation);
 			}
