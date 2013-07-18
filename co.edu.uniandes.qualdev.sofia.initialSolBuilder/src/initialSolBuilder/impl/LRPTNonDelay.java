@@ -87,12 +87,16 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 		
 		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas);
 
+		OperationIndexVO[][] problem = finalList.getProblem();
+		
+		// Arreglo con las operaciones sin programar
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		for (int i = 0; i < T.length; i++) {
 			for (int j = 0; j < T[0].length; j++) {
+				
 				IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
-				OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
-				currentOperationIndex.setProcessingTime(T[i][j]);
+				OperationIndexVO temp = problem [i][j];
+				OperationIndexVO currentOperationIndex = new OperationIndexVO(temp.getProcessingTime(), temp.getJobId(), temp.getStationId(), temp.getMachineId());
 				currentIOperation.setOperationIndex(currentOperationIndex);
 				operations.add(currentIOperation);
 			}
@@ -102,11 +106,13 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 		for (int i = 0; i < operations.size(); i++) {
 			IOperation operationI = operations.get(i);
 			int remainingTime = 0;
+			ArrayList<Integer> listStations = new ArrayList<Integer>();
 			for (int j = 0; j < operations.size(); j++) {
 				IOperation operationJ = operations.get(j);
 				
-				if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()){
+				if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId() && !listStations.contains(operationJ.getOperationIndex().getStationId())){
 					remainingTime += operationJ.getOperationIndex().getProcessingTime();
+					listStations.add(operationJ.getOperationIndex().getStationId());
 				}
 			}
 			operationI.setJobRemainingTime(remainingTime);
@@ -187,7 +193,7 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 				}
 				
 				int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()] + setupTime;
+				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getMachineId()] + setupTime;
 				iOperation.setInitialTime(initialTime);
 				iOperation.setFinalTime(finalTime);
 				finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
