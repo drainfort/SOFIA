@@ -131,7 +131,7 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 			int minInitialTime = Integer.MAX_VALUE;
 			for (IOperation operation : operations) {
 				int currentInitialTime = operation.getInitialTime();
-				if(currentInitialTime < minInitialTime)
+				if(currentInitialTime < minInitialTime && currentInitialTime>-1)
 					minInitialTime = currentInitialTime;
 			}
 			
@@ -158,7 +158,8 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 					
 				}
 			}
-			operations.remove(selectedOperation);
+			//operations.remove(selectedOperation);
+			removeAll(operations, selectedOperation);
 			
 			if(selectedOperation!=null)
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
@@ -168,46 +169,54 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
 				
-				finalList.scheduleOperation(iOperation.getOperationIndex());
+				boolean canBeScheduled = finalList.scheduleOperation(iOperation.getOperationIndex());
 				
-				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
-				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
-				
-				int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
-				int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
-				int travelTime = 0;
-				int setupTime = 0;
-				
-				// When the problem includes travel times but not setup times
-				if(travelTimesIncluded && !setupTimesIncluded){
-					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+				if(canBeScheduled){
+					IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
+					IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
+					
+					int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
+					int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
+					int travelTime = 0;
+					int setupTime = 0;
+					
+					// When the problem includes travel times but not setup times
+					if(travelTimesIncluded && !setupTimesIncluded){
+						travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+					}
+					// When the problem includes setup times but not travel times
+					else if(setupTimesIncluded && !travelTimesIncluded){
+						setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+					}
+					// When the problems includes both travel times and setup times
+					else if(setupTimesIncluded && travelTimesIncluded){
+						travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+						setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+					}
+					
+					int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
+					int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getMachineId()] + setupTime;
+					iOperation.setInitialTime(initialTime);
+					iOperation.setFinalTime(finalTime);
+					finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
 				}
-				// When the problem includes setup times but not travel times
-				else if(setupTimesIncluded && !travelTimesIncluded){
-					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+				else{
+					iOperation.setInitialTime(-1);
+					iOperation.setFinalTime(-1);
 				}
-				// When the problems includes both travel times and setup times
-				else if(setupTimesIncluded && travelTimesIncluded){
-					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
-					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
-				}
-				
-				int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getMachineId()] + setupTime;
-				iOperation.setInitialTime(initialTime);
-				iOperation.setFinalTime(finalTime);
-				finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
 			}
 			
 			//Updating initial remaining time
 			for (int i = 0; i < operations.size(); i++) {
 				IOperation operationI = operations.get(i);
 				int remainingTime = 0;
+				ArrayList<Integer> listStations = new ArrayList<Integer>();
 				for (int j = 0; j < operations.size(); j++) {
 					IOperation operationJ = operations.get(j);
 					
-					if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()){
+					if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()&& !listStations.contains(operationJ.getOperationIndex().getStationId())){
 						remainingTime += operationJ.getOperationIndex().getProcessingTime();
+						listStations.add(operationJ.getOperationIndex().getStationId());
 					}
 				}
 				operationI.setJobRemainingTime(remainingTime);
@@ -218,6 +227,16 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 		return finalList;
 	}
 	
+	private void removeAll(ArrayList<IOperation> operations,
+			IOperation selectedOperation) {
+		for(int i=0; i< operations.size();i++){
+			OperationIndexVO temp = operations.get(i).getOperationIndex();
+			if(temp.getJobId()==selectedOperation.getOperationIndex().getJobId()&&temp.getStationId()==selectedOperation.getOperationIndex().getStationId())
+				operations.remove(i);
+		}
+		
+	}
+
 	public IStructure createInitialSolution(Integer [][] TMatrix,  Integer[][] TTMatrix, Integer[][]STMatrix, String structureFactory, IGammaCalculator gammaCalculator, IStructure structure) throws Exception {
 		Integer [][] T = TMatrix;
 		Integer [][] TT = TTMatrix;
