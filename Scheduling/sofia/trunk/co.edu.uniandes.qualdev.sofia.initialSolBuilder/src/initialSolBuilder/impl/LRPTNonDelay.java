@@ -158,7 +158,6 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 					
 				}
 			}
-			//operations.remove(selectedOperation);
 
 			if(selectedOperation!=null){
 				removeAll(operations, selectedOperation);
