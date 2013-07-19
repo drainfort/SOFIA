@@ -160,43 +160,46 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			}
 			operations.remove(selectedOperation);
 			
-			if(selectedOperation!=null)
+			if(selectedOperation!=null){
+				removeAll(operations, selectedOperation);
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
+			}
 			
 			finalList.calculateCMatrix();
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
 				
-				finalList.scheduleOperation(iOperation.getOperationIndex());
-				
-				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
-				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
-				
-				int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
-				int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
-				int travelTime = 0;
-				int setupTime = 0;
-				
-				// When the problem includes travel times but not setup times
-				if(travelTimesIncluded && !setupTimesIncluded){
-					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+				boolean canBeScheduled = finalList.scheduleOperation(iOperation.getOperationIndex());
+				if(canBeScheduled){
+					IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
+					IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
+					
+					int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
+					int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
+					int travelTime = 0;
+					int setupTime = 0;
+					
+					// When the problem includes travel times but not setup times
+					if(travelTimesIncluded && !setupTimesIncluded){
+						travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+					}
+					// When the problem includes setup times but not travel times
+					else if(setupTimesIncluded && !travelTimesIncluded){
+						setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+					}
+					// When the problems includes both travel times and setup times
+					else if(setupTimesIncluded && travelTimesIncluded){
+						travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+						setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+					}
+					
+					int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
+					int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getMachineId()] + setupTime;
+					iOperation.setInitialTime(initialTime);
+					iOperation.setFinalTime(finalTime);
+					finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
 				}
-				// When the problem includes setup times but not travel times
-				else if(setupTimesIncluded && !travelTimesIncluded){
-					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
-				}
-				// When the problems includes both travel times and setup times
-				else if(setupTimesIncluded && travelTimesIncluded){
-					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
-					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
-				}
-				
-				int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getMachineId()] + setupTime;
-				iOperation.setInitialTime(initialTime);
-				iOperation.setFinalTime(finalTime);
-				finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
 			}
 			
 			//Updating initial remaining time
