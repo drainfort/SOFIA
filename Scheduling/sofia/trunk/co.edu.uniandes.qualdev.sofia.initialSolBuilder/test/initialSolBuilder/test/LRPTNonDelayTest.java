@@ -125,21 +125,21 @@ public class LRPTNonDelayTest {
 		Assert.assertEquals("La tercera posicion deberia comenzar en 5 y terminar en 13",vector.getOperations().get(2).getInitialTime()==5 && vector.getOperations().get(2).getFinalTime()==13, true );
 		Assert.assertEquals("La cuarta posicion deberia ser las <0,1,3>",vector.getOperations().get(3), new Operation(new OperationIndexVO(0, 0, 1, 3)));
 		Assert.assertEquals("La cuarta posicion deberia comenzar en 5 y terminar en 13",vector.getOperations().get(3).getInitialTime()==5 && vector.getOperations().get(3).getFinalTime()==13, true );
-		/*Assert.assertEquals("La quinta posicion deberia ser las <3,0,0>",vector.getOperations().get(4), new Operation(new OperationIndexVO(0, 3, 0, 0)));
-		Assert.assertEquals("La qunita posicion deberia comenzar en 15 y terminar en 29",vector.getOperations().get(4).getInitialTime()==15 && vector.getOperations().get(4).getFinalTime()==29, true );
-		Assert.assertEquals("La sexta posicion deberia ser las <0,2,4>",vector.getOperations().get(5), new Operation(new OperationIndexVO(0, 0, 2, 4)));
-		Assert.assertEquals("La sexta posicion deberia comenzar en 17 y terminar en 28",vector.getOperations().get(5).getInitialTime()==17 && vector.getOperations().get(5).getFinalTime()==28, true );
-		Assert.assertEquals("La septima posicion deberia ser las <2,2,5>",vector.getOperations().get(6), new Operation(new OperationIndexVO(0, 2, 2, 5)));
-		Assert.assertEquals("La septima posicion deberia comenzar en 19 y terminar en 28",vector.getOperations().get(6).getInitialTime()==19 && vector.getOperations().get(6).getFinalTime()==28, true );
-		Assert.assertEquals("La octava posicion deberia ser las <1,0,1>",vector.getOperations().get(7), new Operation(new OperationIndexVO(0, 1, 0, 1)));
-		Assert.assertEquals("La octava posicion deberia comenzar en 21 y terminar en 30",vector.getOperations().get(7).getInitialTime()==21 && vector.getOperations().get(7).getFinalTime()==30, true );
-		Assert.assertEquals("La novena posicion deberia ser las <0,0,0>",vector.getOperations().get(8), new Operation(new OperationIndexVO(0, 0, 0, 0)));
-		Assert.assertEquals("La novena posicion deberia comenzar en 31 y terminar en 41",vector.getOperations().get(8).getInitialTime()==31 && vector.getOperations().get(8).getFinalTime()==41, true );
-		Assert.assertEquals("La decima posicion deberia ser las <2,0,1>",vector.getOperations().get(9), new Operation(new OperationIndexVO(0, 2, 0, 1)));
-		Assert.assertEquals("La decima posicion deberia comenzar en 31 y terminar en 41",vector.getOperations().get(9).getInitialTime()==31 && vector.getOperations().get(9).getFinalTime()==41, true );
-		Assert.assertEquals("La undecima posicion deberia ser las <3,2,4>",vector.getOperations().get(10), new Operation(new OperationIndexVO(0, 3, 2, 4)));
-		Assert.assertEquals("La undecima posicion deberia comenzar en 32 y terminar en 42",vector.getOperations().get(10).getInitialTime()==32 && vector.getOperations().get(10).getFinalTime()==42, true );
-		Assert.assertEquals("La doceava posicion deberia ser las <1,2,5>",vector.getOperations().get(11), new Operation(new OperationIndexVO(0, 1, 2, 5)));
-		Assert.assertEquals("La doceava posicion deberia comenzar en 33 y terminar en 45",vector.getOperations().get(11).getInitialTime()==33 && vector.getOperations().get(11).getFinalTime()==45, true );*/
+		Assert.assertEquals("La quinta posicion deberia ser las <1,2,4>",vector.getOperations().get(4), new Operation(new OperationIndexVO(0, 1, 2, 4)));
+		Assert.assertEquals("La qunita posicion deberia comenzar en 13 y terminar en 25",vector.getOperations().get(4).getInitialTime()==13 && vector.getOperations().get(4).getFinalTime()==25, true );
+		Assert.assertEquals("La sexta posicion deberia ser las <0,2,4>",vector.getOperations().get(5), new Operation(new OperationIndexVO(0, 3, 0, 0)));
+		Assert.assertEquals("La sexta posicion deberia comenzar en 17 y terminar en 28",vector.getOperations().get(5).getInitialTime()==15 && vector.getOperations().get(5).getFinalTime()==29, true );
+		Assert.assertEquals("La septima posicion deberia ser las <0,0,1>",vector.getOperations().get(6), new Operation(new OperationIndexVO(0, 0, 0, 1)));
+		Assert.assertEquals("La septima posicion deberia comenzar en 15 y terminar en 25",vector.getOperations().get(6).getInitialTime()==15 && vector.getOperations().get(6).getFinalTime()==25, true );
+		Assert.assertEquals("La octava posicion deberia ser las <2,2,5>",vector.getOperations().get(7), new Operation(new OperationIndexVO(0, 2, 2, 5)));
+		Assert.assertEquals("La octava posicion deberia comenzar en 19 y terminar en 28",vector.getOperations().get(7).getInitialTime()==19 && vector.getOperations().get(7).getFinalTime()==28, true );
+		Assert.assertEquals("La novena posicion deberia ser las <0,2,4>",vector.getOperations().get(8), new Operation(new OperationIndexVO(0, 0, 2, 4)));
+		Assert.assertEquals("La novena posicion deberia comenzar en 28 y terminar en 39",vector.getOperations().get(8).getInitialTime()==28 && vector.getOperations().get(8).getFinalTime()==39, true );
+		Assert.assertEquals("La decima posicion deberia ser las <1,0,1>",vector.getOperations().get(9), new Operation(new OperationIndexVO(0, 1, 0, 1)));
+		Assert.assertEquals("La decima posicion deberia comenzar en 28 y terminar en 37",vector.getOperations().get(9).getInitialTime()==28 && vector.getOperations().get(9).getFinalTime()==37, true );
+		Assert.assertEquals("La undecima posicion deberia ser las <2,0,0>",vector.getOperations().get(10), new Operation(new OperationIndexVO(0, 2, 0, 0)));
+		Assert.assertEquals("La undecima posicion deberia comenzar en 32 y terminar en 42",vector.getOperations().get(10).getInitialTime()==31 && vector.getOperations().get(10).getFinalTime()==41, true );
+		Assert.assertEquals("La doceava posicion deberia ser las <1,2,5>",vector.getOperations().get(11), new Operation(new OperationIndexVO(0, 3, 2, 5)));
+		Assert.assertEquals("La doceava posicion deberia comenzar en 33 y terminar en 45",vector.getOperations().get(11).getInitialTime()==32 && vector.getOperations().get(11).getFinalTime()==42, true );
 	}
 }
