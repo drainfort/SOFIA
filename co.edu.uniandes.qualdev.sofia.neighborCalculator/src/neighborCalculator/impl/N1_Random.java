@@ -2,6 +2,8 @@ package neighborCalculator.impl;
 
 import java.util.ArrayList;
 
+import org.omg.PortableInterceptor.InterceptorOperations;
+
 import neighborCalculator.INeighborCalculator;
 import structure.IOperation;
 import structure.IStructure;
@@ -47,24 +49,17 @@ public class N1_Random implements INeighborCalculator{
 		{
 			int totalJobs = currentVector.getTotalJobs();
 			int totalStations = currentVector.getTotalStations();
+			int total = totalJobs*totalStations;
 			
-			int randomA = randomNumber(0, totalStations - 1);
-			int randomB = randomNumber(0, totalJobs - 1);
-			int randomC = randomNumber(0, totalJobs - 1);
-			int randomD = randomNumber(0, totalStations - 1);
-
-			double randomX = Math.random();
+			ArrayList<IOperation>operations = currentVector.getOperations();
 			
-			PairVO pair = null;
-			// Provides a pair with the same station
-			if(randomX > 0.5){
-				pair = new PairVO(new OperationIndexVO(randomB, randomA), new OperationIndexVO(randomC, randomA));
-			}
-			// Provides a pair with the same job
-			else{
-				pair = new PairVO(new OperationIndexVO(randomB, randomA), new OperationIndexVO(randomB, randomD));
-			}
+			int randomA = randomNumber(0, total - 1);
+			int randomB = randomNumber(0, total - 1);
 			
+			OperationIndexVO start = operations.get(randomA).getOperationIndex();
+			OperationIndexVO end = operations.get(randomB).getOperationIndex();
+			
+			PairVO pair = new PairVO(new OperationIndexVO(0, start.getJobId(),start.getStationId(), start.getMachineId()), new OperationIndexVO(0, end.getJobId(),end.getStationId(), end.getMachineId()));		
 			if(!pairs.contains(pair)){
 				pairs.add(pair);
 				size--;
