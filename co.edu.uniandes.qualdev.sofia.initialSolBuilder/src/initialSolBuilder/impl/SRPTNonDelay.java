@@ -87,12 +87,16 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 		
 		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas);
 
+		OperationIndexVO[][] problem = finalList.getProblem();
+		
+		// Arreglo con las operaciones sin programar
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		for (int i = 0; i < T.length; i++) {
 			for (int j = 0; j < T[0].length; j++) {
+				
 				IOperation currentIOperation = AbstractStructureFactory.createNewInstance(structureFactory).createIOperation();
-				OperationIndexVO currentOperationIndex = new OperationIndexVO(i, j);
-				currentOperationIndex.setProcessingTime(T[i][j]);
+				OperationIndexVO temp = problem [i][j];
+				OperationIndexVO currentOperationIndex = new OperationIndexVO(temp.getProcessingTime(), temp.getJobId(), temp.getStationId(), temp.getMachineId());
 				currentIOperation.setOperationIndex(currentOperationIndex);
 				operations.add(currentIOperation);
 			}
@@ -102,11 +106,13 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 		for (int i = 0; i < operations.size(); i++) {
 			IOperation operationI = operations.get(i);
 			int remainingTime = 0;
+			ArrayList<Integer> listStations = new ArrayList<Integer>();
 			for (int j = 0; j < operations.size(); j++) {
 				IOperation operationJ = operations.get(j);
 				
-				if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()){
+				if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId() && !listStations.contains(operationJ.getOperationIndex().getStationId())){
 					remainingTime += operationJ.getOperationIndex().getProcessingTime();
+					listStations.add(operationJ.getOperationIndex().getStationId());
 				}
 			}
 			operationI.setJobRemainingTime(remainingTime);
@@ -137,7 +143,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 				}
 			}
 			
-			// Obteniendo la operacion de mayor tiempo de proceso (LRPT  LongestProcessingTime)
+			// Obteniendo la operacion de menor tiempo de proceso (SRPT ShortestProcessingTime)
 			// dentro de las que estan en el arreglo operationsMinInitialTime
 			int minRemainingProcessingTime = Integer.MAX_VALUE;
 			IOperation selectedOperation = null;
@@ -187,7 +193,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 				}
 				
 				int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()] + setupTime;
+				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getMachineId()] + setupTime;
 				iOperation.setInitialTime(initialTime);
 				iOperation.setFinalTime(finalTime);
 				finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
@@ -295,43 +301,46 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			}
 			operations.remove(selectedOperation);
 			
-			if(selectedOperation!=null)
+			if(selectedOperation!=null){
+				removeAll(operations, selectedOperation);
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
-			
+			}
 			finalList.calculateCMatrix();
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
 				
-				finalList.scheduleOperation(iOperation.getOperationIndex());
+				boolean canBeScheduled = finalList.scheduleOperation(iOperation.getOperationIndex());
+				if(canBeScheduled){
 				
-				IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
-				IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
-				
-				int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
-				int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
-				int travelTime = 0;
-				int setupTime = 0;
-				
-				// When the problem includes travel times but not setup times
-				if(travelTimesIncluded && !setupTimesIncluded){
-					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+					IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
+					IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
+					
+					int finalTimeLastJob = lastJob != null ? lastJob.getFinalTime() : 0;
+					int finalTimeLastStation = lastStation != null ? lastStation.getFinalTime() : 0;
+					int travelTime = 0;
+					int setupTime = 0;
+					
+					// When the problem includes travel times but not setup times
+					if(travelTimesIncluded && !setupTimesIncluded){
+						travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+					}
+					// When the problem includes setup times but not travel times
+					else if(setupTimesIncluded && !travelTimesIncluded){
+						setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+					}
+					// When the problems includes both travel times and setup times
+					else if(setupTimesIncluded && travelTimesIncluded){
+						travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
+						setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
+					}
+					
+					int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
+					int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()] + setupTime;
+					iOperation.setInitialTime(initialTime);
+					iOperation.setFinalTime(finalTime);
+					finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
 				}
-				// When the problem includes setup times but not travel times
-				else if(setupTimesIncluded && !travelTimesIncluded){
-					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
-				}
-				// When the problems includes both travel times and setup times
-				else if(setupTimesIncluded && travelTimesIncluded){
-					travelTime = lastJob != null ? TT[lastJob.getOperationIndex().getStationId() + 1][iOperation.getOperationIndex().getStationId() + 1] : TT[0][iOperation.getOperationIndex().getStationId() + 1];
-					setupTime = S[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()];
-				}
-				
-				int initialTime = Math.max(finalTimeLastJob + travelTime, finalTimeLastStation);
-				int finalTime = initialTime + T[iOperation.getOperationIndex().getJobId()][iOperation.getOperationIndex().getStationId()] + setupTime;
-				iOperation.setInitialTime(initialTime);
-				iOperation.setFinalTime(finalTime);
-				finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
 			}
 			
 			//Updating initial remaining time
@@ -351,6 +360,23 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 		}
 		
 		return finalList;
+	}
+	
+	private void removeAll(ArrayList<IOperation> operations,
+			IOperation selectedOperation) {
+		
+		int job = selectedOperation.getOperationIndex().getJobId();
+		int station = selectedOperation.getOperationIndex().getStationId();
+		
+		for(int i=0; i< operations.size();i++){
+			OperationIndexVO temp = operations.get(i).getOperationIndex();
+			
+			if(temp.getJobId()==job && temp.getStationId()==station){
+				operations.remove(i);
+				i--;
+			}
+		}
+		
 	}
 	
 	@Override
