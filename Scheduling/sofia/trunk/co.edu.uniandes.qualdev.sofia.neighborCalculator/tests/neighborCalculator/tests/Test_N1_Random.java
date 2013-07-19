@@ -175,9 +175,7 @@ public class Test_N1_Random {
 		problem2.scheduleOperation(o44);
 		
 		Graph newVector = (Graph) problem2.cloneStructure();
-		ArrayList<CriticalPath> routes;
 		try {
-			System.out.println("vecinos"+neighborCalulator.calculateCompleteNeighborhood(problem2));
 			ArrayList<PairVO> vecinos = neighborCalulator.calculateCompleteNeighborhood(problem2);
 			System.out.println(new PairVO(o11, o12));
 			assertTrue(vecinos.contains(new PairVO(o11, o12)));
@@ -190,8 +188,6 @@ public class Test_N1_Random {
 			assertTrue(neighborCalulator.calculateCompleteNeighborhood(problem2).contains(new PairVO(o32, o33)));
 			assertTrue(neighborCalulator.calculateCompleteNeighborhood(problem2).contains(new PairVO(o33, o43)));
 			assertTrue(neighborCalulator.calculateCompleteNeighborhood(problem2).contains(new PairVO(o43, o44)));
-			routes = newVector.getCriticalPaths();
-			System.out.println("rutas"+routes);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
