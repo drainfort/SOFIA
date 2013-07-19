@@ -205,13 +205,11 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 			for (int i = 0; i < operations.size(); i++) {
 				IOperation operationI = operations.get(i);
 				int remainingTime = 0;
-				ArrayList<Integer> listStations = new ArrayList<Integer>();
 				for (int j = 0; j < operations.size(); j++) {
 					IOperation operationJ = operations.get(j);
 					
-					if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()&& !listStations.contains(operationJ.getOperationIndex().getStationId())){
+					if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()){
 						remainingTime += operationJ.getOperationIndex().getProcessingTime();
-						listStations.add(operationJ.getOperationIndex().getStationId());
 					}
 				}
 				operationI.setJobRemainingTime(remainingTime);

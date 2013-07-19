@@ -94,7 +94,7 @@ public class LRPTNonDelayTest {
 	//TODO Falta un caso de prueba. Hay que revisar que la matriz C es correcta. 
 	
 	@Test
-	public void testLPTNonDelay04x04x02_1() throws Exception{
+	public void testLRPTNonDelay04x04x02_1() throws Exception{
 		ArrayList<String> problemFiles = new ArrayList<String>();
 
 		String TFile = "./data/04x04x02/1-T/T-04x04x02-01.txt";
