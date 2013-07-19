@@ -174,7 +174,6 @@ public class Test_N1_Random {
 		problem2.scheduleOperation(o43);
 		problem2.scheduleOperation(o44);
 		
-		Graph newVector = (Graph) problem2.cloneStructure();
 		try {
 			ArrayList<PairVO> vecinos = neighborCalulator.calculateCompleteNeighborhood(problem2);
 			System.out.println(new PairVO(o11, o12));
