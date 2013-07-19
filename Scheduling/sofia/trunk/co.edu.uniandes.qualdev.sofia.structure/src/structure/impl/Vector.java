@@ -121,18 +121,8 @@ public class Vector extends AbstractStructure{
 		IOperation initialOperation = this.getOperationByOperationIndex(initialOperationIndex);
 		IOperation finalOperation = this.getOperationByOperationIndex(finalOperationIndex);
 		
-		if(initialOperationPosition==-1 && finalOperationPosition!=-1){
-			getOperations().remove(finalOperationPosition);
-			getOperations().set(finalOperationPosition, initialOperation);
-		}
-		else if(initialOperationPosition!=-1 && finalOperationPosition==-1){
-			getOperations().remove(initialOperationPosition);
-			getOperations().set(initialOperationPosition, finalOperation);
-		}
-		else if(initialOperationPosition!=-1 && finalOperationPosition!=-1){
-			getOperations().set(initialOperationPosition, finalOperation);
-			getOperations().set(finalOperationPosition, initialOperation);
-		}
+		getOperations().set(initialOperationPosition, finalOperation);
+		getOperations().set(finalOperationPosition, initialOperation);
 		
 		synch = false;
 	}
@@ -342,10 +332,7 @@ public class Vector extends AbstractStructure{
 		for (int i = 0; i < vectorDecodSimple.size(); i++){
 			IOperation iOperation = new Operation(vectorDecodSimple.get(i).getOperationIndex());
 			vectorDecodNonDelay.add(iOperation);
-
 		}
-		
-		//vectorDecodNonDelay = (ArrayList<IOperation>) vectorDecodSimple.clone();
 		
 		for (int i = 0; i < vectorDecodNonDelay.size(); i++){
 			IOperation iOperation = vectorDecodNonDelay.get(i);
