@@ -77,7 +77,7 @@ public class N1_Random implements INeighborCalculator{
 			IOperation fistOperation = operations.get(i);
 			
 			for (int j = 0; j < operations.size(); j++) {
-				IOperation secondOperation = operations.get(i);
+				IOperation secondOperation = operations.get(j);
 				
 				if(i!=j){
 					PairVO pair = new PairVO(fistOperation.getOperationIndex(), secondOperation.getOperationIndex());
