@@ -179,6 +179,7 @@ public class Test_N1_Random {
 		try {
 			System.out.println("vecinos"+neighborCalulator.calculateCompleteNeighborhood(problem2));
 			ArrayList<PairVO> vecinos = neighborCalulator.calculateCompleteNeighborhood(problem2);
+			System.out.println(new PairVO(o11, o12));
 			assertTrue(vecinos.contains(new PairVO(o11, o12)));
 			assertTrue(vecinos.contains(new PairVO(o11, o13)));
 			assertTrue(vecinos.contains(new PairVO(o11, o14)));
