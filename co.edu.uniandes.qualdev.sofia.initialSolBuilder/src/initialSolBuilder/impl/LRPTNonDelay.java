@@ -131,7 +131,7 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 			int minInitialTime = Integer.MAX_VALUE;
 			for (IOperation operation : operations) {
 				int currentInitialTime = operation.getInitialTime();
-				if(currentInitialTime < minInitialTime && currentInitialTime>-1)
+				if(currentInitialTime < minInitialTime)
 					minInitialTime = currentInitialTime;
 			}
 			
@@ -198,10 +198,6 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 					iOperation.setInitialTime(initialTime);
 					iOperation.setFinalTime(finalTime);
 					finalList.removeOperationFromSchedule(iOperation.getOperationIndex());
-				}
-				else{
-					iOperation.setInitialTime(-1);
-					iOperation.setFinalTime(-1);
 				}
 			}
 			
