@@ -220,7 +220,6 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 				}
 				operationI.setJobRemainingTime(remainingTime);
 			}
-			System.out.println(finalList.getOperations());
 			index++;
 		}
 		
@@ -229,10 +228,17 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 	
 	private void removeAll(ArrayList<IOperation> operations,
 			IOperation selectedOperation) {
+		
+		int job = selectedOperation.getOperationIndex().getJobId();
+		int station = selectedOperation.getOperationIndex().getStationId();
+		
 		for(int i=0; i< operations.size();i++){
 			OperationIndexVO temp = operations.get(i).getOperationIndex();
-			if(temp.getJobId()==selectedOperation.getOperationIndex().getJobId()&&temp.getStationId()==selectedOperation.getOperationIndex().getStationId())
+			
+			if(temp.getJobId()==job && temp.getStationId()==station){
 				operations.remove(i);
+				i--;
+			}
 		}
 		
 	}
