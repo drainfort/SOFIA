@@ -11,9 +11,11 @@ import neighborCalculator.impl.N1_Random;
 import org.junit.Before;
 import org.junit.Test;
 
+import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
 
+import structure.factory.impl.VectorFactory;
 import structure.impl.CriticalPath;
 import structure.impl.Graph;
 import structure.impl.Operation;
@@ -192,6 +194,69 @@ public class Test_N1_Random {
 		}
 		
 
+	}
+	
+	@Test
+	public void testEscenario3() throws Exception {
+		ArrayList<String> problemFiles = new ArrayList<String>();
+
+		String TFile = "./data/04x04x02/1-T/T-04x04x02-01.txt";
+		String TTFile = "./data/04x04x02/2-TT/TT-04x04x02-01.txt";
+		String MFile = "./data/04x04x02/4-M/M-04x04x02-01.txt";
+		
+		problemFiles.add(TFile);
+		problemFiles.add(TTFile);
+		problemFiles.add(MFile);
+
+		ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
+		ArrayList<String> informationFiles = new ArrayList<String>();
+		informationFiles.add(TTFile);
+
+		BetaVO TTBeta = new BetaVO("TravelTimes", "beta.impl.TravelTimes", informationFiles, true);
+		BetaVO TearDownTT = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", informationFiles, true);
+		betas.add(TTBeta);
+		betas.add(TearDownTT);
+		
+		Vector vector = (Vector) VectorFactory.createNewInstance(
+				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
+		
+		vector.scheduleOperation(new OperationIndexVO(0, 0, 0, 0));
+		vector.scheduleOperation(new OperationIndexVO(0, 0, 1, 3));
+		vector.scheduleOperation(new OperationIndexVO(0, 0, 2, 4));
+		vector.scheduleOperation(new OperationIndexVO(0, 0, 3, 6));
+		
+		vector.scheduleOperation(new OperationIndexVO(0, 1, 0, 1));
+		vector.scheduleOperation(new OperationIndexVO(0, 1, 1, 2));
+		vector.scheduleOperation(new OperationIndexVO(0, 1, 2, 5));
+		vector.scheduleOperation(new OperationIndexVO(0, 1, 3, 7));
+		
+		vector.scheduleOperation(new OperationIndexVO(0, 2, 0, 0));
+		vector.scheduleOperation(new OperationIndexVO(0, 2, 1, 3));
+		vector.scheduleOperation(new OperationIndexVO(0, 2, 2, 4));
+		vector.scheduleOperation(new OperationIndexVO(0, 2, 3, 6));
+
+		vector.scheduleOperation(new OperationIndexVO(0, 3, 0, 1));
+		vector.scheduleOperation(new OperationIndexVO(0, 3, 1, 2));
+		vector.scheduleOperation(new OperationIndexVO(0, 3, 2, 5));
+		vector.scheduleOperation(new OperationIndexVO(0, 3, 3, 7));
+		
+		ArrayList<PairVO> vecinos = neighborCalulator.calculateCompleteNeighborhood(vector);
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 0, 0, 0), new OperationIndexVO(0, 0, 1, 3))));
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 0, 0, 0), new OperationIndexVO(0, 0, 2, 4))));
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 0, 0, 0), new OperationIndexVO(0, 0, 3, 6))));
+		
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 1, 0, 1), new OperationIndexVO(0, 0, 1, 3))));
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 1, 0, 1), new OperationIndexVO(0, 0, 2, 4))));
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 1, 0, 1), new OperationIndexVO(0, 0, 3, 6))));
+		
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 2, 2, 4), new OperationIndexVO(0, 0, 1, 3))));
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 2, 2, 4), new OperationIndexVO(0, 0, 2, 4))));
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 2, 2, 4), new OperationIndexVO(0, 0, 3, 6))));
+		
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 3, 2, 5), new OperationIndexVO(0, 0, 1, 3))));
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 3, 2, 5), new OperationIndexVO(0, 0, 2, 4))));
+		assertTrue(vecinos.contains(new PairVO(new OperationIndexVO(0, 3, 2, 5), new OperationIndexVO(0, 0, 3, 6))));
+		
 	}
 	
 	
