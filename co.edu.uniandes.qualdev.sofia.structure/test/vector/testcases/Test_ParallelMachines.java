@@ -2,6 +2,8 @@ package vector.testcases;
 
 import java.util.ArrayList;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -79,8 +81,12 @@ public class Test_ParallelMachines {
 		}
 		
 		@Test
-		public void testCalculateCMatrix(){
-
+		public void testClone(){
+			Vector clone = (Vector)vector.cloneStructure();
+			
+			Assert.assertEquals(clone.getTotalJobs(), vector.getTotalJobs());
+			Assert.assertEquals(clone.getTotalStations(), vector.getTotalStations());
+			Assert.assertEquals(clone.getTotalMachines(), vector.getTotalMachines());
 		}
 	
 }
