@@ -707,8 +707,6 @@ public class Vector extends AbstractStructure{
 			}
 			
 			clone.vectorDecodNonDelay = clonedVectorDecNonDelay;
-					
-			
 			// Clone betas
 			if (this.betas != null) {
 				clone.betas = new HashMap<String, Beta>();
