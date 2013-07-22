@@ -36,7 +36,6 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 						maxOperationIndex.setStationId(j);
 				}
 			}
-			System.out.println(maxOperationIndex);
 			maxs.add(maxOperationIndex);
 		}
 		
