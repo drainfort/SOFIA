@@ -689,7 +689,8 @@ public class Vector extends AbstractStructure{
 			clone.totalJobs = this.totalJobs;
 			clone.totalStations = this.totalStations;
 			clone.maxMachinesPerStation = this.maxMachinesPerStation;
-			clone.nonDelayActive=this.nonDelayActive;
+			clone.totalMachines = this.totalMachines;
+			clone.nonDelayActive = this.nonDelayActive;
 			
 			ArrayList<IOperation> clonedVectorDecSimple = new ArrayList<IOperation>();
 			for (IOperation operation : vectorDecodSimple) {
