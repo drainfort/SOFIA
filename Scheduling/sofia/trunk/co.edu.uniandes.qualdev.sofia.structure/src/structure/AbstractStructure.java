@@ -79,6 +79,7 @@ public abstract class AbstractStructure  implements IStructure{
 	public AbstractStructure(int totalJobs, int totalStations){
 		this.totalJobs = totalJobs;
 		this.totalStations = totalStations;
+		this.totalMachines = totalStations;
 		//TODO cambiar el constructor
 		operationsMatrix = new OperationIndexVO[this.totalJobs][this.totalStations];
 		
@@ -242,7 +243,7 @@ public abstract class AbstractStructure  implements IStructure{
 				if(line.charAt(i)!='|')
 					numberStations.add(Integer.parseInt(""+line.charAt(i)));
 			}
-			totalStations =numberStations.size();		
+			totalStations = numberStations.size();		
 			
 			String matrixHeightString = reader.readLine();
 			Integer matrixHeight = Integer.parseInt(matrixHeightString);
