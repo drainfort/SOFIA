@@ -71,6 +71,17 @@ public abstract class SchedulingAlgorithm {
 		
 		String processingTimesFiles = (String) problemConfiguration
 				.getProperty("scheduling.instancesFile." + instanceType);
+		
+		String processingTimesFiles2 = null;
+		
+		if(instanceType.equals("Parallel")){
+			processingTimesFiles = (String) problemConfiguration
+					.getProperty("scheduling.instancesFile.T" );
+			processingTimesFiles2 = (String) problemConfiguration
+					.getProperty("scheduling.instancesFile.M" );
+		}
+		
+		
 		System.out.println("scheduling.instancesFile." + instanceType);
 		
 		String machinesFile = (String) problemConfiguration
@@ -82,6 +93,7 @@ public abstract class SchedulingAlgorithm {
 		
 		ArrayList<String> problemFiles = new ArrayList<String>();
 		problemFiles.add(processingTimesFiles);
+		
 		
 		if(machinesFile != null)
 			problemFiles.add(machinesFile);
@@ -119,6 +131,9 @@ public abstract class SchedulingAlgorithm {
 			BetaVO beta = new BetaVO(currentBetaName, currentBetaClass,informationFiles, considered);
 			betas.add(beta);
 		}
+		
+		if(processingTimesFiles2!=null)
+			problemFiles.add(2,processingTimesFiles2);
 		
 		HashMap<String, Integer> bkss = getBkss(problemConfiguration);
 		
