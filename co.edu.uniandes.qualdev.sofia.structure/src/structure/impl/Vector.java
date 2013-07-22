@@ -1089,6 +1089,12 @@ public class Vector extends AbstractStructure{
 		this.totalStations = totaStations;
 		synch = false;
 	}
+	
+	@Override
+	public void setTotalMachines(int totalMachines) {
+		this.totalMachines = totalMachines;
+		synch = false;
+	}
 
 	@Override
 	public void setMaxMachinesPerStation(int maxMachinesPerStation) {
