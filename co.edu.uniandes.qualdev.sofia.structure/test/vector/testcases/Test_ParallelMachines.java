@@ -87,6 +87,7 @@ public class Test_ParallelMachines {
 			Assert.assertEquals(clone.getTotalJobs(), vector.getTotalJobs());
 			Assert.assertEquals(clone.getTotalStations(), vector.getTotalStations());
 			Assert.assertEquals(clone.getTotalMachines(), vector.getTotalMachines());
+			Assert.assertEquals(clone.getOperations(), vector.getOperations());
 		}
 	
 }
