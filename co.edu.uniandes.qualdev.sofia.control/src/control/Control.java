@@ -123,6 +123,7 @@ public abstract class Control {
 				}
 				tasksFinalSolution.add(task);
 			}
+			
 			Machine machine = findMachine(machines, operation.getOperationIndex().getStationId()+1);
 			Job job = findJob(jobs, operation.getOperationIndex().getJobId()+1);
 			
