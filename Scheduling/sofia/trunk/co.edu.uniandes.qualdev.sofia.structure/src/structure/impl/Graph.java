@@ -473,6 +473,11 @@ public class Graph extends AbstractStructure {
 	public int getTotalStations() {
 		return this.totalStations;
 	}
+	
+	@Override
+	public void setTotalMachines(int totalMachines) {
+		this.totalMachines = totalMachines;
+	}
 
 	@Override
 	public int[][] calculateCMatrix() throws Exception{

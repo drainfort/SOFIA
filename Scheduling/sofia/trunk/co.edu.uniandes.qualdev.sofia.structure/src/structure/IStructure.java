@@ -306,6 +306,8 @@ public interface IStructure {
 	public void setTotalJobs(int totalJobs);
 
 	public void setTotalStations(int totalStations);
+	
+	public void setTotalMachines(int totalMachines);
 
 	public String getProcessingTimesFile();
 
