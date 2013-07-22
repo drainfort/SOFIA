@@ -113,6 +113,13 @@ public interface IStructure {
 	public int getTotalStations();
 	
 	/**
+	 * Returns the amount of machines in the system
+	 * 
+	 * @return machines Amount of machines in the system
+	 */
+	public int getTotalMachines();
+	
+	/**
 	 * Returns the max amount of machines per station
 	 * 
 	 * @return max Max amount of machines per station

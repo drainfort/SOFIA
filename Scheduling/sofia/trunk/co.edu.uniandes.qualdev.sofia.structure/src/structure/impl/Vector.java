@@ -1069,6 +1069,11 @@ public class Vector extends AbstractStructure{
 	}
 	
 	@Override
+	public int getTotalMachines() {
+		return this.totalMachines;
+	}
+	
+	@Override
 	public String getProcessingTimesFile() {
 		return processingTimesFile;
 	}

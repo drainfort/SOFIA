@@ -475,6 +475,11 @@ public class Graph extends AbstractStructure {
 	}
 	
 	@Override
+	public int getTotalMachines() {
+		return this.totalMachines;
+	}
+	
+	@Override
 	public void setTotalMachines(int totalMachines) {
 		this.totalMachines = totalMachines;
 	}
