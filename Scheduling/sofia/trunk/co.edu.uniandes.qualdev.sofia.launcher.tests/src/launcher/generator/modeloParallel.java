@@ -83,6 +83,6 @@ public class modeloParallel{
 		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/T_04x04x02_01_TS_RANDOM_SWAP_Vector_consolidated.html");
 	}
 	public static void main(String[] args) {
- 		JUnitCore.main("launcher.generator.T_04x04_01_TS_RN_CR_ADJ_SWAP_Vector");  
+ 		JUnitCore.main("launcher.generator.modeloParallel");  
 	}
 }
