@@ -30,7 +30,7 @@ public class modeloParallel{
 	public static ArrayList<String[]> datos() {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 		String[] file1= {
-			"./data/Om-TT/Algorithm/Vector/TS_RN_CR_ADJ_SWAP.properties","./data/Om-TT/04x04/04x04_01.properties", "gamma.cmax.bks.om", "Taillard", "04x04_01"};
+			"./data/ParallelMachines/Algorithm/Vector/TS_RN_CR_ADJ_SWAP.properties","./data/FileIndex/04x04x02/04x04x02_01.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_02"};
 		datos.add(file1);
 			return datos;
 	}
