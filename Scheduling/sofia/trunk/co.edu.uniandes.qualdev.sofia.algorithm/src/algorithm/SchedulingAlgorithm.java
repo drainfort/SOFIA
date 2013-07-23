@@ -110,7 +110,7 @@ public abstract class SchedulingAlgorithm {
 			for (int j = 0; j < informationFilesAmount; j++) {
 				String currentInformationFile = (String) problemConfiguration.getProperty("betas.beta." + i + ".informationFiles." + j + ".path");
 				informationFiles.add(currentInformationFile);
-				problemFiles.add(currentInformationFile);
+				//problemFiles.add(currentInformationFile);
 			}
 
 			String selectedBetas = currentBks.replace("gamma.cmax.bks.om", "");
@@ -134,6 +134,7 @@ public abstract class SchedulingAlgorithm {
 		
 		if(processingTimesFiles2!=null)
 			problemFiles.add(2,processingTimesFiles2);
+		
 		
 		HashMap<String, Integer> bkss = getBkss(problemConfiguration);
 		
