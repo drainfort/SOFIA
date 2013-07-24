@@ -71,7 +71,7 @@ public class BestDispatchingRule implements IInitialSolBuilder{
 //		System.out.println("gammalptSolution: " + gammalptSolution);
 //		
 //		int gammalrptSolution = gammaCalculator.calculateGamma(lrptSolution);
-//		System.out.println("gammalrptSolution: " + gammalrptSolution);
+//    	System.out.println("gammalrptSolution: " + gammalrptSolution);
 //		
 //		int gammasptSolution = gammaCalculator.calculateGamma(sptSolution);
 //		System.out.println("gammasptSolution: " + gammasptSolution);
