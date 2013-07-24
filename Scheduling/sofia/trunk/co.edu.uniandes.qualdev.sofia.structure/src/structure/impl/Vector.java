@@ -326,12 +326,15 @@ public class Vector extends AbstractStructure{
 		}
 	}
 	
-	private void decodeSolution(){
+	
+    private void decodeSolution(){
+		
 		// Arreglo con las operaciones sin programar
 		vectorDecodNonDelay = new ArrayList<IOperation>();
 		for (int i = 0; i < vectorDecodSimple.size(); i++){
-			IOperation iOperation = new Operation(vectorDecodSimple.get(i).getOperationIndex());
-			vectorDecodNonDelay.add(iOperation);
+			//IOperation iOperation = new Operation();
+			ArrayList<IOperation> iOperations = getOperationsbyJobAndStation(vectorDecodSimple.get(i).getOperationIndex());
+			vectorDecodNonDelay.addAll(iOperations);
 		}
 		
 		for (int i = 0; i < vectorDecodNonDelay.size(); i++){
@@ -366,7 +369,11 @@ public class Vector extends AbstractStructure{
 				}
 			}
 			
-			selectedOperation.setScheduled(true);
+			if(selectedOperation!=null){
+				selectedOperation.setScheduled(true);
+				removeAll(vectorDecodNonDelay, selectedOperation);
+				operationsAmount = vectorDecodNonDelay.size();
+			}
 			
 			// Hace los intercambios propios de la interpretación
 			if(selectedOperation != vectorDecodNonDelay.get(index)){
@@ -400,6 +407,42 @@ public class Vector extends AbstractStructure{
 		}
 		
 	}
+	
+	private void removeAll(ArrayList<IOperation> operations,
+			IOperation selectedOperation) {
+		
+		int job = selectedOperation.getOperationIndex().getJobId();
+		int station = selectedOperation.getOperationIndex().getStationId();
+		int machine = selectedOperation.getOperationIndex().getMachineId();
+		
+		for(int i=0; i< operations.size();i++){
+			OperationIndexVO temp = operations.get(i).getOperationIndex();
+			
+			if(temp.getJobId()==job && temp.getStationId()==station && temp.getMachineId()!=machine){
+				operations.remove(i);
+				i--;
+			}
+		}
+		
+	}
+	
+	private ArrayList<IOperation> getOperationsbyJobAndStation(OperationIndexVO operationIndex) {
+		int jobId = operationIndex.getJobId();
+		int stationId = operationIndex.getStationId();
+		ArrayList <IOperation> operations = new ArrayList<IOperation>();
+		for(int i =0; i< getProblem().length;i++){
+			
+			for(int j=0; j< getProblem()[i].length;j++){
+				OperationIndexVO temp = getProblem()[i][j];
+				if(temp.getJobId()==jobId && stationId == temp.getStationId()){
+					operations.add(new Operation(temp));
+				}
+			}
+			
+		}
+		return operations;
+	}
+	
 	
 	private int getLastJobTime(int jobId, int[][] C) {
 		int max = -1;
@@ -685,6 +728,7 @@ public class Vector extends AbstractStructure{
 		Vector clone = null;
 		try{
 			clone = new Vector(this.totalJobs, this.totalStations);
+			clone.operationsMatrix = this.operationsMatrix;
 			clone.processingTimesFile = this.processingTimesFile;
 			clone.totalJobs = this.totalJobs;
 			clone.totalStations = this.totalStations;
