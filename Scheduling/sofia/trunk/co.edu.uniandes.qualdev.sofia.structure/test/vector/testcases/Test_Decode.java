@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import structure.IOperation;
 import structure.impl.CriticalPath;
+import structure.impl.Operation;
 import structure.impl.Vector;
 
 import common.types.OperationIndexVO;
@@ -64,8 +65,10 @@ public class Test_Decode {
 			
 			ArrayList<IOperation> vector = vectorScenario1.getVectorDecodNonDelay();
 			
-				
-			
+			Assert.assertTrue(vector.contains(new Operation(new OperationIndexVO(10, 0, 0, 0))));
+			Assert.assertTrue(vector.contains(new Operation(new OperationIndexVO(10, 0, 1, 2))));
+			Assert.assertTrue(vector.contains(new Operation(new OperationIndexVO(10, 1, 0, 1))));
+			Assert.assertTrue(vector.contains(new Operation(new OperationIndexVO(10, 1, 1, 2))));
 			
 		}
 
