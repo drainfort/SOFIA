@@ -18,6 +18,7 @@ public class modeloParallel{
 	private String currentBks;
 	private String instanceName;
 	private String instanceType;
+	private ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
 	public modeloParallel(String pAlgorithmFile, String pProblemFile, String pCurrentBks, String pInstanceType, String pInstanceName) {
 			super();
 			algorithmFile = pAlgorithmFile;
@@ -68,11 +69,13 @@ public class modeloParallel{
 	@Test
 	public void testLaunch() throws Exception {
 		try {
-			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
+			
 			for (int i = 0; i < 1; i++) {	
-				results.add(launcher.launch(algorithmFile,problemFile, currentBks, instanceType, instanceName));
+				ExecutionResults temp = launcher.launch(algorithmFile,problemFile, currentBks, instanceType, instanceName);
+				temp.setPrintTable(true);
+				results.add(temp);
 			}
-			ChartPrinter.getInstance().addResults(results);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -80,7 +83,8 @@ public class modeloParallel{
 	}
 	@After
 	public void tearDown(){
-		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/T_04x04x02_01_TS_RANDOM_SWAP_Vector_consolidated.html");
+		ChartPrinter.getInstance().addResults(results);
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/T_04x04x02_01_SA_RANDOM_SWAP_Vector_consolidated.html");
 	}
 	public static void main(String[] args) {
  		JUnitCore.main("launcher.generator.modeloParallel");  
