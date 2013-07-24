@@ -7,6 +7,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import structure.IOperation;
 import structure.impl.CriticalPath;
 import structure.impl.Vector;
 
@@ -58,7 +59,13 @@ public class Test_Decode {
 		public void testCriticalPathScenario1() throws InterruptedException {
 			
 			vectorScenario1.calculateCMatrix();
+			System.out.println(vectorScenario1.getVectorDecodSimple());
 			System.out.println(vectorScenario1.getVectorDecodNonDelay());
+			
+			ArrayList<IOperation> vector = vectorScenario1.getVectorDecodNonDelay();
+			
+				
+			
 			
 		}
 
