@@ -132,9 +132,10 @@ public abstract class SchedulingAlgorithm {
 			betas.add(beta);
 		}
 		
-		if(processingTimesFiles2!=null)
+		if(processingTimesFiles2!=null){
+			problemFiles.add(1,"");
 			problemFiles.add(2,processingTimesFiles2);
-		
+		}
 		
 		HashMap<String, Integer> bkss = getBkss(problemConfiguration);
 		
