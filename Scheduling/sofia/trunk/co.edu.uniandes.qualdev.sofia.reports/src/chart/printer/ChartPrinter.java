@@ -41,8 +41,10 @@ public class ChartPrinter {
 	}
 	
 	public static ChartPrinter getInstance(){
-		if(instance == null)
+		if(instance == null){
+			System.out.println("Nueva instancia");
 			instance = new ChartPrinter();
+		}
 		return instance;
 	}
 	
@@ -71,7 +73,8 @@ public class ChartPrinter {
               e2.printStackTrace();
            }
         }
-        globalExecutionResults = new ArrayList<ArrayList<ExecutionResults>>();
+        //Quitar esto para que funcionen las pruebas.
+       globalExecutionResults = new ArrayList<ArrayList<ExecutionResults>>();
 	}
 	
 	private void printBodyHTML(PrintWriter pw) {
@@ -308,7 +311,6 @@ public class ChartPrinter {
 	
 	public void addResults(ArrayList<ExecutionResults> results) {
 		globalExecutionResults.add(results);
-		
 		printTable=globalExecutionResults.get(0).get(0).isPrintTable();
 		printInitialSolutions = globalExecutionResults.get(0).get(0).isPrintInitialSolution();
 		printSolutions = globalExecutionResults.get(0).get(0).isPrintFinalSolution();
