@@ -45,9 +45,9 @@ public class Test_Decode {
 				
 				vectorScenario1.setProblem(problem);
 				vectorScenario1.scheduleOperation(problem[0][0]);
-				vectorScenario1.scheduleOperation(problem[1][1]);
+				vectorScenario1.scheduleOperation(problem[0][2]);
 				vectorScenario1.scheduleOperation(problem[1][0]);
-				vectorScenario1.scheduleOperation(problem[0][1]);
+				vectorScenario1.scheduleOperation(problem[1][2]);
 				
 		}
 		// -----------------------------------------------
@@ -58,6 +58,7 @@ public class Test_Decode {
 		public void testCriticalPathScenario1() throws InterruptedException {
 			
 			vectorScenario1.calculateCMatrix();
+			System.out.println(vectorScenario1.getVectorDecodNonDelay());
 			
 		}
 
