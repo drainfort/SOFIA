@@ -21,6 +21,7 @@ import common.utils.MatrixUtils;
  * 
  * @author David Mendez-Acuna
  * @author Oriana Cendales
+ * @author Jaime Romero
  */
 public class LPTNonDelay implements IInitialSolBuilder{
 
