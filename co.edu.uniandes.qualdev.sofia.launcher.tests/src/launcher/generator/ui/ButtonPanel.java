@@ -43,7 +43,7 @@ public class ButtonPanel extends JPanel implements ActionListener{
 			ArrayList<String> instancesToExecute = launcher.getSelectedInstances();
 			AlgorithmConfigurationVO algorithmDefinition = algorithmDefinitionPanel.getAlgorithmDefinition();
 			algorithmDefinition.setInstanceType(launcher.getSelectedBenchmark());
-			launcher.generateJars(instancesToExecute, problemPanel.getSelectedBenchmark(), algorithmDefinition);
+			launcher.generateJars(instancesToExecute, launcher.getSelectedBenchmark(), algorithmDefinition);
 			
 		}else if(command.equals(EXECUTE)){
 			ArrayList<String> instancesToExecute = launcher.getSelectedInstances();
