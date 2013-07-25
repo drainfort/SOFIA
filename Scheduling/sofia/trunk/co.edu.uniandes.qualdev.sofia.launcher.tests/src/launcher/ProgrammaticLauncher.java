@@ -232,7 +232,7 @@ public class ProgrammaticLauncher {
 		// TODO: Make this execution parallel
 		for (String instance : instancesToExecute) {
 			String problemFile = "./data/FilesIndex/" + instance.substring(0, 5) + "/" + instance + ".properties";
-			if(instance.substring(5, 8).equals("x02")){
+			if(instance.substring(5, 7).equals("x0")){
 				problemFile = "./data/FilesIndex/" + instance.substring(0, 8) + "/" + instance + ".properties";
 			}
 			
