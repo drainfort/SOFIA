@@ -40,11 +40,14 @@ public class ProblemPanel extends JPanel{
 	
 	private ArrayList<JCheckBox> boxes20;
 	
+	private boolean parallel;
+	
 	// ----------------------------------------------------
 	// Constructor
 	// ----------------------------------------------------
 	
-	public ProblemPanel(){
+	public ProblemPanel(Boolean parallel){
+		this.parallel = parallel;
 		this.setLayout(new BorderLayout());
 		
 		JPanel instanceTypePanel = new JPanel();
@@ -55,16 +58,24 @@ public class ProblemPanel extends JPanel{
 		buttonsInstancesTypes = new ArrayList<JRadioButton>();
 		ButtonGroup instancesTypeGroup = new ButtonGroup();
 		
-		JRadioButton taillardInstances = new JRadioButton("Taillard");
-		instanceTypePanel.add(taillardInstances);
-		buttonsInstancesTypes.add(taillardInstances);
-		instancesTypeGroup.add(taillardInstances);
-		
-		JRadioButton yuInstances = new JRadioButton("Yu");
-		yuInstances.setSelected(true);
-		instanceTypePanel.add(yuInstances);
-		buttonsInstancesTypes.add(yuInstances);
-		instancesTypeGroup.add(yuInstances);
+		if(!parallel){
+			JRadioButton taillardInstances = new JRadioButton("Taillard");
+			instanceTypePanel.add(taillardInstances);
+			buttonsInstancesTypes.add(taillardInstances);
+			instancesTypeGroup.add(taillardInstances);
+			
+			JRadioButton yuInstances = new JRadioButton("Yu");
+			yuInstances.setSelected(true);
+			instanceTypePanel.add(yuInstances);
+			buttonsInstancesTypes.add(yuInstances);
+			instancesTypeGroup.add(yuInstances);
+		}
+		else{
+			JRadioButton parallelInstances = new JRadioButton("Parallel");
+			instanceTypePanel.add(parallelInstances);
+			buttonsInstancesTypes.add(parallelInstances);
+			instancesTypeGroup.add(parallelInstances);
+		}
 		
 		JPanel instancesPanel = new JPanel();
 		instancesPanel.setLayout(new GridLayout(1,6));
@@ -75,11 +86,15 @@ public class ProblemPanel extends JPanel{
 		p4.setLayout(new GridLayout(10, 1));
 		
 		boxes4 = new ArrayList<JCheckBox>();
+		String instanceParallel ="";
+		if(parallel){
+			instanceParallel="x02";
+		}
 		for (int i = 1; i <= 10; i++) {
 			if(i < 10){
-				boxes4.add(new JCheckBox("04x04_0" + i));
+				boxes4.add(new JCheckBox("04x04"+instanceParallel+"_0" + i));
 			}else{
-				boxes4.add(new JCheckBox("04x04_" + i));
+				boxes4.add(new JCheckBox("04x04"+instanceParallel+"_" + i));
 			}
 			p4.add(boxes4.get(i-1));
 		}
@@ -93,9 +108,9 @@ public class ProblemPanel extends JPanel{
 		boxes5 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
 			if(i < 10){
-				boxes5.add(new JCheckBox("05x05_0" + i));
+				boxes5.add(new JCheckBox("05x05"+instanceParallel+"_0" + i));
 			}else{
-				boxes5.add(new JCheckBox("05x05_" + i));
+				boxes5.add(new JCheckBox("05x05"+instanceParallel+"_" + i));
 			}
 			
 			p5.add(boxes5.get(i-1));
@@ -110,9 +125,9 @@ public class ProblemPanel extends JPanel{
 		boxes7 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
 			if(i < 10){
-				boxes7.add(new JCheckBox("07x07_0" + i));
+				boxes7.add(new JCheckBox("07x07"+instanceParallel+"_0" + i));
 			}else{
-				boxes7.add(new JCheckBox("07x07_" + i));
+				boxes7.add(new JCheckBox("07x07"+instanceParallel+"_" + i));
 			}
 			
 			p7.add(boxes7.get(i-1));
@@ -127,9 +142,9 @@ public class ProblemPanel extends JPanel{
 		boxes10 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
 			if(i < 10){
-				boxes10.add(new JCheckBox("10x10_0" + i));
+				boxes10.add(new JCheckBox("10x10"+instanceParallel+"_0" + i));
 			}else{
-				boxes10.add(new JCheckBox("10x10_" + i));
+				boxes10.add(new JCheckBox("10x10"+instanceParallel+"_" + i));
 			}
 			
 			p10.add(boxes10.get(i-1));
@@ -143,9 +158,9 @@ public class ProblemPanel extends JPanel{
 		boxes15 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
 			if(i < 10){
-				boxes15.add(new JCheckBox("15x15_0" + i));
+				boxes15.add(new JCheckBox("15x15"+instanceParallel+"_0" + i));
 			}else{
-				boxes15.add(new JCheckBox("15x15_" + i));
+				boxes15.add(new JCheckBox("15x15"+instanceParallel+"_" + i));
 			}
 			
 			p15.add(boxes15.get(i-1));
@@ -159,9 +174,9 @@ public class ProblemPanel extends JPanel{
 		boxes20 = new ArrayList<JCheckBox>();
 		for (int i = 1; i <= 10; i++) {
 			if(i < 10){
-				boxes20.add(new JCheckBox("20x20_0" + i));
+				boxes20.add(new JCheckBox("20x20"+instanceParallel+"_0" + i));
 			}else{
-				boxes20.add(new JCheckBox("20x20_" + i));
+				boxes20.add(new JCheckBox("20x20"+instanceParallel+"_" + i));
 			}
 			p20.add(boxes20.get(i-1));
 		}
@@ -176,7 +191,10 @@ public class ProblemPanel extends JPanel{
 	
 	public String getSelectedBenchmark(){
 		if(buttonsInstancesTypes.get(0).isSelected()){
-			return AlgorithmConfigurationVO.TAILLARD;
+			if(!parallel)
+				return AlgorithmConfigurationVO.TAILLARD;
+			else
+				return AlgorithmConfigurationVO.PARALLEL;
 		}else{
 			return AlgorithmConfigurationVO.YU;
 		}
