@@ -134,8 +134,9 @@ public class LauncherUI extends JFrame{
 	}
 
 	public String getSelectedBenchmark() {
+		System.out.println();
 		String a= problemPanel.getSelectedBenchmark();
-		String b= problemPanel.getSelectedBenchmark();
+		String b= problemPanel1.getSelectedBenchmark();
 		if(!a.equals("")){
 			return a;
 		}
