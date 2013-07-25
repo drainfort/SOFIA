@@ -11,6 +11,7 @@ import java.io.PrintWriter;
  * @author Lindsay Alvarez
  * @author David Mendez-Acuna
  * @author Oriana Cendales
+ * @author Juan Guillermo Amortegui
  */
 public class InstancesGenerator {
 
@@ -18,7 +19,7 @@ public class InstancesGenerator {
 	// Constants
 	// ------------------------------------------------------
 
-	public final static Double m = new Double(2147483647);
+	public final static Integer m = new Integer(2147483647);
 
 	public final static Integer a = new Integer(16807);
 
@@ -28,6 +29,10 @@ public class InstancesGenerator {
 
 	private Integer tempSeed;
 
+	private int jobs = 4;
+	
+	private int machines = 4;
+
 	// ------------------------------------------------------
 	// Constructor
 	// ------------------------------------------------------
@@ -35,57 +40,63 @@ public class InstancesGenerator {
 	/**
 	 * Constructor of the class
 	 */
-	public InstancesGenerator() {
-		int jobs = 4;
-		int machines = 4;
-
-		int timeSeed =  1166510396; int machineSeed = 164000672;
-
-		
-		//Generacion de los tiempos de proceso
-		
-		tempSeed = new Integer(timeSeed);// esta es la semilla TimeSeed del
-											// OrLibrary
-		Integer[][] matrixTimeSeed = generateTimeSeedMatrix(jobs);// este es el
-																// tamaño de la
-																// instancia
-
-		tempSeed = new Integer(machineSeed);// esta es la semilla MachineSeed del
-											// OrLibrary
-		
-		Integer[][] matrixMachineSeed = generateMachineSeedMatrix(machines);// este es
-																		// el
-																		// tamaño
-																		// de la
-																		// instancia
-		Integer[][] matrixFramework = generadorParaFramework(matrixMachineSeed,
-				matrixTimeSeed);
-		System.out.println("T");
-		printMatrix(matrixFramework);
-		
-		
-		//Generacion de los tiempos de viaje
-		tempSeed = new Integer(timeSeed);
-		Integer[][] matrixVisitTimeSeed = generateVisitTimeSeedMatrix(machines+1);
-		System.out.println("TT");
-		printMatrix(matrixVisitTimeSeed);
+	public InstancesGenerator(int jobs, int machines) {
+		this.jobs = jobs;
+		this.machines = machines;
 	}
 
 	// ------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------
+	
+	//TODO Poner esto a generar la instancia en archivos de texto que sigan el formato adecuado.
+	/**
+	 * Generates and prints in the console an instance according to the given size and the time and machine seeds
+	 * @param timeSeed
+	 * @param machineSeed
+	 */
+	public void generateAndPrintInstances(int timeSeed, int machineSeed){
+		
+		// PASO 1: Generación de los tiempos de proceso
+		tempSeed = new Integer(timeSeed);
+		Integer[][] matrixTimeSeed = generateTimeSeedMatrix(jobs);
 
+		tempSeed = new Integer(machineSeed);
+		Integer[][] matrixMachineSeed = generateMachineSeedMatrix(machines);	
+
+		Integer[][] matrixFramework = generateInstance(matrixMachineSeed, matrixTimeSeed);
+		System.out.println("T");
+		printMatrix(matrixFramework);
+		
+		// PASO 2: Generación de los tiempos de viaje
+		tempSeed = new Integer(timeSeed);
+		Integer[][] matrixVisitTimeSeed = generateVisitTimeSeedMatrix(machines+1);
+		
+		System.out.println("TT");
+		printMatrix(matrixVisitTimeSeed);
+	}
+
+	/**
+	 * Generates the time seed matrix needed for computing the processing times of the instance.
+	 * @param size Instance size
+	 * @return timeSeedMatrix The time seed matrix
+	 */
 	private Integer[][] generateTimeSeedMatrix(int size) {
 		Integer[][] cMatrix = new Integer[size][size];
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				cMatrix[j][i] = getRandomNumber(8, 14);
+				cMatrix[j][i] = unif(8,14);
 			}
 		}
 		return cMatrix;
 	}
 
+	/**
+	 * Generates the machine seed matrix needed for computing the processing times of the instance.
+	 * @param size Instance size
+	 * @return machineSeedMatrix The machine seed matrix
+	 */
 	private Integer[][] generateMachineSeedMatrix(int size) {
 		Integer[][] cMatrix = new Integer[size][size];
 
@@ -97,17 +108,22 @@ public class InstancesGenerator {
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				swap(cMatrix, getRandomNumber(j, size - 1), i, j);
+				swap(cMatrix, unif(j, size - 1), i, j);
 			}
 		}
 		return cMatrix;
 	}
 	
+	/**
+	 * Generates the visit seed matrix needed for computing the travel times of the instance.
+	 * @param size Instance size
+	 * @return visitSeedMatrix The visit seed matrix
+	 */
 	private Integer[][] generateVisitTimeSeedMatrix(int size){
 		Integer[][] cMatrix = new Integer[size][size];
 		cMatrix[0][0]=0;
 		for (int i = 1; i < size; i++) {
-			int random=getRandomNumber(2, 10);
+			int random=unif(2, 10);
 				
 			cMatrix[0][i]=random;
 			cMatrix[i][0]=cMatrix[0][i];
@@ -116,7 +132,7 @@ public class InstancesGenerator {
 		
 		for (int i = 1; i < size-1; i++) {
 			for (int j = i+1; j < size; j++) {
-				int random=getRandomNumber(2, 10);
+				int random=unif(2, 10);
 				cMatrix[j][i] = random;
 				cMatrix[i][j] = cMatrix[j][i];
 			}
@@ -124,57 +140,25 @@ public class InstancesGenerator {
 		return cMatrix;
 	}
 
-	// método para sacar los datos de tiempos de proceso en el formato de
-	// express
-	public String[][] generadorParaExpress(Integer[][] matrixMachineSeed,
-			Integer[][] matrixTimeSeed) {
-		int fila = (matrixMachineSeed.length) * (matrixMachineSeed.length);
-		
-		String dato;
-
-		String[][] matrixExpres2 = new String[matrixMachineSeed.length][matrixMachineSeed.length];
-
-		for (int j = 0; j < matrixMachineSeed.length; j++) {
-			for (int K = 0; K < matrixMachineSeed.length; K++) {
-				dato = "(" + (j + 1) + "," + matrixMachineSeed[K][j] + ")"
-						+ matrixTimeSeed[K][j];
-				matrixExpres2[K][j] = dato;
-			}
-
-		}
-
-		int x = -1;
-		String[][] matrixExpres = new String[fila][1];
-		for (int j = 0; j < matrixExpres2.length; j++) {
-			for (int K = 0; K < matrixExpres2.length; K++) {
-				x = x + 1;
-				matrixExpres[x][0] = matrixExpres2[K][j];
-			}
-		}
-
-		return matrixExpres;
-
-	}
-
-	// método para sacar los datos de tiempos de proceso en el formato de
-	// express
-	private Integer[][] generadorParaFramework(Integer[][] matrixMachineSeed,
+	/**
+	 * Generates and prints an instance according to the given size and the machine/time seed matrixes. 
+	 * @param matrixMachineSeed The machine seed matrix
+	 * @param matrixTimeSeed The time seed matrix
+	 * @return
+	 */
+	private Integer[][] generateInstance(Integer[][] matrixMachineSeed,
 			Integer[][] matrixTimeSeed) {
 
 		Integer[][] matrix = new Integer[matrixMachineSeed.length][matrixMachineSeed.length];
-
 		for (int i = 0; i < matrixMachineSeed.length; i++){
 			for (int j = 0; j < matrixMachineSeed.length; j++) {
-				matrix[i][j] = buscarTiempoProceso(i,j+1, matrixMachineSeed, matrixTimeSeed);
+				matrix[i][j] = findProcessingTime(i,j+1, matrixMachineSeed, matrixTimeSeed);
 			}
-
 		}
-
 		return matrix;
-
 	}
 
-	private Integer buscarTiempoProceso(int job, int machine, Integer[][] matrixMachineSeed,
+	private Integer findProcessingTime(int job, int machine, Integer[][] matrixMachineSeed,
 			Integer[][] matrixTimeSeed) {
 		
 		int posMachine = -1;
@@ -201,21 +185,18 @@ public class InstancesGenerator {
 		temp0 = new Integer(0);
 	}
 
-	private int getRandomNumber(int lowerValue, int upperValue) {
-		int k = tempSeed / b;
-
+	private int unif(int lowerValue, int upperValue) {
+		Integer k = tempSeed / b;
 		tempSeed = (a * (tempSeed % b) - k * c);
 
 		if (tempSeed < 0) {
-			tempSeed = (int) (tempSeed + m);
+			tempSeed = tempSeed + m;
 		}
 
-		Double value_0_1 = new Double(tempSeed / m);
-		return (int) (lowerValue + (value_0_1 * (upperValue - lowerValue + 1)));
+		Float value_0_1 = new Float((float)tempSeed.intValue() / (float) m.intValue());
+		return  lowerValue + ((int) (value_0_1 * (upperValue - lowerValue + 1)));
 	}
 
-
-	
 	// ------------------------------------------------------
 	// Utilities
 	// ------------------------------------------------------
@@ -271,11 +252,14 @@ public class InstancesGenerator {
 		out.close();
 	}
 
-	/**
-	 * @param args
-	 */
+	// ------------------------------------------------------
+	// Main
+	// ------------------------------------------------------
+	
 	public static void main(String[] args) {
-		InstancesGenerator gen = new InstancesGenerator();
-
+		InstancesGenerator gen = new InstancesGenerator(4, 4);
+		
+		int timeSeed =  1166510396; int machineSeed = 164000672;
+		gen.generateAndPrintInstances(timeSeed, machineSeed);
 	}
 }
