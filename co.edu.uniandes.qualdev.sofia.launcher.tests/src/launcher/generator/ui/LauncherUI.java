@@ -130,9 +130,20 @@ public class LauncherUI extends JFrame{
 	}
 
 	public ArrayList<String> getSelectedInstances() {
-		ArrayList<String> instances  = new ArrayList<String>();
-		instances.addAll(problemPanel.getSelectedInstances());
-		instances.addAll(problemPanel1.getSelectedInstances());
-		return instances;
+		
+		String a= problemPanel.getSelectedBenchmark();
+		if(!a.equals("")){
+			return problemPanel.getSelectedInstances();
+		}
+		return problemPanel1.getSelectedInstances();
+	}
+
+	public String getSelectedBenchmark() {
+		String a= problemPanel.getSelectedBenchmark();
+		String b= problemPanel.getSelectedBenchmark();
+		if(!a.equals("")){
+			return a;
+		}
+		return b;
 	}
 }
