@@ -77,12 +77,7 @@ public class LauncherUI extends JFrame{
          
         tabbedPane.addTab("Algorythm", algorithmDefinitionPanel);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-        
-        
-
-		
-		
-		
+        		
 		this.add(buttons, BorderLayout.SOUTH);
         
 		this.add(tabbedPane, BorderLayout.CENTER);
@@ -145,5 +140,9 @@ public class LauncherUI extends JFrame{
 			return a;
 		}
 		return b;
+	}
+
+	public AlgorithmConfigurationVO getAlgorithmDefinition() {
+		return algorithmDefinitionPanel.getAlgorithmDefinition();
 	}
 }
