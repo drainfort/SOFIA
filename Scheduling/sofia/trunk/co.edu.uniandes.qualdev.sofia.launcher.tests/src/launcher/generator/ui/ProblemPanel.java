@@ -196,6 +196,9 @@ public class ProblemPanel extends JPanel{
 			else
 				return AlgorithmConfigurationVO.PARALLEL;
 		}else{
+			if(buttonsInstancesTypes.size()==1){
+				return "";
+			}
 			return AlgorithmConfigurationVO.YU;
 		}
 	}
