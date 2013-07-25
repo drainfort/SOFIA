@@ -21,6 +21,7 @@ import common.utils.MatrixUtils;
  * 
  * @author David Mendez-Acuna
  * @author Oriana Cendales
+ * @author Jaime Romero
  */
 public class LRPTNonDelay implements IInitialSolBuilder{
 
@@ -52,6 +53,10 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 	public IStructure createInitialSolution(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator) throws Exception {
 		boolean travelTimesIncluded = false;
 		boolean setupTimesIncluded = false;
+		
+		// -------------------------------------------------------------------------------------------------------------------
+		// TENIENDO EN CUENTA LAS BETAS
+		// -------------------------------------------------------------------------------------------------------------------
 		
 		BetaVO travelTimes = null;
 		BetaVO setupTimes = null;
@@ -85,11 +90,16 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
 		}
 		
+		// -------------------------------------------------------------------------------------------------------------------
+		// ALGORITMO CONSTRUCTIVO: CONSTRUYENDO LA SOLUCIÓN INICIAL
+		// -------------------------------------------------------------------------------------------------------------------
+	
+		// Inicializando lista de permutacion que se va a retornar
 		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas);
-
 		OperationIndexVO[][] problem = finalList.getProblem();
 		
-		// Arreglo con las operaciones sin programar
+		// Construyendo un arreglo con las operaciones sin programar basandose en el problema que ya está definido
+		// Este arreglo incluye TODAS las operaciones posibles. Por ejemplo: <0,0,0>, <0,0,1>, <0,0,2> ...
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		for (int i = 0; i < T.length; i++) {
 			for (int j = 0; j < T[0].length; j++) {
@@ -102,10 +112,13 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 			}
 		}
 		
-		//Calculate initial remaining time
+		// Actualizando los tiempos remanentes de las operaciones por programar
 		for (int i = 0; i < operations.size(); i++) {
 			IOperation operationI = operations.get(i);
 			int remainingTime = 0;
+			
+			// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
+			// se cumple la restricción de no visitar más de una máquina en la misma estación. 
 			ArrayList<Integer> listStations = new ArrayList<Integer>();
 			for (int j = 0; j < operations.size(); j++) {
 				IOperation operationJ = operations.get(j);
@@ -118,6 +131,7 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 			operationI.setJobRemainingTime(remainingTime);
 		}
 		
+		// Actualizando los tIempos de inicio cuando existen traveltimes para las operaciones sin programar
 		if(travelTimesIncluded){
 			for (IOperation operation : operations) {
 				operation.setInitialTime(TT[0][operation.getOperationIndex().getStationId() + 1]);
@@ -126,8 +140,11 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 		
 		int operationsAmount = T.length * T[0].length;
 		int index = 0;
+		
+		// CICLO PRINCIPAL: Iteracion del algoritmo constructivo. Por cada iteración, programa una operacion
 		while(index < operationsAmount){
 			
+			// Calcula el menor tiempo de inicio dentro de las operaciones sin programar.
 			int minInitialTime = Integer.MAX_VALUE;
 			for (IOperation operation : operations) {
 				int currentInitialTime = operation.getInitialTime();
@@ -135,15 +152,15 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 					minInitialTime = currentInitialTime;
 			}
 			
+			// Construye un arreglo las operaciones que tienen ese menor tiempo de inicio
 			ArrayList<IOperation> operationsMinInitialTime = new ArrayList<IOperation>();
-			
 			for (IOperation operation : operations) {
 				if(operation.getInitialTime() == minInitialTime){
 					operationsMinInitialTime.add(operation);
 				}
 			}
 			
-			// Obteniendo la operacion de mayor tiempo de proceso (LRPT  LongestRemainingProcessingTime)
+			// REGLA DE DESPACHO: Obteniendo la operacion de mayor tiempo remanente  (LRPT  LongestRemainingProcessingTime)
 			// dentro de las que estan en el arreglo operationsMinInitialTime
 			int maxRemainingProcessingTime = -1;
 			IOperation selectedOperation = null;
@@ -155,15 +172,17 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 				if(currentProcessingTime > maxRemainingProcessingTime){
 					maxRemainingProcessingTime = currentProcessingTime;
 					selectedOperation = operation;
-					
 				}
 			}
 
+			// Quita todas las operaciones en el vector con el mismo par job estación para descartar las operaciones repetidas de un job en la misma estación. 
+			// Programa la operación seleccionada
 			if(selectedOperation!=null){
 				removeAll(operations, selectedOperation);
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
 			}
 			
+			// Calcula C con la nueva operación programada
 			finalList.calculateCMatrix();
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
@@ -205,11 +224,13 @@ public class LRPTNonDelay implements IInitialSolBuilder{
 			for (int i = 0; i < operations.size(); i++) {
 				IOperation operationI = operations.get(i);
 				int remainingTime = 0;
+				ArrayList<Integer> listStations = new ArrayList<Integer>();
 				for (int j = 0; j < operations.size(); j++) {
 					IOperation operationJ = operations.get(j);
 					
-					if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()){
+					if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId() && !listStations.contains(operationJ.getOperationIndex().getStationId())){
 						remainingTime += operationJ.getOperationIndex().getProcessingTime();
+						listStations.add(operationJ.getOperationIndex().getStationId());
 					}
 				}
 				operationI.setJobRemainingTime(remainingTime);

@@ -53,6 +53,10 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 		boolean travelTimesIncluded = false;
 		boolean setupTimesIncluded = false;
 		
+		// -------------------------------------------------------------------------------------------------------------------
+		// TENIENDO EN CUENTA LAS BETAS
+		// -------------------------------------------------------------------------------------------------------------------
+		
 		BetaVO travelTimes = null;
 		BetaVO setupTimes = null;
 		
@@ -85,8 +89,13 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
 		}
 		
+		// -------------------------------------------------------------------------------------------------------------------
+		// ALGORITMO CONSTRUCTIVO: CONSTRUYENDO LA SOLUCIÓN INICIAL
+		// -------------------------------------------------------------------------------------------------------------------
+	
+		// Construyendo un arreglo con las operaciones sin programar basandose en el problema que ya está definido
+		// Este arreglo incluye TODAS las operaciones posibles. Por ejemplo: <0,0,0>, <0,0,1>, <0,0,2> ...
 		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas);
-
 		OperationIndexVO[][] problem = finalList.getProblem();
 		
 		// Arreglo con las operaciones sin programar
@@ -102,14 +111,16 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			}
 		}
 		
-		//Calculate initial remaining time
+		// Actualizando los tiempos remanentes de las operaciones por programar
 		for (int i = 0; i < operations.size(); i++) {
 			IOperation operationI = operations.get(i);
 			int remainingTime = 0;
+			
+			// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
+			// se cumple la restricción de no visitar más de una máquina en la misma estación. 
 			ArrayList<Integer> listStations = new ArrayList<Integer>();
 			for (int j = 0; j < operations.size(); j++) {
 				IOperation operationJ = operations.get(j);
-				
 				if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId() && !listStations.contains(operationJ.getOperationIndex().getStationId())){
 					remainingTime += operationJ.getOperationIndex().getProcessingTime();
 					listStations.add(operationJ.getOperationIndex().getStationId());
@@ -118,6 +129,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			operationI.setJobRemainingTime(remainingTime);
 		}
 		
+		// Actualizando los tIempos de inicio cuando existen traveltimes para las operaciones sin programar
 		if(travelTimesIncluded){
 			for (IOperation operation : operations) {
 				operation.setInitialTime(TT[0][operation.getOperationIndex().getStationId() + 1]);
@@ -126,8 +138,11 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 		
 		int operationsAmount = T.length * T[0].length;
 		int index = 0;
+		
+		// CICLO PRINCIPAL: Iteracion del algoritmo constructivo. Por cada iteración, programa una operacion
 		while(index < operationsAmount){
 			
+			// Calcula el menor tiempo de inicio dentro de las operaciones sin programar.
 			int minInitialTime = Integer.MAX_VALUE;
 			for (IOperation operation : operations) {
 				int currentInitialTime = operation.getInitialTime();
@@ -135,8 +150,8 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 					minInitialTime = currentInitialTime;
 			}
 			
+			// Construye un arreglo las operaciones que tienen ese menor tiempo de inicio
 			ArrayList<IOperation> operationsMinInitialTime = new ArrayList<IOperation>();
-			
 			for (IOperation operation : operations) {
 				if(operation.getInitialTime() == minInitialTime){
 					operationsMinInitialTime.add(operation);
@@ -350,11 +365,13 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			for (int i = 0; i < operations.size(); i++) {
 				IOperation operationI = operations.get(i);
 				int remainingTime = 0;
+				ArrayList<Integer> listStations = new ArrayList<Integer>();
 				for (int j = 0; j < operations.size(); j++) {
 					IOperation operationJ = operations.get(j);
 					
-					if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId()){
+					if(operationJ.getOperationIndex().getJobId() == operationI.getOperationIndex().getJobId() && !listStations.contains(operationJ.getOperationIndex().getStationId())){
 						remainingTime += operationJ.getOperationIndex().getProcessingTime();
+						listStations.add(operationJ.getOperationIndex().getStationId());
 					}
 				}
 				operationI.setJobRemainingTime(remainingTime);
