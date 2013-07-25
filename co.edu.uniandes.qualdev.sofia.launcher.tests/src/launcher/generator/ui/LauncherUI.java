@@ -30,7 +30,7 @@ public class LauncherUI extends JFrame{
 	
 	private ConfigurationPanel configurationPanel;
 	
-	private ExecutionPanel executionPanel;
+	private AlgorithmDefinitionPanel algorithmDefinitionPanel;
 	
 	private ButtonPanel buttons;
 	
@@ -53,7 +53,7 @@ public class LauncherUI extends JFrame{
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
 		configurationPanel = new ConfigurationPanel();
-		executionPanel = new ExecutionPanel();
+		algorithmDefinitionPanel = new AlgorithmDefinitionPanel();
 		buttons = new ButtonPanel(this);
 		
 		
@@ -75,7 +75,7 @@ public class LauncherUI extends JFrame{
 		tabbedPane.addTab("Problem", problem);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
          
-        tabbedPane.addTab("Algorythm", executionPanel);
+        tabbedPane.addTab("Algorythm", algorithmDefinitionPanel);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
         
         
