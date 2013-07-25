@@ -53,6 +53,10 @@ public class LPTNonDelay implements IInitialSolBuilder{
 		boolean travelTimesIncluded = false;
 		boolean setupTimesIncluded = false;
 		
+		// -------------------------------------------------------------------------------------------------------------------
+		// TENIENDO EN CUENTA LAS BETAS
+		// -------------------------------------------------------------------------------------------------------------------
+		
 		BetaVO travelTimes = null;
 		BetaVO setupTimes = null;
 		
@@ -85,12 +89,16 @@ public class LPTNonDelay implements IInitialSolBuilder{
 			S = MatrixUtils.loadMatrix(setupTimes.getInformationFiles().get(0));
 		}
 		
-		// Esta es la lista de permutacion que se va a retornar.
-		// Arranca vacía y en cada iteración se le agrega una operación.
+		// -------------------------------------------------------------------------------------------------------------------
+		// ALGORITMO CONSTRUCTIVO: CONSTRUYENDO LA SOLUCIÓN INICIAL
+		// -------------------------------------------------------------------------------------------------------------------
+		
+		// Inicializando lista de permutacion que se va a retornar
 		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas);
 		OperationIndexVO[][] problem = finalList.getProblem();
 		
-		// Arreglo con las operaciones sin programar
+		// Construyendo un arreglo con las operaciones sin programar basandose en el problema que ya está definido
+		// Este arreglo incluye TODAS las operaciones posibles. Por ejemplo: <0,0,0>, <0,0,1>, <0,0,2> ...
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		for (int i = 0; i < T.length; i++) {
 			for (int j = 0; j < T[0].length; j++) {
@@ -103,9 +111,8 @@ public class LPTNonDelay implements IInitialSolBuilder{
 			}
 		}
 		
-		
+		// Actualizando los tIempos de inicio cuando existen traveltimes para las operaciones sin programar
 		if(travelTimesIncluded){
-			// Para las operaciones sin programar actualiza los tiempos de inicio de la operacion.
 			for (IOperation operation : operations) {
 				operation.setInitialTime(TT[0][operation.getOperationIndex().getStationId() + 1]);
 			}
@@ -114,10 +121,10 @@ public class LPTNonDelay implements IInitialSolBuilder{
 		int operationsAmount = T.length * T[0].length;
 		int index = 0;
 		
-		// Iteracion del algoritmo constructivo. Por cada iteración, programa una operacion
+		// CICLO PRINCIPAL: Iteracion del algoritmo constructivo. Por cada iteración, programa una operacion
 		while(index < operationsAmount){
 			
-			// Calcula el menor tiempo de inicio
+			// Calcula el menor tiempo de inicio dentro de las operaciones sin programar.
 			int minInitialTime = Integer.MAX_VALUE;
 			for (IOperation operation : operations) {
 				int currentInitialTime = operation.getInitialTime();
@@ -125,7 +132,7 @@ public class LPTNonDelay implements IInitialSolBuilder{
 					minInitialTime = currentInitialTime;
 			}
 				
-			// Agrega a este arreglo las operaciones que tienen ese menor tiempo de inicio
+			// Construye un arreglo las operaciones que tienen ese menor tiempo de inicio
 			ArrayList<IOperation> operationsMinInitialTime = new ArrayList<IOperation>();
 			for (IOperation operation : operations) {
 				if(operation.getInitialTime() == minInitialTime){
@@ -133,7 +140,7 @@ public class LPTNonDelay implements IInitialSolBuilder{
 				}
 			}
 				
-			// Obteniendo la operacion de mayor tiempo de proceso (LPT  LongestProcessingTime)
+			// REGLA DE DESPACHO: Obteniendo la operacion de mayor tiempo de proceso (LPT  LongestProcessingTime)
 			// dentro de las que estan en el arreglo operationsMinInitialTime
 			int maxProcessingTime = -1;
 			IOperation selectedOperation = null;
@@ -152,15 +159,22 @@ public class LPTNonDelay implements IInitialSolBuilder{
 			
 			// Programa la operacion
 			if(selectedOperation!=null){
+				// ¿Cómo sabe que esta operación si se puede programar? Porque ya se descartaron al inicio las que no.
+				// Una operación no se puede programar cuando ya hay una operación previa atendiendo el mismo trabajo en la misma estación. 
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
 			}
 			
+			// Calcula C con la nueva operación programada
 			finalList.calculateCMatrix();
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
+				// Esta lista contiene operaciones que no pueden ser programadas porque hay estaciones con varias máquinas. Aquí se descartarn estas operaciones. 
 				boolean canBeScheduled = finalList.scheduleOperation(iOperation.getOperationIndex());
+				
 				if(canBeScheduled){
+					
+					// Calculos sobre los tiempos de inicio de las operaciones. 
 					IOperation lastJob = finalList.getCiminus1J(iOperation, index + 1, finalList.getOperations());
 					IOperation lastStation = finalList.getCiJminus1(iOperation, index + 1, finalList.getOperations());
 					
@@ -196,10 +210,11 @@ public class LPTNonDelay implements IInitialSolBuilder{
 			}
 			index++;
 		}
-		System.out.println();
 		return finalList;
 	}
 	
+	// TODO Ajustar este método con los cambios para soportar FOS
+	@Override
 	public IStructure createInitialSolution(Integer [][] TMatrix,  Integer[][] TTMatrix, Integer[][]STMatrix, String structureFactory, IGammaCalculator gammaCalculator, IStructure structure) throws Exception {
 		Integer [][] T = TMatrix;
 		Integer [][] TT = TTMatrix;
