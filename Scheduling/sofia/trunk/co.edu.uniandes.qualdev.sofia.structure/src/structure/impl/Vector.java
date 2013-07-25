@@ -18,17 +18,15 @@ import beta.TearDownBeta;
 import beta.impl.TearDownTravelTime;
 
 import common.types.BetaVO;
-import common.types.NeighborInformation;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
-import common.utils.MatrixUtils;
 
 /**
  * Implementation of a graph
  * 
  * @author Rubby Casallas
  * @author David Mendez-Acuna
- * @author Lindsay çlvarez
+ * @author Lindsay Alvarez
  * @author Oriana Cendales
  * @author Jaime Romero
  * @author Juan Pablo Caballero-Villalobos
@@ -266,8 +264,7 @@ public class Vector extends AbstractStructure{
 		if(synch){
 			return C;
 		}else{
-			
-			
+			// Decodificación simple en la que la lista de permutación representa el orden en el que las operaciones deben ser programadas. 
 			int [][] CSolution = new int[getTotalJobs()][getTotalStations() + 1];
 			
 			for (int i = 0; i < vectorDecodSimple.size(); i++) {
@@ -288,6 +285,8 @@ public class Vector extends AbstractStructure{
 				CSolution[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
 			}
 			
+			// Decodificación non-delay en la que la lista de permutación representa un criterior de desempate para la programación de las operaciones
+			// que se hace como una regla de despacho. Es decir, se toman las que menor tiempo de inicio y se selecciona la que primero aparezca en la lista. 
 			decodeSolution();
 			
 			CIntepretation = new int[getTotalJobs()][getTotalStations() + 1];
@@ -310,7 +309,6 @@ public class Vector extends AbstractStructure{
 				CIntepretation[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
 			}
 			
-			//TODO seleccionar la mejor
 			C = CSolution;
 			int[][] newC = applyTearDownBetas(C);
 			if (newC != null)
@@ -329,14 +327,14 @@ public class Vector extends AbstractStructure{
 	
     private void decodeSolution(){
 		
-		// Arreglo con las operaciones sin programar
+		// Arreglo con todas las operaciones sin programar en el orden en el que aparece en la lista de permutación.
 		vectorDecodNonDelay = new ArrayList<IOperation>();
 		for (int i = 0; i < vectorDecodSimple.size(); i++){
-			//IOperation iOperation = new Operation();
 			ArrayList<IOperation> iOperations = getOperationsbyJobAndStation(vectorDecodSimple.get(i).getOperationIndex());
 			vectorDecodNonDelay.addAll(iOperations);
 		}
 		
+		// Actualiza los tiempos de inicio.
 		for (int i = 0; i < vectorDecodNonDelay.size(); i++){
 			IOperation iOperation = vectorDecodNonDelay.get(i);
 			int sumTTBetas = this.getTTBetas(null, i, vectorDecodNonDelay);
@@ -347,7 +345,7 @@ public class Vector extends AbstractStructure{
 		int operationsAmount = vectorDecodNonDelay.size();
 		int index = 0;
 		
-		// Iteracion del algoritmo constructivo. Por cada iteración, programa una operacion
+		// CICLO PRINCIPAL:  Iteracion del algoritmo constructivo. Por cada iteración, programa una operacion
 		while(index < operationsAmount){
 			
 			// Calcula el menor tiempo de inicio
