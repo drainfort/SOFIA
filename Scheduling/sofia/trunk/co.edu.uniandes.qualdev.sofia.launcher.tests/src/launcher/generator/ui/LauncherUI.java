@@ -36,6 +36,10 @@ public class LauncherUI extends JFrame{
 	
 	private JarGenerator jarsGenerator;
 	
+	private ProblemPanel problemPanel;
+	
+	private ProblemPanel problemPanel1;
+	
 
 	
 	// ----------------------------------------------------
@@ -57,8 +61,8 @@ public class LauncherUI extends JFrame{
 		problem.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Execution" ) ) );
 		problem.setLayout(new BorderLayout());
 		
-		ProblemPanel problemPanel = new ProblemPanel(true);
-		ProblemPanel problemPanel1 = new ProblemPanel(false);
+		problemPanel = new ProblemPanel(true);
+		problemPanel1 = new ProblemPanel(false);
 		
 		problem.add(configurationPanel, BorderLayout.NORTH);
 		
@@ -123,5 +127,12 @@ public class LauncherUI extends JFrame{
 	public static void main(String[] args) {
 		LauncherUI launcher = new LauncherUI();
 		launcher.setVisible(true);
+	}
+
+	public ArrayList<String> getSelectedInstances() {
+		ArrayList<String> instances  = new ArrayList<String>();
+		instances.addAll(problemPanel.getSelectedInstances());
+		instances.addAll(problemPanel1.getSelectedInstances());
+		return instances;
 	}
 }
