@@ -315,15 +315,26 @@ public class InstancesGenerator {
 		
 		// Parameters for each instance
 		
+		// -------------------------------
+		// 4x4
+		// -------------------------------
+		
 //		int timeSeed =  1166510396; int machineSeed = 164000672;
 //		int timeSeed =  1624514147; int machineSeed = 1076870026;
 //		int timeSeed =  1116611914; int machineSeed = 1729673136;
 //		int timeSeed =  410579806; int machineSeed = 1453014524;
 		int timeSeed =  1036100146; int machineSeed = 375655500;
 		
+		// -------------------------------
+		// 5x5
+		// -------------------------------
+		
 		// Parameters for all the instances
 		Interval processingTimeInterval = new Interval(8, 14);
 		Interval travelTimeInterval = new Interval(2, 10);
+		
+		// TODO Este intervalo cambia dependiendo del tamaño de la instancia: 
+		// 4x4 a 10x10 -> [1,2];  y de tamaño 15x15 a 20x20 -> [1,3].  
 		Interval parallelMachinesInterval = new Interval(1, 2);
 		
 		// Generation
