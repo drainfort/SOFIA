@@ -69,9 +69,13 @@ public class InstancesGenerator {
 		Integer[][] matrixTimeSeed = generateTimeSeedMatrix(jobs, processingTimeInterval);
 
 		tempSeed = new Integer(machineSeed);
-		Integer[][] matrixMachineSeed = generateMachineSeedMatrix(machines);	
+		Integer[][] matrixMachineSeed = generateMachineSeedMatrix(machines);
+		
+		// PASO 3: Generación del vector de las máquinas en paralelo
+		tempSeed = new Integer(machineSeed);
+		Integer[] parallelMachinesVector = generateParallelMachinesVector(machines, parallelMachinesInterval);
 
-		Integer[][] matrixFramework = generateProcessingTimesMatrix(matrixMachineSeed, matrixTimeSeed);
+		Integer[][] matrixFramework = generateProcessingTimesMatrix(matrixMachineSeed, matrixTimeSeed, parallelMachinesVector);
 		System.out.println("T");
 		printMatrix(matrixFramework);
 		
@@ -82,9 +86,7 @@ public class InstancesGenerator {
 		System.out.println("TT");
 		printMatrix(matrixVisitTimeSeed);
 		
-		// PASO 3: Generación del vector de las máquinas en paralelo
-		tempSeed = new Integer(machineSeed);
-		Integer[] parallelMachinesVector = generateParallelMachinesVector(machines, parallelMachinesInterval);
+		
 		
 		System.out.println("M");
 		printVector(parallelMachinesVector);
@@ -142,12 +144,22 @@ public class InstancesGenerator {
 	 * @param matrixTimeSeed The time seed matrix
 	 * @return
 	 */
-	public Integer[][] generateProcessingTimesMatrix(Integer[][] matrixMachineSeed, Integer[][] matrixTimeSeed) {
-
-		Integer[][] matrix = new Integer[matrixMachineSeed.length][matrixMachineSeed.length];
+	public Integer[][] generateProcessingTimesMatrix(Integer[][] matrixMachineSeed, Integer[][] matrixTimeSeed, Integer[] parallel) {
+		
+		int sum =0;
+		for(int i=0; i< parallel.length;i++){
+			sum+=parallel[i];
+		}
+		Integer[][] matrix = new Integer[matrixMachineSeed.length][sum];
 		for (int i = 0; i < matrixMachineSeed.length; i++){
+			int index = 0;
 			for (int j = 0; j < matrixMachineSeed.length; j++) {
-				matrix[i][j] = findProcessingTime(i,j+1, matrixMachineSeed, matrixTimeSeed);
+				int times = parallel[j];
+				while (times >0){
+					matrix[i][index] = findProcessingTime(i,j+1, matrixMachineSeed, matrixTimeSeed);
+					index++;
+					times--;
+				}
 			}
 		}
 		return matrix;
