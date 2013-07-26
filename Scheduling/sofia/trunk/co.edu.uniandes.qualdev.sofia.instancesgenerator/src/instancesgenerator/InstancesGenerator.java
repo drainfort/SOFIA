@@ -322,7 +322,7 @@ public class InstancesGenerator {
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
 			
-			String matrix = "";
+			String matrix = matrixToPrint.length+ "\n"+matrixToPrint[0].length+"\n";
 			for (int i = 0; i < matrixToPrint.length; i++) {
 				Integer[] integers = matrixToPrint[i];
 				for (int j = 0; j < integers.length; j++) {
