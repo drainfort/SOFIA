@@ -56,7 +56,7 @@ public class InstancesGenerator {
 	 * @param machineSeed
 	 * @param parallelMachinesInterval 
 	 */
-	public void generateAndPrintInstances(int timeSeed, int machineSeed, Interval processingTimeInterval, Interval visitTimeInterval, Interval parallelMachinesInterval){
+	public void generateAndPrintInstance(int timeSeed, int machineSeed, Interval processingTimeInterval, Interval visitTimeInterval, Interval parallelMachinesInterval){
 		
 		// PASO 1: Generación de los tiempos de proceso
 		tempSeed = new Integer(timeSeed);
@@ -313,13 +313,20 @@ public class InstancesGenerator {
 	public static void main(String[] args) {
 		InstancesGenerator gen = new InstancesGenerator(4, 4);
 		
-		// Parameters
-		int timeSeed =  1166510396; int machineSeed = 164000672;
+		// Parameters for each instance
+		
+//		int timeSeed =  1166510396; int machineSeed = 164000672;
+//		int timeSeed =  1624514147; int machineSeed = 1076870026;
+//		int timeSeed =  1116611914; int machineSeed = 1729673136;
+//		int timeSeed =  410579806; int machineSeed = 1453014524;
+		int timeSeed =  1036100146; int machineSeed = 375655500;
+		
+		// Parameters for all the instances
 		Interval processingTimeInterval = new Interval(8, 14);
 		Interval travelTimeInterval = new Interval(2, 10);
 		Interval parallelMachinesInterval = new Interval(1, 2);
 		
 		// Generation
-		gen.generateAndPrintInstances(timeSeed, machineSeed, processingTimeInterval, travelTimeInterval, parallelMachinesInterval);
+		gen.generateAndPrintInstance(timeSeed, machineSeed, processingTimeInterval, travelTimeInterval, parallelMachinesInterval);
 	}
 }
