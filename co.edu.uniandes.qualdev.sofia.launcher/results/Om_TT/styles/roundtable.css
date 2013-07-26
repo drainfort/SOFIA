@@ -1,0 +1,65 @@
+#roundTable{
+	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size:12px;
+	width:550px;
+	text-align:left;
+	border-collapse:collapse;
+	margin:20px;
+}
+#roundTable thead th.leftTopCorner{
+	border-top-left-radius: 15px;
+}
+#roundTable thead th.rightTopCorner{
+	border-top-right-radius: 15px;
+}
+#roundTable th{
+	font-weight:normal;
+	font-size:13px;color:#039;
+	background:#b9c9fe;padding:8px;
+}
+#roundTable td{
+	background:#e8edff;
+	border-top:1px solid #fff;
+	color:#669;
+	padding:8px;
+}
+#roundTable tbody td.leftBottomCorner{
+	border-bottom-left-radius: 15px;
+}
+#roundTable tbody td.rightBottomCorner{
+	border-bottom-right-radius: 15px;
+}
+#roundTable tbody tr:hover td{
+	background:#d0dafd;
+}
+
+.title {
+	text-align:left;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-weight:normal;
+	font-size:13px;
+	width:950px;
+	color:#012;
+	background-image: linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
+	background-image: -o-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
+	background-image: -moz-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
+	background-image: -webkit-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
+	background-image: -ms-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.37, rgb(67,123,217)),
+		color-stop(0.69, rgb(94,160,255))
+	);
+	padding:8px;
+	position:relative;
+	border-radius: 15px;
+}
+.informationbox {
+	background:#e8edff;
+	border-top:1px solid #fff;
+	color:#669;
+	border-radius: 15px;
+}
