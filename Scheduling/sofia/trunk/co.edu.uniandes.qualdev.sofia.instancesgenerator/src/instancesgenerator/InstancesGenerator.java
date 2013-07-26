@@ -342,6 +342,36 @@ public class InstancesGenerator {
 			e.printStackTrace();
 		}
 	}
+	
+	private void printVectorOnFile(Integer[] vectorToPrint, String name) {
+		
+		try {
+			 
+			File file = new File("./Result/04x04x02/"+name);
+ 
+			// if file doesnt exists, then create it
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+ 
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			String matrix ="|";
+			
+			for (Integer integer : vectorToPrint) {
+				matrix +=integer + "|";
+			}
+			
+			bw.write(matrix);
+			bw.close();
+ 
+			System.out.println("Done");
+ 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Prints in the console the vector given in the parameter.
