@@ -31,34 +31,34 @@ public class modeloParallel{
 	public static ArrayList<String[]> datos() {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 		String[] file1= {
-			"./data/ParallelMachines/Algorithm/Vector/SA_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_01.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_01"};
+			"./data/ParallelMachines/Algorithm/Vector/TS_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_01.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_01"};
 		datos.add(file1);
 		String[] file2= {
-				"./data/ParallelMachines/Algorithm/Vector/SA_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_02.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_02"};
+				"./data/ParallelMachines/Algorithm/Vector/TS_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_02.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_02"};
 			datos.add(file2);
 		String[] file3= {
-				"./data/ParallelMachines/Algorithm/Vector/SA_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_03.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_03"};
+				"./data/ParallelMachines/Algorithm/Vector/TS_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_03.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_03"};
 			datos.add(file3);
 		String[] file4= {
-				"./data/ParallelMachines/Algorithm/Vector/SA_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_04.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_04"};
+				"./data/ParallelMachines/Algorithm/Vector/TS_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_04.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_04"};
 			datos.add(file4);
 		String[] file5= {
-				"./data/ParallelMachines/Algorithm/Vector/SA_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_05.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_05"};
+				"./data/ParallelMachines/Algorithm/Vector/TS_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_05.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_05"};
 			datos.add(file5);
 		String[] file6= {
-				"./data/ParallelMachines/Algorithm/Vector/SA_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_06.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_06"};
+				"./data/ParallelMachines/Algorithm/Vector/TS_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_06.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_06"};
 			datos.add(file6);
 		String[] file7= {
-				"./data/ParallelMachines/Algorithm/Vector/SA_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_07.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_07"};
+				"./data/ParallelMachines/Algorithm/Vector/TS_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_07.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_07"};
 			datos.add(file7);
 		String[] file8= {
-				"./data/ParallelMachines/Algorithm/Vector/SA_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_08.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_08"};
+				"./data/ParallelMachines/Algorithm/Vector/TS_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_08.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_08"};
 			datos.add(file8);
 		String[] file9= {
-				"./data/ParallelMachines/Algorithm/Vector/SA_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_09.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_09"};
+				"./data/ParallelMachines/Algorithm/Vector/TS_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_09.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_09"};
 			datos.add(file9);
 		String[] file10= {
-				"./data/ParallelMachines/Algorithm/Vector/SA_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_10.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_10"};
+				"./data/ParallelMachines/Algorithm/Vector/TS_RANDOM_SWAP.properties","./data/FilesIndex/04x04x02/04x04x02_10.properties", "gamma.cmax.bks.om.tt", "Parallel", "04x04x02_10"};
 			datos.add(file10);
 			return datos;
 	}
@@ -84,7 +84,7 @@ public class modeloParallel{
 	@After
 	public void tearDown(){
 		ChartPrinter.getInstance().addResults(results);
-		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/T_04x04x02_01_SA_RANDOM_SWAP_Vector_consolidated.html");
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/T_04x04x02_01_TS_RANDOM_SWAP_Vector_consolidated.html");
 	}
 	public static void main(String[] args) {
  		JUnitCore.main("launcher.generator.modeloParallel");  

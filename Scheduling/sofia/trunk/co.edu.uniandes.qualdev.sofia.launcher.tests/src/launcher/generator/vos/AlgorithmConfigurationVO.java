@@ -22,6 +22,7 @@ public class AlgorithmConfigurationVO {
 	public final static String StochasticERM = "Stochastic ERM";
 	public final static String StochasticLPTNonDelay = "Stochastic LPT";
 	public final static String StochasticSPTNonDelay = "Stochastic SPT";
+	public static final String PARALLEL = "Parallel";
 	
 	// Meta-heuristics
 	public static String TABU_SEARCH_COMPLETE_NEIGHBORHOOD = "Tabu search (CN)";
