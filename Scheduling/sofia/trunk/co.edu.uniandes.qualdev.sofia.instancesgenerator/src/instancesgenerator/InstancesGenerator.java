@@ -32,6 +32,8 @@ public class InstancesGenerator {
 	private int jobs = 4;
 	
 	private int machines = 4;
+	
+	private String nameinstance;
 
 	// ------------------------------------------------------
 	// Constructor
@@ -43,6 +45,10 @@ public class InstancesGenerator {
 	public InstancesGenerator(int jobs, int machines) {
 		this.jobs = jobs;
 		this.machines = machines;
+	}
+	
+	public void setNameInstance(String name){
+		nameinstance = name;
 	}
 
 	// ------------------------------------------------------------------------------------------------------------------------------
