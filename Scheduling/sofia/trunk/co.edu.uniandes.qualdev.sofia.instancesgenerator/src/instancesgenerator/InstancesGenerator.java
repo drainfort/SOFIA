@@ -365,46 +365,46 @@ public class InstancesGenerator {
 		// 10x10
 		// -------------------------------
 				
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  1344106948; int machineSeed = 1868311537;
+//		int timeSeed =  425990073; int machineSeed = 1111853152;
+//		int timeSeed =  666128954; int machineSeed = 1750328066;
+//		int timeSeed =  442723456; int machineSeed = 1369177184;
+//		int timeSeed =  2033800800; int machineSeed = 1344077538;
+//		int timeSeed =  964467313; int machineSeed = 1735817385;
+//		int timeSeed =  1004528509; int machineSeed = 967002400;
+//		int timeSeed =  1667495107; int machineSeed = 818777384;
+//		int timeSeed =  1806968543; int machineSeed = 1561913259;
+//		int timeSeed =  938376228; int machineSeed = 344628625;
 		
 		// -------------------------------
 		// 15x15
 		// -------------------------------
 				
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  1561423441; int machineSeed = 1787167667;
+//		int timeSeed =  204120997; int machineSeed = 213027331;
+//		int timeSeed =  801158374; int machineSeed = 1812110433;
+//		int timeSeed =  1502847623; int machineSeed = 1527847153;
+//		int timeSeed =  282791231; int machineSeed = 1855451778;
+//		int timeSeed =  1130361878; int machineSeed = 849417380;
+//		int timeSeed =  379464508; int machineSeed = 944419714;
+//		int timeSeed =  1760142791; int machineSeed = 1955448160;
+//		int timeSeed =  1993140927; int machineSeed = 179408412;
+//		int timeSeed =  1678386613; int machineSeed = 1567160817;
 		
 		// -------------------------------
 		// 20x20
 		// -------------------------------
 				
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
-//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  957638; int machineSeed = 9237185;
+//		int timeSeed =  162587311; int machineSeed = 1489531109;
+//		int timeSeed =  965299017; int machineSeed = 1054695706;
+//		int timeSeed =  1158457671; int machineSeed = 1499999517;
+//		int timeSeed =  1191143707; int machineSeed = 1530757746;
+//		int timeSeed =  1826671743; int machineSeed = 901609771;
+//		int timeSeed =  1591533998; int machineSeed = 1146547719;
+//		int timeSeed =  937297777; int machineSeed = 92726463;
+//		int timeSeed =  687896268; int machineSeed = 1731298717;
+//		int timeSeed =  687034842; int machineSeed = 684013066;
 		
 		// Parameters for all the instances
 		Interval processingTimeInterval = new Interval(8, 14);
