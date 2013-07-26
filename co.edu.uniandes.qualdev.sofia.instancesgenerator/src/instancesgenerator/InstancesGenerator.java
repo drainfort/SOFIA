@@ -96,7 +96,7 @@ public class InstancesGenerator {
 		
 		System.out.println("M");
 		printVector(parallelMachinesVector);
-		//printMatrixOnFile(parallelMachinesVector, "/4-M/M-"+nameinstance+".txt");
+		printVectorOnFile(parallelMachinesVector, "/4-M/M-"+nameinstance+".txt");
 	}
 
 	// ------------------------------------------------------------------------------------------------------------------------------
@@ -312,7 +312,7 @@ public class InstancesGenerator {
 		
 		try {
 			 
-			File file = new File("./Result/04x04x02/"+name);
+			File file = new File("./Result/"+nameinstance.substring(0, 8)+"/"+name);
  
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
@@ -336,8 +336,6 @@ public class InstancesGenerator {
 			bw.write(matrix);
 			bw.close();
  
-			System.out.println("Done");
- 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -347,7 +345,7 @@ public class InstancesGenerator {
 		
 		try {
 			 
-			File file = new File("./Result/04x04x02/"+name);
+			File file = new File("./Result/"+nameinstance.substring(0, 8)+"/"+name);
  
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
@@ -402,6 +400,7 @@ public class InstancesGenerator {
 	
 	public static void main(String[] args) {
 		InstancesGenerator gen = new InstancesGenerator(4, 4);
+		gen.setNameInstance("04x04x02-10");
 		
 		// Parameters for each instance
 		
@@ -409,8 +408,7 @@ public class InstancesGenerator {
 		// 4x4
 		// -------------------------------
 		
-		int timeSeed =  1166510396; int machineSeed = 164000672;
-		gen.setNameInstance("04x04x02-01");
+//		int timeSeed =  1166510396; int machineSeed = 164000672;
 //		int timeSeed =  1624514147; int machineSeed = 1076870026;
 //		int timeSeed =  1116611914; int machineSeed = 1729673136;
 //		int timeSeed =  410579806; int machineSeed = 1453014524;
@@ -420,7 +418,7 @@ public class InstancesGenerator {
 //		int timeSeed =  1268670769; int machineSeed = 556009645;
 //		int timeSeed =  307928077; int machineSeed = 421384574;
 //		int timeSeed =  667545295; int machineSeed = 485515899;
-//		int timeSeed =  35780816; int machineSeed = 492238933;
+		int timeSeed =  35780816; int machineSeed = 492238933;
 		
 		// -------------------------------
 		// 5x5
