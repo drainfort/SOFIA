@@ -399,8 +399,7 @@ public class InstancesGenerator {
 	// ------------------------------------------------------
 	
 	public static void main(String[] args) {
-		InstancesGenerator gen = new InstancesGenerator(4, 4);
-		gen.setNameInstance("04x04x02-10");
+		InstancesGenerator gen = new InstancesGenerator(4, 4);	
 		
 		// Parameters for each instance
 		
@@ -418,11 +417,12 @@ public class InstancesGenerator {
 //		int timeSeed =  1268670769; int machineSeed = 556009645;
 //		int timeSeed =  307928077; int machineSeed = 421384574;
 //		int timeSeed =  667545295; int machineSeed = 485515899;
-		int timeSeed =  35780816; int machineSeed = 492238933;
+//		int timeSeed =  35780816; int machineSeed = 492238933;
 		
 		// -------------------------------
 		// 5x5
 		// -------------------------------
+
 		
 //		int timeSeed =  527556884; int machineSeed = 1343124817;
 //		int timeSeed =  1046824493; int machineSeed = 1973406531;
@@ -438,6 +438,7 @@ public class InstancesGenerator {
 		// -------------------------------
 		// 7x7
 		// -------------------------------
+		
 				
 //		int timeSeed =  1840686215; int machineSeed = 1827454623;
 //		int timeSeed =  1026771938; int machineSeed = 1312166461;
@@ -469,7 +470,7 @@ public class InstancesGenerator {
 		// 15x15
 		// -------------------------------
 				
-//		int timeSeed =  1561423441; int machineSeed = 1787167667;
+//    	int timeSeed =  1561423441; int machineSeed = 1787167667;
 //		int timeSeed =  204120997; int machineSeed = 213027331;
 //		int timeSeed =  801158374; int machineSeed = 1812110433;
 //		int timeSeed =  1502847623; int machineSeed = 1527847153;
@@ -483,6 +484,8 @@ public class InstancesGenerator {
 		// -------------------------------
 		// 20x20
 		// -------------------------------
+		
+		gen.setNameInstance("20x20x02-10");
 				
 //		int timeSeed =  957638; int machineSeed = 9237185;
 //		int timeSeed =  162587311; int machineSeed = 1489531109;
@@ -493,7 +496,7 @@ public class InstancesGenerator {
 //		int timeSeed =  1591533998; int machineSeed = 1146547719;
 //		int timeSeed =  937297777; int machineSeed = 92726463;
 //		int timeSeed =  687896268; int machineSeed = 1731298717;
-//		int timeSeed =  687034842; int machineSeed = 684013066;
+		int timeSeed =  687034842; int machineSeed = 684013066;
 		
 		// Parameters for all the instances
 		Interval processingTimeInterval = new Interval(8, 14);
@@ -501,8 +504,8 @@ public class InstancesGenerator {
 		
 		// TODO Este intervalo cambia dependiendo del tamaño de la instancia: 
 		// 4x4 a 10x10 -> [1,2];  y de tamaño 15x15 a 20x20 -> [1,3].  
-		Interval parallelMachinesInterval = new Interval(1, 2);
-		//Interval parallelMachinesInterval = new Interval(1, 3);
+		//Interval parallelMachinesInterval = new Interval(1, 2);
+		Interval parallelMachinesInterval = new Interval(1, 3);
 		
 		// Generation
 		gen.generateAndPrintInstance(timeSeed, machineSeed, processingTimeInterval, travelTimeInterval, parallelMachinesInterval);
