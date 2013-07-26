@@ -147,7 +147,7 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		JRadioButton btnCRBlockEndStartAnyNeighborhood = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_BLOCK_END_START_ANY_NEIGHBORHOOD);
 		JRadioButton btnCRWeightedNodesNeighborhood = new JRadioButton(AlgorithmConfigurationVO.CRITICAL_WEIGHTED_NODES_NEIGHBORHOOD);
 		
-		btnCRAdjacentNeighborhood.setSelected(true);
+		btnRandomNeighborhood.setSelected(true);
 		
 		neighborhoodPanel.add(btnRandomNeighborhood);
 		neighborhoodPanel.add(btnApiNeighborhood);

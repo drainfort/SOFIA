@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -40,15 +39,13 @@ public class LauncherUI extends JFrame{
 	
 	private ProblemPanel problemPanel1;
 	
-
-	
 	// ----------------------------------------------------
 	// Constructor
 	// ----------------------------------------------------
 	
 	public LauncherUI() {
 		this.setLayout(new BorderLayout());
-		this.setSize(790, 830);
+		this.setSize(800, 830);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -75,16 +72,12 @@ public class LauncherUI extends JFrame{
 		tabbedPane.addTab("Problem", problem);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
          
-        tabbedPane.addTab("Algorythm", algorithmDefinitionPanel);
+        tabbedPane.addTab("Solution method", algorithmDefinitionPanel);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
         		
 		this.add(buttons, BorderLayout.SOUTH);
-        
 		this.add(tabbedPane, BorderLayout.CENTER);
-		
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		
-		
 	}
 	
 	// ----------------------------------------------------
@@ -99,10 +92,6 @@ public class LauncherUI extends JFrame{
 		ParametersDialog dialog = new ParametersDialog(this, instancesToExecute, instancesType, algorithmDefinition, false);
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
-		
-		
-		
-		
 	}
 	
 	public void generateJars2(ArrayList<String> instancesToExecute, AlgorithmConfigurationVO algorithmDefinition){
