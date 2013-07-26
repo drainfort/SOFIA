@@ -319,15 +319,92 @@ public class InstancesGenerator {
 		// 4x4
 		// -------------------------------
 		
-//		int timeSeed =  1166510396; int machineSeed = 164000672;
+		int timeSeed =  1166510396; int machineSeed = 164000672;
 //		int timeSeed =  1624514147; int machineSeed = 1076870026;
 //		int timeSeed =  1116611914; int machineSeed = 1729673136;
 //		int timeSeed =  410579806; int machineSeed = 1453014524;
-		int timeSeed =  1036100146; int machineSeed = 375655500;
+//		int timeSeed =  1036100146; int machineSeed = 375655500;
+		
+//		int timeSeed =  597897640; int machineSeed = 322140729;
+//		int timeSeed =  1268670769; int machineSeed = 556009645;
+//		int timeSeed =  307928077; int machineSeed = 421384574;
+//		int timeSeed =  667545295; int machineSeed = 485515899;
+//		int timeSeed =  35780816; int machineSeed = 492238933;
 		
 		// -------------------------------
 		// 5x5
 		// -------------------------------
+		
+//		int timeSeed =  527556884; int machineSeed = 1343124817;
+//		int timeSeed =  1046824493; int machineSeed = 1973406531;
+//		int timeSeed =  1165033492; int machineSeed = 86711717;
+//		int timeSeed =  476292817; int machineSeed = 24463110;
+//		int timeSeed =  1181363416; int machineSeed = 606981348;
+//		int timeSeed =  897739730; int machineSeed = 513119113;
+//		int timeSeed =  577107303; int machineSeed = 2046387124;
+//		int timeSeed =  1714191910; int machineSeed = 1928475945;
+//		int timeSeed =  1813128617; int machineSeed = 2091141708;
+//		int timeSeed =  808919936; int machineSeed = 183753764;
+		
+		// -------------------------------
+		// 7x7
+		// -------------------------------
+				
+//		int timeSeed =  1840686215; int machineSeed = 1827454623;
+//		int timeSeed =  1026771938; int machineSeed = 1312166461;
+//		int timeSeed =  609471574; int machineSeed = 670843185;
+//		int timeSeed =  1022295947; int machineSeed = 398226875;
+//		int timeSeed =  1513073047; int machineSeed = 1250759651;
+//		int timeSeed =  1612211197; int machineSeed = 95606345;
+//		int timeSeed =  435024109; int machineSeed = 1118234860;
+//		int timeSeed =  1760865440; int machineSeed = 1099909092;
+//		int timeSeed =  122574075; int machineSeed = 10979313;
+//		int timeSeed =  248031774; int machineSeed = 1685251301;
+		
+		// -------------------------------
+		// 10x10
+		// -------------------------------
+				
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+		
+		// -------------------------------
+		// 15x15
+		// -------------------------------
+				
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+		
+		// -------------------------------
+		// 20x20
+		// -------------------------------
+				
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
+//		int timeSeed =  ; int machineSeed = ;
 		
 		// Parameters for all the instances
 		Interval processingTimeInterval = new Interval(8, 14);
@@ -336,6 +413,7 @@ public class InstancesGenerator {
 		// TODO Este intervalo cambia dependiendo del tamaño de la instancia: 
 		// 4x4 a 10x10 -> [1,2];  y de tamaño 15x15 a 20x20 -> [1,3].  
 		Interval parallelMachinesInterval = new Interval(1, 2);
+		//Interval parallelMachinesInterval = new Interval(1, 3);
 		
 		// Generation
 		gen.generateAndPrintInstance(timeSeed, machineSeed, processingTimeInterval, travelTimeInterval, parallelMachinesInterval);
