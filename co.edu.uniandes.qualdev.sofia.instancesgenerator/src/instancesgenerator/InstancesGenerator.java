@@ -1,7 +1,9 @@
 package instancesgenerator;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -76,20 +78,25 @@ public class InstancesGenerator {
 		Integer[] parallelMachinesVector = generateParallelMachinesVector(machines, parallelMachinesInterval);
 
 		Integer[][] matrixFramework = generateProcessingTimesMatrix(matrixMachineSeed, matrixTimeSeed, parallelMachinesVector);
-		System.out.println("T");
-		printMatrix(matrixFramework);
+		
 		
 		// PASO 2: Generación de los tiempos de viaje
 		tempSeed = new Integer(timeSeed);
 		Integer[][] matrixVisitTimeSeed = generateTravelTimesMatrix(machines+1, visitTimeInterval);
 		
+		
+		System.out.println("T");
+		printMatrix(matrixFramework);
+		printMatrixOnFile(matrixFramework, "/1-T/T-"+nameinstance+".txt");
+		
 		System.out.println("TT");
 		printMatrix(matrixVisitTimeSeed);
-		
+		printMatrixOnFile(matrixVisitTimeSeed, "/2-TT/TT-"+nameinstance+".txt");
 		
 		
 		System.out.println("M");
 		printVector(parallelMachinesVector);
+		//printMatrixOnFile(parallelMachinesVector, "/4-M/M-"+nameinstance+".txt");
 	}
 
 	// ------------------------------------------------------------------------------------------------------------------------------
@@ -300,6 +307,41 @@ public class InstancesGenerator {
 		System.out.println(matrix);
 		return matrix;
 	}
+	
+	private void printMatrixOnFile(Integer[][] matrixToPrint, String name) {
+		
+		try {
+			 
+			File file = new File("./Result/04x04x02/"+name);
+ 
+			// if file doesnt exists, then create it
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+ 
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			String matrix = "";
+			for (int i = 0; i < matrixToPrint.length; i++) {
+				Integer[] integers = matrixToPrint[i];
+				for (int j = 0; j < integers.length; j++) {
+					if (integers[j] != null)
+						matrix += "|" + integers[j];
+					else
+						matrix += "| ";
+				}
+				matrix += "|\n";
+			}
+			bw.write(matrix);
+			bw.close();
+ 
+			System.out.println("Done");
+ 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Prints in the console the vector given in the parameter.
@@ -338,6 +380,7 @@ public class InstancesGenerator {
 		// -------------------------------
 		
 		int timeSeed =  1166510396; int machineSeed = 164000672;
+		gen.setNameInstance("04x04x02-01");
 //		int timeSeed =  1624514147; int machineSeed = 1076870026;
 //		int timeSeed =  1116611914; int machineSeed = 1729673136;
 //		int timeSeed =  410579806; int machineSeed = 1453014524;
