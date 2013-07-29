@@ -232,7 +232,6 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			}
 			index++;
 		}
-		
 		return finalList;
 	}
 	
