@@ -253,23 +253,33 @@ public class ChartPrinter {
 			int stationId= tasks.get(j).getStationIdentifier()+1;
 			pw.println("var project"+j+" = new GanttProjectInfo("+j+", \""+tasks.get(j).getName() +"\", new Date(2010, 5, 2))");
 			ArrayList<OperationIndexVO> finalSolutions = executionResults.getOperationsFinalSolution();
-			ArrayList<OperationIndexVO> myOperations = new ArrayList<OperationIndexVO>();
-			String machine = "";
+				
+			ArrayList<String> listStations = new ArrayList<String>();
+			
 			for(int i=0; i<finalSolutions.size();i++){
 				OperationIndexVO temp = finalSolutions.get(i);
-				if(temp.getStationId()==(stationId-1)){
-					myOperations.add(temp);
-					machine =temp.getNameMachine();
+				if(temp.getStationId()==(stationId-1)&& !listStations.contains(temp.getNameMachine())){
+					listStations.add(temp.getNameMachine());
 				}
 			}
-			pw.println("var parentTask"+j+1+ "= new GanttTaskInfo("+j+1+", \""+machine+"\", new Date(2010, 5, 2),"+executionResults.getBestCmax()+", 100, \"\");");
-			for(int i=0; i<myOperations.size();i++){
-				OperationIndexVO temp = myOperations.get(i);
-				pw.println("parentTask"+j+1+".addChildTask(new GanttTaskInfo("+j+1+i+", \""+temp.getNameJob()+"\", new Date(2010, 5, 2,"+temp.getInitialTime()*24+",0,0), "+(temp.getFinalTime()-temp.getInitialTime())+", 100, \"\"));");
+
+			for( int z=0; z< listStations.size();z++){
+				String machine =listStations.get(z);
+				ArrayList<OperationIndexVO> myOperations = new ArrayList<OperationIndexVO>();
+				for(int i=0; i<finalSolutions.size();i++){
+					OperationIndexVO temp = finalSolutions.get(i);
+					if(temp.getStationId()==(stationId-1) && temp.getNameMachine().equals(machine)){
+						myOperations.add(temp);
+					}
+				}
+				pw.println("var parentTask"+j+1+z+ "= new GanttTaskInfo("+j+1+z+", \""+machine+"\", new Date(2010, 5, 2),"+executionResults.getInitialCmax()+", 100, \"\");");
+				for(int i=0; i<myOperations.size();i++){
+					OperationIndexVO temp = myOperations.get(i);
+					pw.println("parentTask"+j+1+z+".addChildTask(new GanttTaskInfo("+j+1+i+z+", \""+temp.getNameJob()+"\", new Date(2010, 5, 2,"+temp.getInitialTime()*24+",0,0), "+(temp.getFinalTime()-temp.getInitialTime())+", 100, \"\"));");
+				}
+				pw.println("project"+j+".addTask(parentTask"+j+1+z+ ");");
 			}
 			
-			pw.println("project"+j+".addTask(parentTask"+j+1+ ");");
-		
 			pw.println("ganttChartControl.addProject(project"+j+");");
 
 		}
@@ -285,23 +295,36 @@ public class ChartPrinter {
 			int stationId= tasks.get(j).getStationIdentifier()+1;
 			pw.println("var project"+j+" = new GanttProjectInfo("+j+", \""+tasks.get(j).getName() +"\", new Date(2010, 5, 2))");
 			ArrayList<OperationIndexVO> initialSolutions = executionResults.getOperationsInitialSolution();
-			ArrayList<OperationIndexVO> myOperations = new ArrayList<OperationIndexVO>();
-			String machine = "";
+			
+			ArrayList<String> listStations = new ArrayList<String>();
+			
 			for(int i=0; i<initialSolutions.size();i++){
 				OperationIndexVO temp = initialSolutions.get(i);
-				if(temp.getStationId()==(stationId-1)){
-					myOperations.add(temp);
-					machine =temp.getNameMachine();
+				if(temp.getStationId()==(stationId-1)&& !listStations.contains(temp.getNameMachine())){
+					listStations.add(temp.getNameMachine());
 				}
 			}
-			pw.println("var parentTask"+j+1+ "= new GanttTaskInfo("+j+1+", \""+machine+"\", new Date(2010, 5, 2),"+executionResults.getInitialCmax()+", 100, \"\");");
-			for(int i=0; i<myOperations.size();i++){
-				OperationIndexVO temp = myOperations.get(i);
-				pw.println("parentTask"+j+1+".addChildTask(new GanttTaskInfo("+j+1+i+", \""+temp.getNameJob()+"\", new Date(2010, 5, 2,"+temp.getInitialTime()*24+",0,0), "+(temp.getFinalTime()-temp.getInitialTime())+", 100, \"\"));");
-			}
+
 			
-			pw.println("project"+j+".addTask(parentTask"+j+1+ ");");
-		
+			for( int z=0; z< listStations.size();z++){
+				String machine =listStations.get(z);
+				ArrayList<OperationIndexVO> myOperations = new ArrayList<OperationIndexVO>();
+				for(int i=0; i<initialSolutions.size();i++){
+					OperationIndexVO temp = initialSolutions.get(i);
+					if(temp.getStationId()==(stationId-1) && temp.getNameMachine().equals(machine)){
+						myOperations.add(temp);
+					}
+				}
+				pw.println("var parentTask"+j+1+z+ "= new GanttTaskInfo("+j+1+z+", \""+machine+"\", new Date(2010, 5, 2),"+executionResults.getInitialCmax()+", 100, \"\");");
+				for(int i=0; i<myOperations.size();i++){
+					OperationIndexVO temp = myOperations.get(i);
+					pw.println("parentTask"+j+1+z+".addChildTask(new GanttTaskInfo("+j+1+i+z+", \""+temp.getNameJob()+"\", new Date(2010, 5, 2,"+temp.getInitialTime()*24+",0,0), "+(temp.getFinalTime()-temp.getInitialTime())+", 100, \"\"));");
+				}
+				pw.println("project"+j+".addTask(parentTask"+j+1+z+ ");");
+			}	
+			
+			
+	
 			pw.println("ganttChartControl.addProject(project"+j+");");
 
 		}
