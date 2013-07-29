@@ -26,29 +26,18 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 	public int calculateGamma(IStructure vector) throws Exception {
 		C = vector.calculateCMatrix();
 
-		ArrayList<OperationIndexVO> maxs = new ArrayList<OperationIndexVO>();
-		for (int i = 0; i < C.length; i++) {
-			OperationIndexVO maxOperationIndex = new OperationIndexVO(0, i, vector.getTotalStations(), -1);
-			maxs.add(maxOperationIndex);
-		}		
 		int meanFlowTime = 0;
-		for (OperationIndexVO max : maxs) {
-			meanFlowTime += C[max.getJobId()][max.getStationId()];
-		}
+		for (int i = 0; i < C.length; i++) {
+			meanFlowTime += C[i][vector.getTotalStations()];
+		}		
 		
 		if(vector.getClass().equals(Vector.class)){
 			
 			int C2[][] = ((Vector)vector).getCIntepretation();
-			ArrayList<OperationIndexVO> maxs2 = new ArrayList<OperationIndexVO>();
-			for (int i = 0; i < C2.length; i++) {
-				OperationIndexVO maxOperationIndex = new OperationIndexVO(0, i, vector.getTotalStations(), -1);
-				maxs2.add(maxOperationIndex);
-			}
-			
 			int meanFlowTime2 = 0;
-			for (OperationIndexVO max : maxs2) {
-				meanFlowTime2 += C[max.getJobId()][max.getStationId()];
-			}
+			for (int i = 0; i < C2.length; i++) {
+				meanFlowTime2 += C2[i][vector.getTotalStations()];
+			}	
 			if(meanFlowTime2<meanFlowTime)
 				return meanFlowTime2;
 		}
