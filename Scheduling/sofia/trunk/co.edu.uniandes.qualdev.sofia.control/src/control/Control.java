@@ -136,7 +136,7 @@ public abstract class Control {
 			}
 			else{
 				operationIndex.setNameJob("Trabajo "+operation.getOperationIndex().getJobId());
-				operationIndex.setNameMachine("Máquina " +1);
+				operationIndex.setNameMachine("Máquina " + operation.getOperationIndex().getMachineId());
 			}
 			operationIndexesFinalSolution.add(operationIndex);
 			
