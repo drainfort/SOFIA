@@ -28,17 +28,9 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 
 		ArrayList<OperationIndexVO> maxs = new ArrayList<OperationIndexVO>();
 		for (int i = 0; i < C.length; i++) {
-			int currentCMax = -1;
-			OperationIndexVO maxOperationIndex = new OperationIndexVO(0, i, -1, -1);
-			for (int j = 0; j < C[0].length; j++) {
-					if (currentCMax < C[i][j]){
-						currentCMax = C[i][j];
-						maxOperationIndex.setStationId(j);
-				}
-			}
+			OperationIndexVO maxOperationIndex = new OperationIndexVO(0, i, vector.getTotalStations(), -1);
 			maxs.add(maxOperationIndex);
-		}
-		
+		}		
 		int meanFlowTime = 0;
 		for (OperationIndexVO max : maxs) {
 			meanFlowTime += C[max.getJobId()][max.getStationId()];
@@ -51,14 +43,7 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 
 			ArrayList<OperationIndexVO> maxs2 = new ArrayList<OperationIndexVO>();
 			for (int i = 0; i < C2.length; i++) {
-				int currentCMax = -1;
-				OperationIndexVO maxOperationIndex = new OperationIndexVO(0, i, -1, -1);
-				for (int j = 0; j < C2[0].length; j++) {
-						if (currentCMax < C2[i][j]){
-							currentCMax = C2[i][j];
-							maxOperationIndex.setStationId(j);
-					}
-				}
+				OperationIndexVO maxOperationIndex = new OperationIndexVO(0, i, vector.getTotalStations(), -1);
 				maxs2.add(maxOperationIndex);
 			}
 			
