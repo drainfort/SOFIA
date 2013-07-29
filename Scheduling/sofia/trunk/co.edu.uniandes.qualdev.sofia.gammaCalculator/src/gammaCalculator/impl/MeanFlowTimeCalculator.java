@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.MatrixUtils;
 
 import structure.IStructure;
 import structure.impl.Vector;
@@ -25,7 +26,6 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 	@Override
 	public int calculateGamma(IStructure vector) throws Exception {
 		C = vector.calculateCMatrix();
-
 		int meanFlowTime = 0;
 		for (int i = 0; i < C.length; i++) {
 			meanFlowTime += C[i][vector.getTotalStations()];
