@@ -32,7 +32,6 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 		}		
 		
 		if(vector.getClass().equals(Vector.class)){
-			
 			int C2[][] = ((Vector)vector).getCIntepretation();
 			int meanFlowTime2 = 0;
 			for (int i = 0; i < C2.length; i++) {
