@@ -407,8 +407,8 @@ public class InstancesGenerator {
 		// 4x4
 		// -------------------------------
 		
-		gen.jobs=4;
-		gen.machines=4;
+//		gen.jobs=4;
+//		gen.machines=4;
 //		gen.setNameInstance("04x04x02-01");
 		
 //		int timeSeed =  1166510396; int machineSeed = 164000672;
@@ -427,8 +427,8 @@ public class InstancesGenerator {
 		// 5x5
 		// -------------------------------
 		
-		gen.jobs=5;
-		gen.machines=5;
+//		gen.jobs=5;
+//		gen.machines=5;
 //		gen.setNameInstance("05x05x02-10");
 		
 //		int timeSeed =  527556884; int machineSeed = 1343124817;
@@ -446,8 +446,8 @@ public class InstancesGenerator {
 		// 7x7
 		// -------------------------------
 		
-		gen.jobs=7;
-		gen.machines=7;
+//		gen.jobs=7;
+//		gen.machines=7;
 //		gen.setNameInstance("07x07x02-10");
 		
 //		int timeSeed =  1840686215; int machineSeed = 1827454623;
@@ -465,9 +465,9 @@ public class InstancesGenerator {
 		// 10x10
 		// -------------------------------
 		
-		gen.jobs=10;
-		gen.machines=10;
-		gen.setNameInstance("10x10x02-10");
+//		gen.jobs=10;
+//		gen.machines=10;
+//		gen.setNameInstance("10x10x02-10");
 				
 //		int timeSeed =  1344106948; int machineSeed = 1868311537;
 //		int timeSeed =  425990073; int machineSeed = 1111853152;
@@ -484,9 +484,9 @@ public class InstancesGenerator {
 		// 15x15
 		// -------------------------------
 		
-		gen.jobs=15;
-		gen.machines=15;
-		gen.setNameInstance("15x15x02-10");
+//		gen.jobs=15;
+//		gen.machines=15;
+//		gen.setNameInstance("15x15x02-10");
 				
 //    	int timeSeed =  1561423441; int machineSeed = 1787167667;
 //		int timeSeed =  204120997; int machineSeed = 213027331;
