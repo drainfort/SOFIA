@@ -129,7 +129,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			this.setSize(480,220);
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(6,2));
+			panelParameters.setLayout(new GridLayout(7,2));
 			
 			//Percent
 			JLabel labPercent = new JLabel("percent");
@@ -176,6 +176,14 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			ParamComponent paramMaxImprovements = new ParamComponent(labMaxImprovements, txtMaxImprovements);
 			parameters.add(paramMaxImprovements);
 			
+			JLabel labMaxTime= new JLabel("maxExecutionTime");
+			JTextField txtmaxExecutionTime = new JTextField("1000");
+			panelParameters.add(labMaxTime);
+			panelParameters.add(txtmaxExecutionTime);
+			
+			ParamComponent paramMaxTime = new ParamComponent(labMaxTime, txtmaxExecutionTime);
+			parameters.add(paramMaxTime);
+			
 			// Amount of executions by instance
 			JLabel labAmountExecutionsByInstance = new JLabel("amountOfExecutionsPerInstance");
 			JTextField txtAmountExecutionsByInstance = new JTextField("1");
@@ -192,7 +200,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			this.setTitle("Metaheuristic parameters: Simulated annealing");
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(8,2));
+			panelParameters.setLayout(new GridLayout(10,2));
 			this.setSize(450,290);
 			
 			//T0
@@ -257,6 +265,22 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			ParamComponent paramRestarts = new ParamComponent(labRestarts, txtRestarts);
 			parameters.add(paramRestarts);
+			
+			JLabel labMaxImprovements = new JLabel("maxNumberImprovements");
+			JTextField txtMaxImprovements = new JTextField("1");
+			panelParameters.add(labMaxImprovements);
+			panelParameters.add(txtMaxImprovements);
+			
+			ParamComponent paramMaxImprovements = new ParamComponent(labMaxImprovements, txtMaxImprovements);
+			parameters.add(paramMaxImprovements);
+			
+			JLabel labMaxTime= new JLabel("maxExecutionTime");
+			JTextField txtmaxExecutionTime = new JTextField("1000");
+			panelParameters.add(labMaxTime);
+			panelParameters.add(txtmaxExecutionTime);
+			
+			ParamComponent paramMaxTime = new ParamComponent(labMaxTime, txtmaxExecutionTime);
+			parameters.add(paramMaxTime);
 			
 			// Amount of executions by instance
 			JLabel labAmountExecutionsByInstance = new JLabel("amountOfExecutionsPerInstance");
