@@ -129,6 +129,7 @@ public class TabuSearchCN extends Control {
 								maxNumberImprovements--;
 							if(maxNumberImprovements<=0){
 								optimalAchieved = true;
+								executionResults.setStopCriteria(3);
 							}
 						}
 					}

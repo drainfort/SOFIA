@@ -143,6 +143,7 @@ public class TabuSearchRN extends Control {
 								maxNumberImprovements--;
 							if(maxNumberImprovements<=0){
 								optimalAchieved = true;
+								executionResults.setStopCriteria(3);
 							}
 						}
 					}
@@ -162,14 +163,19 @@ public class TabuSearchRN extends Control {
 				
 				long actualTime = System.currentTimeMillis();
 			    long elapsedTime = actualTime - startTime;
-			    if(elapsedTime>=stopTime)
+			    if(elapsedTime>=stopTime){
 			    	optimalAchieved = true;
+			    	executionResults.setStopCriteria(2);
+			    }
 			}
 			
 			// Avance while
 			iterations--;
 			nonimproving--;
 			arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
+		}
+		if(nonimproving<=0){
+			executionResults.setStopCriteria(1);
 		}
 
 		System.out.println();

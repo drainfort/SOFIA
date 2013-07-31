@@ -127,6 +127,7 @@ public class SimpleSimulatedAnnealing extends Control {
 								maxNumberImprovements--;
 							if(maxNumberImprovements<=0){
 								optimalAchieved = true;
+								executionResults.setStopCriteria(2);
 							}
 						}
 					}
@@ -135,8 +136,10 @@ public class SimpleSimulatedAnnealing extends Control {
 				
 				long actualTime = System.currentTimeMillis();
 			    long elapsedTime = actualTime - startTime;
-			    if(elapsedTime>=stopTime)
+			    if(elapsedTime>=stopTime){
 			    	optimalAchieved = true;
+			    	executionResults.setStopCriteria(3);
+			    }
 				k--;
 				Y.clean();
 			}
@@ -145,6 +148,9 @@ public class SimpleSimulatedAnnealing extends Control {
 			Double coolingFactor = (Double) params.get("coolingFactor");
 			temperature = temperature * (coolingFactor);
 			temperatureReductions ++;
+		}
+		if(nonImproving>=temperatureReductions){
+			executionResults.setStopCriteria(1);
 		}
 		
 		System.out.println();
