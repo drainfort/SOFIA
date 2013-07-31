@@ -75,6 +75,7 @@ public class TabuSearchRN extends Control {
 			else{
 				if(maxNumberImprovements<=0){
 					optimalAchieved = true;
+					executionResults.setStopCriteria(3);
 				}
 			}
 		}
@@ -174,6 +175,7 @@ public class TabuSearchRN extends Control {
 			nonimproving--;
 			arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 		}
+		
 		if(nonimproving<=0){
 			executionResults.setStopCriteria(1);
 		}
