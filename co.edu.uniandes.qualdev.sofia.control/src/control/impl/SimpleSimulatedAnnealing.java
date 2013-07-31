@@ -137,7 +137,6 @@ public class SimpleSimulatedAnnealing extends Control {
 			    long elapsedTime = actualTime - startTime;
 			    if(elapsedTime>=stopTime)
 			    	optimalAchieved = true;
-				
 				k--;
 				Y.clean();
 			}
