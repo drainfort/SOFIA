@@ -35,11 +35,8 @@ public class TabuSearchRN extends Control {
 		
 		
 		long startTime = System.currentTimeMillis();
-	    long stopTime = 10 *1000;
+	    long stopTime = (Integer) params.get("maxExecutionTime") *1000;		
 	    
-	    
-
-		
 		executionResults = new ExecutionResults();
 		int numberOfVisitedNeighbors=0;
 		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
