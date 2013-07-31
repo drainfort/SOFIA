@@ -159,6 +159,7 @@ public class ChartPrinter {
 				"<th scope=\"col\">OPTIMAL</th>"+			
 				"<th scope=\"col\">BEST OBJECTIVE</th>"+
 				"<th scope=\"col\">AVERAGE OBJECTIVE</th>"+
+				"<th scope=\"col\">STOP CRITERIA</th>"+
 				"<th scope=\"col\" class=\"rightTopCorner\">VISITED NEIGHBORS</th>"+
 				"</tr></thead><tbody>");
 		for ( int i =0; i< globalExecutionResults.size();i++) {
@@ -167,6 +168,7 @@ public class ChartPrinter {
 			String initialCMax = results.get(0).getInitialCmax() + ""; 
 			String optimalCMax = results.get(0).getOptimal() + ""; 
 			String neighbor =  results.get(0).getNumberOfVisitedNeighbors()+"";
+			String stopCriteria = results.get(0).getStopCriteria()+"";
 			
 			int bestCmax = Integer.MAX_VALUE;
 			int sumBestCMax = 0;
@@ -192,6 +194,7 @@ public class ChartPrinter {
 				pw.println("<td>"+optimalCMax+"</td>");
 				pw.println("<td>"+bestCMaxString+"</td>");
 				pw.println("<td>"+average+"</td>");
+				pw.println("<td>"+stopCriteria+"</td>");
 				pw.println("<td class =\"rightBottomCorner\"> "+neighbor+"</td>");
 			}
 			else{
@@ -201,6 +204,7 @@ public class ChartPrinter {
 				pw.println("<td>"+optimalCMax+"</td>");
 				pw.println("<td>"+bestCMaxString+"</td>");
 				pw.println("<td>"+average+"</td>");
+				pw.println("<td>"+stopCriteria+"</td>");
 				pw.println("<td>"+neighbor+"</td>");
 			}
 		}
