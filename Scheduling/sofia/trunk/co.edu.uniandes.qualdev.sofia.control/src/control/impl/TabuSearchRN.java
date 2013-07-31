@@ -33,6 +33,13 @@ public class TabuSearchRN extends Control {
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 		
+		
+		long startTime = System.currentTimeMillis();
+	    long stopTime = 10 *1000;
+	    
+	    
+
+		
 		executionResults = new ExecutionResults();
 		int numberOfVisitedNeighbors=0;
 		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
@@ -52,7 +59,7 @@ public class TabuSearchRN extends Control {
 
 		executionResults.setOptimal(optimal);
 
-		int maxNumberImprovements =0;
+		int maxNumberImprovements = 0;
 		if(params.get("maxNumberImprovements")!=null){
 			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
 		}
@@ -152,6 +159,11 @@ public class TabuSearchRN extends Control {
 				}
 				arrayTabu.add(bestPairCandidate);
 				tabuIndex++;
+				
+				long actualTime = System.currentTimeMillis();
+			    long elapsedTime = actualTime - startTime;
+			    if(elapsedTime>=stopTime)
+			    	optimalAchieved = true;
 			}
 			
 			// Avance while
