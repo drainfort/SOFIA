@@ -34,6 +34,10 @@ public class SimpleSimulatedAnnealingParametersLoader implements IParametersLoad
 			params.put("maxNumberImprovements", Integer.parseInt(algorithmConfiguration.getProperty("params.maxNumberImprovements")));
 		}
 		
+		if(algorithmConfiguration.getProperty("params.maxExecutionTime")!=null){
+			params.put("maxExecutionTime", Integer.parseInt(algorithmConfiguration.getProperty("params.maxExecutionTime")));
+		}
+		
 		params.put("printTable", Boolean.parseBoolean((String) algorithmConfiguration
 				.getProperty("report.consolidationTable")));
 		
