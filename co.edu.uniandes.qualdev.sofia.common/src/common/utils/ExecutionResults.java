@@ -49,6 +49,7 @@ public class ExecutionResults {
 	
 	private int numberOfVisitedNeighbors;
 	
+	private int stopCriteria;
 	
 	private boolean printTable;
 	
@@ -198,6 +199,15 @@ public class ExecutionResults {
 	public void setParameters(Properties parameters) {
 		this.parameters = parameters;
 	}
+
+	public int getStopCriteria() {
+		return stopCriteria;
+	}
+
+	public void setStopCriteria(int stopCriteria) {
+		this.stopCriteria = stopCriteria;
+	}
+	
 	
 	
 }
