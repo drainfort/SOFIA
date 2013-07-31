@@ -36,6 +36,7 @@ public class TabuSearchRN extends Control {
 		
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
+		System.out.println((Integer) params.get("maxExecutionTime"));
 		if(params.get("maxExecutionTime")!=null){
 			stopTime = (Integer) params.get("maxExecutionTime") *1000;	
 		}	
