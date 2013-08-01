@@ -32,6 +32,7 @@ public class SimpleSimulatedAnnealing extends Control {
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 
+		initializeLogger();
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE*1000;
 		if(params.get("maxExecutionTime")!=null){

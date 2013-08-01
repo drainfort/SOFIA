@@ -34,10 +34,8 @@ public class TabuSearchRN extends Control {
 			INeighborCalculator neighborCalculator, IModifier modifier,
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
-		
-		
-		LOGGER.info("Instance: ");
-		
+			
+		initializeLogger ();
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
 		if(params.get("maxExecutionTime")!=null){
