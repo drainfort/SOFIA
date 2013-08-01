@@ -51,9 +51,8 @@ public abstract class Control {
 	
 	public Control(){
 		
-		LOGGER.setLevel(Level.INFO);
+		
 		String name = "" +System.currentTimeMillis();
-		LOGGER.info("Name of execution: "+name);
 		FileHandler fileTxt;
 		try {
 			fileTxt = new FileHandler("./log/Log-execution-"+name+".txt");
@@ -61,6 +60,8 @@ public abstract class Control {
 			SimpleFormatter formatterTxt = new SimpleFormatter();
 			fileTxt.setFormatter(formatterTxt);
 			LOGGER.addHandler(fileTxt);
+			LOGGER.setLevel(Level.INFO);
+			LOGGER.info("Name of execution: "+name);
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
