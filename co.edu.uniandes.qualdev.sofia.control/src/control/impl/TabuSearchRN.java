@@ -153,6 +153,7 @@ public class TabuSearchRN extends Control {
 							if(maxNumberImprovements<=0){
 								optimalAchieved = true;
 								executionResults.setStopCriteria(3);
+								System.out.println("Stop Criteria: Max number improvements");
 							}
 						}
 					}
@@ -175,6 +176,7 @@ public class TabuSearchRN extends Control {
 			    if(elapsedTime>=stopTime){
 			    	optimalAchieved = true;
 			    	executionResults.setStopCriteria(2);
+			    	System.out.println("Stop Criteria: Max execution time");
 			    }
 			}
 			
@@ -186,6 +188,7 @@ public class TabuSearchRN extends Control {
 		
 		if(nonimproving<=0){
 			executionResults.setStopCriteria(1);
+			System.out.println("Stop Criteria: Non Improving");
 		}
 
 		System.out.println();
