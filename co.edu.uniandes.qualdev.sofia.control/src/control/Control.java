@@ -50,8 +50,6 @@ public abstract class Control {
 	// -----------------------------------------------
 	
 	public Control(){
-		
-		
 		String name = "" +System.currentTimeMillis();
 		FileHandler fileTxt;
 		try {
@@ -62,15 +60,10 @@ public abstract class Control {
 			LOGGER.addHandler(fileTxt);
 			LOGGER.setLevel(Level.INFO);
 			LOGGER.info("Name of execution: "+name);
-		} catch (SecurityException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		
+		} 
 		
 	}
 	
