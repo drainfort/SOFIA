@@ -54,6 +54,7 @@ public class SimpleSimulatedAnnealing extends Control {
 		IStructure XBest = X.cloneStructure();
 		int XBestCMax = gammaCalculator.calculateGamma(XBest);
 		System.out.println("initial solution (XBestCMax): " + XBestCMax);
+		LOGGER.info("initial solution (XBestCMax): " + XBestCMax);
 		
 		// Obtaining the parameters from the algorithm configuration.
 		Integer nonImproving = (Integer) params.get("non-improving");
@@ -115,12 +116,7 @@ public class SimpleSimulatedAnnealing extends Control {
 					XBestCMax = gammaCalculator.calculateGamma(XBest);
 					temperatureReductions = 0;
 					System.out.println("CMax improvement: " + XBestCMax);
-					LOGGER.info("Improvemente: "+XBestCMax);
-					LOGGER.info("Pair Candidate: "+YMovement);
-					LOGGER.info("Vector: "+XBest.getOperations());
-					LOGGER.info("Vector Critical Paths: "+XBest.getCriticalPaths());
-					//LOGGER.info("Contains x: "+best.getCriticalPaths().contains(bestPairCandidate.getoX()));
-					//LOGGER.info("Contains y: "+best.getCriticalPaths().contains(bestPairCandidate.getoY()));
+					LOGGER.info("Improvement: "+XBestCMax);
 					
 					if(optimal.intValue() >= XBestCMax){
 						if(isOptimal){
@@ -134,6 +130,8 @@ public class SimpleSimulatedAnnealing extends Control {
 							if(maxNumberImprovements<=0){
 								optimalAchieved = true;
 								executionResults.setStopCriteria(3);
+								System.out.println("Stop Criteria: Max number of improvements");
+								LOGGER.info("Stop Criteria: Max number of improvements");
 							}
 						}
 					}
@@ -145,6 +143,8 @@ public class SimpleSimulatedAnnealing extends Control {
 			    if(elapsedTime>=stopTime){
 			    	optimalAchieved = true;
 			    	executionResults.setStopCriteria(2);
+			    	System.out.println("Stop Criteria: Max execution time");
+			    	LOGGER.info("Stop Criteria: Max execution time");
 			    }
 				k--;
 				Y.clean();
@@ -157,6 +157,8 @@ public class SimpleSimulatedAnnealing extends Control {
 		}
 		if(temperatureReductions>=nonImproving){
 			executionResults.setStopCriteria(1);
+			System.out.println("Stop Criteria: Non improving");
+			LOGGER.info("Stop Criteria: Non improving");
 		}
 		
 		System.out.println();

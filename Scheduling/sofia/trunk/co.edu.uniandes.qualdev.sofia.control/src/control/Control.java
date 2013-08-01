@@ -34,10 +34,6 @@ public abstract class Control {
 	// Attributes
 	// -----------------------------------------------
 
-//	protected MetricsModel metricsModel;
-
-//	protected Integer iteration = 0;
-	
 	protected IStructure So;
 	
 	protected ExecutionResults executionResults;
@@ -53,8 +49,8 @@ public abstract class Control {
 		String name = "" +System.currentTimeMillis();
 		FileHandler fileTxt;
 		try {
+			LOGGER.setUseParentHandlers(false);
 			fileTxt = new FileHandler("./log/Log-execution-"+name+".txt");
-			// Create txt Formatter
 			SimpleFormatter formatterTxt = new SimpleFormatter();
 			fileTxt.setFormatter(formatterTxt);
 			LOGGER.addHandler(fileTxt);
