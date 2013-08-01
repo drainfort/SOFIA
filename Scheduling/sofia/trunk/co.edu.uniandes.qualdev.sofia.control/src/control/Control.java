@@ -1,8 +1,12 @@
 package control;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import structure.IOperation;
 import structure.IStructure;
@@ -46,6 +50,26 @@ public abstract class Control {
 	// -----------------------------------------------
 	
 	public Control(){
+		
+		LOGGER.setLevel(Level.INFO);
+		String name = "" +System.currentTimeMillis();
+		LOGGER.info("Name of execution: "+name);
+		FileHandler fileTxt;
+		try {
+			fileTxt = new FileHandler("./log/Log-execution-"+name+".txt");
+			// Create txt Formatter
+			SimpleFormatter formatterTxt = new SimpleFormatter();
+			fileTxt.setFormatter(formatterTxt);
+			LOGGER.addHandler(fileTxt);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 		
 	}
 	
