@@ -41,7 +41,7 @@ public class JUnitLauncher {
 		}else{
 			algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problemConfiguration, currentBks, instanceType, true);
 		}
-		return algorithm.execute(instanceName);
+		return algorithm.execute(instanceName,"");
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class JUnitLauncher {
 	 * @throws Exception
 	 */
 	public ExecutionResults launch(SchedulingAlgorithm algorithm, String resultsFile, String instanceName) throws Exception{
-		return algorithm.execute(instanceName);
+		return algorithm.execute(instanceName,"");
 	}
 	
 	// -----------------------------------------
