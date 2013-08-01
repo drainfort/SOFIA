@@ -38,6 +38,10 @@ public abstract class Control {
 	
 	protected ExecutionResults executionResults;
 	
+	protected String resultFile;
+	
+	protected String instanceName;
+	
 	protected final static Logger LOGGER = Logger.getLogger(Control.class
 		      .getName());
 	
@@ -45,22 +49,7 @@ public abstract class Control {
 	// Constructor
 	// -----------------------------------------------
 	
-	public Control(){
-		String name = "" +System.currentTimeMillis();
-		FileHandler fileTxt;
-		try {
-			LOGGER.setUseParentHandlers(false);
-			fileTxt = new FileHandler("./log/Log-execution-"+name+".txt");
-			SimpleFormatter formatterTxt = new SimpleFormatter();
-			fileTxt.setFormatter(formatterTxt);
-			LOGGER.addHandler(fileTxt);
-			LOGGER.setLevel(Level.INFO);
-			LOGGER.info("Name of execution: "+name);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
+	public Control(){		
 	}
 	
 	// -----------------------------------------------
@@ -80,6 +69,24 @@ public abstract class Control {
 	// -----------------------------------------------
 	// Methods
 	// -----------------------------------------------
+	
+	protected void initializeLogger (){
+		FileHandler fileTxt;
+		try {
+			LOGGER.setUseParentHandlers(false);
+			fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
+			System.out.println(resultFile);
+			System.out.println(instanceName);
+			SimpleFormatter formatterTxt = new SimpleFormatter();
+			fileTxt.setFormatter(formatterTxt);
+			LOGGER.addHandler(fileTxt);
+			LOGGER.setLevel(Level.INFO);
+			LOGGER.info("Instance: "+instanceName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
 	
 	/**
 	 * 
@@ -211,6 +218,25 @@ public abstract class Control {
 		}
 		return null;
 	}
+
+	public String getResultFile() {
+		return resultFile;
+	}
+
+	public void setResultFile(String resultFile) {
+		this.resultFile = resultFile;
+	}
+
+	public String getInstanceName() {
+		return instanceName;
+	}
+
+	public void setInstanceName(String instanceName) {
+		this.instanceName = instanceName;
+	}
+	
+	
+	
 
 //	private boolean validateSolution(IVector S0){
 //			
