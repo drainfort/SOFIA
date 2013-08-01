@@ -28,10 +28,12 @@ public class TrajectoryBasedAlgorithm extends SchedulingAlgorithm {
 	// Methods
 	// -------------------------------------------
 	
-	public ExecutionResults execute(String instanceName) throws Exception {
+	public ExecutionResults execute(String instanceName, String resultFile) throws Exception {
 		long initialExecutionTime = System.currentTimeMillis();
 		
 		IStructure initialSolution = constructiveAlgorithm.getInitialSolutionBuilder().createInitialSolution(problem.getProblemFiles(), problem.getBetas(), problem.getStructrureFactory(), iterativeAlgorithm.getGammaCalculator());
+		problem.setInstanceName(instanceName);
+		problem.setResultFile(resultFile);
 		
 		ExecutionResults results = iterativeAlgorithm.execute(problem, initialSolution);
 		long finalExecutionTime = System.currentTimeMillis();
