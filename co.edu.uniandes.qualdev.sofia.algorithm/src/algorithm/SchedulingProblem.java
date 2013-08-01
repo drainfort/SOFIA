@@ -31,6 +31,10 @@ public class SchedulingProblem {
 	
 	private boolean hasOptimal;
 	
+	private String resultFile;
+	
+	private String instanceName;
+	
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
@@ -101,4 +105,22 @@ public class SchedulingProblem {
 	public void setHasOptimal(boolean hasOptimal) {
 		this.hasOptimal = hasOptimal;
 	}
+
+	public String getResultFile() {
+		return resultFile;
+	}
+
+	public void setResultFile(String resultFile) {
+		this.resultFile = resultFile;
+	}
+
+	public String getInstanceName() {
+		return instanceName;
+	}
+
+	public void setInstanceName(String instanceName) {
+		this.instanceName = instanceName;
+	}
+	
+	
 }
