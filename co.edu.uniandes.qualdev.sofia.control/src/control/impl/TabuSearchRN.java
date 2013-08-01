@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import structure.IStructure;
 
 import common.types.PairVO;
-import common.utils.ExecutionLogger;
 import common.utils.ExecutionResults;
 import control.Control;
 
@@ -36,8 +35,6 @@ public class TabuSearchRN extends Control {
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 		
-		ExecutionLogger.setup();
-		LOGGER.setLevel(Level.INFO);
 		
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
@@ -137,7 +134,12 @@ public class TabuSearchRN extends Control {
 					bestGamma = gammaBestCandidate;
 					nonimproving = (int) (iterations * (Double) params.get("non-improving"));
 					System.out.println("Improvement: " + bestGamma);
+					LOGGER.info("Improvemente: "+bestGamma);
 					LOGGER.info("Pair Candidate: "+bestPairCandidate);
+					LOGGER.info("Vector: "+best.getOperations());
+					LOGGER.info("Vector Critical Paths: "+best.getCriticalPaths());
+					//LOGGER.info("Contains x: "+best.getCriticalPaths().contains(bestPairCandidate.getoX()));
+					//LOGGER.info("Contains y: "+best.getCriticalPaths().contains(bestPairCandidate.getoY()));
 
 					if (optimal.intValue() >= bestGamma) {
 						if(isOptimal){
