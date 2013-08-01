@@ -379,7 +379,8 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 				GUILauncher launcher = new GUILauncher();
 				try {
-					String fileName =  "./results/Om_TT/experiment-results-" + System.currentTimeMillis() + ".html";
+					String fileName =  ""+System.currentTimeMillis() ;
+
 					launcher.launch(instancesToExecute, instancesType, algorithmConfiguration, fileName);
 					JOptionPane.showMessageDialog(this, "Results saved in: " + fileName);
 				} catch (InstantiationException e) {

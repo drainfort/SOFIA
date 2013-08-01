@@ -252,12 +252,14 @@ public class GUILauncher {
 			
 			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
 			for (int i = 0; i < algorithmDefinition.getAmountOfExecutionsPerInstance(); i++) {
+				
 				ExecutionResults result = algorithm.execute(instance, resultsFile);
+				
 				results.add(result);
 			}
 			ChartPrinter.getInstance().addResults(results);
 		}
-		ChartPrinter.getInstance().printGlobalResultsHTML(resultsFile);
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/experiment-results-" + resultsFile + ".html");
 	}
 	
 	// ------------------------------------------------------------
