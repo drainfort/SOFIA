@@ -115,6 +115,12 @@ public class SimpleSimulatedAnnealing extends Control {
 					XBestCMax = gammaCalculator.calculateGamma(XBest);
 					temperatureReductions = 0;
 					System.out.println("CMax improvement: " + XBestCMax);
+					LOGGER.info("Improvemente: "+XBestCMax);
+					LOGGER.info("Pair Candidate: "+YMovement);
+					LOGGER.info("Vector: "+XBest.getOperations());
+					LOGGER.info("Vector Critical Paths: "+XBest.getCriticalPaths());
+					//LOGGER.info("Contains x: "+best.getCriticalPaths().contains(bestPairCandidate.getoX()));
+					//LOGGER.info("Contains y: "+best.getCriticalPaths().contains(bestPairCandidate.getoY()));
 					
 					if(optimal.intValue() >= XBestCMax){
 						if(isOptimal){
