@@ -2,6 +2,7 @@ package control;
 
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import structure.IOperation;
 import structure.IStructure;
@@ -37,6 +38,8 @@ public abstract class Control {
 	
 	protected ExecutionResults executionResults;
 	
+	protected final static Logger LOGGER = Logger.getLogger(Control.class
+		      .getName());
 	
 	// -----------------------------------------------
 	// Constructor
