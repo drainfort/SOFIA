@@ -41,12 +41,7 @@ public abstract class Control {
 	protected String resultFile;
 	
 	protected String instanceName;
-	
-	protected final static Logger LOGGER = Logger.getLogger(Control.class
-		      .getName());
-	
-	private static boolean loggerInitialize=false;
-	
+		
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
@@ -72,24 +67,7 @@ public abstract class Control {
 	// Methods
 	// -----------------------------------------------
 	
-	protected void initializeLogger (){
-		FileHandler fileTxt;
-		try {
-			if(!loggerInitialize){
-				System.out.println("Entro");
-				LOGGER.setUseParentHandlers(false);
-				fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
-				SimpleFormatter formatterTxt = new SimpleFormatter();
-				fileTxt.setFormatter(formatterTxt);
-				LOGGER.addHandler(fileTxt);
-				LOGGER.setLevel(Level.INFO);
-				loggerInitialize=true;
-			}
-			LOGGER.info("Instance: "+instanceName);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-	}
+	
 	
 	/**
 	 * 
