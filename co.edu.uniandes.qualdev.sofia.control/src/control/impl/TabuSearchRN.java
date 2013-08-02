@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import structure.IStructure;
 
 import common.types.PairVO;
+import common.utils.ExecutionLogger;
 import common.utils.ExecutionResults;
 import control.Control;
 
@@ -35,7 +36,7 @@ public class TabuSearchRN extends Control {
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 			
-		initializeLogger ();
+		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
 		if(params.get("maxExecutionTime")!=null){
@@ -57,7 +58,7 @@ public class TabuSearchRN extends Control {
 		IStructure best = current.cloneStructure();
 		int bestGamma = gammaCalculator.calculateGamma(best);
 		System.out.println("initial solution (XBestCMax): " + bestGamma);
-		LOGGER.info("initial solution (XBestCMax): " + bestGamma);
+		ExecutionLogger.getInstance().printLog("initial solution (XBestCMax): " + bestGamma);
 
 		executionResults.setOptimal(optimal);
 
@@ -134,7 +135,7 @@ public class TabuSearchRN extends Control {
 					bestGamma = gammaBestCandidate;
 					nonimproving = (int) (iterations * (Double) params.get("non-improving"));
 					System.out.println("Improvement: " + bestGamma);
-					LOGGER.info("Improvement: "+bestGamma);
+					ExecutionLogger.getInstance().printLog("Improvement: "+bestGamma);
 
 					if (optimal.intValue() >= bestGamma) {
 						if(isOptimal){
@@ -149,7 +150,7 @@ public class TabuSearchRN extends Control {
 								optimalAchieved = true;
 								executionResults.setStopCriteria(3);
 								System.out.println("Stop Criteria: Max number improvements");
-								LOGGER.info("Stop Criteria: Max number improvements");
+								ExecutionLogger.getInstance().printLog("Stop Criteria: Max number improvements");
 							}
 						}
 					}
@@ -173,7 +174,7 @@ public class TabuSearchRN extends Control {
 			    	optimalAchieved = true;
 			    	executionResults.setStopCriteria(2);
 			    	System.out.println("Stop Criteria: Max execution time");
-			    	LOGGER.info("Stop Criteria: Max execution time");
+			    	ExecutionLogger.getInstance().printLog("Stop Criteria: Max execution time");
 			    }
 			}
 			
@@ -186,7 +187,7 @@ public class TabuSearchRN extends Control {
 		if(nonimproving<=0){
 			executionResults.setStopCriteria(1);
 			System.out.println("Stop Criteria: Non Improving");
-			LOGGER.info("Stop Criteria: Non Improving");
+			ExecutionLogger.getInstance().printLog("Stop Criteria: Non Improving");
 		}
 
 		System.out.println();
