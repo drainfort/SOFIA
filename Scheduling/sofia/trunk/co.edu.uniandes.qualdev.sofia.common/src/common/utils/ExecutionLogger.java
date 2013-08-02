@@ -13,9 +13,9 @@ public class ExecutionLogger {
 	protected final static Logger LOGGER = Logger.getLogger(ExecutionLogger.class
 		      .getName());
 	
-	private static boolean loggerInitialize=false;
+	private static boolean loggerInitialize = false;
 	
-	private static boolean useLogger=true;
+	private static boolean useLogger = false;
 	
 	public ExecutionLogger(){
 		
