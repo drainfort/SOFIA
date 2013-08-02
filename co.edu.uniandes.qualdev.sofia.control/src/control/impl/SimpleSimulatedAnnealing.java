@@ -5,6 +5,7 @@ import java.util.Properties;
 import structure.IStructure;
 
 import common.types.PairVO;
+import common.utils.ExecutionLogger;
 import common.utils.ExecutionResults;
 import control.Control;
 
@@ -32,7 +33,7 @@ public class SimpleSimulatedAnnealing extends Control {
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 
-		initializeLogger();
+		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE*1000;
 		if(params.get("maxExecutionTime")!=null){
@@ -55,7 +56,7 @@ public class SimpleSimulatedAnnealing extends Control {
 		IStructure XBest = X.cloneStructure();
 		int XBestCMax = gammaCalculator.calculateGamma(XBest);
 		System.out.println("initial solution (XBestCMax): " + XBestCMax);
-		LOGGER.info("initial solution (XBestCMax): " + XBestCMax);
+		ExecutionLogger.getInstance().printLog("initial solution (XBestCMax): " + XBestCMax);
 		
 		// Obtaining the parameters from the algorithm configuration.
 		Integer nonImproving = (Integer) params.get("non-improving");
@@ -117,7 +118,7 @@ public class SimpleSimulatedAnnealing extends Control {
 					XBestCMax = gammaCalculator.calculateGamma(XBest);
 					temperatureReductions = 0;
 					System.out.println("CMax improvement: " + XBestCMax);
-					LOGGER.info("Improvement: "+XBestCMax);
+					ExecutionLogger.getInstance().printLog("Improvement: "+XBestCMax);
 					
 					if(optimal.intValue() >= XBestCMax){
 						if(isOptimal){
@@ -132,7 +133,7 @@ public class SimpleSimulatedAnnealing extends Control {
 								optimalAchieved = true;
 								executionResults.setStopCriteria(3);
 								System.out.println("Stop Criteria: Max number of improvements");
-								LOGGER.info("Stop Criteria: Max number of improvements");
+								ExecutionLogger.getInstance().printLog("Stop Criteria: Max number of improvements");
 							}
 						}
 					}
@@ -145,7 +146,7 @@ public class SimpleSimulatedAnnealing extends Control {
 			    	optimalAchieved = true;
 			    	executionResults.setStopCriteria(2);
 			    	System.out.println("Stop Criteria: Max execution time");
-			    	LOGGER.info("Stop Criteria: Max execution time");
+			    	ExecutionLogger.getInstance().printLog("Stop Criteria: Max execution time");
 			    }
 				k--;
 				Y.clean();
@@ -159,7 +160,7 @@ public class SimpleSimulatedAnnealing extends Control {
 		if(temperatureReductions>=nonImproving){
 			executionResults.setStopCriteria(1);
 			System.out.println("Stop Criteria: Non improving");
-			LOGGER.info("Stop Criteria: Non improving");
+			ExecutionLogger.getInstance().printLog("Stop Criteria: Non improving");
 		}
 		
 		System.out.println();
