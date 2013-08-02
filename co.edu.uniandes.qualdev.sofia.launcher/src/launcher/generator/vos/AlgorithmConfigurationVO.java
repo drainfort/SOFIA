@@ -63,6 +63,7 @@ public class AlgorithmConfigurationVO {
 	public static String CONSOLIDATION_TABLE = "Consolidation table";
 	public static String INITIAL_SOLUTIONS = "Initial solutions";
 	public static String FINAL_SOLUTIONS = "Final solutions";
+	public static String LOG = "Log";
 	
 	// ----------------------------------------------------
 	// Attributes
