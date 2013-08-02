@@ -53,5 +53,15 @@ public class ExecutionLogger {
 			e.printStackTrace();
 		} 
 	}
+
+	public static boolean isUseLogger() {
+		return useLogger;
+	}
+
+	public static void setUseLogger(boolean useLogger) {
+		ExecutionLogger.useLogger = useLogger;
+	}
+	
+	
 	
 }
