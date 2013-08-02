@@ -15,6 +15,8 @@ public class ExecutionLogger {
 	
 	private static boolean loggerInitialize=false;
 	
+	private static boolean useLogger=true;
+	
 	public ExecutionLogger(){
 		
 	}
@@ -28,23 +30,25 @@ public class ExecutionLogger {
 	}
 	
 	public void printLog(String notice){
-		LOGGER.info(notice);
+		if(useLogger)
+			LOGGER.info(notice);
 	}
 	
 	public void initializeLogger (String resultFile, String instanceName){
 		FileHandler fileTxt;
 		try {
-			if(!loggerInitialize){
-				System.out.println("Entro");
-				LOGGER.setUseParentHandlers(false);
-				fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
-				SimpleFormatter formatterTxt = new SimpleFormatter();
-				fileTxt.setFormatter(formatterTxt);
-				LOGGER.addHandler(fileTxt);
-				LOGGER.setLevel(Level.INFO);
-				loggerInitialize=true;
+			if(useLogger){
+				if(!loggerInitialize){
+					LOGGER.setUseParentHandlers(false);
+					fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
+					SimpleFormatter formatterTxt = new SimpleFormatter();
+					fileTxt.setFormatter(formatterTxt);
+					LOGGER.addHandler(fileTxt);
+					LOGGER.setLevel(Level.INFO);
+					loggerInitialize=true;
+				}
+				LOGGER.info("Instance: "+instanceName);
 			}
-			LOGGER.info("Instance: "+instanceName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
