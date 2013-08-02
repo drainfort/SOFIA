@@ -45,6 +45,8 @@ public abstract class Control {
 	protected final static Logger LOGGER = Logger.getLogger(Control.class
 		      .getName());
 	
+	private static boolean loggerInitialize=false;
+	
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
@@ -73,17 +75,18 @@ public abstract class Control {
 	protected void initializeLogger (){
 		FileHandler fileTxt;
 		try {
-			LOGGER.setUseParentHandlers(false);
-			fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
-			System.out.println(resultFile);
-			System.out.println(instanceName);
-			SimpleFormatter formatterTxt = new SimpleFormatter();
-			fileTxt.setFormatter(formatterTxt);
-			LOGGER.addHandler(fileTxt);
-			LOGGER.setLevel(Level.INFO);
+			if(!loggerInitialize){
+				System.out.println("Entro");
+				LOGGER.setUseParentHandlers(false);
+				fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
+				SimpleFormatter formatterTxt = new SimpleFormatter();
+				fileTxt.setFormatter(formatterTxt);
+				LOGGER.addHandler(fileTxt);
+				LOGGER.setLevel(Level.INFO);
+				loggerInitialize=true;
+			}
 			LOGGER.info("Instance: "+instanceName);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	}
