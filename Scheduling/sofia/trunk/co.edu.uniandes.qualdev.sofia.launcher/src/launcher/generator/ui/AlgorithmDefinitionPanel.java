@@ -11,6 +11,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import common.utils.ExecutionLogger;
+
 import launcher.generator.vos.AlgorithmConfigurationVO;
 
 public class AlgorithmDefinitionPanel extends JPanel {
@@ -272,14 +274,17 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		consolidationTable.setSelected(true);
 		JCheckBox initialSolitions = new JCheckBox(AlgorithmConfigurationVO.INITIAL_SOLUTIONS);
 		JCheckBox finalSolitions = new JCheckBox(AlgorithmConfigurationVO.FINAL_SOLUTIONS);
+		JCheckBox log = new JCheckBox(AlgorithmConfigurationVO.LOG);
 		
 		reportBoxes.add(consolidationTable);
 		reportBoxes.add(initialSolitions);
 		reportBoxes.add(finalSolitions);
+		reportBoxes.add(log);
 		
 		reportPanel.add(consolidationTable);
 		reportPanel.add(initialSolitions);
 		reportPanel.add(finalSolitions);
+		reportPanel.add(log);
 		
 		this.add(reportPanel);
 	}
@@ -339,9 +344,15 @@ public class AlgorithmDefinitionPanel extends JPanel {
 			}
 		}
 		
-		for (JCheckBox checkBox : reportBoxes) {
+		for (int i=0; i< reportBoxes.size(); i++) {
+			JCheckBox checkBox =reportBoxes.get(i);
 			if(checkBox.isSelected()){
-				answer.getReportConfiguration().add(checkBox.getText());
+				if(i!=reportBoxes.size()-1){
+					answer.getReportConfiguration().add(checkBox.getText());
+				}
+				else{
+					ExecutionLogger.getInstance().setUseLogger(true);
+				}
 			}
 		}
 		return answer;
