@@ -39,8 +39,9 @@ public class TabuSearchRN extends Control {
 		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
-		if(params.get("maxExecutionTime")!=null){
-			stopTime = (Integer) params.get("maxExecutionTime") *1000;	
+		if(params.get("maxExecutionTime")!=null ){
+			if((Integer) params.get("maxExecutionTime")!=-1)
+				stopTime = (Integer) params.get("maxExecutionTime") *1000;	
 		}	
 		executionResults = new ExecutionResults();
 		int numberOfVisitedNeighbors=0;
@@ -83,6 +84,8 @@ public class TabuSearchRN extends Control {
 
 		int iterations = vectorSize * 10000;
 		int nonimproving = (int) (iterations * (Double) params.get("non-improving"));
+		if(nonimproving<0)
+			nonimproving= Integer.MAX_VALUE;
 		
 		// parameter
 		double percent = (Double) params.get("percent");

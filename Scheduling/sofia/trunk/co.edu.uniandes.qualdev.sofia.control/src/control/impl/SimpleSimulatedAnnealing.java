@@ -37,7 +37,8 @@ public class SimpleSimulatedAnnealing extends Control {
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE*1000;
 		if(params.get("maxExecutionTime")!=null){
-			stopTime = (Integer) params.get("maxExecutionTime") *1000;	
+			if((Integer) params.get("maxExecutionTime")!=-1)
+				stopTime = (Integer) params.get("maxExecutionTime") *1000;	
 		}
 		executionResults = new ExecutionResults();
 		int numberOfVisitedNeighbors=0;
@@ -60,6 +61,8 @@ public class SimpleSimulatedAnnealing extends Control {
 		
 		// Obtaining the parameters from the algorithm configuration.
 		Integer nonImproving = (Integer) params.get("non-improving");
+		if(nonImproving==-1)
+			nonImproving= Integer.MAX_VALUE;
 		Double boltzmann = (Double) params.get("boltzmann");
 		Double finalTemperature = (Double) params.get("Tf");
 		executionResults.setOptimal(optimal);
