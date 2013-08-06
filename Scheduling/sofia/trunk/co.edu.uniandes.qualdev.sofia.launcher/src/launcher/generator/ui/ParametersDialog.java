@@ -132,8 +132,8 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			panelParameters.setLayout(new GridLayout(7,2));
 			
 			//Percent
-			JLabel labPercent = new JLabel("percent");
-			JTextField txtPercent = new JTextField("0.1");
+			JLabel labPercent = new JLabel("iterations");
+			JTextField txtPercent = new JTextField("100");
 			panelParameters.add(labPercent);
 			panelParameters.add(txtPercent);
 			
