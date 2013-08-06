@@ -10,8 +10,8 @@ public class TabuSearchRNParametersLoader  implements IParametersLoader{
 	public Properties loadParameters(Properties algorithmConfiguration) {
 		Properties params = new Properties();
 
-		params.put("percent", Double.parseDouble((String) algorithmConfiguration
-				.getProperty("params.percent")));
+		params.put("iterations", Integer.parseInt((String) algorithmConfiguration
+				.getProperty("params.iterations")));
 		
 		params.put("non-improving", Double.parseDouble((String) algorithmConfiguration
 				.getProperty("params.non-improving")));
