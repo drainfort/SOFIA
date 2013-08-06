@@ -35,7 +35,7 @@ public class SimpleSimulatedAnnealing extends Control {
 
 		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
 		long startTime = System.currentTimeMillis();
-		long stopTime = Integer.MAX_VALUE*1000;
+		long stopTime = Integer.MAX_VALUE;
 		if(params.get("maxExecutionTime")!=null){
 			if((Integer) params.get("maxExecutionTime")!=-1)
 				stopTime = (Integer) params.get("maxExecutionTime") *1000;	
@@ -63,6 +63,8 @@ public class SimpleSimulatedAnnealing extends Control {
 		Integer nonImproving = (Integer) params.get("non-improving");
 		if(nonImproving==-1)
 			nonImproving= Integer.MAX_VALUE;
+		System.out.println(nonImproving);
+		System.out.println(stopTime);
 		Double boltzmann = (Double) params.get("boltzmann");
 		Double finalTemperature = (Double) params.get("Tf");
 		executionResults.setOptimal(optimal);
