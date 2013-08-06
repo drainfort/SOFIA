@@ -88,8 +88,7 @@ public class TabuSearchRN extends Control {
 			nonimproving= Integer.MAX_VALUE;
 		
 		// parameter
-		double percent = (Double) params.get("percent");
-		int neighborhodSize = (int) ((vectorSize * (vectorSize - 1)) / 2 * percent);
+		int neighborhodSize =  (Integer) params.get("iterations");
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 
 		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
