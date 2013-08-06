@@ -64,7 +64,7 @@ public class SimpleSimulatedAnnealing extends Control {
 		Double finalTemperature = (Double) params.get("Tf");
 		executionResults.setOptimal(optimal);
 		
-		int maxNumberImprovements =0;
+		int maxNumberImprovements = -1;
 		if(params.get("maxNumberImprovements")!=null){
 			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
 		}
@@ -76,11 +76,6 @@ public class SimpleSimulatedAnnealing extends Control {
 				System.out.println("optimal found!");
 				System.out.println();
 				optimalAchieved = true;
-			}
-			else{
-				if(maxNumberImprovements<=0){
-					optimalAchieved = true;
-				}
 			}
 		}
 		
@@ -129,7 +124,8 @@ public class SimpleSimulatedAnnealing extends Control {
 						else{
 							if (optimal.intValue() >XBestCMax)
 								maxNumberImprovements--;
-							if(maxNumberImprovements<=0){
+							
+							if(maxNumberImprovements==0){
 								optimalAchieved = true;
 								executionResults.setStopCriteria(3);
 								System.out.println("Stop Criteria: Max number of improvements");
