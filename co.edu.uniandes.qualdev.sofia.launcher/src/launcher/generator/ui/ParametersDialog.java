@@ -126,12 +126,12 @@ public class ParametersDialog extends JDialog implements ActionListener{
 		// Case 2:  The selected meta-heuristic is TabuSearch -> restricted neighborhood
 		else if(this.algorithmConfiguration.getMetaheuristic().equals(AlgorithmConfigurationVO.TABU_SEARCH_RESTRICTED_NEIGHBORHOOD)){
 			this.setTitle("Metaheuristic parameters: Tabu search restricted neighborhood");
-			this.setSize(480,220);
+			this.setSize(480,280);
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(7,2));
+			panelParameters.setLayout(new GridLayout(8,2));
 			
-			//Percent
+			//Iterations
 			JLabel labPercent = new JLabel("iterations");
 			JTextField txtPercent = new JTextField("100");
 			panelParameters.add(labPercent);
@@ -139,6 +139,15 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			ParamComponent paramPercent = new ParamComponent(labPercent, txtPercent);
 			parameters.add(paramPercent);
+			
+			//Neighborhod
+			JLabel labNeighborhod = new JLabel("neighborhodSize");
+			JTextField txtNeighborhod  = new JTextField("100");
+			panelParameters.add(labNeighborhod);
+			panelParameters.add(txtNeighborhod);
+			
+			ParamComponent paramNeighborhod = new ParamComponent(labNeighborhod, txtNeighborhod);
+			parameters.add(paramNeighborhod);
 			
 			//tabulist-size
 			JLabel labTabuListSize = new JLabel("tabulist-size");
