@@ -81,13 +81,14 @@ public class TabuSearchRN extends Control {
 		ArrayList<PairVO> arrayTabu = new ArrayList<PairVO>();
 		int tabuIndex = 0;
 
-		int iterations = vectorSize * 10000;
+		int iterations =  (Integer) params.get("iterations");
 		int nonimproving = (int) (iterations * (Double) params.get("non-improving"));
 		if(nonimproving<0)
 			nonimproving= Integer.MAX_VALUE;
+		System.out.println(nonimproving);
 		
 		// parameter
-		int neighborhodSize =  (Integer) params.get("iterations");
+		int neighborhodSize =  (Integer) params.get("neighborhodSize");
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 
 		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
@@ -130,6 +131,8 @@ public class TabuSearchRN extends Control {
 					best = bestCandidate.cloneStructure();
 					bestGamma = gammaBestCandidate;
 					nonimproving = (int) (iterations * (Double) params.get("non-improving"));
+					if(nonimproving<=0)
+						nonimproving=Integer.MAX_VALUE;
 					System.out.println("Improvement: " + bestGamma);
 					ExecutionLogger.getInstance().printLog("Improvement: "+bestGamma);
 
@@ -181,6 +184,7 @@ public class TabuSearchRN extends Control {
 		}
 		
 		if(nonimproving<=0){
+			System.out.println(nonimproving);
 			executionResults.setStopCriteria(1);
 			System.out.println("Stop Criteria: Non Improving");
 			ExecutionLogger.getInstance().printLog("Stop Criteria: Non Improving");
