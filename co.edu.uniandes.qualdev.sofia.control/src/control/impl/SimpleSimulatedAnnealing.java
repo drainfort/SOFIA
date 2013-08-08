@@ -63,8 +63,6 @@ public class SimpleSimulatedAnnealing extends Control {
 		Integer nonImproving = (Integer) params.get("non-improving");
 		if(nonImproving==-1)
 			nonImproving= Integer.MAX_VALUE;
-		System.out.println(nonImproving);
-		System.out.println(stopTime);
 		Double boltzmann = (Double) params.get("boltzmann");
 		Double finalTemperature = (Double) params.get("Tf");
 		executionResults.setOptimal(optimal);
