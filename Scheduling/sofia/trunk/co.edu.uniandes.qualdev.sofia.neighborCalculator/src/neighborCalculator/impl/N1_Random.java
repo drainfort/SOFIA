@@ -41,7 +41,7 @@ public class N1_Random implements INeighborCalculator{
 	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, int size)
 			throws Exception {
 		ArrayList<PairVO> pairs = new ArrayList<PairVO>();
-
+		int exit=0;
 		while(size>0)
 		{
 			int totalJobs = currentVector.getTotalJobs();
@@ -60,7 +60,14 @@ public class N1_Random implements INeighborCalculator{
 			if(!pairs.contains(pair)){
 				pairs.add(pair);
 				size--;
+				exit=0;
+			}else{
+				exit++;
+				if(exit>=100){
+					return pairs;
+				}
 			}
+			
 		}
 		return pairs;
 	}
