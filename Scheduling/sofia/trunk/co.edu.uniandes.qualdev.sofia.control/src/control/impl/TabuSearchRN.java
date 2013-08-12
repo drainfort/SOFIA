@@ -85,7 +85,6 @@ public class TabuSearchRN extends Control {
 		int nonimproving = (int) (iterations * (Double) params.get("non-improving"));
 		if(nonimproving<0)
 			nonimproving= Integer.MAX_VALUE;
-		System.out.println(nonimproving);
 		
 		// parameter
 		int neighborhodSize =  (Integer) params.get("neighborhodSize");
