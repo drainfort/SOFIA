@@ -193,7 +193,6 @@ public class TabuSearchRN extends Control {
 		}
 		
 		if(nonimprovingout<=0){
-			System.out.println(nonimprovingout);
 			executionResults.setStopCriteria(1);
 			System.out.println("Stop Criteria: Non Improving");
 			ExecutionLogger.getInstance().printLog("Stop Criteria: Non Improving");
