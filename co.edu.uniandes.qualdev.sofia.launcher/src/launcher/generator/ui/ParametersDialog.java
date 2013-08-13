@@ -138,11 +138,11 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			this.setSize(480,280);
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(8,2));
+			panelParameters.setLayout(new GridLayout(9,2));
 			
 			//Iterations
 			JLabel labPercent = new JLabel("iterations");
-			JTextField txtPercent = new JTextField("100");
+			JTextField txtPercent = new JTextField("390");
 			panelParameters.add(labPercent);
 			panelParameters.add(txtPercent);
 			
@@ -167,14 +167,23 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			ParamComponent paramTabuListSize = new ParamComponent(labTabuListSize, txtTabuListSize);
 			parameters.add(paramTabuListSize);
 			
-			//Non-improving
-			JLabel labNonImproving = new JLabel("non-improving");
-			JTextField txtNonImproving = new JTextField("0.6");
-			panelParameters.add(labNonImproving);
-			panelParameters.add(txtNonImproving);
+			//Non-improving-in
+			JLabel labNonImprovingIn = new JLabel("non-improving-in");
+			JTextField txtNonImprovingIn = new JTextField("50");
+			panelParameters.add(labNonImprovingIn);
+			panelParameters.add(txtNonImprovingIn);
 			
-			ParamComponent paramNonImproving = new ParamComponent(labNonImproving, txtNonImproving);
-			parameters.add(paramNonImproving);
+			ParamComponent paramNonImprovingIn = new ParamComponent(labNonImprovingIn, txtNonImprovingIn);
+			parameters.add(paramNonImprovingIn);
+			
+			//Non-improving-out
+			JLabel labNonImprovingOut = new JLabel("non-improving-out");
+			JTextField txtNonImprovingOut = new JTextField("50");
+			panelParameters.add(labNonImprovingOut);
+			panelParameters.add(txtNonImprovingOut);
+			
+			ParamComponent paramNonImprovingOut = new ParamComponent(labNonImprovingOut, txtNonImprovingOut);
+			parameters.add(paramNonImprovingOut);
 			
 			//Restarts
 			JLabel labRestarts = new JLabel("restarts");
@@ -232,7 +241,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//Tf
 			JLabel labTf = new JLabel("Tf");
-			JTextField txtTf = new JTextField("0.5");
+			JTextField txtTf = new JTextField("1");
 			panelParameters.add(labTf);
 			panelParameters.add(txtTf);
 			
@@ -259,7 +268,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			
 			//coolingFactor
 			JLabel labCoolingFactor = new JLabel("coolingFactor");
-			JTextField txtcoolingFactor = new JTextField("0.95");
+			JTextField txtcoolingFactor = new JTextField("0.975");
 			panelParameters.add(labCoolingFactor);
 			panelParameters.add(txtcoolingFactor);
 			
