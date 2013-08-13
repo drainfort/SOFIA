@@ -22,8 +22,10 @@ public class SimpleSimulatedAnnealingParametersLoader implements IParametersLoad
 				.getProperty("params.Tf")));
 		params.put("coolingFactor", Double.parseDouble((String) algorithmConfiguration
 				.getProperty("params.coolingFactor")));
-		params.put("non-improving", Integer.parseInt((String) algorithmConfiguration
-				.getProperty("params.non-improving")));
+		params.put("non-improving-in", Integer.parseInt((String) algorithmConfiguration
+				.getProperty("params.non-improving-in")));
+		params.put("non-improving-out", Integer.parseInt((String) algorithmConfiguration
+				.getProperty("params.non-improving-out")));
 		params.put("restarts", Integer.parseInt((String) algorithmConfiguration
 				.getProperty("params.restarts")));
 		params.put("boltzmann", Double.parseDouble((String) algorithmConfiguration
