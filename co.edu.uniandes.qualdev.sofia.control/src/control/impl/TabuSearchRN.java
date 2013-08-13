@@ -49,7 +49,11 @@ public class TabuSearchRN extends Control {
 		executionResults.setInitialCmax(GammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 
-		int vectorSize = initialSolution.getTotalJobs() * initialSolution.getTotalStations() ;
+		int n = initialSolution.getOperations().size();
+		int r = 2;
+		
+		int nPr =(int)((factorial(n))/factorial(n-r));
+		
 		int a = (Integer) params.get("tabulist-size");
 		int tabuSize = (int)a;
 
@@ -89,6 +93,8 @@ public class TabuSearchRN extends Control {
 		
 		// parameter
 		int neighborhodSize =  (Integer) params.get("neighborhodSize");
+		if(neighborhodSize>nPr)
+			neighborhodSize=nPr;
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 
 		while (iterations >= 0 && nonimprovingout >= 0 && !optimalAchieved) {
@@ -205,4 +211,13 @@ public class TabuSearchRN extends Control {
 		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
 		return result;
 	}
+	
+	public static long factorial(int N)
+    {
+        long multi = 1;
+        for (int i = 1; i <= N; i++) {
+            multi = multi * i;
+        }
+        return multi;
+    }
 }
