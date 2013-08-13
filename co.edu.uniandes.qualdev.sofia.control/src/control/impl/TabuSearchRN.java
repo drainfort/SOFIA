@@ -49,10 +49,6 @@ public class TabuSearchRN extends Control {
 		executionResults.setInitialCmax(GammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 
-		int n = initialSolution.getOperations().size();
-		int r = 2;
-		
-		int nPr =(int)((factorial(n))/factorial(n-r));
 		
 		int a = (Integer) params.get("tabulist-size");
 		int tabuSize = (int)a;
@@ -92,9 +88,8 @@ public class TabuSearchRN extends Control {
 			nonimprovingout= Integer.MAX_VALUE;
 		
 		// parameter
-		int neighborhodSize =  (Integer) params.get("neighborhodSize");
-		if(neighborhodSize>nPr)
-			neighborhodSize=nPr;
+		int neighborhodSize =  (Integer) params.get("neighborhodSize");		
+		System.out.println(neighborhodSize);
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 
 		while (iterations >= 0 && nonimprovingout >= 0 && !optimalAchieved) {
