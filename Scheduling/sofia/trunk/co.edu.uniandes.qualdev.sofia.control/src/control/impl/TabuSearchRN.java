@@ -118,7 +118,7 @@ public class TabuSearchRN extends Control {
 							bestCandidate = candidate.cloneStructure();
 							gammaBestCandidate = gammaCandidate;
 							bestPairCandidate = pairCandidate;
-							nonimprovingin = (int) (iterations * (Double) params.get("non-improving-in"));
+							nonimprovingin = (Integer) params.get("non-improving-in");
 							if(nonimprovingin<=0)
 								nonimprovingin=Integer.MAX_VALUE;
 						}
@@ -126,7 +126,7 @@ public class TabuSearchRN extends Control {
 						bestCandidate = candidate.cloneStructure();
 						gammaBestCandidate = gammaCandidate;
 						bestPairCandidate = pairCandidate;
-						nonimprovingin = (int) (iterations * (Double) params.get("non-improving-in"));
+						nonimprovingin = (Integer) params.get("non-improving-in");
 						if(nonimprovingin<=0)
 							nonimprovingin=Integer.MAX_VALUE;
 					}
@@ -139,7 +139,7 @@ public class TabuSearchRN extends Control {
 				if (gammaBestCandidate < bestGamma) {
 					best = bestCandidate.cloneStructure();
 					bestGamma = gammaBestCandidate;
-					nonimprovingout = (int) (iterations * (Double) params.get("non-improving-out"));
+					nonimprovingout = (Integer) params.get("non-improving-out");
 					if(nonimprovingout<=0)
 						nonimprovingout=Integer.MAX_VALUE;
 					System.out.println("Improvement: " + bestGamma);
