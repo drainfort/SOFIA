@@ -60,9 +60,6 @@ public class SimpleSimulatedAnnealing extends Control {
 		ExecutionLogger.getInstance().printLog("initial solution (XBestCMax): " + XBestCMax);
 		
 		// Obtaining the parameters from the algorithm configuration.
-		Integer nonImprovingIn = (Integer) params.get("non-improving-in");
-		if(nonImprovingIn==-1)
-			nonImprovingIn= Integer.MAX_VALUE;
 		Integer nonImprovingOut = (Integer) params.get("non-improving-out");
 		if(nonImprovingOut==-1)
 			nonImprovingOut= Integer.MAX_VALUE;
@@ -90,7 +87,9 @@ public class SimpleSimulatedAnnealing extends Control {
 		
 		while (temperature >= finalTemperature &&  temperatureReductions < nonImprovingOut && !optimalAchieved) {
 			Integer k = (Integer) params.get("k");
-			
+			Integer nonImprovingIn = (Integer) params.get("non-improving-in");
+			if(nonImprovingIn==-1)
+				nonImprovingIn= Integer.MAX_VALUE;
 			while (k > 0 && !optimalAchieved && nonImprovingIn>=0){
 				
 				// Obtains a next solution (Y) from the current one (X)
@@ -167,7 +166,7 @@ public class SimpleSimulatedAnnealing extends Control {
 			temperature = temperature * (coolingFactor);
 			temperatureReductions ++;
 		}
-		if(temperatureReductions>=nonImprovingIn){
+		if(temperatureReductions>=nonImprovingOut){
 			executionResults.setStopCriteria(1);
 			System.out.println("Stop Criteria: Non improving");
 			ExecutionLogger.getInstance().printLog("Stop Criteria: Non improving");
