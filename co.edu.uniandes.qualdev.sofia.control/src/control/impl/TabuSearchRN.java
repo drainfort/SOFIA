@@ -83,11 +83,9 @@ public class TabuSearchRN extends Control {
 
 		int iterations =  (Integer) params.get("iterations");
 		int nonimprovingout = (Integer) params.get("non-improving-out");
-		int nonimprovingin = (Integer) params.get("non-improving-in");
+		
 		if(nonimprovingout<0)
 			nonimprovingout= Integer.MAX_VALUE;
-		if(nonimprovingin<0)
-			nonimprovingin= Integer.MAX_VALUE;
 		
 		// parameter
 		int neighborhodSize =  (Integer) params.get("neighborhodSize");
@@ -97,6 +95,10 @@ public class TabuSearchRN extends Control {
 			IStructure bestCandidate = null;
 			int gammaBestCandidate = Integer.MAX_VALUE;
 			PairVO bestPairCandidate = null;
+			
+			int nonimprovingin = (Integer) params.get("non-improving-in");
+			if(nonimprovingin<0)
+				nonimprovingin= Integer.MAX_VALUE;
 
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonimprovingin>=0; index++) {
 				PairVO pairCandidate = arrayNeighbors.get(index);
