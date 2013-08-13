@@ -60,9 +60,12 @@ public class SimpleSimulatedAnnealing extends Control {
 		ExecutionLogger.getInstance().printLog("initial solution (XBestCMax): " + XBestCMax);
 		
 		// Obtaining the parameters from the algorithm configuration.
-		Integer nonImproving = (Integer) params.get("non-improving");
-		if(nonImproving==-1)
-			nonImproving= Integer.MAX_VALUE;
+		Integer nonImprovingIn = (Integer) params.get("non-improving-in");
+		if(nonImprovingIn==-1)
+			nonImprovingIn= Integer.MAX_VALUE;
+		Integer nonImprovingOut = (Integer) params.get("non-improving-out");
+		if(nonImprovingOut==-1)
+			nonImprovingOut= Integer.MAX_VALUE;
 		Double boltzmann = (Double) params.get("boltzmann");
 		Double finalTemperature = (Double) params.get("Tf");
 		executionResults.setOptimal(optimal);
@@ -85,10 +88,10 @@ public class SimpleSimulatedAnnealing extends Control {
 		
 		int temperatureReductions = 0;
 		
-		while (temperature >= finalTemperature &&  temperatureReductions < nonImproving && !optimalAchieved) {
+		while (temperature >= finalTemperature &&  temperatureReductions < nonImprovingOut && !optimalAchieved) {
 			Integer k = (Integer) params.get("k");
 			
-			while (k > 0 && !optimalAchieved){
+			while (k > 0 && !optimalAchieved && nonImprovingIn>=0){
 				
 				// Obtains a next solution (Y) from the current one (X)
 				PairVO YMovement = neighborCalculator.calculateNeighbor(X);
@@ -105,16 +108,23 @@ public class SimpleSimulatedAnnealing extends Control {
 					if(acceptanceRandom <= acceptaceValue){
 						X = Y.cloneStructure();
 						XCMax = gammaCalculator.calculateGamma(X);
+						nonImprovingIn = (Integer) params.get("non-improving-in");
+						if(nonImprovingIn<=0)
+							nonImprovingIn=Integer.MAX_VALUE;
 					}
 				}else{
 					X = Y.cloneStructure();
 					XCMax = gammaCalculator.calculateGamma(X);
+					nonImprovingIn = (Integer) params.get("non-improving-in");
+					if(nonImprovingIn<=0)
+						nonImprovingIn=Integer.MAX_VALUE;
 				}
 				
 				if(XCMax < XBestCMax){
 					XBest = X.cloneStructure();
 					XBestCMax = gammaCalculator.calculateGamma(XBest);
 					temperatureReductions = 0;
+					nonImprovingIn = (Integer) params.get("non-improving-in");
 					System.out.println("CMax improvement: " + XBestCMax);
 					ExecutionLogger.getInstance().printLog("Improvement: "+XBestCMax);
 					
@@ -147,6 +157,7 @@ public class SimpleSimulatedAnnealing extends Control {
 			    	System.out.println("Stop Criteria: Max execution time");
 			    	ExecutionLogger.getInstance().printLog("Stop Criteria: Max execution time");
 			    }
+			    nonImprovingIn--;
 				k--;
 				Y.clean();
 			}
@@ -156,7 +167,7 @@ public class SimpleSimulatedAnnealing extends Control {
 			temperature = temperature * (coolingFactor);
 			temperatureReductions ++;
 		}
-		if(temperatureReductions>=nonImproving){
+		if(temperatureReductions>=nonImprovingIn){
 			executionResults.setStopCriteria(1);
 			System.out.println("Stop Criteria: Non improving");
 			ExecutionLogger.getInstance().printLog("Stop Criteria: Non improving");
