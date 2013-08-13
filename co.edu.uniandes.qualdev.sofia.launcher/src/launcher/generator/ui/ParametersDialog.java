@@ -73,7 +73,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			this.setTitle("Metaheuristic parameters: Tabu search complete neighborhood");
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(5,2));
+			panelParameters.setLayout(new GridLayout(6,2));
 			this.setSize(450,200);
 			
 			//tabulist-size
@@ -85,14 +85,23 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			ParamComponent paramTabuListSize = new ParamComponent(labTabuListSize, txtTabuListSize);
 			parameters.add(paramTabuListSize);
 			
-			//Non-improving
-			JLabel labNonImproving = new JLabel("non-improving");
-			JTextField txtNonImproving = new JTextField("0.6");
-			panelParameters.add(labNonImproving);
-			panelParameters.add(txtNonImproving);
+			//Non-improving-in
+			JLabel labNonImprovingIn = new JLabel("non-improving-in");
+			JTextField txtNonImprovingIn = new JTextField("50");
+			panelParameters.add(labNonImprovingIn);
+			panelParameters.add(txtNonImprovingIn);
 			
-			ParamComponent paramNonImproving = new ParamComponent(labNonImproving, txtNonImproving);
-			parameters.add(paramNonImproving);
+			ParamComponent paramNonImprovingIn = new ParamComponent(labNonImprovingIn, txtNonImprovingIn);
+			parameters.add(paramNonImprovingIn);
+			
+			//Non-improving-out
+			JLabel labNonImprovingOut = new JLabel("non-improving-out");
+			JTextField txtNonImprovingOut = new JTextField("50");
+			panelParameters.add(labNonImprovingOut);
+			panelParameters.add(txtNonImprovingOut);
+			
+			ParamComponent paramNonImprovingOut = new ParamComponent(labNonImprovingOut, txtNonImprovingOut);
+			parameters.add(paramNonImprovingOut);
 			
 			//Restarts
 			JLabel labRestarts = new JLabel("restarts");
@@ -209,7 +218,7 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			this.setTitle("Metaheuristic parameters: Simulated annealing");
 			JPanel panelParameters = new JPanel();
 			panelParameters.setBorder( new CompoundBorder( new EmptyBorder( 0, 0, 5, 0 ), new TitledBorder( "Parameters" ) ) );
-			panelParameters.setLayout(new GridLayout(10,2));
+			panelParameters.setLayout(new GridLayout(11,2));
 			this.setSize(450,290);
 			
 			//T0
@@ -257,14 +266,23 @@ public class ParametersDialog extends JDialog implements ActionListener{
 			ParamComponent paramCoolingFactor= new ParamComponent(labCoolingFactor, txtcoolingFactor);
 			parameters.add(paramCoolingFactor);
 			
-			//Non-improving
-			JLabel labNonImproving = new JLabel("non-improving");
-			JTextField txtNonImproving = new JTextField("50");
-			panelParameters.add(labNonImproving);
-			panelParameters.add(txtNonImproving);
+			//Non-improving-in
+			JLabel labNonImprovingIn = new JLabel("non-improving-in");
+			JTextField txtNonImprovingIn = new JTextField("50");
+			panelParameters.add(labNonImprovingIn);
+			panelParameters.add(txtNonImprovingIn);
 			
-			ParamComponent paramNonImproving = new ParamComponent(labNonImproving, txtNonImproving);
-			parameters.add(paramNonImproving);
+			ParamComponent paramNonImprovingIn = new ParamComponent(labNonImprovingIn, txtNonImprovingIn);
+			parameters.add(paramNonImprovingIn);
+			
+			//Non-improving-out
+			JLabel labNonImprovingOut = new JLabel("non-improving-out");
+			JTextField txtNonImprovingOut = new JTextField("50");
+			panelParameters.add(labNonImprovingOut);
+			panelParameters.add(txtNonImprovingOut);
+			
+			ParamComponent paramNonImprovingOut = new ParamComponent(labNonImprovingOut, txtNonImprovingOut);
+			parameters.add(paramNonImprovingOut);
 			
 			//Restarts
 			JLabel labRestarts = new JLabel("restarts");
