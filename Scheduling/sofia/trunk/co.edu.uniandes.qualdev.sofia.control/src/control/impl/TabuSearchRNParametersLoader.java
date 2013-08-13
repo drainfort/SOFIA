@@ -13,10 +13,10 @@ public class TabuSearchRNParametersLoader  implements IParametersLoader{
 		params.put("iterations", Integer.parseInt((String) algorithmConfiguration
 				.getProperty("params.iterations")));
 		
-		params.put("non-improving", Integer.parseInt((String) algorithmConfiguration
+		params.put("non-improving-in", Integer.parseInt((String) algorithmConfiguration
 				.getProperty("params.non-improving-in")));
 		
-		params.put("non-improving", Integer.parseInt((String) algorithmConfiguration
+		params.put("non-improving-out", Integer.parseInt((String) algorithmConfiguration
 				.getProperty("params.non-improving-out")));
 		
 		params.put("tabulist-size", Integer.parseInt((String) algorithmConfiguration
