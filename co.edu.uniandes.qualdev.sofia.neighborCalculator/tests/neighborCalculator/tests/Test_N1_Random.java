@@ -94,8 +94,12 @@ public class Test_N1_Random {
 		int r = 2;
 		
 		long nPr = (factorial(n))/factorial(n-r);
+		long permutacion = permutacion(n, r);
+		
+		
 		
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", nPr, neighborhood.size());
+		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", permutacion, neighborhood.size());
 	}
 	
 	/**
@@ -112,6 +116,8 @@ public class Test_N1_Random {
 		long nCr = (factorial(n))/factorial(n-r);
 		
 		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", nCr, neighborhood.size());
+		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", permutacion(n, r), neighborhood.size());
+		
 	}
 	
 	
@@ -260,6 +266,46 @@ public class Test_N1_Random {
 	}
 	
 	
+	@Test
+	public void testEscenario4() throws Exception {
+		ArrayList<String> problemFiles = new ArrayList<String>();
+
+		String TFile = "./data/15x15/1-T/T-15x15-01.txt";
+		String TTFile = "./data/15x15/2-TT/TT-15x15-01.txt";
+		
+		problemFiles.add(TFile);
+		problemFiles.add(TTFile);
+
+		ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
+		ArrayList<String> informationFiles = new ArrayList<String>();
+		informationFiles.add(TTFile);
+
+		BetaVO TTBeta = new BetaVO("TravelTimes", "beta.impl.TravelTimes", informationFiles, true);
+		BetaVO TearDownTT = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", informationFiles, true);
+		betas.add(TTBeta);
+		betas.add(TearDownTT);
+		
+		Vector vector = (Vector) VectorFactory.createNewInstance(
+				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
+		
+		for(int i=0; i<15;i++){
+			for(int j=0; j<15;j++){
+				vector.scheduleOperation(new OperationIndexVO(0, i, j, j));
+			}
+		}
+		
+		ArrayList<PairVO> neighborhood = neighborCalulator.calculateCompleteNeighborhood(vector);
+		
+		int n = vector.getOperations().size();
+		int r = 2;
+
+		long permutacion = permutacion(n, r);
+		
+		Assert.assertEquals("The amount of generated neighbor pairs is not correct. ", permutacion, neighborhood.size());
+		
+		
+	}
+	
 	// -----------------------------------------------
 	// Utilities
 	// -----------------------------------------------
@@ -268,6 +314,15 @@ public class Test_N1_Random {
     {
         long multi = 1;
         for (int i = 1; i <= N; i++) {
+            multi = multi * i;
+        }
+        return multi;
+    }
+	
+	public static long permutacion(int N, int r)
+    {
+        long multi = 1;
+        for (int i = N-r+1; i <= N; i++) {
             multi = multi * i;
         }
         return multi;
