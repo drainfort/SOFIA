@@ -39,7 +39,7 @@ public interface INeighborCalculator {
 	 * 			The calculate neighbor
 	 * @throws Exception
 	 */
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, int size) throws Exception;
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, long size) throws Exception;
 
 	/**
 	 * Calculates the complete neighborhood from the given solution

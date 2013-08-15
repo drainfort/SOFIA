@@ -64,7 +64,7 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 	}
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, int size)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, long size)
 			throws Exception {
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		IStructure clone = currentStructure.cloneStructure();

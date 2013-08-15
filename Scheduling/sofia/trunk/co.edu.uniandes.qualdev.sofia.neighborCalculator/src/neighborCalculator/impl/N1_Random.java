@@ -38,7 +38,7 @@ public class N1_Random implements INeighborCalculator{
 	}
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, int size)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentVector, long size)
 			throws Exception {
 		ArrayList<PairVO> pairs = new ArrayList<PairVO>();
 		int exit=0;
