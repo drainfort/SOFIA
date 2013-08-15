@@ -13,8 +13,6 @@ public class CMaxCalculator implements IGammaCalculator {
 
 	@Override
 	public int calculateGamma(IStructure vector) throws Exception {
-		//int[][] C = vector.calculateCMatrix();
-		//printMatrix(C);
 		int cmax = calculateGammaMatrix(vector.calculateCMatrix(), vector.getTotalJobs(), vector.getTotalStations());
 		
 		if(vector instanceof Vector){
