@@ -114,7 +114,7 @@ public class Api implements INeighborCalculator {
 	}
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, int size)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, long size)
 			throws Exception {
 		A = currentStructure.calculateAMatrix();
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();

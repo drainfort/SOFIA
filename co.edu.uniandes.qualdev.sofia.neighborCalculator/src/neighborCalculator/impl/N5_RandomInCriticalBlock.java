@@ -64,7 +64,7 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
 	}
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, int size)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentGraph, long size)
 			throws Exception {
 		
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();

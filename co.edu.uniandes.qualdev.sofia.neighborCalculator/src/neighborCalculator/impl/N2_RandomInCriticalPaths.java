@@ -54,7 +54,7 @@ public class N2_RandomInCriticalPaths implements INeighborCalculator {
 	}
 
 	@Override
-	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, int size)
+	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, long size)
 			throws Exception {
 	
 		int amount = 0;
