@@ -90,11 +90,14 @@ public class TabuSearchRN extends Control {
 		// parameter
 		long neighborhodSize =  (Integer) params.get("neighborhodSize");	
 		int n = initialSolution.getOperations().size();
-		int r = 2;
+		if(n<48){
+			int r = 2;
+			long nPr = (factorial(n))/factorial(n-r);
+			
+			if(neighborhodSize<nPr && nPr>0)
+				neighborhodSize=nPr;
+		}
 		
-		long nPr = (factorial(n))/factorial(n-r);
-		if(neighborhodSize<nPr && nPr>0)
-			neighborhodSize=nPr;
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 
 		while (iterations >= 0 && nonimprovingout >= 0 && !optimalAchieved) {
