@@ -90,13 +90,11 @@ public class TabuSearchRN extends Control {
 		// parameter
 		long neighborhodSize =  (Integer) params.get("neighborhodSize");	
 		int n = initialSolution.getOperations().size();
-		if(n<48){
-			int r = 2;
-			long nPr = (factorial(n))/factorial(n-r);
-			
-			if(neighborhodSize<nPr && nPr>0)
-				neighborhodSize=nPr;
-		}
+		int r = 2;
+		long nPr = permutacion(n, r);	
+		if(neighborhodSize<nPr && nPr>0)
+			neighborhodSize=nPr;
+
 		
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 
@@ -215,10 +213,10 @@ public class TabuSearchRN extends Control {
 		return result;
 	}
 	
-	public static long factorial(int N)
+	public static long permutacion(int N, int r)
     {
         long multi = 1;
-        for (int i = 1; i <= N; i++) {
+        for (int i = N-r+1; i <= N; i++) {
             multi = multi * i;
         }
         return multi;
