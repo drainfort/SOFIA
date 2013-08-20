@@ -44,7 +44,7 @@ public class HtmlFormatter extends Formatter {
   // This method is called just after the handler using this
   // formatter is created
   public String getHead(Handler h) {
-    return "<HTML>\n<HEAD>\n" + (new Date()) 
+    return "<HTML>\n<HEAD>\n" 
         + "\n</HEAD>\n<BODY>\n<PRE>\n"
         + "<table width=\"100%\" border>\n  "
         + "<tr><th>Level</th>" +
