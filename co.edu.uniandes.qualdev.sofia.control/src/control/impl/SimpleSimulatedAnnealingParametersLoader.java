@@ -48,6 +48,9 @@ public class SimpleSimulatedAnnealingParametersLoader implements IParametersLoad
 		
 		params.put("printSolutions", Boolean.parseBoolean((String) algorithmConfiguration
 				.getProperty("report.gantt.bestsolutions")));
+		
+		params.put("printLog", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.gantt.log")));
 		return params;
 		
 	}
