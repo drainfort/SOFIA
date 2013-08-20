@@ -57,10 +57,20 @@ public class ExecutionResults {
 	
 	private boolean printFinalSolution;
 	
+	private boolean printLog;
+	
 	// --------------------------------------------
 	// Constructor
 	// --------------------------------------------
 	
+	public boolean isPrintLog() {
+		return printLog;
+	}
+
+	public void setPrintLog(boolean printLog) {
+		this.printLog = printLog;
+	}
+
 	public int getOptimal() {
 		return optimal;
 	}
