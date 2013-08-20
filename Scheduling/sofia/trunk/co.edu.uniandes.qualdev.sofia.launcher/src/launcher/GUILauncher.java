@@ -178,6 +178,7 @@ public class GUILauncher {
 		String consolidateTable = "false";
 		String initialSolutions = "false";
 		String finalSolutions = "false";
+		String log = "false";
 		
 		ArrayList<String> reportConfiguration = algorithmDefinition.getReportConfiguration();
 		for (String report : reportConfiguration) {
@@ -188,10 +189,14 @@ public class GUILauncher {
 			}else if(report.equals(AlgorithmConfigurationVO.FINAL_SOLUTIONS)){
 				finalSolutions = "true";
 			}
+			else if(report.equals(AlgorithmConfigurationVO.LOG)){
+				log = "true";
+			}
 		}
 		algorithmConfiguration.setProperty("report.consolidationTable", consolidateTable);
 		algorithmConfiguration.setProperty("report.gantt.initialsolutions", initialSolutions);
 		algorithmConfiguration.setProperty("report.gantt.bestsolutions", finalSolutions);
+		algorithmConfiguration.setProperty("report.gantt.log", log);
 		
 		String currentBks = "gamma." + gammaBKS + ".bks.";
 		
