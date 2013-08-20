@@ -32,7 +32,7 @@ public class ChartPrinter {
 	
 	private boolean printSolutions;
 	
-	private boolean printLog = true;
+	private boolean printLog;
 	
 	private String logFile ="";
 	
