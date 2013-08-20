@@ -90,7 +90,7 @@ public class GRASPERLS extends Control {
 					System.out.println("****NEW OPTIMAL CMax found! local search stage");
 			}	
 		}
-		ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"));
+		ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"));
 		result.setNumberOfVisitedNeighbors(numberOfNeighbors[0]);
 		result.setBestCmax(bestGamma);
 

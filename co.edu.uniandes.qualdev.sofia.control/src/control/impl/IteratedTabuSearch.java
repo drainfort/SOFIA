@@ -104,7 +104,7 @@ public class IteratedTabuSearch extends Control {
 			}
 		}
 		
-		ExecutionResults result = obtainExecutionResults(Sb, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"));
+		ExecutionResults result = obtainExecutionResults(Sb, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"));
 		System.out.println();
 		return result;
 	}
