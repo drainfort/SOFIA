@@ -41,7 +41,7 @@ public class ExecutionLogger {
 				if(!loggerInitialize){
 					LOGGER.setUseParentHandlers(false);
 					fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
-					fileHTML = new FileHandler("./results/Log-execution-"+resultFile+".html");
+					fileHTML = new FileHandler("./results/Om_TT/Log-execution-"+resultFile+".html");
 					
 					LOGGER.setLevel(Level.INFO);
 
