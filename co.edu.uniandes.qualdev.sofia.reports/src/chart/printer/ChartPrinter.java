@@ -32,6 +32,10 @@ public class ChartPrinter {
 	
 	private boolean printSolutions;
 	
+	private boolean printLog = true;
+	
+	private String logFile ="";
+	
 	// ------------------------------------------------------------
 	// Constructor
 	// ------------------------------------------------------------
@@ -58,6 +62,9 @@ public class ChartPrinter {
         try
         {
             fichero = new FileWriter(resultsFile);
+            System.out.println(resultsFile);
+            logFile = resultsFile.replace("./results/Om_TT/experiment-results", "Log-execution");
+            System.out.println(logFile);
             pw = new PrintWriter(fichero);
             printHeaderHTML(pw);
             printBodyHTML(pw);
@@ -90,6 +97,9 @@ public class ChartPrinter {
 		if(printInitialSolutions){
 			pw.println("<li><a href=\"#\" rel=\"view3\">InitialSolutions</a></li>");
 		}
+		if(printLog){
+			pw.println("<li><a href=\"#\" rel=\"view5\">Log</a></li>");
+		}
 		
 		
 		pw.println("</ul><div class=\"tabcontents\">");
@@ -121,6 +131,11 @@ public class ChartPrinter {
 			}
 			pw.println("</table></div>");
 			
+		}
+		if(printLog){
+			pw.println("<div id=\"view5\" class=\"tabcontent\"> ");
+			pw.println("<iframe src=\""+ logFile+"\" width=\"90%\" height=\"70%\"></iframe> ");
+			pw.println("</div>");
 		}
 		
 		pw.println("</div></div>");
