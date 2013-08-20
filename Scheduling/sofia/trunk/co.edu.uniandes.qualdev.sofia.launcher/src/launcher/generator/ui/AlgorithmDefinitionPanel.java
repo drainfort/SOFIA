@@ -347,11 +347,8 @@ public class AlgorithmDefinitionPanel extends JPanel {
 		for (int i=0; i< reportBoxes.size(); i++) {
 			JCheckBox checkBox =reportBoxes.get(i);
 			if(checkBox.isSelected()){
-				if(i!=reportBoxes.size()-1){
-					answer.getReportConfiguration().add(checkBox.getText());
-				}
-				else{
-					answer.getReportConfiguration().add(checkBox.getText());
+				answer.getReportConfiguration().add(checkBox.getText());
+				if(i==reportBoxes.size()-1){
 					ExecutionLogger.getInstance().setUseLogger(true);
 				}
 			}
