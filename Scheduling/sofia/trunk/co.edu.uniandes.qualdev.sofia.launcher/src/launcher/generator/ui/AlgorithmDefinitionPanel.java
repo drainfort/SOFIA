@@ -343,12 +343,11 @@ public class AlgorithmDefinitionPanel extends JPanel {
 				answer.getSelectedBetas().add(checkBox.getText());
 			}
 		}
-		
+		ExecutionLogger.getInstance().setUseLogger(false);
 		for (int i=0; i< reportBoxes.size(); i++) {
 			JCheckBox checkBox =reportBoxes.get(i);
 			if(checkBox.isSelected()){
 				answer.getReportConfiguration().add(checkBox.getText());
-				ExecutionLogger.getInstance().setUseLogger(false);
 				if(i==reportBoxes.size()-1){
 					ExecutionLogger.getInstance().setUseLogger(true);
 				}
