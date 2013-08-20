@@ -23,7 +23,6 @@ public class ExecutionLogger {
 	
 	public static ExecutionLogger getInstance(){
 		if(instance == null){
-			System.out.println("Nueva instancia");
 			instance = new ExecutionLogger();
 		}
 		return instance;
@@ -36,15 +35,26 @@ public class ExecutionLogger {
 	
 	public void initializeLogger (String resultFile, String instanceName){
 		FileHandler fileTxt;
+		FileHandler fileHTML;
 		try {
 			if(useLogger){
 				if(!loggerInitialize){
 					LOGGER.setUseParentHandlers(false);
 					fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
-					SimpleFormatter formatterTxt = new SimpleFormatter();
+					fileHTML = new FileHandler("./log/Log-execution-"+resultFile+".html");
+					
+					LOGGER.setLevel(Level.INFO);
+
+				    // Create txt Formatter
+				    SimpleFormatter formatterTxt = new SimpleFormatter();
 					fileTxt.setFormatter(formatterTxt);
 					LOGGER.addHandler(fileTxt);
-					LOGGER.setLevel(Level.INFO);
+
+				    // Create HTML Formatter
+					HtmlFormatter formatterHTML = new HtmlFormatter();
+				    fileHTML.setFormatter(formatterHTML);
+				    LOGGER.addHandler(fileHTML);
+					
 					loggerInitialize=true;
 				}
 				LOGGER.info("Instance: "+instanceName);
