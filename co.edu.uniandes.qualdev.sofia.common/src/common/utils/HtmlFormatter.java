@@ -26,10 +26,11 @@ public class HtmlFormatter extends Formatter {
     buf.append("</td>");
     buf.append("<td>");
     buf.append(calcDate(rec.getMillis()));
-    buf.append(' ');
+    buf.append("</td>");
+    buf.append("<td>");
     buf.append(formatMessage(rec));
     buf.append('\n');
-    buf.append("<td>");
+    buf.append("</td>");
     buf.append("</tr>\n");
     return buf.toString();
   }
