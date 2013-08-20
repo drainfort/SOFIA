@@ -351,9 +351,11 @@ public class AlgorithmDefinitionPanel extends JPanel {
 					answer.getReportConfiguration().add(checkBox.getText());
 				}
 				else{
+					answer.getReportConfiguration().add(checkBox.getText());
 					ExecutionLogger.getInstance().setUseLogger(true);
 				}
 			}
+			ExecutionLogger.getInstance().setUseLogger(false);
 		}
 		return answer;
 	}
