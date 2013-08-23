@@ -54,43 +54,14 @@ public class Test_Decode {
 				vectorScenario1.scheduleOperation(problem[1][0]);
 				vectorScenario1.scheduleOperation(problem[1][2]);
 				
-				vectorScenario2 = new Vector(4,4);
-				vectorScenario2.setTotalMachines(4);
-
-			
-				OperationIndexVO[][] problem1 = new OperationIndexVO[2][4]; 
-				problem1[0][0] = new OperationIndexVO(5, 0, 0, 0);
-				problem1[0][1] = new OperationIndexVO(5, 0, 0, 1);
-				problem1[0][2] = new OperationIndexVO(5, 0, 1, 2);
-				problem1[0][3] = new OperationIndexVO(5, 0, 1, 3);
-				problem1[1][0] = new OperationIndexVO(5, 1, 0, 0);
-				problem1[1][1] = new OperationIndexVO(5, 1, 0, 1);
-				problem1[1][2] = new OperationIndexVO(5, 1, 1, 2);
-				problem1[1][3] = new OperationIndexVO(5, 1, 1, 3);
-				problem1[2][0] = new OperationIndexVO(5, 2, 0, 0);
-				problem1[2][1] = new OperationIndexVO(5, 2, 0, 1);
-				problem1[2][2] = new OperationIndexVO(5, 2, 1, 2);
-				problem1[2][3] = new OperationIndexVO(5, 2, 1, 3);
-				problem1[3][0] = new OperationIndexVO(5, 3, 0, 0);
-				problem1[3][1] = new OperationIndexVO(5, 3, 0, 1);
-				problem1[3][2] = new OperationIndexVO(5, 3, 1, 2);
-				problem1[3][3] = new OperationIndexVO(5, 3, 1, 3);
-				
-				vectorScenario1.setProblem(problem);
-				vectorScenario1.scheduleOperation(problem[0][0]);
-				vectorScenario1.scheduleOperation(problem[0][2]);
-				vectorScenario1.scheduleOperation(problem[1][0]);
-				vectorScenario1.scheduleOperation(problem[1][2]);
 				
 				ArrayList<String> problemFiles = new ArrayList<String>();
 
-				String TFile = "./data/04x04x02/1-T/T-04x04x02-01.txt";
-				String TTFile = "./data/04x04x02/2-TT/TT-04x04x02-01.txt";
-				String MFile = "./data/04x04x02/4-M/M-04x04x02-01.txt";
+				String TFile = "./data/CasoEspecial/1-T/T-04x04-01.txt";
+				String TTFile = "./data/CasoEspecial/2-TT/TT-04x04-01.txt";
 				
 				problemFiles.add(TFile);
 				problemFiles.add(TTFile);
-				problemFiles.add(MFile);
 
 				ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
 				ArrayList<String> informationFiles = new ArrayList<String>();
@@ -116,10 +87,10 @@ public class Test_Decode {
 				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 2, 1, 1));
 				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 2, 2, 2));
 				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 2, 3, 3));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 4, 0, 0));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 4, 1, 1));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 4, 2, 2));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 4, 3, 3));
+				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 3, 0, 0));
+				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 3, 1, 1));
+				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 3, 2, 2));
+				vectorScenario2.scheduleOperation(new OperationIndexVO(5, 3, 3, 3));
 
 				
 		}
@@ -131,8 +102,6 @@ public class Test_Decode {
 		public void testCriticalPathScenario1() throws InterruptedException {
 			
 			vectorScenario1.calculateCMatrix();
-			System.out.println(vectorScenario1.getVectorDecodSimple());
-			System.out.println(vectorScenario1.getVectorDecodNonDelay());
 			
 			ArrayList<IOperation> vector = vectorScenario1.getVectorDecodNonDelay();
 			
