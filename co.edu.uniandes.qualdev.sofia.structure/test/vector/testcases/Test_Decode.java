@@ -116,6 +116,7 @@ public class Test_Decode {
 		public void testCriticalPathScenario2() throws InterruptedException {
 			
 			vectorScenario2.calculateCMatrix();
+			System.out.println(vectorScenario2.getVectorDecodSimple());
 			System.out.println(vectorScenario2.getVectorDecodNonDelay());
 		}
 		
