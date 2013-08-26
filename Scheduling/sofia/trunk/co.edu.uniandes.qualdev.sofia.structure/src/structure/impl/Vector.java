@@ -347,14 +347,17 @@ public class Vector extends AbstractStructure{
 			int minStartTime = copia.get(i).getInitialTime();
 			
 			for (int a = 0; a < machinesCandidates.size(); a++) {
-				scheduleOperation(machinesCandidates.get(a));
-				calculateCMatrix();
-				startTimeTested = vectorDecodSimple.get(i).getInitialTime();
-				if (startTimeTested < minStartTime) {
-					minStartTime = startTimeTested;
-					candidate = machinesCandidates.get(a);
+				boolean canSchedulled = scheduleOperation(machinesCandidates.get(a));
+				if (canSchedulled){
+					calculateCMatrix();
+					startTimeTested = vectorDecodSimple.get(i).getInitialTime();
+					if (startTimeTested < minStartTime) {
+						minStartTime = startTimeTested;
+						candidate = machinesCandidates.get(a);
+					}
+					vectorDecodSimple.remove(i);
 				}
-				vectorDecodSimple.remove(i);
+				
 			}
 			
 			machinesCandidates.clear();
@@ -377,8 +380,9 @@ public class Vector extends AbstractStructure{
 					}
 				}
 			}
-			if(operationIndexInitialTime == null)
+			if(operationIndexInitialTime == null){
 				operationIndexInitialTime= candidate;
+			}
 			
 			if(operationIndexInitialTime.getJobId() == candidate.getJobId()&& minFinalTime<minStartTime-getTT(candidate.getStationId(), operationIndexInitialTime.getStationId()) ){
 				scheduleOperation(operationIndexInitialTime);
