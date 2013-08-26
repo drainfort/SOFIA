@@ -342,7 +342,6 @@ public class Vector extends AbstractStructure{
 				if(temp.getStationId()==candidate.getMachineId()&& temp.getMachineId()!=candidate.getMachineId())
 					machinesCandidates.add(temp);
 			}
-			System.out.println(machinesCandidates);
 			
 			int startTimeTested = 0;
 			int minStartTime = copia.get(i).getInitialTime();
