@@ -357,12 +357,11 @@ public class Vector extends AbstractStructure{
 					}
 					vectorDecodSimple.remove(contador);
 				}
-				
 			}
 			
 			machinesCandidates.clear();
 			
-			int minInitialTime=0;
+			int minInitialTime=Integer.MAX_VALUE;
 			int minFinalTime=0;
 			OperationIndexVO operationIndexInitialTime = null;
 			for(int j =0; j<getProblem().length;j++){
@@ -381,13 +380,16 @@ public class Vector extends AbstractStructure{
 				}
 			}
 			
-			boolean schedulled =false;
+			boolean schedulled = false;
+			boolean schedulled2 = false;
 			if(operationIndexInitialTime != null){
 				if(operationIndexInitialTime.getJobId() == candidate.getJobId()&& minFinalTime<minStartTime-getTT(candidate.getStationId(), operationIndexInitialTime.getStationId()) ){
 					schedulled = scheduleOperation(operationIndexInitialTime);
+					schedulled2 = scheduleOperation(candidate);
 				}
 				else if(operationIndexInitialTime.getJobId() != candidate.getJobId()&& minInitialTime<minStartTime ){
 					schedulled = scheduleOperation(operationIndexInitialTime);
+					schedulled2 = scheduleOperation(candidate);
 				}
 				else{
 					schedulled = scheduleOperation(candidate);
@@ -397,6 +399,8 @@ public class Vector extends AbstractStructure{
 				schedulled = scheduleOperation(candidate);
 			}
 			if(schedulled)
+				contador++;
+			if(schedulled2)
 				contador++;
 
 		}
