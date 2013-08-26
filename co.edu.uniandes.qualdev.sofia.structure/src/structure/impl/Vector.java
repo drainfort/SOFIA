@@ -324,6 +324,77 @@ public class Vector extends AbstractStructure{
 		}
 	}
 	
+	public void decodeSolutionActiveSchedule(){
+		
+		ArrayList<IOperation> copia = new ArrayList<IOperation>();
+		for (int i = 0; i < vectorDecodSimple.size(); i++){
+			IOperation iOperations = vectorDecodSimple.get(i);
+			copia.add(iOperations);
+		}
+		vectorDecodSimple = new ArrayList<IOperation>();
+		
+		for (int i = 0; i < copia.size(); i++) {
+			OperationIndexVO candidate = copia.get(i).getOperationIndex();
+			ArrayList<OperationIndexVO> machinesCandidates = new ArrayList<OperationIndexVO>();
+			
+			for(int j=0; j<getProblem()[candidate.getJobId()].length; j++){
+				OperationIndexVO temp = getProblem()[candidate.getJobId()][j];
+				if(temp.getStationId()==candidate.getMachineId()&& temp.getMachineId()!=candidate.getMachineId())
+					machinesCandidates.add(temp);
+			}
+			System.out.println(machinesCandidates);
+			
+			int startTimeTested = 0;
+			int minStartTime = copia.get(i).getInitialTime();
+			
+			for (int a = 0; a < machinesCandidates.size(); a++) {
+				scheduleOperation(machinesCandidates.get(a));
+				calculateCMatrix();
+				startTimeTested = vectorDecodSimple.get(i).getInitialTime();
+				if (startTimeTested < minStartTime) {
+					minStartTime = startTimeTested;
+					candidate = machinesCandidates.get(a);
+				}
+				vectorDecodSimple.remove(i);
+			}
+			
+			machinesCandidates.clear();
+			
+			int minInitialTime=0;
+			int minFinalTime=0;
+			OperationIndexVO operationIndexInitialTime = null;
+			for(int j =0; j<getProblem().length;j++){
+				for(int z=0; z<getProblem()[j].length;z++){
+					boolean canSchedulled = scheduleOperation(getProblem()[j][z]);
+					if (canSchedulled){
+						calculateCMatrix();
+						int initalTime = vectorDecodSimple.get(i).getInitialTime();
+						if (initalTime < minInitialTime) {
+							minInitialTime = initalTime;
+							minFinalTime = vectorDecodSimple.get(i).getFinalTime();
+							operationIndexInitialTime = getProblem()[j][z];
+						}
+						vectorDecodSimple.remove(i);
+					}
+				}
+			}
+			if(operationIndexInitialTime == null)
+				operationIndexInitialTime= candidate;
+			
+			if(operationIndexInitialTime.getJobId() == candidate.getJobId()&& minFinalTime<minStartTime-getTT(candidate.getStationId(), operationIndexInitialTime.getStationId()) ){
+				scheduleOperation(operationIndexInitialTime);
+			}
+			else if(operationIndexInitialTime.getJobId() != candidate.getJobId()&& minInitialTime<minStartTime ){
+				scheduleOperation(operationIndexInitialTime);
+			}
+			else{
+				scheduleOperation(candidate);
+			}
+			
+			
+		}
+		System.out.println(vectorDecodSimple);
+	}
 	
     private void decodeSolution(){
 		
