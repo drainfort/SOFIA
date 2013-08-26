@@ -80,6 +80,8 @@ public class Test_Decode_Active {
 		public void testDecode() throws InterruptedException {
 			
 			vectorScenario2.decodeSolutionActiveSchedule();
+			vectorScenario2.calculateCMatrix();
+			System.out.println(vectorScenario2.getOperations());
 			
 			
 		}
