@@ -332,14 +332,14 @@ public class Vector extends AbstractStructure{
 			copia.add(iOperations);
 		}
 		vectorDecodSimple = new ArrayList<IOperation>();
-		
+		int contador = 0;
 		for (int i = 0; i < copia.size(); i++) {
 			OperationIndexVO candidate = copia.get(i).getOperationIndex();
 			ArrayList<OperationIndexVO> machinesCandidates = new ArrayList<OperationIndexVO>();
 			
 			for(int j=0; j<getProblem()[candidate.getJobId()].length; j++){
 				OperationIndexVO temp = getProblem()[candidate.getJobId()][j];
-				if(temp.getStationId()==candidate.getMachineId()&& temp.getMachineId()!=candidate.getMachineId())
+				if(temp.getStationId()==candidate.getStationId()&& temp.getMachineId()!=candidate.getMachineId())
 					machinesCandidates.add(temp);
 			}
 			
@@ -350,12 +350,12 @@ public class Vector extends AbstractStructure{
 				boolean canSchedulled = scheduleOperation(machinesCandidates.get(z));
 				if (canSchedulled){
 					calculateCMatrix();
-					startTimeTested = vectorDecodSimple.get(i).getInitialTime();
+					startTimeTested = vectorDecodSimple.get(contador).getInitialTime();
 					if (startTimeTested < minStartTime) {
 						minStartTime = startTimeTested;
 						candidate = machinesCandidates.get(z);
 					}
-					vectorDecodSimple.remove(i);
+					vectorDecodSimple.remove(contador);
 				}
 				
 			}
@@ -370,33 +370,36 @@ public class Vector extends AbstractStructure{
 					boolean canSchedulled = scheduleOperation(getProblem()[j][z]);
 					if (canSchedulled){
 						calculateCMatrix();
-						int initalTime = vectorDecodSimple.get(i).getInitialTime();
+						int initalTime = vectorDecodSimple.get(contador).getInitialTime();
 						if (initalTime < minInitialTime) {
 							minInitialTime = initalTime;
-							minFinalTime = vectorDecodSimple.get(i).getFinalTime();
+							minFinalTime = vectorDecodSimple.get(contador).getFinalTime();
 							operationIndexInitialTime = getProblem()[j][z];
 						}
-						vectorDecodSimple.remove(i);
+						vectorDecodSimple.remove(contador);
 					}
 				}
 			}
-			if(operationIndexInitialTime == null){
-				operationIndexInitialTime = candidate;
-			}
 			
-			if(operationIndexInitialTime.getJobId() == candidate.getJobId()&& minFinalTime<minStartTime-getTT(candidate.getStationId(), operationIndexInitialTime.getStationId()) ){
-				scheduleOperation(operationIndexInitialTime);
-			}
-			else if(operationIndexInitialTime.getJobId() != candidate.getJobId()&& minInitialTime<minStartTime ){
-				scheduleOperation(operationIndexInitialTime);
+			boolean schedulled =false;
+			if(operationIndexInitialTime != null){
+				if(operationIndexInitialTime.getJobId() == candidate.getJobId()&& minFinalTime<minStartTime-getTT(candidate.getStationId(), operationIndexInitialTime.getStationId()) ){
+					schedulled = scheduleOperation(operationIndexInitialTime);
+				}
+				else if(operationIndexInitialTime.getJobId() != candidate.getJobId()&& minInitialTime<minStartTime ){
+					schedulled = scheduleOperation(operationIndexInitialTime);
+				}
+				else{
+					schedulled = scheduleOperation(candidate);
+				}
 			}
 			else{
-				scheduleOperation(candidate);
+				schedulled = scheduleOperation(candidate);
 			}
-			
-			
+			if(schedulled)
+				contador++;
+
 		}
-		System.out.println(vectorDecodSimple);
 	}
 	
     private void decodeSolution(){
