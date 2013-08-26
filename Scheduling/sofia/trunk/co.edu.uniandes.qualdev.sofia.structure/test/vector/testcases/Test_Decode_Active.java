@@ -31,42 +31,44 @@ public class Test_Decode_Active {
 		@Before
 		public void setUpScenario() throws Exception {
 				
-				ArrayList<String> problemFiles = new ArrayList<String>();
+			ArrayList<String> problemFiles = new ArrayList<String>();
 
-				String TFile = "./data/CasoEspecial/1-T/T-04x04-01.txt";
-				String TTFile = "./data/CasoEspecial/2-TT/TT-04x04-01.txt";
-				
-				problemFiles.add(TFile);
-				problemFiles.add(TTFile);
+			String TFile = "./data/04x04x02/1-T/T-04x04x02-02.txt";
+			String TTFile = "./data/04x04x02/2-TT/TT-04x04x02-02.txt";
+			String MFile = "./data/04x04x02/4-M/M-04x04x02-02.txt";
+			
+			problemFiles.add(TFile);
+			problemFiles.add(TTFile);
+			problemFiles.add(MFile);
+			
+			ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
+			ArrayList<String> informationFiles = new ArrayList<String>();
+			informationFiles.add(TTFile);
 
-				ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
-				ArrayList<String> informationFiles = new ArrayList<String>();
-				informationFiles.add(TTFile);
+			BetaVO TTBeta = new BetaVO("TravelTimes", "beta.impl.TravelTimes", informationFiles, true);
+			BetaVO TearDownTT = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", informationFiles, true);
+			betas.add(TTBeta);
+			betas.add(TearDownTT);
 
-				BetaVO TTBeta = new BetaVO("TravelTimes", "beta.impl.TravelTimes", informationFiles, true);
-				BetaVO TearDownTT = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", informationFiles, true);
-				betas.add(TTBeta);
-				betas.add(TearDownTT);
-
-				vectorScenario2 = (Vector) VectorFactory.createNewInstance(
-						"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
-				
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 0, 0));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 1, 1));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 2, 2));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 3, 3));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 0, 0));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 1, 1));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 2, 2));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 3, 3));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 0, 0));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 1, 1));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 2, 2));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 3, 3));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 0, 0));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 1, 1));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 2, 2));
-				vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 3, 3));
+			vectorScenario2 = (Vector) VectorFactory.createNewInstance(
+					"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
+			
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 0, 0));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 1, 1));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 2, 2));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 3, 3));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 0, 0));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 1, 1));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 2, 2));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 3, 3));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 0, 0));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 1, 1));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 2, 2));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 3, 3));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 0, 0));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 1, 1));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 2, 2));
+			vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 3, 3));
 
 				
 		}
