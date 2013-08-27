@@ -329,7 +329,7 @@ public class Vector extends AbstractStructure{
 		int sizeList = vectorDecodSimple.size();
 		ArrayList<IOperation> copia = new ArrayList<IOperation>();
 		for (int i = 0; i < sizeList; i++){
-			IOperation iOperations = vectorDecodSimple.get(i);
+			IOperation iOperations = new Operation (vectorDecodSimple.get(i).getOperationIndex());
 			copia.add(iOperations);
 		}
 		
@@ -361,38 +361,35 @@ public class Vector extends AbstractStructure{
 			activeCandidates.add(operationIndexMinFinalTime);
 			
 			// Obtendiendo todas las oepraciones que se pueden programar en la misma máquina de la misma estación.
-			ArrayList<OperationIndexVO> jobsCandidates = new ArrayList<OperationIndexVO>();
+			//Filtrando las operaciones para que queden solamente las que resultan en un programa activo
 			for(int i=0; i<getProblem().length; i++){
 				OperationIndexVO temp = getProblem()[i][operationIndexMinFinalTime.getMachineId()];
-				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId())
-					jobsCandidates.add(temp);
-			}
-			
-			//Filtrando las operaciones para que queden solamente las que resultan en un programa activo
-			for (int i = 0; i < jobsCandidates.size(); i++) {
-				boolean canSchedulled = scheduleOperation(jobsCandidates.get(i));
-				if (canSchedulled){
-					calculateCMatrix();
-					int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
-					if (startTimeTested < minFinalTime) {
-						minFinalTime = startTimeTested;
-						jobsCandidates.add(jobsCandidates.get(i));
+				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId()){
+					boolean canSchedulled = scheduleOperation(temp);
+					if (canSchedulled){
+						calculateCMatrix();
+						int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
+						if (startTimeTested < minFinalTime) {
+							activeCandidates.add(temp);
+						}
+						vectorDecodSimple.remove(actualSize);
 					}
-					vectorDecodSimple.remove(actualSize);
 				}
 			}
-			
+						
 			//Desempate: Selecciona la primera de las operaciones que esté en la lista de permutación. 
 			boolean schedulled = false;
-			for(int i=0; i< jobsCandidates.size() && !schedulled;i++){
-				OperationIndexVO temp =  jobsCandidates.get(i);
-				Operation operation = new Operation(temp);
-				if(copia.contains(operation)){
-					schedulled = scheduleOperation(jobsCandidates.get(i));
-					if (schedulled){
-						actualSize++;
-					}
-				}	
+			for(int i=0; i< activeCandidates.size() && !schedulled;i++){
+				OperationIndexVO temp =  activeCandidates.get(i);
+				for(int j=0; j< copia.size()&& !schedulled;j++){
+					OperationIndexVO opIndex = copia.get(j).getOperationIndex(); 
+					if(temp.getJobId()==opIndex.getJobId() && temp.getStationId()== opIndex.getStationId()){
+						schedulled = scheduleOperation(temp);
+						if (schedulled){
+							actualSize++;
+						}
+					}	
+				}
 			}
 			
 		}
