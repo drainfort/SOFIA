@@ -326,6 +326,75 @@ public class Vector extends AbstractStructure{
 	
 	public void decodeSolutionActiveSchedule(){
 		
+		int sizeList = vectorDecodSimple.size();
+		ArrayList<IOperation> copia = new ArrayList<IOperation>();
+		for (int i = 0; i < sizeList; i++){
+			IOperation iOperations = vectorDecodSimple.get(i);
+			copia.add(iOperations);
+		}
+		
+		vectorDecodSimple = new ArrayList<IOperation>();
+		int actualSize = 0;
+		
+		while (actualSize<sizeList){
+			
+			int minInitialTime = 0;
+			int minFinalTime = Integer.MAX_VALUE;
+			OperationIndexVO operationIndexMinFinalTime = null;
+			for(int j =0; j<getProblem().length;j++){
+				for(int z=0; z<getProblem()[j].length;z++){
+					boolean canSchedulled = scheduleOperation(getProblem()[j][z]);
+					if (canSchedulled){
+						calculateCMatrix();
+						int initialTime = vectorDecodSimple.get(actualSize).getInitialTime();
+						int finalTime = vectorDecodSimple.get(actualSize).getFinalTime();
+						if (finalTime < minFinalTime ) {
+							minInitialTime = initialTime;
+							minFinalTime = finalTime;
+							operationIndexMinFinalTime = getProblem()[j][z];
+						}
+						vectorDecodSimple.remove(actualSize);
+					}
+				}
+			}
+			
+			ArrayList<OperationIndexVO> activeCandidates = new ArrayList<OperationIndexVO>();
+			activeCandidates.add(operationIndexMinFinalTime);
+			ArrayList<OperationIndexVO> jobsCandidates = new ArrayList<OperationIndexVO>();
+			
+			for(int i=0; i<getProblem().length; i++){
+				OperationIndexVO temp = getProblem()[i][operationIndexMinFinalTime.getMachineId()];
+				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId())
+					jobsCandidates.add(temp);
+			}
+			
+			for (int i = 0; i < jobsCandidates.size(); i++) {
+				boolean canSchedulled = scheduleOperation(jobsCandidates.get(i));
+				if (canSchedulled){
+					calculateCMatrix();
+					int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
+					if (startTimeTested < minFinalTime) {
+						minFinalTime = startTimeTested;
+						jobsCandidates.add(jobsCandidates.get(i));
+					}
+					vectorDecodSimple.remove(actualSize);
+				}
+			}
+			
+			boolean schedulled = false;
+			for(int i=0; i< jobsCandidates.size() && !schedulled;i++){
+				OperationIndexVO temp =  jobsCandidates.get(i);
+				Operation operation = new Operation(temp);
+				if(copia.contains(operation)){
+					schedulled = scheduleOperation(jobsCandidates.get(i));
+					if (schedulled){
+						actualSize++;
+					}
+				}	
+			}
+			
+		}
+		/*
 		ArrayList<IOperation> copia = new ArrayList<IOperation>();
 		for (int i = 0; i < vectorDecodSimple.size(); i++){
 			IOperation iOperations = vectorDecodSimple.get(i);
@@ -361,18 +430,18 @@ public class Vector extends AbstractStructure{
 			
 			machinesCandidates.clear();
 			
-			int minInitialTime=Integer.MAX_VALUE;
-			int minFinalTime=0;
+			int minInitialTime=0;
+			int minFinalTime=Integer.MAX_VALUE;
 			OperationIndexVO operationIndexInitialTime = null;
 			for(int j =0; j<getProblem().length;j++){
 				for(int z=0; z<getProblem()[j].length;z++){
 					boolean canSchedulled = scheduleOperation(getProblem()[j][z]);
 					if (canSchedulled){
 						calculateCMatrix();
-						int initalTime = vectorDecodSimple.get(contador).getInitialTime();
-						if (initalTime < minInitialTime) {
-							minInitialTime = initalTime;
-							minFinalTime = vectorDecodSimple.get(contador).getFinalTime();
+						int finalTime = vectorDecodSimple.get(contador).getFinalTime();
+						if (finalTime < minFinalTime) {
+							minInitialTime = vectorDecodSimple.get(contador).getInitialTime();
+							minFinalTime = finalTime;
 							operationIndexInitialTime = getProblem()[j][z];
 						}
 						vectorDecodSimple.remove(contador);
@@ -401,7 +470,7 @@ public class Vector extends AbstractStructure{
 				contador++;
 
 
-		}
+		}*/
 	}
 	
     private void decodeSolution(){
