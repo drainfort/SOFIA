@@ -338,7 +338,7 @@ public class Vector extends AbstractStructure{
 		
 		while (actualSize<sizeList){
 			
-			int minInitialTime = 0;
+			// Selecciona la operación que puede terminar lo antes posible. La guarda en la veriable operationIndexMinFinalTime
 			int minFinalTime = Integer.MAX_VALUE;
 			OperationIndexVO operationIndexMinFinalTime = null;
 			for(int j =0; j<getProblem().length;j++){
@@ -346,10 +346,8 @@ public class Vector extends AbstractStructure{
 					boolean canSchedulled = scheduleOperation(getProblem()[j][z]);
 					if (canSchedulled){
 						calculateCMatrix();
-						int initialTime = vectorDecodSimple.get(actualSize).getInitialTime();
 						int finalTime = vectorDecodSimple.get(actualSize).getFinalTime();
 						if (finalTime < minFinalTime ) {
-							minInitialTime = initialTime;
 							minFinalTime = finalTime;
 							operationIndexMinFinalTime = getProblem()[j][z];
 						}
@@ -358,16 +356,19 @@ public class Vector extends AbstractStructure{
 				}
 			}
 			
+			// Arreglo de candidatas. 
 			ArrayList<OperationIndexVO> activeCandidates = new ArrayList<OperationIndexVO>();
 			activeCandidates.add(operationIndexMinFinalTime);
-			ArrayList<OperationIndexVO> jobsCandidates = new ArrayList<OperationIndexVO>();
 			
+			// Obtendiendo todas las oepraciones que se pueden programar en la misma máquina de la misma estación.
+			ArrayList<OperationIndexVO> jobsCandidates = new ArrayList<OperationIndexVO>();
 			for(int i=0; i<getProblem().length; i++){
 				OperationIndexVO temp = getProblem()[i][operationIndexMinFinalTime.getMachineId()];
 				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId())
 					jobsCandidates.add(temp);
 			}
 			
+			//Filtrando las operaciones para que queden solamente las que resultan en un programa activo
 			for (int i = 0; i < jobsCandidates.size(); i++) {
 				boolean canSchedulled = scheduleOperation(jobsCandidates.get(i));
 				if (canSchedulled){
@@ -381,6 +382,7 @@ public class Vector extends AbstractStructure{
 				}
 			}
 			
+			//Desempate: Selecciona la primera de las operaciones que esté en la lista de permutación. 
 			boolean schedulled = false;
 			for(int i=0; i< jobsCandidates.size() && !schedulled;i++){
 				OperationIndexVO temp =  jobsCandidates.get(i);
