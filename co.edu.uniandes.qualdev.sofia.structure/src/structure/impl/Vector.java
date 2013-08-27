@@ -289,35 +289,10 @@ public class Vector extends AbstractStructure{
 			// que se hace como una regla de despacho. Es decir, se toman las que menor tiempo de inicio y se selecciona la que primero aparezca en la lista. 
 			decodeSolution();
 			
-			CIntepretation = new int[getTotalJobs()][getTotalStations() + 1];
-			
-			for (int i = 0; i < vectorDecodNonDelay.size(); i++) {
-				IOperation Cij = vectorDecodNonDelay.get(i);
-				
-				int Ciminus1J = getCiminus1J(Cij, i, vectorDecodNonDelay) != null ? getCiminus1J(Cij, i, vectorDecodNonDelay).getFinalTime() : 0;
-				int CiJminus1 = getCiJminus1(Cij, i, vectorDecodNonDelay) != null ? getCiJminus1(Cij, i, vectorDecodNonDelay).getFinalTime() : 0;
-				
-				int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vectorDecodNonDelay), i, vectorDecodNonDelay);
-				int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
-				
-				int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
-				int finalTime = initialTime + Cij.getOperationIndex().getProcessingTime() + sumSetupBetas;
-				
-				Cij.setInitialTime(initialTime);
-				Cij.setFinalTime(finalTime);
-				
-				CIntepretation[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
-			}
-			
 			C = CSolution;
 			int[][] newC = applyTearDownBetas(C);
 			if (newC != null)
 				C = newC;
-			
-			
-			int[][] newC2 = applyTearDownBetas(CIntepretation);
-			if (newC2 != null)
-				CIntepretation = newC2;
 		
 			synch = true;
 			return C;
@@ -563,6 +538,32 @@ public class Vector extends AbstractStructure{
 			}
 			index++;
 		}
+		
+		// Actualiza la matriz c
+		CIntepretation = new int[getTotalJobs()][getTotalStations() + 1];
+		
+		for (int i = 0; i < vectorDecodNonDelay.size(); i++) {
+			IOperation Cij = vectorDecodNonDelay.get(i);
+			
+			int Ciminus1J = getCiminus1J(Cij, i, vectorDecodNonDelay) != null ? getCiminus1J(Cij, i, vectorDecodNonDelay).getFinalTime() : 0;
+			int CiJminus1 = getCiJminus1(Cij, i, vectorDecodNonDelay) != null ? getCiJminus1(Cij, i, vectorDecodNonDelay).getFinalTime() : 0;
+			
+			int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vectorDecodNonDelay), i, vectorDecodNonDelay);
+			int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
+			
+			int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
+			int finalTime = initialTime + Cij.getOperationIndex().getProcessingTime() + sumSetupBetas;
+			
+			Cij.setInitialTime(initialTime);
+			Cij.setFinalTime(finalTime);
+			
+			CIntepretation[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
+		}
+		
+		int[][] newC2 = applyTearDownBetas(CIntepretation);
+		if (newC2 != null)
+			CIntepretation = newC2;
+		
 		
 	}
 	
