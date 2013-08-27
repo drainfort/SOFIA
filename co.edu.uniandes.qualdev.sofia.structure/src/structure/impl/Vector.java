@@ -394,8 +394,9 @@ public class Vector extends AbstractStructure{
 			
 		}
 		
-		
 		/*
+		
+		calculateCMatrix();
 		ArrayList<IOperation> copia = new ArrayList<IOperation>();
 		for (int i = 0; i < vectorDecodSimple.size(); i++){
 			IOperation iOperations = vectorDecodSimple.get(i);
@@ -431,8 +432,8 @@ public class Vector extends AbstractStructure{
 			
 			machinesCandidates.clear();
 			
-			int minInitialTime=0;
-			int minFinalTime=Integer.MAX_VALUE;
+			int minInitialTime = 0;
+			int minFinalTime = Integer.MAX_VALUE;
 			OperationIndexVO operationIndexInitialTime = null;
 			for(int j =0; j<getProblem().length;j++){
 				for(int z=0; z<getProblem()[j].length;z++){
@@ -471,7 +472,8 @@ public class Vector extends AbstractStructure{
 				contador++;
 
 
-		}*/
+		}
+		*/
 	}
 	
     private void decodeSolution(){
