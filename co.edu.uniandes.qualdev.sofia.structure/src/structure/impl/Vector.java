@@ -393,6 +393,8 @@ public class Vector extends AbstractStructure{
 			}
 			
 		}
+		
+		
 		/*
 		ArrayList<IOperation> copia = new ArrayList<IOperation>();
 		for (int i = 0; i < vectorDecodSimple.size(); i++){
