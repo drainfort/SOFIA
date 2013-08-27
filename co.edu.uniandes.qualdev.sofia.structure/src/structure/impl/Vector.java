@@ -335,24 +335,31 @@ public class Vector extends AbstractStructure{
 		
 		vectorDecodSimple = new ArrayList<IOperation>();
 		int actualSize = 0;
-		
+		ArrayList<OperationIndexVO> unschedulledOperations = new ArrayList<OperationIndexVO>();
+		for(int j =0; j<getProblem().length;j++){
+			for(int z=0; z<getProblem()[j].length;z++){	
+				unschedulledOperations.add(getProblem()[j][z]);
+			}
+		}
 		while (actualSize<sizeList){
 			
 			// Selecciona la operación que puede terminar lo antes posible. La guarda en la veriable operationIndexMinFinalTime
 			int minFinalTime = Integer.MAX_VALUE;
 			OperationIndexVO operationIndexMinFinalTime = null;
-			for(int j =0; j<getProblem().length;j++){
-				for(int z=0; z<getProblem()[j].length;z++){
-					boolean canSchedulled = scheduleOperation(getProblem()[j][z]);
-					if (canSchedulled){
-						calculateCMatrix();
-						int finalTime = vectorDecodSimple.get(actualSize).getFinalTime();
-						if (finalTime < minFinalTime ) {
-							minFinalTime = finalTime;
-							operationIndexMinFinalTime = getProblem()[j][z];
-						}
-						vectorDecodSimple.remove(actualSize);
+			for(int j =0; j<unschedulledOperations.size();j++){
+				OperationIndexVO temp = unschedulledOperations.get(j);
+				boolean canSchedulled = scheduleOperation(temp);
+				if (canSchedulled){
+					calculateCMatrix();
+					int finalTime = vectorDecodSimple.get(actualSize).getFinalTime();
+					if (finalTime < minFinalTime ) {
+						minFinalTime = finalTime;
+						operationIndexMinFinalTime = temp;
 					}
+					vectorDecodSimple.remove(actualSize);
+				}
+				else{
+					unschedulledOperations.remove(j);
 				}
 			}
 			
@@ -387,6 +394,7 @@ public class Vector extends AbstractStructure{
 						schedulled = scheduleOperation(temp);
 						if (schedulled){
 							actualSize++;
+							unschedulledOperations.remove(temp);
 						}
 					}	
 				}
