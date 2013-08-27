@@ -341,6 +341,7 @@ public class Vector extends AbstractStructure{
 				unschedulledOperations.add(getProblem()[j][z]);
 			}
 		}
+		
 		while (actualSize<sizeList){
 			
 			// Selecciona la operación que puede terminar lo antes posible. La guarda en la veriable operationIndexMinFinalTime
