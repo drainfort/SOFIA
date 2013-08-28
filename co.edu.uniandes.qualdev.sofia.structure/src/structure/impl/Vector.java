@@ -379,7 +379,7 @@ public class Vector extends AbstractStructure{
 		}
 		
 		vectorDecodActiveSchedule = vectorDecodSimple;
-		vectorDecodSimple = copia;
+		vectorDecodSimple = new ArrayList<IOperation>();
 				
 		CActiveSchedule = new int[getTotalJobs()][getTotalStations() + 1];
 		
@@ -388,7 +388,10 @@ public class Vector extends AbstractStructure{
 				CActiveSchedule[i][j] = C[i][j];
 			}
 		}
-		
+	
+		for (int i = 0; i < sizeList; i++){
+			scheduleOperation(copia.get(i).getOperationIndex());
+		}
 		calculateCMatrix();
 		/*
 		
