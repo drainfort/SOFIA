@@ -394,6 +394,7 @@ public class Vector extends AbstractStructure{
 			scheduleOperation(copia.get(i).getOperationIndex());
 		}
 		calculateCMatrix();
+		
 		/*
 		
 		calculateCMatrix();
