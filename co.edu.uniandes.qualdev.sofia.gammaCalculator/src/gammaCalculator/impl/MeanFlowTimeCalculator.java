@@ -33,18 +33,23 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 		
 		if(vector.getClass().equals(Vector.class)){
 			((Vector) vector).decodeSolutionActiveSchedule();
-			C = vector.calculateCMatrix();
-			meanFlowTime = 0;
-			for (int i = 0; i < C.length; i++) {
-				meanFlowTime += C[i][vector.getTotalStations()];
-			}	
+			int C3[][] = ((Vector)vector).getCActiveSchedule();
+			int meanFlowTime3 = 0;
+			for (int i = 0; i < C3.length; i++) {
+				meanFlowTime3 += C3[i][vector.getTotalStations()];
+			}
+			
 			int C2[][] = ((Vector)vector).getCIntepretation();
 			int meanFlowTime2 = 0;
 			for (int i = 0; i < C2.length; i++) {
 				meanFlowTime2 += C2[i][vector.getTotalStations()];
-			}	
-			if(meanFlowTime2<meanFlowTime)
-				return meanFlowTime2;
+			}
+			int solution = meanFlowTime;
+			if(meanFlowTime2<solution)
+				solution = meanFlowTime2;
+			if(meanFlowTime3<solution)
+				solution = meanFlowTime3;
+			return solution;
 		}
 		
 		return meanFlowTime;
