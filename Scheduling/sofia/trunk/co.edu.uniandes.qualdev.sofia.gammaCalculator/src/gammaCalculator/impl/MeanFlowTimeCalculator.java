@@ -38,19 +38,24 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 			for (int i = 0; i < C3.length; i++) {
 				meanFlowTime3 += C3[i][vector.getTotalStations()];
 			}
-			//System.out.println("Normal: "+meanFlowTime);
-			//System.out.println("Active: "+meanFlowTime3);
+			
 			int C2[][] = ((Vector)vector).getCIntepretation();
 			int meanFlowTime2 = 0;
 			for (int i = 0; i < C2.length; i++) {
 				meanFlowTime2 += C2[i][vector.getTotalStations()];
 			}
+			//System.out.println("Normal: "+meanFlowTime);
+			//System.out.println("Active: "+meanFlowTime3);
 			//System.out.println("Nodelay: "+meanFlowTime2);
 			int solution = meanFlowTime;
-			if(meanFlowTime2<solution)
+			if(meanFlowTime2<solution){
 				solution = meanFlowTime2;
-			if(meanFlowTime3<solution)
+				//((Vector)vector).setVectorDecodSimple(((Vector)vector).getVectorDecodNonDelay());
+			}
+			if(meanFlowTime3<solution){
 				solution = meanFlowTime3;
+				//((Vector)vector).setVectorDecodSimple(((Vector)vector).getVectorDecodActiveSchedule());
+			}
 			return solution;
 		}
 		
