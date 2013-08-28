@@ -38,7 +38,7 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 			for (int i = 0; i < C3.length; i++) {
 				meanFlowTime3 += C3[i][vector.getTotalStations()];
 			}
-			System.out.println(meanFlowTime);
+			System.out.println("Normal: "+meanFlowTime);
 			System.out.println("Active: "+meanFlowTime3);
 			int C2[][] = ((Vector)vector).getCIntepretation();
 			int meanFlowTime2 = 0;
