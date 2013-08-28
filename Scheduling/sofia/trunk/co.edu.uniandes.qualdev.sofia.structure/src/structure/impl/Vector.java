@@ -319,7 +319,7 @@ public class Vector extends AbstractStructure{
 		
 		while (actualSize<sizeList){
 			
-			// Selecciona la operación que puede terminar lo antes posible. La guarda en la veriable operationIndexMinFinalTime
+			// Selecciona la operación (de la lista de operaciones no programadas) termina lo antes posible. La guarda en la veriable operationIndexMinFinalTime
 			int minFinalTime = Integer.MAX_VALUE;
 			OperationIndexVO operationIndexMinFinalTime = null;
 			for(int j =0; j<unschedulledOperations.size();j++){

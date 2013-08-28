@@ -40,10 +40,8 @@ public class Test_DecodeActive {
 		ArrayList<String> informationFiles = new ArrayList<String>();
 		informationFiles.add(TTFile);
 
-		BetaVO TTBeta = new BetaVO("TravelTimes", "beta.impl.TravelTimes",
-				informationFiles, true);
-		BetaVO TearDownTT = new BetaVO("TearDownTravelTime",
-				"beta.impl.TearDownTravelTime", informationFiles, true);
+		BetaVO TTBeta = new BetaVO("TravelTimes", "beta.impl.TravelTimes", informationFiles, true);
+		BetaVO TearDownTT = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", informationFiles, true);
 		betas.add(TTBeta);
 		betas.add(TearDownTT);
 
@@ -67,7 +65,6 @@ public class Test_DecodeActive {
 		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 1, 1));
 		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 2, 2));
 		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 3, 3));
-
 	}
 
 	// -----------------------------------------------
