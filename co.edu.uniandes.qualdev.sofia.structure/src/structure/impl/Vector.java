@@ -332,9 +332,9 @@ public class Vector extends AbstractStructure{
 				}
 				else{
 					unschedulledOperations.remove(j);
+					j--;
 				}
 			}
-			
 			// Arreglo de candidatas. 
 			ArrayList<OperationIndexVO> activeCandidates = new ArrayList<OperationIndexVO>();
 			activeCandidates.add(operationIndexMinFinalTime);
@@ -360,9 +360,9 @@ public class Vector extends AbstractStructure{
 			boolean schedulled = false;
 			OperationIndexVO chosen = null;
 			int minIndex = copia.size();
-			for(int i=0; i< activeCandidates.size() && !schedulled;i++){
+			for(int i=0; i< activeCandidates.size();i++){
 				OperationIndexVO temp =  activeCandidates.get(i);
-				for(int j=0; j< copia.size()&& !schedulled;j++){
+				for(int j=0; j< copia.size();j++){
 					OperationIndexVO opIndex = copia.get(j).getOperationIndex(); 
 					if(temp.getJobId()==opIndex.getJobId() && temp.getStationId()== opIndex.getStationId()&& j<minIndex){
 						chosen = temp;
@@ -376,7 +376,6 @@ public class Vector extends AbstractStructure{
 				actualSize++;
 				unschedulledOperations.remove(chosen);
 			}
-			
 		}
 		
 		vectorDecodActiveSchedule = vectorDecodSimple;
