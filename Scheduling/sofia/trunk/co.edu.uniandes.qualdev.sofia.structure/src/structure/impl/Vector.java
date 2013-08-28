@@ -365,7 +365,7 @@ public class Vector extends AbstractStructure{
 				for(int j=0; j< copia.size()&& !schedulled;j++){
 					OperationIndexVO opIndex = copia.get(j).getOperationIndex(); 
 					if(temp.getJobId()==opIndex.getJobId() && temp.getStationId()== opIndex.getStationId()&& j<minIndex){
-						chosen = opIndex;
+						chosen = temp;
 					}	
 				}
 			}
