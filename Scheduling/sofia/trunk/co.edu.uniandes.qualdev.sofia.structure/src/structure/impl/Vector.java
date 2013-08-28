@@ -362,18 +362,22 @@ public class Vector extends AbstractStructure{
 						
 			//Desempate: Selecciona la primera de las operaciones que esté en la lista de permutación. 
 			boolean schedulled = false;
+			OperationIndexVO chosen = null;
+			int minIndex= activeCandidates.size();
 			for(int i=0; i< activeCandidates.size() && !schedulled;i++){
 				OperationIndexVO temp =  activeCandidates.get(i);
 				for(int j=0; j< copia.size()&& !schedulled;j++){
 					OperationIndexVO opIndex = copia.get(j).getOperationIndex(); 
-					if(temp.getJobId()==opIndex.getJobId() && temp.getStationId()== opIndex.getStationId()){
-						schedulled = scheduleOperation(temp);
-						if (schedulled){
-							actualSize++;
-							unschedulledOperations.remove(temp);
-						}
+					if(temp.getJobId()==opIndex.getJobId() && temp.getStationId()== opIndex.getStationId()&& j<minIndex){
+						chosen = opIndex;
 					}	
 				}
+			}
+			
+			schedulled = scheduleOperation(chosen);
+			if (schedulled){
+				actualSize++;
+				unschedulledOperations.remove(chosen);
 			}
 			
 		}
