@@ -370,7 +370,7 @@ public class Vector extends AbstractStructure{
 					}	
 				}
 			}
-			
+			//Programa la operación
 			schedulled = scheduleOperation(chosen);
 			if (schedulled){
 				actualSize++;
