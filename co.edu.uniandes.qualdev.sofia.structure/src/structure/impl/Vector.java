@@ -42,6 +42,8 @@ public class Vector extends AbstractStructure{
 
 	private ArrayList<IOperation> vectorDecodSimple = null;
 	
+	private ArrayList<IOperation> vectorDecodActiveSchedule = null;
+	
 	/** Flag that indicates if the structure indicators are up to date according to the state of the structure. */
 	private boolean synch;
 	
@@ -50,19 +52,13 @@ public class Vector extends AbstractStructure{
 	
 	private int [][] CIntepretation;
 	
+	private int [][] CActiveSchedule;
+	
 	private boolean nonDelayActive = false;
 	
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
-
-	public int[][] getCIntepretation() {
-		return CIntepretation;
-	}
-
-	public void setCIntepretation(int[][] cIntepretation) {
-		CIntepretation = cIntepretation;
-	}
 
 	/**
 	 * Constructor of the class that initializes an empty structure
@@ -381,6 +377,35 @@ public class Vector extends AbstractStructure{
 			}
 			
 		}
+		
+		vectorDecodActiveSchedule = vectorDecodSimple;
+		vectorDecodSimple = copia;
+		calculateCMatrix();
+		
+		CActiveSchedule = new int[getTotalJobs()][getTotalStations() + 1];
+		
+		for (int i = 0; i < vectorDecodActiveSchedule.size(); i++) {
+			IOperation Cij = vectorDecodActiveSchedule.get(i);
+			
+			int Ciminus1J = getCiminus1J(Cij, i, vectorDecodActiveSchedule) != null ? getCiminus1J(Cij, i, vectorDecodActiveSchedule).getFinalTime() : 0;
+			int CiJminus1 = getCiJminus1(Cij, i, vectorDecodActiveSchedule) != null ? getCiJminus1(Cij, i, vectorDecodActiveSchedule).getFinalTime() : 0;
+			
+			int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vectorDecodActiveSchedule), i, vectorDecodActiveSchedule);
+			int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
+			
+			int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
+			int finalTime = initialTime + Cij.getOperationIndex().getProcessingTime() + sumSetupBetas;
+			
+			Cij.setInitialTime(initialTime);
+			Cij.setFinalTime(finalTime);
+			
+			CActiveSchedule[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
+		}
+		
+		int[][] newC = applyTearDownBetas(CActiveSchedule);
+		if (newC != null)
+			CActiveSchedule = newC;
+		
 		
 		/*
 		
@@ -1346,6 +1371,23 @@ public class Vector extends AbstractStructure{
 
 	public void setNonDelayActive(boolean nonDelayActive) {
 		this.nonDelayActive = nonDelayActive;
+	}
+	
+
+	public int[][] getCIntepretation() {
+		return CIntepretation;
+	}
+
+	public int[][] getCActiveSchedule() {
+		return CActiveSchedule;
+	}
+
+	public void setCActiveSchedule(int[][] cActiveSchedule) {
+		CActiveSchedule = cActiveSchedule;
+	}
+
+	public void setCIntepretation(int[][] cIntepretation) {
+		CIntepretation = cIntepretation;
 	}
 		
 }
