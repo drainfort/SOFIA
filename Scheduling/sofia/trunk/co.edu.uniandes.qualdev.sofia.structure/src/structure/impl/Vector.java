@@ -359,7 +359,7 @@ public class Vector extends AbstractStructure{
 			//Desempate: Selecciona la primera de las operaciones que esté en la lista de permutación. 
 			boolean schedulled = false;
 			OperationIndexVO chosen = null;
-			int minIndex= activeCandidates.size();
+			int minIndex = copia.size();
 			for(int i=0; i< activeCandidates.size() && !schedulled;i++){
 				OperationIndexVO temp =  activeCandidates.get(i);
 				for(int j=0; j< copia.size()&& !schedulled;j++){
@@ -380,33 +380,16 @@ public class Vector extends AbstractStructure{
 		
 		vectorDecodActiveSchedule = vectorDecodSimple;
 		vectorDecodSimple = copia;
-		calculateCMatrix();
-		
+				
 		CActiveSchedule = new int[getTotalJobs()][getTotalStations() + 1];
 		
-		for (int i = 0; i < vectorDecodActiveSchedule.size(); i++) {
-			IOperation Cij = vectorDecodActiveSchedule.get(i);
-			
-			int Ciminus1J = getCiminus1J(Cij, i, vectorDecodActiveSchedule) != null ? getCiminus1J(Cij, i, vectorDecodActiveSchedule).getFinalTime() : 0;
-			int CiJminus1 = getCiJminus1(Cij, i, vectorDecodActiveSchedule) != null ? getCiJminus1(Cij, i, vectorDecodActiveSchedule).getFinalTime() : 0;
-			
-			int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vectorDecodActiveSchedule), i, vectorDecodActiveSchedule);
-			int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
-			
-			int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
-			int finalTime = initialTime + Cij.getOperationIndex().getProcessingTime() + sumSetupBetas;
-			
-			Cij.setInitialTime(initialTime);
-			Cij.setFinalTime(finalTime);
-			
-			CActiveSchedule[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
+		for(int i=0; i< C.length;i++){
+			for(int j=0; j<C[i].length;j++){
+				CActiveSchedule[i][j] = C[i][j];
+			}
 		}
 		
-		int[][] newC = applyTearDownBetas(CActiveSchedule);
-		if (newC != null)
-			CActiveSchedule = newC;
-		
-		
+		calculateCMatrix();
 		/*
 		
 		calculateCMatrix();
