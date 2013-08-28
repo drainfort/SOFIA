@@ -1376,5 +1376,14 @@ public class Vector extends AbstractStructure{
 	public void setCIntepretation(int[][] cIntepretation) {
 		CIntepretation = cIntepretation;
 	}
+
+	public ArrayList<IOperation> getVectorDecodActiveSchedule() {
+		return vectorDecodActiveSchedule;
+	}
+
+	public void setVectorDecodActiveSchedule(
+			ArrayList<IOperation> vectorDecodActiveSchedule) {
+		this.vectorDecodActiveSchedule = vectorDecodActiveSchedule;
+	}
 		
 }
