@@ -390,7 +390,7 @@ public class Vector extends AbstractStructure{
 		}
 	
 		for (int i = 0; i < sizeList; i++){
-			scheduleOperation(copia.get(i).getOperationIndex());
+		    scheduleOperation(copia.get(i).getOperationIndex());
 		}
 		calculateCMatrix();
 		
