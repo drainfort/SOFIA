@@ -378,6 +378,7 @@ public class Vector extends AbstractStructure{
 			}
 		}
 		
+		calculateCMatrix();
 		vectorDecodActiveSchedule = vectorDecodSimple;
 		vectorDecodSimple = new ArrayList<IOperation>();
 				
