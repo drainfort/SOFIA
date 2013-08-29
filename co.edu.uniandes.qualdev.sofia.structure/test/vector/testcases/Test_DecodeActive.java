@@ -54,6 +54,7 @@ public class Test_DecodeActive {
 				vectorScenario2.scheduleOperation(vectorScenario2.getProblem()[i][j]);
 			}
 		}
+		vectorScenario2.calculateCMatrix();
 	}
 
 	// -----------------------------------------------
@@ -64,7 +65,6 @@ public class Test_DecodeActive {
 	public void testDecode() throws InterruptedException {
 		System.out.println(vectorScenario2.getOperations());
 		vectorScenario2.decodeSolutionActiveSchedule();
-		vectorScenario2.calculateCMatrix();
-		System.out.println(vectorScenario2.getOperations());
+		System.out.println(vectorScenario2.getVectorDecodActiveSchedule());
 	}
 }
