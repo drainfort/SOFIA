@@ -49,22 +49,11 @@ public class Test_DecodeActive {
 				"structure.factory.impl.VectorFactory")
 				.createSolutionStructure(problemFiles, betas);
 
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 0, 0));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 1, 1));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 2, 2));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 3, 3));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 0, 0));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 1, 1));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 2, 2));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 3, 3));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 0, 0));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 1, 1));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 2, 2));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 3, 3));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 0, 0));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 1, 1));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 2, 2));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 3, 3));
+		for(int i=0; i< vectorScenario2.getProblem().length;i++){
+			for(int j=0; j< vectorScenario2.getProblem()[i].length;j++){
+				vectorScenario2.scheduleOperation(vectorScenario2.getProblem()[i][j]);
+			}
+		}
 	}
 
 	// -----------------------------------------------
@@ -73,7 +62,7 @@ public class Test_DecodeActive {
 
 	@Test
 	public void testDecode() throws InterruptedException {
-
+		System.out.println(vectorScenario2.getOperations());
 		vectorScenario2.decodeSolutionActiveSchedule();
 		vectorScenario2.calculateCMatrix();
 		System.out.println(vectorScenario2.getOperations());
