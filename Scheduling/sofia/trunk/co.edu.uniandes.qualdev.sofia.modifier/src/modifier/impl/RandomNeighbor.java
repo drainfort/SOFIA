@@ -30,12 +30,10 @@ public class RandomNeighbor implements IModifier {
 		IStructure vector = currentVector.cloneStructure();
 		double random = Math.random();
 		
-		if(random > 0.3){
+		if(random > 0.5){
 			vector.exchangeOperations(movement.getoX(), movement.getoY());
-		}else if(random <= 0.3 && random > 0.6){
-			vector.insertOperationBefore(movement.getoX(), movement.getoY());
 		}else{
-			vector.insertOperationAfter(movement.getoX(), movement.getoY());
+			vector.insertOperationBefore(movement.getoX(), movement.getoY());
 		}
 		
 		if(vector.validateStructure()){
