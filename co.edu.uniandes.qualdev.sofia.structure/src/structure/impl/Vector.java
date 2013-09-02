@@ -540,7 +540,7 @@ public class Vector extends AbstractStructure{
 			
 			
 			boolean schedulled = false;
-			OperationIndexVO chosen = desempatar(operationIndexMinFinalTime, 0, actualSize, minFinalTime, minStartTime);
+			OperationIndexVO chosen = desempatar(operationIndexMinFinalTime, 3, actualSize, minFinalTime, minStartTime, unschedulledOperations);
 			//Programa la operación
 			schedulled = scheduleOperation(chosen);
 			if (schedulled){
@@ -648,10 +648,27 @@ public class Vector extends AbstractStructure{
 		*/
 	}
 	
-	public OperationIndexVO desempatar(OperationIndexVO operation, int rule, int actualSize, int minFinalTime, int minStartTime ){
+	public OperationIndexVO desempatar(OperationIndexVO operation, int rule, int actualSize, int minFinalTime, int minStartTime, ArrayList<OperationIndexVO> unschedulledoperations){
 		OperationIndexVO chosen = operation;
 		int spt = chosen.getProcessingTime();
 		int lpt = chosen.getProcessingTime();
+		
+		int remainingTime1 = 0;
+		// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
+		// se cumple la restricción de no visitar más de una máquina en la misma estación. 
+		ArrayList<Integer> listStations1 = new ArrayList<Integer>();
+		for (int j = 0; j < unschedulledoperations.size(); j++) {
+			OperationIndexVO operationJ = unschedulledoperations.get(j);
+			
+			if(operationJ.getJobId() == chosen.getJobId() && !listStations1.contains(operationJ.getStationId())){
+				remainingTime1 += operationJ.getProcessingTime();
+				listStations1.add(operationJ.getStationId());
+			}
+		}
+		
+		int lrpt = remainingTime1;
+		int srpt = remainingTime1;
+		
 		for(int i=0; i<getProblem().length; i++){
 			OperationIndexVO temp = getProblem()[i][operation.getMachineId()];
 			if(temp.getJobId()!=operation.getJobId()){
@@ -660,16 +677,65 @@ public class Vector extends AbstractStructure{
 					calculateCMatrix();
 					int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
 					if(rule==0){
+						//spt
 						if (temp.getProcessingTime()<spt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
 							lpt= temp.getProcessingTime();
 							chosen = temp;
 						}
 					}
 					else if (rule==1){
+						//lpt
 						if (temp.getProcessingTime()>lpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
 							lpt= temp.getProcessingTime();
 							chosen = temp;
 						}
+					}
+					else if (rule ==2){
+						//lrpt
+						int remainingTime = 0;
+						
+						// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
+						// se cumple la restricción de no visitar más de una máquina en la misma estación. 
+						ArrayList<Integer> listStations = new ArrayList<Integer>();
+						for (int j = 0; j < unschedulledoperations.size(); j++) {
+							OperationIndexVO operationJ = unschedulledoperations.get(j);
+							
+							if(operationJ.getJobId() == temp.getJobId() && !listStations.contains(operationJ.getStationId())){
+								remainingTime += operationJ.getProcessingTime();
+								listStations.add(operationJ.getStationId());
+							}
+						}
+						if (remainingTime>lrpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
+							lpt= temp.getProcessingTime();
+							chosen = temp;
+						}
+					}
+					else if (rule ==3){
+						//srpt
+						int remainingTime = 0;
+						
+						// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
+						// se cumple la restricción de no visitar más de una máquina en la misma estación. 
+						ArrayList<Integer> listStations = new ArrayList<Integer>();
+						for (int j = 0; j < unschedulledoperations.size(); j++) {
+							OperationIndexVO operationJ = unschedulledoperations.get(j);
+							
+							if(operationJ.getJobId() == temp.getJobId() && !listStations.contains(operationJ.getStationId())){
+								remainingTime += operationJ.getProcessingTime();
+								listStations.add(operationJ.getStationId());
+							}
+						}
+						
+						if (remainingTime<srpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
+							lpt= temp.getProcessingTime();
+							chosen = temp;
+						}
+					}
+					else if (rule ==4){
+						//LRPTOM
+					}
+					else if (rule ==5){
+						//SRPTOM
 					}
 					vectorDecodSimple.remove(actualSize);
 				}
