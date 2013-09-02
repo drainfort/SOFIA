@@ -668,6 +668,8 @@ public class Vector extends AbstractStructure{
 		
 		int lrpt = remainingTime1;
 		int srpt = remainingTime1;
+		int lrptom = remainingTime1 - operation.getProcessingTime();
+		int srptom = remainingTime1- operation.getProcessingTime();
 		
 		for(int i=0; i<getProblem().length; i++){
 			OperationIndexVO temp = getProblem()[i][operation.getMachineId()];
@@ -706,7 +708,7 @@ public class Vector extends AbstractStructure{
 							}
 						}
 						if (remainingTime>lrpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
-							lpt= temp.getProcessingTime();
+							lrpt= remainingTime;
 							chosen = temp;
 						}
 					}
@@ -727,15 +729,52 @@ public class Vector extends AbstractStructure{
 						}
 						
 						if (remainingTime<srpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
-							lpt= temp.getProcessingTime();
+							srpt= remainingTime;
 							chosen = temp;
 						}
 					}
 					else if (rule ==4){
 						//LRPTOM
+						int remainingTime = 0;
+						
+						// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
+						// se cumple la restricción de no visitar más de una máquina en la misma estación. 
+						ArrayList<Integer> listStations = new ArrayList<Integer>();
+						for (int j = 0; j < unschedulledoperations.size(); j++) {
+							OperationIndexVO operationJ = unschedulledoperations.get(j);
+							
+							if(operationJ.getJobId() == temp.getJobId() && !listStations.contains(operationJ.getStationId())){
+								remainingTime += operationJ.getProcessingTime();
+								listStations.add(operationJ.getStationId());
+							}
+						}
+						remainingTime-= temp.getProcessingTime();
+						if (remainingTime>lrptom && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
+							lrptom= remainingTime;
+							chosen = temp;
+						}
 					}
 					else if (rule ==5){
 						//SRPTOM
+						int remainingTime = 0;
+						
+						// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
+						// se cumple la restricción de no visitar más de una máquina en la misma estación. 
+						ArrayList<Integer> listStations = new ArrayList<Integer>();
+						for (int j = 0; j < unschedulledoperations.size(); j++) {
+							OperationIndexVO operationJ = unschedulledoperations.get(j);
+							
+							if(operationJ.getJobId() == temp.getJobId() && !listStations.contains(operationJ.getStationId())){
+								remainingTime += operationJ.getProcessingTime();
+								listStations.add(operationJ.getStationId());
+							}
+						}
+						remainingTime-= temp.getProcessingTime();
+						if (remainingTime<srptom && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
+							srptom= remainingTime;
+							chosen = temp;
+						}
+						
 					}
 					vectorDecodSimple.remove(actualSize);
 				}
