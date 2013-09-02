@@ -335,6 +335,23 @@ public class Vector extends AbstractStructure{
 					j--;
 				}
 			}
+			//Se calcula el menor tiempo de inicio para las operaciones que tienen la misma combinación estación, máquina
+			int minStartTime = Integer.MAX_VALUE;
+			for(int i=0; i<getProblem().length; i++){
+				OperationIndexVO temp = getProblem()[i][operationIndexMinFinalTime.getMachineId()];
+				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId()){
+					boolean canSchedulled = scheduleOperation(temp);
+					if (canSchedulled){
+						calculateCMatrix();
+						int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
+						if (startTimeTested < minStartTime) {
+							minStartTime = startTimeTested;
+						}
+						vectorDecodSimple.remove(actualSize);
+					}
+				}
+			}
+			
 			// Arreglo de candidatas. 
 			ArrayList<OperationIndexVO> activeCandidates = new ArrayList<OperationIndexVO>();
 			activeCandidates.add(operationIndexMinFinalTime);
@@ -348,7 +365,7 @@ public class Vector extends AbstractStructure{
 					if (canSchedulled){
 						calculateCMatrix();
 						int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
-						if (startTimeTested < minFinalTime) {
+						if (startTimeTested < minFinalTime && minStartTime ==startTimeTested) {
 							activeCandidates.add(temp);
 						}
 						vectorDecodSimple.remove(actualSize);
