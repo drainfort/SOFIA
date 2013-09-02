@@ -295,7 +295,7 @@ public class Vector extends AbstractStructure{
 		}
 	}
 	
-	public void decodeSolutionActiveSchedule(){
+	public void decodeSolutionActiveSchedule2(){
 		
 		int sizeList = vectorDecodSimple.size();
 		ArrayList<IOperation> copia = new ArrayList<IOperation>();
@@ -335,22 +335,6 @@ public class Vector extends AbstractStructure{
 					j--;
 				}
 			}
-			//Se calcula el menor tiempo de inicio para las operaciones que tienen la misma combinación estación, máquina
-			int minStartTime = Integer.MAX_VALUE;
-			for(int i=0; i<getProblem().length; i++){
-				OperationIndexVO temp = getProblem()[i][operationIndexMinFinalTime.getMachineId()];
-				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId()){
-					boolean canSchedulled = scheduleOperation(temp);
-					if (canSchedulled){
-						calculateCMatrix();
-						int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
-						if (startTimeTested < minStartTime) {
-							minStartTime = startTimeTested;
-						}
-						vectorDecodSimple.remove(actualSize);
-					}
-				}
-			}
 			
 			// Arreglo de candidatas. 
 			ArrayList<OperationIndexVO> activeCandidates = new ArrayList<OperationIndexVO>();
@@ -365,7 +349,7 @@ public class Vector extends AbstractStructure{
 					if (canSchedulled){
 						calculateCMatrix();
 						int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
-						if (startTimeTested < minFinalTime && minStartTime ==startTimeTested) {
+						if (startTimeTested < minFinalTime) {
 							activeCandidates.add(temp);
 						}
 						vectorDecodSimple.remove(actualSize);
@@ -387,6 +371,193 @@ public class Vector extends AbstractStructure{
 					}	
 				}
 			}
+			//Programa la operación
+			schedulled = scheduleOperation(chosen);
+			if (schedulled){
+				actualSize++;
+				unschedulledOperations.remove(chosen);
+			}
+		}
+		
+		calculateCMatrix();
+		vectorDecodActiveSchedule = vectorDecodSimple;
+		vectorDecodSimple = new ArrayList<IOperation>();
+				
+		CActiveSchedule = new int[getTotalJobs()][getTotalStations() + 1];
+		
+		for(int i=0; i< C.length;i++){
+			for(int j=0; j<C[i].length;j++){
+				CActiveSchedule[i][j] = C[i][j];
+			}
+		}
+	
+		for (int i = 0; i < sizeList; i++){
+		    scheduleOperation(copia.get(i).getOperationIndex());
+		}
+		calculateCMatrix();
+		
+		/*
+		
+		calculateCMatrix();
+		ArrayList<IOperation> copia = new ArrayList<IOperation>();
+		for (int i = 0; i < vectorDecodSimple.size(); i++){
+			IOperation iOperations = vectorDecodSimple.get(i);
+			copia.add(iOperations);
+		}
+		vectorDecodSimple = new ArrayList<IOperation>();
+		int contador = 0;
+		for (int i = 0; i < copia.size(); i++) {
+			OperationIndexVO candidate = copia.get(i).getOperationIndex();
+			ArrayList<OperationIndexVO> machinesCandidates = new ArrayList<OperationIndexVO>();
+			
+			for(int j=0; j<getProblem()[candidate.getJobId()].length; j++){
+				OperationIndexVO temp = getProblem()[candidate.getJobId()][j];
+				if(temp.getStationId()==candidate.getStationId()&& temp.getMachineId()!=candidate.getMachineId())
+					machinesCandidates.add(temp);
+			}
+			
+			int startTimeTested = 0;
+			int minStartTime = copia.get(i).getInitialTime();
+			
+			for (int z = 0; z < machinesCandidates.size(); z++) {
+				boolean canSchedulled = scheduleOperation(machinesCandidates.get(z));
+				if (canSchedulled){
+					calculateCMatrix();
+					startTimeTested = vectorDecodSimple.get(contador).getInitialTime();
+					if (startTimeTested < minStartTime) {
+						minStartTime = startTimeTested;
+						candidate = machinesCandidates.get(z);
+					}
+					vectorDecodSimple.remove(contador);
+				}
+			}
+			
+			machinesCandidates.clear();
+			
+			int minInitialTime = 0;
+			int minFinalTime = Integer.MAX_VALUE;
+			OperationIndexVO operationIndexInitialTime = null;
+			for(int j =0; j<getProblem().length;j++){
+				for(int z=0; z<getProblem()[j].length;z++){
+					boolean canSchedulled = scheduleOperation(getProblem()[j][z]);
+					if (canSchedulled){
+						calculateCMatrix();
+						int finalTime = vectorDecodSimple.get(contador).getFinalTime();
+						if (finalTime < minFinalTime) {
+							minInitialTime = vectorDecodSimple.get(contador).getInitialTime();
+							minFinalTime = finalTime;
+							operationIndexInitialTime = getProblem()[j][z];
+						}
+						vectorDecodSimple.remove(contador);
+					}
+				}
+			}
+			
+			boolean schedulled = false;
+			if(operationIndexInitialTime != null){
+				if(operationIndexInitialTime.getJobId() == candidate.getJobId()&& minFinalTime<minStartTime-getTT(candidate.getStationId(), operationIndexInitialTime.getStationId()) ){
+					schedulled = scheduleOperation(operationIndexInitialTime);
+					i--;
+				}
+				else if(operationIndexInitialTime.getJobId() != candidate.getJobId()&& minInitialTime<minStartTime ){
+					schedulled = scheduleOperation(operationIndexInitialTime);
+					i--;
+				}
+				else{
+					schedulled = scheduleOperation(candidate);
+				}
+			}
+			else{
+				schedulled = scheduleOperation(candidate);
+			}
+			if(schedulled)
+				contador++;
+
+
+		}
+		*/
+	}
+	
+public void decodeSolutionActiveSchedule(){
+		
+		int sizeList = vectorDecodSimple.size();
+		ArrayList<IOperation> copia = new ArrayList<IOperation>();
+		for (int i = 0; i < sizeList; i++){
+			IOperation iOperations = new Operation (vectorDecodSimple.get(i).getOperationIndex());
+			copia.add(iOperations);
+		}
+		
+		vectorDecodSimple = new ArrayList<IOperation>();
+		int actualSize = 0;
+		ArrayList<OperationIndexVO> unschedulledOperations = new ArrayList<OperationIndexVO>();
+		for(int j =0; j<getProblem().length;j++){
+			for(int z=0; z<getProblem()[j].length;z++){	
+				unschedulledOperations.add(getProblem()[j][z]);
+			}
+		}
+		
+		while (actualSize<sizeList){
+			
+			// Selecciona la operación (de la lista de operaciones no programadas) termina lo antes posible. La guarda en la veriable operationIndexMinFinalTime
+			int minFinalTime = Integer.MAX_VALUE;
+			OperationIndexVO operationIndexMinFinalTime = null;
+			for(int j =0; j<unschedulledOperations.size();j++){
+				OperationIndexVO temp = unschedulledOperations.get(j);
+				boolean canSchedulled = scheduleOperation(temp);
+				if (canSchedulled){
+					calculateCMatrix();
+					int finalTime = vectorDecodSimple.get(actualSize).getFinalTime();
+					if (finalTime < minFinalTime ) {
+						minFinalTime = finalTime;
+						operationIndexMinFinalTime = temp;
+					}
+					vectorDecodSimple.remove(actualSize);
+				}
+				else{
+					unschedulledOperations.remove(j);
+					j--;
+				}
+			}
+			
+			//Se calcula el menor tiempo de inicio para las operaciones que tienen la misma combinación estación, máquina
+			int minStartTime = Integer.MAX_VALUE;
+			
+			for(int i=0; i<getProblem().length; i++){
+				OperationIndexVO temp = getProblem()[i][operationIndexMinFinalTime.getMachineId()];
+				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId()){
+					boolean canSchedulled = scheduleOperation(temp);
+					if (canSchedulled){
+						calculateCMatrix();
+						int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
+						if (startTimeTested < minStartTime) {
+							minStartTime = startTimeTested;
+						}
+						vectorDecodSimple.remove(actualSize);
+					}
+				}
+			}			
+			boolean schedulled = false;
+			OperationIndexVO chosen = operationIndexMinFinalTime;
+			int lpt = chosen.getProcessingTime();
+			// Obtendiendo todas las oepraciones que se pueden programar en la misma máquina de la misma estación.
+			//Filtrando las operaciones para que queden solamente las que resultan en un programa activo
+			for(int i=0; i<getProblem().length; i++){
+				OperationIndexVO temp = getProblem()[i][operationIndexMinFinalTime.getMachineId()];
+				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId()){
+					boolean canSchedulled = scheduleOperation(temp);
+					if (canSchedulled){
+						calculateCMatrix();
+						int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
+						if (temp.getProcessingTime()<lpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
+							lpt= temp.getProcessingTime();
+							chosen = temp;
+						}
+						vectorDecodSimple.remove(actualSize);
+					}
+				}
+			}
+			
+
 			//Programa la operación
 			schedulled = scheduleOperation(chosen);
 			if (schedulled){
