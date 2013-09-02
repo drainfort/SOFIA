@@ -43,6 +43,7 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 				solution = meanFlowTime3;
 			}
 			else{
+				((Vector) vector).decodeSolution();
 				int C2[][] = ((Vector)vector).getCIntepretation();
 				int meanFlowTime2 = 0;
 				for (int i = 0; i < C2.length; i++) {
