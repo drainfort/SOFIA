@@ -283,7 +283,7 @@ public class Vector extends AbstractStructure{
 			
 			// Decodificación non-delay en la que la lista de permutación representa un criterior de desempate para la programación de las operaciones
 			// que se hace como una regla de despacho. Es decir, se toman las que menor tiempo de inicio y se selecciona la que primero aparezca en la lista. 
-			decodeSolution();
+			//decodeSolution();
 			
 			C = CSolution;
 			int[][] newC = applyTearDownBetas(C);
@@ -540,7 +540,7 @@ public class Vector extends AbstractStructure{
 			
 			
 			boolean schedulled = false;
-			OperationIndexVO chosen = desempatar(operationIndexMinFinalTime, 3, actualSize, minFinalTime, minStartTime, unschedulledOperations);
+			OperationIndexVO chosen = desempatar(operationIndexMinFinalTime, 2, actualSize, minFinalTime, minStartTime, unschedulledOperations);
 			//Programa la operación
 			schedulled = scheduleOperation(chosen);
 			if (schedulled){
@@ -565,87 +565,6 @@ public class Vector extends AbstractStructure{
 		    scheduleOperation(copia.get(i).getOperationIndex());
 		}
 		calculateCMatrix();
-		
-		/*
-		
-		calculateCMatrix();
-		ArrayList<IOperation> copia = new ArrayList<IOperation>();
-		for (int i = 0; i < vectorDecodSimple.size(); i++){
-			IOperation iOperations = vectorDecodSimple.get(i);
-			copia.add(iOperations);
-		}
-		vectorDecodSimple = new ArrayList<IOperation>();
-		int contador = 0;
-		for (int i = 0; i < copia.size(); i++) {
-			OperationIndexVO candidate = copia.get(i).getOperationIndex();
-			ArrayList<OperationIndexVO> machinesCandidates = new ArrayList<OperationIndexVO>();
-			
-			for(int j=0; j<getProblem()[candidate.getJobId()].length; j++){
-				OperationIndexVO temp = getProblem()[candidate.getJobId()][j];
-				if(temp.getStationId()==candidate.getStationId()&& temp.getMachineId()!=candidate.getMachineId())
-					machinesCandidates.add(temp);
-			}
-			
-			int startTimeTested = 0;
-			int minStartTime = copia.get(i).getInitialTime();
-			
-			for (int z = 0; z < machinesCandidates.size(); z++) {
-				boolean canSchedulled = scheduleOperation(machinesCandidates.get(z));
-				if (canSchedulled){
-					calculateCMatrix();
-					startTimeTested = vectorDecodSimple.get(contador).getInitialTime();
-					if (startTimeTested < minStartTime) {
-						minStartTime = startTimeTested;
-						candidate = machinesCandidates.get(z);
-					}
-					vectorDecodSimple.remove(contador);
-				}
-			}
-			
-			machinesCandidates.clear();
-			
-			int minInitialTime = 0;
-			int minFinalTime = Integer.MAX_VALUE;
-			OperationIndexVO operationIndexInitialTime = null;
-			for(int j =0; j<getProblem().length;j++){
-				for(int z=0; z<getProblem()[j].length;z++){
-					boolean canSchedulled = scheduleOperation(getProblem()[j][z]);
-					if (canSchedulled){
-						calculateCMatrix();
-						int finalTime = vectorDecodSimple.get(contador).getFinalTime();
-						if (finalTime < minFinalTime) {
-							minInitialTime = vectorDecodSimple.get(contador).getInitialTime();
-							minFinalTime = finalTime;
-							operationIndexInitialTime = getProblem()[j][z];
-						}
-						vectorDecodSimple.remove(contador);
-					}
-				}
-			}
-			
-			boolean schedulled = false;
-			if(operationIndexInitialTime != null){
-				if(operationIndexInitialTime.getJobId() == candidate.getJobId()&& minFinalTime<minStartTime-getTT(candidate.getStationId(), operationIndexInitialTime.getStationId()) ){
-					schedulled = scheduleOperation(operationIndexInitialTime);
-					i--;
-				}
-				else if(operationIndexInitialTime.getJobId() != candidate.getJobId()&& minInitialTime<minStartTime ){
-					schedulled = scheduleOperation(operationIndexInitialTime);
-					i--;
-				}
-				else{
-					schedulled = scheduleOperation(candidate);
-				}
-			}
-			else{
-				schedulled = scheduleOperation(candidate);
-			}
-			if(schedulled)
-				contador++;
-
-
-		}
-		*/
 	}
 	
 	public OperationIndexVO desempatar(OperationIndexVO operation, int rule, int actualSize, int minFinalTime, int minStartTime, ArrayList<OperationIndexVO> unschedulledoperations){
@@ -784,7 +703,7 @@ public class Vector extends AbstractStructure{
 		return chosen;
 	}
 	
-    private void decodeSolution(){
+    public void decodeSolution(){
 		
 		// Arreglo con todas las operaciones sin programar en el orden en el que aparece en la lista de permutación.
 		vectorDecodNonDelay = new ArrayList<IOperation>();
