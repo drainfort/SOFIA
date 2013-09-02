@@ -478,7 +478,7 @@ public class Vector extends AbstractStructure{
 		*/
 	}
 	
-public void decodeSolutionActiveSchedule(){
+	public void decodeSolutionActiveSchedule(){
 		
 		int sizeList = vectorDecodSimple.size();
 		ArrayList<IOperation> copia = new ArrayList<IOperation>();
@@ -536,28 +536,11 @@ public void decodeSolutionActiveSchedule(){
 					}
 				}
 			}			
-			boolean schedulled = false;
-			OperationIndexVO chosen = operationIndexMinFinalTime;
-			int lpt = chosen.getProcessingTime();
-			// Obtendiendo todas las oepraciones que se pueden programar en la misma máquina de la misma estación.
-			//Filtrando las operaciones para que queden solamente las que resultan en un programa activo
-			for(int i=0; i<getProblem().length; i++){
-				OperationIndexVO temp = getProblem()[i][operationIndexMinFinalTime.getMachineId()];
-				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId()){
-					boolean canSchedulled = scheduleOperation(temp);
-					if (canSchedulled){
-						calculateCMatrix();
-						int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
-						if (temp.getProcessingTime()<lpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
-							lpt= temp.getProcessingTime();
-							chosen = temp;
-						}
-						vectorDecodSimple.remove(actualSize);
-					}
-				}
-			}
 			
-
+			
+			
+			boolean schedulled = false;
+			OperationIndexVO chosen = desempatar(operationIndexMinFinalTime, 0, actualSize, minFinalTime, minStartTime);
 			//Programa la operación
 			schedulled = scheduleOperation(chosen);
 			if (schedulled){
@@ -663,6 +646,37 @@ public void decodeSolutionActiveSchedule(){
 
 		}
 		*/
+	}
+	
+	public OperationIndexVO desempatar(OperationIndexVO operation, int rule, int actualSize, int minFinalTime, int minStartTime ){
+		OperationIndexVO chosen = operation;
+		int spt = chosen.getProcessingTime();
+		int lpt = chosen.getProcessingTime();
+		for(int i=0; i<getProblem().length; i++){
+			OperationIndexVO temp = getProblem()[i][operation.getMachineId()];
+			if(temp.getJobId()!=operation.getJobId()){
+				boolean canSchedulled = scheduleOperation(temp);
+				if (canSchedulled){
+					calculateCMatrix();
+					int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
+					if(rule==0){
+						if (temp.getProcessingTime()<spt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
+							lpt= temp.getProcessingTime();
+							chosen = temp;
+						}
+					}
+					else if (rule==1){
+						if (temp.getProcessingTime()>lpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
+							lpt= temp.getProcessingTime();
+							chosen = temp;
+						}
+					}
+					vectorDecodSimple.remove(actualSize);
+				}
+			}
+		}
+		
+		return chosen;
 	}
 	
     private void decodeSolution(){
