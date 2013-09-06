@@ -17,6 +17,7 @@ public class CMaxCalculator implements IGammaCalculator {
 		
 		if(vector instanceof Vector){
 			((Vector) vector).decodeSolutionActiveSchedule();
+			((Vector) vector).decodeSolution();
 			int[][] CActiveSchedule = ((Vector)vector).getCActiveSchedule();
 			int[][] CIntepretation = ((Vector)vector).getCIntepretation();
 			int cmax3 = calculateGammaMatrix(CActiveSchedule, vector.getTotalJobs(), vector.getTotalStations());
