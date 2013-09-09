@@ -13,7 +13,6 @@ import java.io.PrintWriter;
  * @author Lindsay Alvarez
  * @author David Mendez-Acuna
  * @author Oriana Cendales
- * @author Juan Guillermo Amortegui
  */
 public class InstancesGenerator {
 
@@ -31,10 +30,6 @@ public class InstancesGenerator {
 
 	private Integer tempSeed;
 
-	private int jobs = 4;
-	
-	private int machines = 4;
-	
 	private String nameinstance;
 
 	// ------------------------------------------------------
@@ -44,9 +39,8 @@ public class InstancesGenerator {
 	/**
 	 * Constructor of the class
 	 */
-	public InstancesGenerator(int jobs, int machines) {
-		this.jobs = jobs;
-		this.machines = machines;
+	public InstancesGenerator() {
+		
 	}
 	
 	public void setNameInstance(String name){
@@ -57,46 +51,46 @@ public class InstancesGenerator {
 	// Methods: Configuration invocation of the corresponding methods
 	// ------------------------------------------------------------------------------------------------------------------------------
 	
-	//TODO Pedir configuracion por consola y poner esto a generar la instancia en archivos de texto que sigan el formato adecuado.
 	/**
-	 * Generates and prints in the console an instance according to the given size and the time and machine seeds
-	 * @param timeSeed
-	 * @param machineSeed
-	 * @param parallelMachinesInterval 
-	 */
-	public void generateAndPrintInstance(int timeSeed, int machineSeed, Interval processingTimeInterval, Interval visitTimeInterval, Interval parallelMachinesInterval){
+	  * Generates and prints in the console an instance according 
+	  * to the given size and the time and machine seeds.
+	  * 
+	  * @param jobs. Amount of jobs in the system
+	  * @param stations. Amount of stations in the system
+	  * @param timeSeed. Time seed
+	  * @param machineSeed. Machine seed
+	  * @param processingTimeInterval. Interval for the generation of processing times.
+	  * @param parallelMachinesInterval. Interval for the generation of parallel machines.
+	  */
+	public void generateAndPrintInstance(int size, int timeSeed, int machineSeed, Interval processingTimeInterval, Interval visitTimeInterval, Interval parallelMachinesInterval){
 		
-		// PASO 1: Generación de los tiempos de proceso
+		//STEP 1: Processing times generation
 		tempSeed = new Integer(timeSeed);
-		Integer[][] matrixTimeSeed = generateTimeSeedMatrix(jobs, processingTimeInterval);
+		Integer[][] matrixTimeSeed = generateTimeSeedMatrix(size, processingTimeInterval);
 
 		tempSeed = new Integer(machineSeed);
-		Integer[][] matrixMachineSeed = generateMachineSeedMatrix(machines);
+		Integer[][] matrixMachineSeed = generateMachineSeedMatrix(size);
 		
-		// PASO 3: Generación del vector de las máquinas en paralelo
 		tempSeed = new Integer(machineSeed);
-		Integer[] parallelMachinesVector = generateParallelMachinesVector(machines, parallelMachinesInterval);
+		Integer[] parallelMachinesVector = generateParallelMachinesVector(size, parallelMachinesInterval);
 
-		Integer[][] matrixFramework = generateProcessingTimesMatrix(matrixMachineSeed, matrixTimeSeed, parallelMachinesVector);
-		
-		
-		// PASO 2: Generación de los tiempos de viaje
-		tempSeed = new Integer(timeSeed);
-		Integer[][] matrixVisitTimeSeed = generateTravelTimesMatrix(machines+1, visitTimeInterval);
-		
+		Integer[][] processingTimesMatrix = generateProcessingTimesMatrix(matrixMachineSeed, matrixTimeSeed, parallelMachinesVector);
 		
 		System.out.println("T");
-		printMatrix(matrixFramework);
-		printMatrixOnFile(matrixFramework, "/1-T/T-"+nameinstance+".txt");
-		
-		System.out.println("TT");
-		printMatrix(matrixVisitTimeSeed);
-		printMatrixOnFile(matrixVisitTimeSeed, "/2-TT/TT-"+nameinstance+".txt");
-		
+		printMatrix(processingTimesMatrix);
+//		printMatrixOnFile(processingTimesMatrix, "./data/1-T/T-"+nameinstance+".txt");
 		
 		System.out.println("M");
 		printVector(parallelMachinesVector);
-		printVectorOnFile(parallelMachinesVector, "/4-M/M-"+nameinstance+".txt");
+//		printVectorOnFile(parallelMachinesVector, "./data/4-M/M-"+nameinstance+".txt");
+		
+		// STEP 2: Travel times generation
+		tempSeed = new Integer(timeSeed);
+		Integer[][] matrixVisitTimeSeed = generateTravelTimesMatrix(size+1, visitTimeInterval);
+		
+		System.out.println("TT");
+		printMatrix(matrixVisitTimeSeed);
+//		printMatrixOnFile(matrixVisitTimeSeed, "./data/2-TT/TT-"+nameinstance+".txt");
 	}
 
 	// ------------------------------------------------------------------------------------------------------------------------------
@@ -104,9 +98,11 @@ public class InstancesGenerator {
 	// ------------------------------------------------------------------------------------------------------------------------------
 	
 	/**
-	 * Generates the time seed matrix needed for computing the processing times of the instance.
-	 * @param size Instance size
-	 * @return timeSeedMatrix The time seed matrix
+	 * Generates the time seed matrix needed for computing
+	 * the processing times of the instance.
+	 * 
+	 * @param size. Instance size
+	 * @return timeSeedMatrix. The time seed matrix
 	 */
 	private Integer[][] generateTimeSeedMatrix(int size, Interval processingTimeInterval) {
 		Integer[][] cMatrix = new Integer[size][size];
@@ -120,9 +116,11 @@ public class InstancesGenerator {
 	}
 
 	/**
-	 * Generates the machine seed matrix needed for computing the processing times of the instance.
-	 * @param size Instance size
-	 * @return machineSeedMatrix The machine seed matrix
+	 * Generates the machine seed matrix needed for computing
+	 * the processing times of the instance.
+	 * 
+	 * @param size. Instance size
+	 * @return machineSeedMatrix. The machine seed matrix
 	 */
 	private Integer[][] generateMachineSeedMatrix(int size) {
 		Integer[][] cMatrix = new Integer[size][size];
@@ -381,9 +379,11 @@ public class InstancesGenerator {
 		for (Integer integer : vectorToPrint) {
 			System.out.print(integer + "|");
 		}
+		System.out.println();
+		System.out.println();
 	}
 	
-	//TODO Integrar al código
+	//TODO Integrar al cï¿½digo
 	public void createFile(String text, String fileName) throws IOException {
 		File file = new File(fileName);
 		if (!file.exists())
@@ -399,7 +399,7 @@ public class InstancesGenerator {
 	// ------------------------------------------------------
 	
 	public static void main(String[] args) {
-		InstancesGenerator gen = new InstancesGenerator(4, 4);	
+		InstancesGenerator gen = new InstancesGenerator( );	
 		
 		// Parameters for each instance
 		
@@ -411,7 +411,7 @@ public class InstancesGenerator {
 //		gen.machines=4;
 //		gen.setNameInstance("04x04x02-01");
 		
-//		int timeSeed =  1166510396; int machineSeed = 164000672;
+		int timeSeed =  1166510396; int machineSeed = 164000672;
 //		int timeSeed =  1624514147; int machineSeed = 1076870026;
 //		int timeSeed =  1116611914; int machineSeed = 1729673136;
 //		int timeSeed =  410579806; int machineSeed = 1453014524;
@@ -503,8 +503,6 @@ public class InstancesGenerator {
 		// 20x20
 		// -------------------------------
 		
-		gen.jobs=20;
-		gen.machines=20;
 		gen.setNameInstance("20x20x02-10");
 				
 //		int timeSeed =  957638; int machineSeed = 9237185;
@@ -516,18 +514,18 @@ public class InstancesGenerator {
 //		int timeSeed =  1591533998; int machineSeed = 1146547719;
 //		int timeSeed =  937297777; int machineSeed = 92726463;
 //		int timeSeed =  687896268; int machineSeed = 1731298717;
-		int timeSeed =  687034842; int machineSeed = 684013066;
+//		int timeSeed =  687034842; int machineSeed = 684013066;
 		
 		// Parameters for all the instances
 		Interval processingTimeInterval = new Interval(8, 14);
 		Interval travelTimeInterval = new Interval(2, 10);
 		
-		// TODO Este intervalo cambia dependiendo del tamaño de la instancia: 
-		// 4x4 a 10x10 -> [1,2];  y de tamaño 15x15 a 20x20 -> [1,3].  
+		// TODO Este intervalo cambia dependiendo del tamaï¿½o de la instancia: 
+		// 4x4 a 10x10 -> [1,2];  y de tamaï¿½o 15x15 a 20x20 -> [1,3].  
 		//Interval parallelMachinesInterval = new Interval(1, 2);
 		Interval parallelMachinesInterval = new Interval(1, 3);
 		
 		// Generation
-		gen.generateAndPrintInstance(timeSeed, machineSeed, processingTimeInterval, travelTimeInterval, parallelMachinesInterval);
+		gen.generateAndPrintInstance(4, timeSeed, machineSeed, processingTimeInterval, travelTimeInterval, parallelMachinesInterval);
 	}
 }
