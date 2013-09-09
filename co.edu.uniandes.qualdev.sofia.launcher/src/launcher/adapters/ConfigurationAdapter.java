@@ -256,7 +256,6 @@ public class ConfigurationAdapter {
 			for (int i = 0; i < algorithmDefinition.getAmountOfExecutionsPerInstance(); i++) {
 				
 				ExecutionResults result = algorithm.execute(instance, resultsFile);
-				
 				results.add(result);
 			}
 			ChartPrinter.getInstance().addResults(results);
