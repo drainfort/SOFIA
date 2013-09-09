@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import chart.printer.ChartPrinter;
+import common.utils.ExecutionResults;
+import algorithm.SchedulingAlgorithm;
+import algorithm.impl.TrajectoryBasedAlgorithm;
 import launcher.adapters.ConfigurationAdapter;
-import launcher.vos.AlgorithmConfigurationVO;
 
 public class ConfigurationFileLauncher {
 
@@ -20,6 +23,11 @@ public class ConfigurationFileLauncher {
 	// ----------------------------------------------
 	// Constants
 	// ----------------------------------------------
+	
+	private String userId;
+	
+	private String benchmark;
+	private int amountOfExecutionsPerInstance;
 	
 	private String initialSolutionBuilder;
 	private String structure;
@@ -40,8 +48,10 @@ public class ConfigurationFileLauncher {
 	// Methods
 	// ----------------------------------------------
 	
-	public void launchSofia() throws IOException{
-		Properties data = loadPropertiesFile();
+	public void launchSofia() throws Exception{
+		Properties data = loadPropertiesFile(new File(CONFIGURATION_FILE));
+		
+		userId = data.getProperty("userId");
 		
 		// Loading the instances to execute
 		ArrayList<String> instancesToExecute = new ArrayList<String>();
@@ -112,6 +122,9 @@ public class ConfigurationFileLauncher {
 			}
 		}
 		
+		benchmark = data.getProperty("benchmark");
+		amountOfExecutionsPerInstance = Integer.parseInt(data.getProperty("amountOfExecutionsPerInstance"));
+		
 		// Loading the solution method configuration
 		initialSolutionBuilder = data.getProperty("initialSolutionBuilder");
 		structure = data.getProperty("structure");
@@ -124,9 +137,18 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("scheduling.initialSolutionBuilder", initialSolutionBuilder);
 		algorithmConfiguration.setProperty("scheduling.structureFactory", structure);
 		algorithmConfiguration.setProperty("scheduling.neighborCalculator", neighborCalculator);
+		algorithmConfiguration.setProperty("scheduling.gammaCalculator", gammaCalculator);
 		algorithmConfiguration.setProperty("scheduling.modifier", modifier);
 		algorithmConfiguration.setProperty("scheduling.control", control);
-		algorithmConfiguration.setProperty("scheduling.control", control);
+		algorithmConfiguration.setProperty("scheduling.parametersLoader", control + "ParametersLoader");
+		
+		algorithmConfiguration.setProperty("params.iterations", data.getProperty("params.iterations"));
+		algorithmConfiguration.setProperty("params.non-improving-in", data.getProperty("params.non-improving-in"));
+		algorithmConfiguration.setProperty("params.non-improving-out", data.getProperty("params.non-improving-out"));
+		algorithmConfiguration.setProperty("params.tabulist-size", data.getProperty("params.tabulist-size"));
+		algorithmConfiguration.setProperty("params.neighborhodSize", data.getProperty("params.neighborhodSize"));
+		algorithmConfiguration.setProperty("params.maxNumberImprovements", data.getProperty("params.maxNumberImprovements"));
+		algorithmConfiguration.setProperty("params.maxExecutionTime", data.getProperty("params.maxExecutionTime"));
 		
 		// Loading selected betas
 		considerTravelTimes = data.getProperty("betas.considerTravelTimes");
@@ -171,10 +193,35 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("report.gantt.log", showLog);
 		
 		// Executing instances
-		for (String instance : instancesToExecute) {
+		for (int i = 0; i < instancesToExecute.size(); i++) {
+			String instance = instancesToExecute.get(i);
 			
+			boolean hasOptimal = false;
+			if(instance.contains("04x04") || instance.contains("05x05"))
+				hasOptimal = true;
+			
+			String problemFile = "./data/FilesIndex/" + instance.substring(0, 5);
+			if(benchmark.equals("Parallel")){
+				problemFile += "x02";
+				instance = instance.substring(0, 5) + "x02_" + instance.substring(6, 8);
+			}
+			problemFile += "/" + instance + ".properties";
+			
+			Properties problem = loadPropertiesFile(new File(problemFile));
+			SchedulingAlgorithm algorithm = new TrajectoryBasedAlgorithm(algorithmConfiguration, problem, currentBks, benchmark, hasOptimal);
+			
+			ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
+			for(int j = 0; j < amountOfExecutionsPerInstance; j++){
+				ExecutionResults result = algorithm.execute(instance, problemFile);
+				results.add(result);
+			}
+			ChartPrinter.getInstance().addResults(results);
 		}
-		
+		File destinationFolder = new File("./results/Om_TT/" + userId);
+		if(!destinationFolder.exists()){
+			destinationFolder.mkdir();
+		}
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/" + userId + "/experiment-results-" + System.currentTimeMillis() + ".html");
 	}
 	
 	/**
@@ -184,10 +231,8 @@ public class ConfigurationFileLauncher {
 	 * @return data. A properties object containing the information in the file
 	 * @throws IOException If any input/output error occurs
 	 */
-	private Properties loadPropertiesFile() throws IOException{
+	private Properties loadPropertiesFile(File propertiesFile) throws IOException{
 		Properties data = new Properties();
-		
-		File propertiesFile = new File(CONFIGURATION_FILE);
 		FileInputStream in = new FileInputStream( propertiesFile );
 		
 		data.load( in );
@@ -208,7 +253,7 @@ public class ConfigurationFileLauncher {
 		ConfigurationFileLauncher launcher = new ConfigurationFileLauncher();
 		try {
 			launcher.launchSofia();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

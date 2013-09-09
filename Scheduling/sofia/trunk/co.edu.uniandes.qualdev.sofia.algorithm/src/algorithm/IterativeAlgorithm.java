@@ -65,34 +65,29 @@ public class IterativeAlgorithm {
 
 		control = (Control) getClass()
 				.getClassLoader()
-				.loadClass(
-						algorithmConfiguration
-								.getProperty("scheduling.control"))
+				.loadClass(algorithmConfiguration.getProperty("scheduling.control"))
 				.newInstance();
+		
 		neighborCalculator = (INeighborCalculator) getClass()
 				.getClassLoader()
-				.loadClass(
-						algorithmConfiguration
-								.getProperty("scheduling.neighborCalculator"))
+				.loadClass(algorithmConfiguration.getProperty("scheduling.neighborCalculator"))
 				.newInstance();
+		
 		modifier = (IModifier) getClass()
 				.getClassLoader()
-				.loadClass(
-						algorithmConfiguration
-								.getProperty("scheduling.modifier"))
+				.loadClass(algorithmConfiguration.getProperty("scheduling.modifier"))
 				.newInstance();
+		
 		gammaCalculator = (IGammaCalculator) getClass()
 				.getClassLoader()
-				.loadClass(
-						algorithmConfiguration
-								.getProperty("scheduling.gammaCalculator"))
+				.loadClass(algorithmConfiguration.getProperty("scheduling.gammaCalculator"))
 				.newInstance();
+		
 		parametersLoader = (IParametersLoader) getClass()
 				.getClassLoader()
-				.loadClass(
-						algorithmConfiguration
-								.getProperty("scheduling.parametersLoader"))
+				.loadClass(algorithmConfiguration.getProperty("scheduling.parametersLoader"))
 				.newInstance();
+		
 		initialSolutionFile = (String) algorithmConfiguration
 				.getProperty("scheduling.initialSolutionFile");
 	}
