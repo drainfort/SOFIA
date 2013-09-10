@@ -2,17 +2,16 @@ package vector.testcases;
 
 import java.util.ArrayList;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import common.types.BetaVO;
 import common.utils.MatrixUtils;
-
 import structure.IOperation;
 import structure.factory.impl.VectorFactory;
 import structure.impl.Vector;
+import structure.impl.decoding.SequencialDecoding;
 
 /**
  * Test for the functionality of create a permutation list from
@@ -55,7 +54,7 @@ public class Test_CreateVectorFromAMatrix {
 		betas.add(TearDownTT);
 		
 		vector = (Vector) VectorFactory.createNewInstance("structure.factory.impl.VectorFactory").createSolutionStructure(
-				A, problemFiles, betas);
+				A, problemFiles, betas, new SequencialDecoding());
 	}
 	
 	// ----------------------------------------

@@ -35,6 +35,7 @@ public class ConfigurationFileLauncher {
 	private String modifier;
 	private String control;
 	private String gammaCalculator;
+	private String decodingStrategy;
 	
 	private String considerTravelTimes;
 	private String considerSetupTimes;
@@ -132,6 +133,7 @@ public class ConfigurationFileLauncher {
 		gammaCalculator = data.getProperty("gammaCalculator");
 		modifier = data.getProperty("modifier");
 		control = data.getProperty("control");
+		decodingStrategy = data.getProperty("decodingStrategy");
 		
 		Properties algorithmConfiguration = new Properties();
 		algorithmConfiguration.setProperty("scheduling.initialSolutionBuilder", initialSolutionBuilder);
@@ -141,6 +143,7 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("scheduling.modifier", modifier);
 		algorithmConfiguration.setProperty("scheduling.control", control);
 		algorithmConfiguration.setProperty("scheduling.parametersLoader", control + "ParametersLoader");
+		algorithmConfiguration.setProperty("scheduling.decodingStrategy", decodingStrategy);
 		
 		algorithmConfiguration.setProperty("params.iterations", data.getProperty("params.iterations"));
 		algorithmConfiguration.setProperty("params.non-improving-in", data.getProperty("params.non-improving-in"));

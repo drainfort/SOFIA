@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import structure.factory.impl.VectorFactory;
 import structure.impl.Vector;
-
+import structure.impl.decoding.SequencialDecoding;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.utils.MatrixUtils;
@@ -45,7 +45,7 @@ public class Test_CalculateCMatrix {
 		betas.add(TearDownTT);
 
 		vector = (Vector) VectorFactory.createNewInstance(
-				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
+				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas, new SequencialDecoding());
 		
 		vector.scheduleOperation(new OperationIndexVO(0, 1));
 		vector.scheduleOperation(new OperationIndexVO(1, 2));
@@ -73,6 +73,6 @@ public class Test_CalculateCMatrix {
 		
 		MatrixUtils.printMatrix(C);
 		
-		//TODO Esta prueba no sirve. Hay que hacer las aserciones para la validación completa. 
+		//TODO Esta prueba no sirve. Hay que hacer las aserciones para la validaciï¿½n completa. 
 	}
 }

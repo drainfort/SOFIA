@@ -1,7 +1,6 @@
 package initialSolBuilder.impl;
 
 import gammaCalculator.IGammaCalculator;
-
 import initialSolBuilder.IInitialSolBuilder;
 
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import structure.IOperation;
 import structure.IStructure;
 import structure.factory.AbstractStructureFactory;
-
+import structure.impl.decoding.Decoding;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.utils.MatrixUtils;
@@ -48,7 +47,8 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 	// -----------------------------------------------
 	
 	@Override
-	public IStructure createInitialSolution(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator) throws Exception {
+	public IStructure createInitialSolution(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, 
+			String structureFactory, IGammaCalculator gammaCalculator, Decoding decodingStrategy) throws Exception {
 		boolean travelTimesIncluded = false;
 		boolean setupTimesIncluded = false;
 		
@@ -86,7 +86,7 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 		
 		
 		
-		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas);
+		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas, decodingStrategy);
 
 		//Amplitud porcentual para escoger los candidatos de la RCL
 		float alfa=0.7f;
@@ -216,7 +216,7 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 			travelTimesIncluded=true;
 		
 		// Esta es la lista de permutacion que se va a retornar.
-		// Arranca vacía y en cada iteración se le agrega una operación.
+		// Arranca vacï¿½a y en cada iteraciï¿½n se le agrega una operaciï¿½n.
 		IStructure finalList = structure;
 		
 		//Amplitud porcentual para escoger los candidatos de la RCL

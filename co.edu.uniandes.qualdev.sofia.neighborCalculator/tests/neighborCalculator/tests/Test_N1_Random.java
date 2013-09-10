@@ -4,22 +4,19 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import junit.framework.Assert;
-
 import neighborCalculator.impl.N1_Random;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
-
 import structure.factory.impl.VectorFactory;
-import structure.impl.CriticalPath;
 import structure.impl.Graph;
-import structure.impl.Operation;
 import structure.impl.Vector;
+import structure.impl.decoding.SequencialDecoding;
 
 /**
  * Test case for the neighborhood calculator algorithm: N1_Random
@@ -62,7 +59,7 @@ public class Test_N1_Random {
 		graphScenario1.scheduleOperation(problemGraph[0][1]);
 		
 		// Loading the scenario 1 for the vector
-		vectorScenario1 = new Vector(2,2);
+		vectorScenario1 = new Vector(2,2, new SequencialDecoding());
 		
 		OperationIndexVO[][] problemVector = new OperationIndexVO[2][2]; 
 		problemVector[0][0] = new OperationIndexVO(10, 0, 0);
@@ -224,7 +221,7 @@ public class Test_N1_Random {
 		betas.add(TearDownTT);
 		
 		Vector vector = (Vector) VectorFactory.createNewInstance(
-				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
+				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas, new SequencialDecoding());
 		
 		vector.scheduleOperation(new OperationIndexVO(0, 0, 0, 0));
 		vector.scheduleOperation(new OperationIndexVO(0, 0, 1, 3));
@@ -286,7 +283,7 @@ public class Test_N1_Random {
 		betas.add(TearDownTT);
 		
 		Vector vector = (Vector) VectorFactory.createNewInstance(
-				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
+				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas, new SequencialDecoding());
 		
 		for(int i=0; i<15;i++){
 			for(int j=0; j<15;j++){

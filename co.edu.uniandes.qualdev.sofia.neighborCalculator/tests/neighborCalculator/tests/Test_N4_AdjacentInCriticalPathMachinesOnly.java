@@ -2,20 +2,19 @@ package neighborCalculator.tests;
 
 import java.util.ArrayList;
 
-import junit.framework.Assert;
-
 import neighborCalculator.impl.N4_AdjacentInCriticalPathMachinesOnly;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
-
 import structure.IOperation;
 import structure.impl.CriticalPath;
 import structure.impl.Graph;
 import structure.impl.Vector;
+import structure.impl.decoding.SequencialDecoding;
 
 /**
  * Test case for the neighborhood calculator algorithm: AjacentInCriticalPathMachinesOnly
@@ -102,7 +101,7 @@ public class Test_N4_AdjacentInCriticalPathMachinesOnly {
 			graphScenario2.scheduleOperation(problemGraphScenario2[3][3]);
 			
 			// Loading graph scenario 1
-			vectorScenario1 = new Vector(2,2);
+			vectorScenario1 = new Vector(2,2, new SequencialDecoding());
 			
 			OperationIndexVO[][] problemVector = new OperationIndexVO[2][2]; 
 			problemVector[0][0] = new OperationIndexVO(10, 0, 0);
@@ -117,7 +116,7 @@ public class Test_N4_AdjacentInCriticalPathMachinesOnly {
 			vectorScenario1.scheduleOperation(problemVector[0][1]);
 			
 			// Loading graph vector 2
-			vectorScenario2 = new Vector(4,4);
+			vectorScenario2 = new Vector(4,4, new SequencialDecoding());
 			
 			OperationIndexVO[][] problemVectorScenario2 = new OperationIndexVO[4][4];
 			problemVectorScenario2[0][0] = new OperationIndexVO(5, 0, 0);

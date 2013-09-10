@@ -75,7 +75,7 @@ public class GraphScenariosFactory {
 		problemFiles.add(TMatrixFile);
 		ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
 		
-		Graph problem = (Graph) GraphFactory.createNewInstance("structure.factory.impl.GraphFactory").createSolutionStructure(problemFiles, betas);
+		Graph problem = (Graph) GraphFactory.createNewInstance("structure.factory.impl.GraphFactory").createSolutionStructure(problemFiles, betas, null);
 		
 		return problem;
 	}
@@ -86,7 +86,7 @@ public class GraphScenariosFactory {
 		
 		Integer[][] A = MatrixUtils.loadMatrix(AMatrixFile);
 		ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
-		Graph problem = (Graph) GraphFactory.createNewInstance("structure.factory.impl.GraphFactory").createSolutionStructure(A, problemFiles, betas);
+		Graph problem = (Graph) GraphFactory.createNewInstance("structure.factory.impl.GraphFactory").createSolutionStructure(A, problemFiles, betas, null);
 		
 		return problem;
 	}

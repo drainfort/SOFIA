@@ -5,8 +5,8 @@ import gammaCalculator.IGammaCalculator;
 import java.util.ArrayList;
 
 import common.types.BetaVO;
-
 import structure.IStructure;
+import structure.impl.decoding.Decoding;
 
 /**
  * Interface for the construction of an initial solution
@@ -32,7 +32,8 @@ public interface IInitialSolBuilder {
 	 * @throws Exception
 	 */
 	public IStructure createInitialSolution(ArrayList<String> problemFiles,
-			ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator) throws Exception;
+			ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator,
+				Decoding decodingStrategy) throws Exception;
 	
     public IStructure createInitialSolution(Integer [][] TMatrix,  Integer[][] TTMatrix, Integer[][]STMatrix, String structureFactory, IGammaCalculator gammaCalculator, IStructure structure) throws Exception;
 	

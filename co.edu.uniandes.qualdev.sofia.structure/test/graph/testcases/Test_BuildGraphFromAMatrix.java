@@ -45,7 +45,7 @@ public class Test_BuildGraphFromAMatrix {
 			problemFiles.add(TMatrixFile);
 			ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
 			
- 			problem = (Graph) GraphFactory.createNewInstance("structure.factory.impl.GraphFactory").createSolutionStructure(A, problemFiles, betas);			
+ 			problem = (Graph) GraphFactory.createNewInstance("structure.factory.impl.GraphFactory").createSolutionStructure(A, problemFiles, betas, null);			
 	}
 
 	// -----------------------------------------------

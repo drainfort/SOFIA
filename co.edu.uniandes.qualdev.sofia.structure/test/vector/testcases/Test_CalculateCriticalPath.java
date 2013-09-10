@@ -1,17 +1,16 @@
 package vector.testcases;
 
 import java.util.ArrayList;
-import junit.framework.Assert;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import common.types.OperationIndexVO;
-
 import structure.IOperation;
 import structure.impl.CriticalPath;
-import structure.impl.Operation;
 import structure.impl.Vector;
+import structure.impl.decoding.SequencialDecoding;
 
 /**
  * Test cases for the functionality of calculating the critical paths on the vector
@@ -36,7 +35,7 @@ public class Test_CalculateCriticalPath {
 	public void setUpScenario() throws Exception {
 		
 			//Building scenario 1
-			vectorScenario1 = new Vector(2,2);
+			vectorScenario1 = new Vector(2,2, new SequencialDecoding());
 		
 			OperationIndexVO[][] problem = new OperationIndexVO[2][2]; 
 			problem[0][0] = new OperationIndexVO(10, 0, 0);
@@ -51,7 +50,7 @@ public class Test_CalculateCriticalPath {
 			vectorScenario1.scheduleOperation(problem[0][1]);
 			
 			//Building scenario 2
-			vectorScenario2 = new Vector(2,2);
+			vectorScenario2 = new Vector(2,2, new SequencialDecoding());
 			
 			OperationIndexVO[][] secondEscenario = new OperationIndexVO[2][2];
 			secondEscenario[0][0] = new OperationIndexVO(10, 0, 0);
