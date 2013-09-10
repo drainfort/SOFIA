@@ -4,14 +4,13 @@ import initialSolBuilder.impl.LRPTNonDelay;
 
 import java.util.ArrayList;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import structure.impl.Operation;
 import structure.impl.Vector;
-
+import structure.impl.decoding.SequencialDecoding;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 
@@ -56,7 +55,7 @@ public class LRPTNonDelayTest {
 		BetaVO tearDownTravelTimes = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", tearDownTravelTimeFiles, true);
 		betas.add(tearDownTravelTimes);
 		
-		constructiveInitialSolution = testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null).calculateAMatrix();
+		constructiveInitialSolution = testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null, new SequencialDecoding()).calculateAMatrix();
 		
 	}
 	
@@ -112,10 +111,10 @@ public class LRPTNonDelayTest {
 		betas.add(TTBeta);
 		betas.add(TearDownTT);
 
-		Vector vector= (Vector) testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null);
+		Vector vector= (Vector) testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null, new SequencialDecoding());
 		
-		// Validando el tamaño de la lista
-		Assert.assertEquals("El vector deberia tener un tamaño de 16", vector.getOperations().size(), 16);
+		// Validando el tamaï¿½o de la lista
+		Assert.assertEquals("El vector deberia tener un tamaï¿½o de 16", vector.getOperations().size(), 16);
 		
 		// Validando el orden de las operaciones y sus tiempos de inicio y fin
 		Assert.assertEquals("La primer posicion deberia ser las <1,3,6>",vector.getOperations().get(0), new Operation(new OperationIndexVO(0, 1, 3, 6)));

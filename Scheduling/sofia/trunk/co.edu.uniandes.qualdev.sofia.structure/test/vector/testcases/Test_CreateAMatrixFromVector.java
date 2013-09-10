@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import structure.factory.impl.VectorFactory;
 import structure.impl.Vector;
-
+import structure.impl.decoding.SequencialDecoding;
 import common.types.BetaVO;
 import common.utils.MatrixUtils;
 
@@ -54,7 +54,7 @@ public class Test_CreateAMatrixFromVector {
 
 		vector = (Vector) VectorFactory.createNewInstance(
 				"structure.factory.impl.VectorFactory").createSolutionStructure(A,
-				problemFiles, betas);
+				problemFiles, betas, new SequencialDecoding());
 	}
 
 	// ----------------------------------------

@@ -9,14 +9,15 @@ import org.junit.Test;
 import structure.IOperation;
 import structure.factory.impl.VectorFactory;
 import structure.impl.Vector;
+import structure.impl.decoding.ActiveDecoding;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 
 /**
  * Test class for the active decoding of the permutation list
+ * 
  * @author Jaime Romero
  * @author David Mendez-Acuna
- *
  */
 public class Test_DecodeActive {
 
@@ -24,7 +25,7 @@ public class Test_DecodeActive {
 	// Attributes
 	// -----------------------------------------------
 
-	private Vector vectorScenario2;
+	private Vector vectorScenario;
 
 	// -----------------------------------------------
 	// Setup scenarios
@@ -52,16 +53,16 @@ public class Test_DecodeActive {
 		betas.add(TTBeta);
 		betas.add(TearDownTT);
 
-		vectorScenario2 = (Vector) VectorFactory.createNewInstance(
+		vectorScenario = (Vector) VectorFactory.createNewInstance(
 				"structure.factory.impl.VectorFactory")
-				.createSolutionStructure(problemFiles, betas);
+				.createSolutionStructure(problemFiles, betas, new ActiveDecoding());
 
-		for(int i=0; i< vectorScenario2.getProblem().length;i++){
-			for(int j=0; j< vectorScenario2.getProblem()[i].length;j++){
-				vectorScenario2.scheduleOperation(vectorScenario2.getProblem()[i][j]);
+		for(int i=0; i< vectorScenario.getProblem().length;i++){
+			for(int j=0; j< vectorScenario.getProblem()[i].length;j++){
+				vectorScenario.scheduleOperation(vectorScenario.getProblem()[i][j]);
 			}
 		}
-		vectorScenario2.calculateCMatrix();
+		vectorScenario.calculateCMatrix();
 	}
 
 	// -----------------------------------------------
@@ -72,10 +73,11 @@ public class Test_DecodeActive {
 	public void testActiveDecodingOperationsOrder() {
 		
 		// Calling the decoding method
-		vectorScenario2.decodeSolutionActiveSchedule();
+		vectorScenario.decodeSolution();
 		
 		// Checking the order of the operations
-		ArrayList<IOperation> decode = vectorScenario2.getVectorDecodActiveSchedule();
+		ArrayList<IOperation> decode = vectorScenario.getOperations();
+		
 		Assert.assertEquals(new OperationIndexVO(0,0,0,0), decode.get(0).getOperationIndex());
 		Assert.assertEquals(new OperationIndexVO(0,1,0,1), decode.get(1).getOperationIndex());
 		Assert.assertEquals(new OperationIndexVO(0,2,2,3), decode.get(2).getOperationIndex());
@@ -97,10 +99,10 @@ public class Test_DecodeActive {
 	@Test
 	public void testActiveDecodingSchedule() {
 		// Calling the decoding method
-		vectorScenario2.decodeSolutionActiveSchedule();
+		vectorScenario.decodeSolution();
 		
-		// Checking the initial and final time for each operation
-		ArrayList<IOperation> decode = vectorScenario2.getVectorDecodActiveSchedule();
+		// Checking the order of the operations
+		ArrayList<IOperation> decode = vectorScenario.getOperations();
 		
 		Assert.assertEquals(decode.get(0).getInitialTime(), 2);
 		Assert.assertEquals(decode.get(0).getFinalTime(), 13);

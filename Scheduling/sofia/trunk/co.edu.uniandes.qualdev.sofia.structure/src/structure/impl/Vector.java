@@ -10,13 +10,12 @@ import java.util.Iterator;
 import structure.AbstractStructure;
 import structure.IOperation;
 import structure.IStructure;
-
+import structure.impl.decoding.Decoding;
 import beta.Beta;
 import beta.SetupBeta;
 import beta.TTBeta;
 import beta.TearDownBeta;
 import beta.impl.TearDownTravelTime;
-
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
@@ -38,11 +37,7 @@ public class Vector extends AbstractStructure{
 	// -----------------------------------------------
 	
 	/** ArrayList with the permutation list interpreted according to the defined algorithm */
-	private ArrayList<IOperation> vectorDecodNonDelay = null;
-
-	private ArrayList<IOperation> vectorDecodSimple = null;
-	
-	private ArrayList<IOperation> vectorDecodActiveSchedule = null;
+	private ArrayList<IOperation> vector = null;
 	
 	/** Flag that indicates if the structure indicators are up to date according to the state of the structure. */
 	private boolean synch;
@@ -50,11 +45,10 @@ public class Vector extends AbstractStructure{
 	/** A matrix of the current solution. */
 	private int[][] A;
 	
-	private int [][] CIntepretation;
+	/** C matrix of the current solution. */
+	private int [][] C;
 	
-	private int [][] CActiveSchedule;
-	
-	private boolean nonDelayActive = false;
+	private Decoding decodingStrategy;
 	
 	// -----------------------------------------------
 	// Constructor
@@ -63,34 +57,34 @@ public class Vector extends AbstractStructure{
 	/**
 	 * Constructor of the class that initializes an empty structure
 	 */
-	public Vector(int totalJobs, int totalStations){
+	public Vector(int totalJobs, int totalStations, Decoding decodingStrategy){
 		super(totalJobs, totalStations);
-		//TODO en algun lado  hay que armar las IOperation apuntando a los operationIndex de la matrix de STRUCTURE
-		vectorDecodNonDelay = new ArrayList<IOperation>();
-		vectorDecodSimple = new ArrayList<IOperation>();
+		
+		vector = new ArrayList<IOperation>();
 		synch = false;
+		this.decodingStrategy = decodingStrategy;
 	}
 	
 	/**
 	 * Constructor of the class
 	 */
-	public Vector(String processingTimesFile, ArrayList<BetaVO> pBetas) throws Exception {
+	public Vector(String processingTimesFile, ArrayList<BetaVO> pBetas, Decoding decodingStrategy) throws Exception {
 		super(processingTimesFile, pBetas);
 		
-		vectorDecodNonDelay = new ArrayList<IOperation>();
-		vectorDecodSimple = new ArrayList<IOperation>();
+		vector = new ArrayList<IOperation>();
 		synch = false;
+		this.decodingStrategy = decodingStrategy;
 	}
 	
 	/**
 	 * Constructor of the class
 	 */
-	public Vector(String processingTimesFile, String mVector, ArrayList<BetaVO> pBetas) throws Exception {
+	public Vector(String processingTimesFile, String mVector, ArrayList<BetaVO> pBetas, Decoding decodingStrategy) throws Exception {
 		super(processingTimesFile, mVector, pBetas);
 		
-		vectorDecodNonDelay = new ArrayList<IOperation>();
-		vectorDecodSimple = new ArrayList<IOperation>();
+		vector = new ArrayList<IOperation>();
 		synch = false;
+		this.decodingStrategy = decodingStrategy;
 	}
 
 	// -------------------------------------------------
@@ -235,7 +229,7 @@ public class Vector extends AbstractStructure{
 	
 	@Override
 	public ArrayList<IOperation> getOperations(){
-		return vectorDecodSimple;
+		return vector;
 	}
 	
 	@Override
@@ -260,16 +254,16 @@ public class Vector extends AbstractStructure{
 		if(synch){
 			return C;
 		}else{
-			// Decodificación simple en la que la lista de permutación representa el orden en el que las operaciones deben ser programadas. 
+			// Decodificaciï¿½n simple en la que la lista de permutaciï¿½n representa el orden en el que las operaciones deben ser programadas. 
 			int [][] CSolution = new int[getTotalJobs()][getTotalStations() + 1];
 			
-			for (int i = 0; i < vectorDecodSimple.size(); i++) {
-				IOperation Cij = vectorDecodSimple.get(i);
+			for (int i = 0; i < vector.size(); i++) {
+				IOperation Cij = vector.get(i);
 				
-				int Ciminus1J = getCiminus1J(Cij, i, vectorDecodSimple) != null ? getCiminus1J(Cij, i, vectorDecodSimple).getFinalTime() : 0;
-				int CiJminus1 = getCiJminus1(Cij, i, vectorDecodSimple) != null ? getCiJminus1(Cij, i, vectorDecodSimple).getFinalTime() : 0;
+				int Ciminus1J = getCiminus1J(Cij, i, vector) != null ? getCiminus1J(Cij, i, vector).getFinalTime() : 0;
+				int CiJminus1 = getCiJminus1(Cij, i, vector) != null ? getCiJminus1(Cij, i, vector).getFinalTime() : 0;
 				
-				int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vectorDecodSimple), i, vectorDecodSimple);
+				int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vector), i, vector);
 				int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
 				
 				int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
@@ -281,554 +275,23 @@ public class Vector extends AbstractStructure{
 				CSolution[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
 			}
 			
-			// Decodificación non-delay en la que la lista de permutación representa un criterior de desempate para la programación de las operaciones
-			// que se hace como una regla de despacho. Es decir, se toman las que menor tiempo de inicio y se selecciona la que primero aparezca en la lista. 
-			//decodeSolution();
-			
 			C = CSolution;
+			
 			int[][] newC = applyTearDownBetas(C);
-			if (newC != null)
-				C = newC;
+			if (newC != null) C = newC;
 		
 			synch = true;
 			return C;
 		}
 	}
 	
-	public void decodeSolutionActiveSchedule2(){
-		
-		int sizeList = vectorDecodSimple.size();
-		ArrayList<IOperation> copia = new ArrayList<IOperation>();
-		for (int i = 0; i < sizeList; i++){
-			IOperation iOperations = new Operation (vectorDecodSimple.get(i).getOperationIndex());
-			copia.add(iOperations);
-		}
-		
-		vectorDecodSimple = new ArrayList<IOperation>();
-		int actualSize = 0;
-		ArrayList<OperationIndexVO> unschedulledOperations = new ArrayList<OperationIndexVO>();
-		for(int j =0; j<getProblem().length;j++){
-			for(int z=0; z<getProblem()[j].length;z++){	
-				unschedulledOperations.add(getProblem()[j][z]);
-			}
-		}
-		
-		while (actualSize<sizeList){
-			
-			// Selecciona la operación (de la lista de operaciones no programadas) termina lo antes posible. La guarda en la veriable operationIndexMinFinalTime
-			int minFinalTime = Integer.MAX_VALUE;
-			OperationIndexVO operationIndexMinFinalTime = null;
-			for(int j =0; j<unschedulledOperations.size();j++){
-				OperationIndexVO temp = unschedulledOperations.get(j);
-				boolean canSchedulled = scheduleOperation(temp);
-				if (canSchedulled){
-					calculateCMatrix();
-					int finalTime = vectorDecodSimple.get(actualSize).getFinalTime();
-					if (finalTime < minFinalTime ) {
-						minFinalTime = finalTime;
-						operationIndexMinFinalTime = temp;
-					}
-					vectorDecodSimple.remove(actualSize);
-				}
-				else{
-					unschedulledOperations.remove(j);
-					j--;
-				}
-			}
-			
-			// Arreglo de candidatas. 
-			ArrayList<OperationIndexVO> activeCandidates = new ArrayList<OperationIndexVO>();
-			activeCandidates.add(operationIndexMinFinalTime);
-			
-			// Obtendiendo todas las oepraciones que se pueden programar en la misma máquina de la misma estación.
-			//Filtrando las operaciones para que queden solamente las que resultan en un programa activo
-			for(int i=0; i<getProblem().length; i++){
-				OperationIndexVO temp = getProblem()[i][operationIndexMinFinalTime.getMachineId()];
-				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId()){
-					boolean canSchedulled = scheduleOperation(temp);
-					if (canSchedulled){
-						calculateCMatrix();
-						int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
-						if (startTimeTested < minFinalTime) {
-							activeCandidates.add(temp);
-						}
-						vectorDecodSimple.remove(actualSize);
-					}
-				}
-			}
-						
-			//Desempate: Selecciona la primera de las operaciones que esté en la lista de permutación. 
-			boolean schedulled = false;
-			OperationIndexVO chosen = null;
-			int minIndex = copia.size();
-			for(int i=0; i< activeCandidates.size();i++){
-				OperationIndexVO temp =  activeCandidates.get(i);
-				for(int j=0; j< copia.size();j++){
-					OperationIndexVO opIndex = copia.get(j).getOperationIndex(); 
-					if(temp.getJobId()==opIndex.getJobId() && temp.getStationId()== opIndex.getStationId()&& j<minIndex){
-						chosen = temp;
-						minIndex = j;
-					}	
-				}
-			}
-			//Programa la operación
-			schedulled = scheduleOperation(chosen);
-			if (schedulled){
-				actualSize++;
-				unschedulledOperations.remove(chosen);
-			}
-		}
-		
-		calculateCMatrix();
-		vectorDecodActiveSchedule = vectorDecodSimple;
-		vectorDecodSimple = new ArrayList<IOperation>();
-				
-		CActiveSchedule = new int[getTotalJobs()][getTotalStations() + 1];
-		
-		for(int i=0; i< C.length;i++){
-			for(int j=0; j<C[i].length;j++){
-				CActiveSchedule[i][j] = C[i][j];
-			}
-		}
-	
-		for (int i = 0; i < sizeList; i++){
-		    scheduleOperation(copia.get(i).getOperationIndex());
-		}
-		calculateCMatrix();
-		
-		/*
-		
-		calculateCMatrix();
-		ArrayList<IOperation> copia = new ArrayList<IOperation>();
-		for (int i = 0; i < vectorDecodSimple.size(); i++){
-			IOperation iOperations = vectorDecodSimple.get(i);
-			copia.add(iOperations);
-		}
-		vectorDecodSimple = new ArrayList<IOperation>();
-		int contador = 0;
-		for (int i = 0; i < copia.size(); i++) {
-			OperationIndexVO candidate = copia.get(i).getOperationIndex();
-			ArrayList<OperationIndexVO> machinesCandidates = new ArrayList<OperationIndexVO>();
-			
-			for(int j=0; j<getProblem()[candidate.getJobId()].length; j++){
-				OperationIndexVO temp = getProblem()[candidate.getJobId()][j];
-				if(temp.getStationId()==candidate.getStationId()&& temp.getMachineId()!=candidate.getMachineId())
-					machinesCandidates.add(temp);
-			}
-			
-			int startTimeTested = 0;
-			int minStartTime = copia.get(i).getInitialTime();
-			
-			for (int z = 0; z < machinesCandidates.size(); z++) {
-				boolean canSchedulled = scheduleOperation(machinesCandidates.get(z));
-				if (canSchedulled){
-					calculateCMatrix();
-					startTimeTested = vectorDecodSimple.get(contador).getInitialTime();
-					if (startTimeTested < minStartTime) {
-						minStartTime = startTimeTested;
-						candidate = machinesCandidates.get(z);
-					}
-					vectorDecodSimple.remove(contador);
-				}
-			}
-			
-			machinesCandidates.clear();
-			
-			int minInitialTime = 0;
-			int minFinalTime = Integer.MAX_VALUE;
-			OperationIndexVO operationIndexInitialTime = null;
-			for(int j =0; j<getProblem().length;j++){
-				for(int z=0; z<getProblem()[j].length;z++){
-					boolean canSchedulled = scheduleOperation(getProblem()[j][z]);
-					if (canSchedulled){
-						calculateCMatrix();
-						int finalTime = vectorDecodSimple.get(contador).getFinalTime();
-						if (finalTime < minFinalTime) {
-							minInitialTime = vectorDecodSimple.get(contador).getInitialTime();
-							minFinalTime = finalTime;
-							operationIndexInitialTime = getProblem()[j][z];
-						}
-						vectorDecodSimple.remove(contador);
-					}
-				}
-			}
-			
-			boolean schedulled = false;
-			if(operationIndexInitialTime != null){
-				if(operationIndexInitialTime.getJobId() == candidate.getJobId()&& minFinalTime<minStartTime-getTT(candidate.getStationId(), operationIndexInitialTime.getStationId()) ){
-					schedulled = scheduleOperation(operationIndexInitialTime);
-					i--;
-				}
-				else if(operationIndexInitialTime.getJobId() != candidate.getJobId()&& minInitialTime<minStartTime ){
-					schedulled = scheduleOperation(operationIndexInitialTime);
-					i--;
-				}
-				else{
-					schedulled = scheduleOperation(candidate);
-				}
-			}
-			else{
-				schedulled = scheduleOperation(candidate);
-			}
-			if(schedulled)
-				contador++;
-
-
-		}
-		*/
-	}
-	
-	public void decodeSolutionActiveSchedule(){
-		
-		int sizeList = vectorDecodSimple.size();
-		ArrayList<IOperation> copia = new ArrayList<IOperation>();
-		for (int i = 0; i < sizeList; i++){
-			IOperation iOperations = new Operation (vectorDecodSimple.get(i).getOperationIndex());
-			copia.add(iOperations);
-		}
-		
-		vectorDecodSimple = new ArrayList<IOperation>();
-		int actualSize = 0;
-		ArrayList<OperationIndexVO> unschedulledOperations = new ArrayList<OperationIndexVO>();
-		for(int j =0; j<getProblem().length;j++){
-			for(int z=0; z<getProblem()[j].length;z++){	
-				unschedulledOperations.add(getProblem()[j][z]);
-			}
-		}
-		
-		while (actualSize<sizeList){
-			
-			// Selecciona la operación (de la lista de operaciones no programadas) termina lo antes posible. La guarda en la veriable operationIndexMinFinalTime
-			int minFinalTime = Integer.MAX_VALUE;
-			OperationIndexVO operationIndexMinFinalTime = null;
-			for(int j =0; j<unschedulledOperations.size();j++){
-				OperationIndexVO temp = unschedulledOperations.get(j);
-				boolean canSchedulled = scheduleOperation(temp);
-				if (canSchedulled){
-					calculateCMatrix();
-					int finalTime = vectorDecodSimple.get(actualSize).getFinalTime();
-					if (finalTime < minFinalTime ) {
-						minFinalTime = finalTime;
-						operationIndexMinFinalTime = temp;
-					}
-					vectorDecodSimple.remove(actualSize);
-				}
-				else{
-					unschedulledOperations.remove(j);
-					j--;
-				}
-			}
-			
-			//Se calcula el menor tiempo de inicio para las operaciones que tienen la misma combinación estación, máquina
-			int minStartTime = Integer.MAX_VALUE;
-			
-			for(int i=0; i<getProblem().length; i++){
-				OperationIndexVO temp = getProblem()[i][operationIndexMinFinalTime.getMachineId()];
-				if(temp.getJobId()!=operationIndexMinFinalTime.getJobId()){
-					boolean canSchedulled = scheduleOperation(temp);
-					if (canSchedulled){
-						calculateCMatrix();
-						int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
-						if (startTimeTested < minStartTime) {
-							minStartTime = startTimeTested;
-						}
-						vectorDecodSimple.remove(actualSize);
-					}
-				}
-			}			
-			
-			
-			
-			boolean schedulled = false;
-			OperationIndexVO chosen = desempatar(operationIndexMinFinalTime, 2, actualSize, minFinalTime, minStartTime, unschedulledOperations);
-			//Programa la operación
-			schedulled = scheduleOperation(chosen);
-			if (schedulled){
-				actualSize++;
-				unschedulledOperations.remove(chosen);
-			}
-		}
-		
-		calculateCMatrix();
-		vectorDecodActiveSchedule = vectorDecodSimple;
-		vectorDecodSimple = new ArrayList<IOperation>();
-				
-		CActiveSchedule = new int[getTotalJobs()][getTotalStations() + 1];
-		
-		for(int i=0; i< C.length;i++){
-			for(int j=0; j<C[i].length;j++){
-				CActiveSchedule[i][j] = C[i][j];
-			}
-		}
-	
-		for (int i = 0; i < sizeList; i++){
-		    scheduleOperation(copia.get(i).getOperationIndex());
-		}
-		calculateCMatrix();
-	}
-	
-	public OperationIndexVO desempatar(OperationIndexVO operation, int rule, int actualSize, int minFinalTime, int minStartTime, ArrayList<OperationIndexVO> unschedulledoperations){
-		OperationIndexVO chosen = operation;
-		int spt = chosen.getProcessingTime();
-		int lpt = chosen.getProcessingTime();
-		
-		int remainingTime1 = 0;
-		// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
-		// se cumple la restricción de no visitar más de una máquina en la misma estación. 
-		ArrayList<Integer> listStations1 = new ArrayList<Integer>();
-		for (int j = 0; j < unschedulledoperations.size(); j++) {
-			OperationIndexVO operationJ = unschedulledoperations.get(j);
-			
-			if(operationJ.getJobId() == chosen.getJobId() && !listStations1.contains(operationJ.getStationId())){
-				remainingTime1 += operationJ.getProcessingTime();
-				listStations1.add(operationJ.getStationId());
-			}
-		}
-		
-		int lrpt = remainingTime1;
-		int srpt = remainingTime1;
-		int lrptom = remainingTime1 - operation.getProcessingTime();
-		int srptom = remainingTime1- operation.getProcessingTime();
-		
-		for(int i=0; i<getProblem().length; i++){
-			OperationIndexVO temp = getProblem()[i][operation.getMachineId()];
-			if(temp.getJobId()!=operation.getJobId()){
-				boolean canSchedulled = scheduleOperation(temp);
-				if (canSchedulled){
-					calculateCMatrix();
-					int startTimeTested = vectorDecodSimple.get(actualSize).getInitialTime();
-					if(rule==0){
-						//spt
-						if (temp.getProcessingTime()<spt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
-							lpt= temp.getProcessingTime();
-							chosen = temp;
-						}
-					}
-					else if (rule==1){
-						//lpt
-						if (temp.getProcessingTime()>lpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
-							lpt= temp.getProcessingTime();
-							chosen = temp;
-						}
-					}
-					else if (rule ==2){
-						//lrpt
-						int remainingTime = 0;
-						
-						// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
-						// se cumple la restricción de no visitar más de una máquina en la misma estación. 
-						ArrayList<Integer> listStations = new ArrayList<Integer>();
-						for (int j = 0; j < unschedulledoperations.size(); j++) {
-							OperationIndexVO operationJ = unschedulledoperations.get(j);
-							
-							if(operationJ.getJobId() == temp.getJobId() && !listStations.contains(operationJ.getStationId())){
-								remainingTime += operationJ.getProcessingTime();
-								listStations.add(operationJ.getStationId());
-							}
-						}
-						if (remainingTime>lrpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
-							lrpt= remainingTime;
-							chosen = temp;
-						}
-					}
-					else if (rule ==3){
-						//srpt
-						int remainingTime = 0;
-						
-						// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
-						// se cumple la restricción de no visitar más de una máquina en la misma estación. 
-						ArrayList<Integer> listStations = new ArrayList<Integer>();
-						for (int j = 0; j < unschedulledoperations.size(); j++) {
-							OperationIndexVO operationJ = unschedulledoperations.get(j);
-							
-							if(operationJ.getJobId() == temp.getJobId() && !listStations.contains(operationJ.getStationId())){
-								remainingTime += operationJ.getProcessingTime();
-								listStations.add(operationJ.getStationId());
-							}
-						}
-						
-						if (remainingTime<srpt && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
-							srpt= remainingTime;
-							chosen = temp;
-						}
-					}
-					else if (rule ==4){
-						//LRPTOM
-						int remainingTime = 0;
-						
-						// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
-						// se cumple la restricción de no visitar más de una máquina en la misma estación. 
-						ArrayList<Integer> listStations = new ArrayList<Integer>();
-						for (int j = 0; j < unschedulledoperations.size(); j++) {
-							OperationIndexVO operationJ = unschedulledoperations.get(j);
-							
-							if(operationJ.getJobId() == temp.getJobId() && !listStations.contains(operationJ.getStationId())){
-								remainingTime += operationJ.getProcessingTime();
-								listStations.add(operationJ.getStationId());
-							}
-						}
-						remainingTime-= temp.getProcessingTime();
-						if (remainingTime>lrptom && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
-							lrptom= remainingTime;
-							chosen = temp;
-						}
-					}
-					else if (rule ==5){
-						//SRPTOM
-						int remainingTime = 0;
-						
-						// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
-						// se cumple la restricción de no visitar más de una máquina en la misma estación. 
-						ArrayList<Integer> listStations = new ArrayList<Integer>();
-						for (int j = 0; j < unschedulledoperations.size(); j++) {
-							OperationIndexVO operationJ = unschedulledoperations.get(j);
-							
-							if(operationJ.getJobId() == temp.getJobId() && !listStations.contains(operationJ.getStationId())){
-								remainingTime += operationJ.getProcessingTime();
-								listStations.add(operationJ.getStationId());
-							}
-						}
-						remainingTime-= temp.getProcessingTime();
-						if (remainingTime<srptom && startTimeTested < minFinalTime && minStartTime == startTimeTested) {
-							srptom= remainingTime;
-							chosen = temp;
-						}
-						
-					}
-					vectorDecodSimple.remove(actualSize);
-				}
-			}
-		}
-		
-		return chosen;
-	}
-	
+	@Override
     public void decodeSolution(){
-		
-		// Arreglo con todas las operaciones sin programar en el orden en el que aparece en la lista de permutación.
-		vectorDecodNonDelay = new ArrayList<IOperation>();
-		for (int i = 0; i < vectorDecodSimple.size(); i++){
-			ArrayList<IOperation> iOperations = getOperationsbyJobAndStation(vectorDecodSimple.get(i).getOperationIndex());
-			vectorDecodNonDelay.addAll(iOperations);
-		}
-		
-		// Actualiza los tiempos de inicio.
-		for (int i = 0; i < vectorDecodNonDelay.size(); i++){
-			IOperation iOperation = vectorDecodNonDelay.get(i);
-			int sumTTBetas = this.getTTBetas(null, i, vectorDecodNonDelay);
-			iOperation.setInitialTime(sumTTBetas);
-			iOperation.setScheduled(false);
-		}
-		
-		int operationsAmount = vectorDecodNonDelay.size();
-		int index = 0;
-		
-		// CICLO PRINCIPAL:  Iteracion del algoritmo constructivo. Por cada iteración, programa una operacion
-		while(index < operationsAmount){
-			
-			// Calcula el menor tiempo de inicio
-			int minInitialTime = Integer.MAX_VALUE;
-			for (int i = index; i < vectorDecodNonDelay.size(); i++) {
-				IOperation operation = vectorDecodNonDelay.get(i);
-				int currentInitialTime = operation.getInitialTime();
-				if(currentInitialTime < minInitialTime)
-					minInitialTime = currentInitialTime;
-			}
-			
-			// Selecciona la próxima operación a programar tomando la primera cuyo tiempo de inicio sea el mínimo posible. 
-			IOperation selectedOperation = null;
-			for (int i = index; i < vectorDecodNonDelay.size(); i++) {
-				IOperation operation = vectorDecodNonDelay.get(i);
-				if(operation.getInitialTime() == minInitialTime){
-					selectedOperation = operation;
-					break;
-				}
-			}
-			
-			if(selectedOperation!=null){
-				selectedOperation.setScheduled(true);
-				removeAll(vectorDecodNonDelay, selectedOperation);
-				operationsAmount = vectorDecodNonDelay.size();
-			}
-			
-			// Hace los intercambios propios de la interpretación
-			if(selectedOperation != vectorDecodNonDelay.get(index)){
-				IOperation operationAtIndex = vectorDecodNonDelay.get(index);
-				int indexOfSelected = vectorDecodNonDelay.indexOf(selectedOperation);
-				
-				vectorDecodNonDelay.set(index, selectedOperation);
-				vectorDecodNonDelay.set(indexOfSelected, operationAtIndex);
-			}
-			
-			// Calcula el C de la operación a decodificar.
-			int finalTimeToSchedule = selectedOperation.getInitialTime() + selectedOperation.getOperationIndex().getProcessingTime() ;
-			selectedOperation.setFinalTime(finalTimeToSchedule);
-			
-			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
-			for (int i = index + 1; i < vectorDecodNonDelay.size(); i++){
-				IOperation iOperation = vectorDecodNonDelay.get(i);
-				
-				IOperation lastJobSchedule = getCiminus1J(iOperation, i, vectorDecodNonDelay);
-				int finalTimeLastJob = lastJobSchedule != null ? lastJobSchedule.getFinalTime() : 0;
-				
-				IOperation lastStationSchedule = getCiJminus1(iOperation, i, vectorDecodNonDelay);
-				int finalTimeLastStation = lastStationSchedule != null ? lastStationSchedule.getFinalTime() : 0;
-				
-				int sumTTBetas = this.getTTBetas(getCiminus1J(iOperation, i, vectorDecodNonDelay), i, vectorDecodNonDelay);
-				
-				int initialTime = Math.max(finalTimeLastJob + sumTTBetas, finalTimeLastStation);
-				iOperation.setInitialTime(initialTime);
-			}
-			index++;
-		}
-		
-		// Actualiza la matriz c
-		CIntepretation = new int[getTotalJobs()][getTotalStations() + 1];
-		
-		for (int i = 0; i < vectorDecodNonDelay.size(); i++) {
-			IOperation Cij = vectorDecodNonDelay.get(i);
-			
-			int Ciminus1J = getCiminus1J(Cij, i, vectorDecodNonDelay) != null ? getCiminus1J(Cij, i, vectorDecodNonDelay).getFinalTime() : 0;
-			int CiJminus1 = getCiJminus1(Cij, i, vectorDecodNonDelay) != null ? getCiJminus1(Cij, i, vectorDecodNonDelay).getFinalTime() : 0;
-			
-			int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vectorDecodNonDelay), i, vectorDecodNonDelay);
-			int sumSetupBetas = this.getSetupBetas(Cij.getOperationIndex().getJobId(), Cij.getOperationIndex().getStationId());
-			
-			int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
-			int finalTime = initialTime + Cij.getOperationIndex().getProcessingTime() + sumSetupBetas;
-			
-			Cij.setInitialTime(initialTime);
-			Cij.setFinalTime(finalTime);
-			
-			CIntepretation[Cij.getOperationIndex().getJobId()][Cij.getOperationIndex().getStationId()] = finalTime;
-		}
-		
-		int[][] newC2 = applyTearDownBetas(CIntepretation);
-		if (newC2 != null)
-			CIntepretation = newC2;
-		
-		
+		decodingStrategy.setVector(this);
+		vector = decodingStrategy.decode(vector);
 	}
 	
-	private void removeAll(ArrayList<IOperation> operations,
-			IOperation selectedOperation) {
-		
-		int job = selectedOperation.getOperationIndex().getJobId();
-		int station = selectedOperation.getOperationIndex().getStationId();
-		int machine = selectedOperation.getOperationIndex().getMachineId();
-		
-		for(int i=0; i< operations.size();i++){
-			OperationIndexVO temp = operations.get(i).getOperationIndex();
-			
-			if(temp.getJobId()==job && temp.getStationId()==station && temp.getMachineId()!=machine){
-				operations.remove(i);
-				i--;
-			}
-		}
-		
-	}
-	
-	private ArrayList<IOperation> getOperationsbyJobAndStation(OperationIndexVO operationIndex) {
+	public ArrayList<IOperation> getOperationsbyJobAndStation(OperationIndexVO operationIndex) {
 		int jobId = operationIndex.getJobId();
 		int stationId = operationIndex.getStationId();
 		ArrayList <IOperation> operations = new ArrayList<IOperation>();
@@ -845,40 +308,18 @@ public class Vector extends AbstractStructure{
 		return operations;
 	}
 	
-	
-	private int getLastJobTime(int jobId, int[][] C) {
-		int max = -1;
-		for (int i = 0; i < C.length; i++) {
-			if(max < C[jobId][i]){
-				max = C[jobId][i];
-			}
-		}
-		return max;
-	}
-	
-	private int getLastStationTime(int stationId, int[][] C) {
-		
-		int max = -1;
-		for (int i = 0; i < C.length; i++) {
-			if(max < C[i][stationId]){
-				max = C[i][stationId];
-			}
-		}
-		return max;
-	}
-
 	@Override
 	public int[][] updateCMatrix(PairVO pair){
 		if(synch){
 			return C;
 		}else{
-			for (int i = Math.max(pair.getX(), pair.getY()); i < vectorDecodSimple.size(); i++) {
-				IOperation Cij = vectorDecodSimple.get(i);
+			for (int i = Math.max(pair.getX(), pair.getY()); i < vector.size(); i++) {
+				IOperation Cij = vector.get(i);
 				
-				int Ciminus1J = getCiminus1J(Cij, i, vectorDecodSimple) != null ? getCiminus1J(Cij, i, vectorDecodSimple).getFinalTime() : 0;
-				int CiJminus1 = getCiJminus1(Cij, i, vectorDecodSimple) != null ? getCiJminus1(Cij, i, vectorDecodSimple).getFinalTime() : 0;
+				int Ciminus1J = getCiminus1J(Cij, i, vector) != null ? getCiminus1J(Cij, i, vector).getFinalTime() : 0;
+				int CiJminus1 = getCiJminus1(Cij, i, vector) != null ? getCiJminus1(Cij, i, vector).getFinalTime() : 0;
 				
-				int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vectorDecodSimple), i, vectorDecodSimple);
+				int sumTTBetas = this.getTTBetas(getCiminus1J(Cij, i, vector), i, vector);
 				
 				int initialTime = Math.max(Ciminus1J + sumTTBetas, CiJminus1);
 				int finalTime = initialTime + + Cij.getOperationIndex().getProcessingTime();
@@ -1051,7 +492,7 @@ public class Vector extends AbstractStructure{
 		throw new Exception("Operation not currently supported");
 	}
 
-	private int getSetupBetas(int i, int j) {
+	public int getSetupBetas(int i, int j) {
 		int sumBetas = 0;
 		if(this.betas!=null){
 			Iterator<Beta> iterator = betas.values().iterator();
@@ -1065,11 +506,6 @@ public class Vector extends AbstractStructure{
 		return sumBetas;
 	}
 
-	private int getReleaseBetas(IOperation iOperation, IOperation iOperation2) {
-		// TODO getReleaseBetas on Vector
-		return 0;
-	}
-	
 	// -------------------------------------------------
 	// Manipulation methods
 	// -------------------------------------------------
@@ -1129,30 +565,22 @@ public class Vector extends AbstractStructure{
 	public IStructure cloneStructure() {
 		Vector clone = null;
 		try{
-			clone = new Vector(this.totalJobs, this.totalStations);
+			clone = new Vector(this.totalJobs, this.totalStations, this.decodingStrategy);
 			clone.operationsMatrix = this.operationsMatrix;
 			clone.processingTimesFile = this.processingTimesFile;
 			clone.totalJobs = this.totalJobs;
 			clone.totalStations = this.totalStations;
 			clone.maxMachinesPerStation = this.maxMachinesPerStation;
 			clone.totalMachines = this.totalMachines;
-			clone.nonDelayActive = this.nonDelayActive;
 			
 			ArrayList<IOperation> clonedVectorDecSimple = new ArrayList<IOperation>();
-			for (IOperation operation : vectorDecodSimple) {
+			for (IOperation operation : vector) {
 				IOperation cloneOperation = operation.clone();
 				clonedVectorDecSimple.add(cloneOperation);
 			}
 			
-			clone.vectorDecodSimple = clonedVectorDecSimple;
+			clone.vector = clonedVectorDecSimple;
 			
-			ArrayList<IOperation> clonedVectorDecNonDelay= new ArrayList<IOperation>();
-			for (IOperation operation : vectorDecodNonDelay) {
-				IOperation cloneOperation = operation.clone();
-				clonedVectorDecNonDelay.add(cloneOperation);
-			}
-			
-			clone.vectorDecodNonDelay = clonedVectorDecNonDelay;
 			// Clone betas
 			if (this.betas != null) {
 				clone.betas = new HashMap<String, Beta>();
@@ -1203,7 +631,7 @@ public class Vector extends AbstractStructure{
 		return rank;
 	}
 	
-	private int[][] applyTearDownBetas(int [][] matrix) {
+	public int[][] applyTearDownBetas(int [][] matrix) {
 		int[][] newC = null;
 		if (this.betas != null) {
 			Iterator<Beta> i = betas.values().iterator();
@@ -1232,17 +660,11 @@ public class Vector extends AbstractStructure{
 		synch=false;
 		calculateCMatrix();
 		int [][] cmatrix = C;
-		if(isNonDelayActive())
-			cmatrix = CIntepretation;
 		
 		ArrayList<CriticalPath> routes = new ArrayList<CriticalPath>();
 		ArrayList<IOperation> finalNodes = getLastOperation(cmatrix);
 		
 		for(int i=0; i < finalNodes.size();i++ ){
-			//CriticalPath temp= new CriticalPath();
-			//temp.addNodeBegin(finalNodes.get(i));
-			//routes.addAll(getLongestRoute(temp, solution));
-			
 			CriticalPath temp1= new CriticalPath();
 			temp1.addNodeBegin(finalNodes.get(i));
 			routes.addAll(getCriticalRoute(cmatrix, temp1));
@@ -1281,115 +703,6 @@ public class Vector extends AbstractStructure{
 		return operations;
 	}
 		
-	/**
-	 * Complete the critical path in the parameter according to the initial nodes it contains
-	 * @param criticalPath The collection of critical paths associated with the node
-	 * @return
-	 */
-	private ArrayList<CriticalPath> getLongestRoute(CriticalPath route, ArrayList<IOperation> solution){
-		ArrayList<CriticalPath> routes = new ArrayList<CriticalPath>();
-		IOperation lastOperation= route.getRoute().get(0);
-		ArrayList<IOperation> operationsStation = getOperationsBeforeByStation(lastOperation.getOperationIndex(), solution);
-		ArrayList<IOperation> operationsJob = getOperationsBeforeByJob(lastOperation.getOperationIndex(), solution);
-		if(!operationsJob.isEmpty()){
-			IOperation operationBeforeByJob = operationsJob.get(operationsJob.size()-1);
-			if(!operationsStation.isEmpty()){
-				IOperation operationBeforeByStation = operationsStation.get(operationsStation.size()-1);
-				if(operationBeforeByJob.getFinalTime()>operationBeforeByStation.getFinalTime()){
-					route.addNodeBegin(operationBeforeByJob);
-					operationsJob=null;
-					operationsStation=null;
-					return getLongestRoute(route, solution);
-					
-				}
-				else if(operationBeforeByJob.getFinalTime()==operationBeforeByStation.getFinalTime()){
-					CriticalPath clone = new CriticalPath();
-					for(int j=0; j<route.getRoute().size();j++){
-						IOperation node = route.getRoute().get(j);
-						clone.getRoute().add(node);
-					}
-					route.addNodeBegin(operationBeforeByJob);
-					clone.addNodeBegin(operationBeforeByStation);
-					ArrayList<CriticalPath> temp1 = getLongestRoute(route, solution);
-					
-					ArrayList<CriticalPath> temp2 = getLongestRoute(clone, solution);
-					
-					temp1.addAll(temp2);
-					operationsJob=null;
-					operationsStation=null;
-					return temp1;
-				}
-				else{
-					route.addNodeBegin(operationBeforeByStation);
-					operationsJob=null;
-					operationsStation=null;
-					return getLongestRoute(route, solution);
-					
-				}
-			}
-			else{
-				route.addNodeBegin( operationBeforeByJob);
-				operationsJob=null;
-				operationsStation=null;
-				return getLongestRoute(route, solution);
-			}
-		}
-		else{
-			if(!operationsStation.isEmpty()){
-					IOperation operationBeforeByStation = operationsStation.get(operationsStation.size()-1);
-					route.addNodeBegin(operationBeforeByStation);
-					operationsJob=null;
-					operationsStation=null;
-					return getLongestRoute(route, solution);
-			}
-			else{
-				routes.add(route);
-				operationsJob=null;
-				operationsStation=null;
-				return routes;	
-			}
-		}
-	}
-	
-	/**
-	 * Returns the set of operations that are in the same station and that are scheduled before the one in the parameter
-	 * @param operation Reference operation
-	 * @return
-	 */
-	private ArrayList<IOperation> getOperationsBeforeByStation(OperationIndexVO operation, ArrayList<IOperation> solution){
-		ArrayList<IOperation> operations = new ArrayList<IOperation>();
-		for(IOperation op : solution){
-			if(op.getOperationIndex().getStationId()==operation.getStationId()){
-				if(!op.getOperationIndex().equals(operation)){
-					operations.add(op);
-				}else{
-					return operations;
-				}
-			}
-				
-		}
-		return operations;
-	}
-	
-	/**
-	 * Returns the set of operations that are in the same job and that are scheduled before the one in the parameter
-	 * @param operation Reference operation
-	 * @return
-	 */
-	private ArrayList<IOperation> getOperationsBeforeByJob(OperationIndexVO operation, ArrayList<IOperation> solution){
-		ArrayList<IOperation> operations = new ArrayList<IOperation>();
-		for(IOperation op : solution){
-			if(op.getOperationIndex().getJobId()==operation.getJobId()){
-				if(!op.getOperationIndex().equals(operation)){
-					operations.add(op);
-				}else{
-					return operations;
-				}
-			}
-				
-		}
-		return operations;
-	}
 	
 	public void sortArray(ArrayList<IOperation> vector){
 		Collections.sort(vector, new Comparator<IOperation>() {
@@ -1511,7 +824,7 @@ public class Vector extends AbstractStructure{
 	// -------------------------------------------------
 
 	public ArrayList<IOperation> getVector(){
-		return vectorDecodSimple;
+		return vector;
 	}
 	
 	@Override
@@ -1563,54 +876,15 @@ public class Vector extends AbstractStructure{
 		return true;
 	}
 
-	public ArrayList<IOperation> getVectorDecodNonDelay() {
-		return vectorDecodNonDelay;
-	}
-
-	public void setVectorDecodNonDelay(ArrayList<IOperation> vectorDecodNonDelay) {
-		this.vectorDecodNonDelay = vectorDecodNonDelay;
-	}
-
 	public ArrayList<IOperation> getVectorDecodSimple() {
-		return vectorDecodSimple;
+		return vector;
 	}
 
 	public void setVectorDecodSimple(ArrayList<IOperation> vectorDecodSimple) {
-		this.vectorDecodSimple = vectorDecodSimple;
+		this.vector = vectorDecodSimple;
 	}
 
-	public boolean isNonDelayActive() {
-		return nonDelayActive;
+	public OperationIndexVO[][] getOperationsMatrix() {
+		return operationsMatrix;
 	}
-
-	public void setNonDelayActive(boolean nonDelayActive) {
-		this.nonDelayActive = nonDelayActive;
-	}
-	
-
-	public int[][] getCIntepretation() {
-		return CIntepretation;
-	}
-
-	public int[][] getCActiveSchedule() {
-		return CActiveSchedule;
-	}
-
-	public void setCActiveSchedule(int[][] cActiveSchedule) {
-		CActiveSchedule = cActiveSchedule;
-	}
-
-	public void setCIntepretation(int[][] cIntepretation) {
-		CIntepretation = cIntepretation;
-	}
-
-	public ArrayList<IOperation> getVectorDecodActiveSchedule() {
-		return vectorDecodActiveSchedule;
-	}
-
-	public void setVectorDecodActiveSchedule(
-			ArrayList<IOperation> vectorDecodActiveSchedule) {
-		this.vectorDecodActiveSchedule = vectorDecodActiveSchedule;
-	}
-		
 }

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import structure.factory.impl.VectorFactory;
 import structure.impl.Vector;
-
+import structure.impl.decoding.SequencialDecoding;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.utils.MatrixUtils;
@@ -48,7 +48,7 @@ public class _AmountAdjCRTest {
 		betas.add(TearDownTT);
 
 		vector = (Vector) VectorFactory.createNewInstance(
-				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas);
+				"structure.factory.impl.VectorFactory").createSolutionStructure(problemFiles, betas, new SequencialDecoding());
 		
 		for(int i=0; i<10;i++){
 			for(int j=0; j<10;j++){
@@ -62,7 +62,7 @@ public class _AmountAdjCRTest {
 	public void testCalculateAmountNeighbors(){
 		
 		try {
-			//Numero de parejas adjacentes en un ruta critica es necesariamente el tamaño del arreglo -1
+			//Numero de parejas adjacentes en un ruta critica es necesariamente el tamaï¿½o del arreglo -1
 			//Si se tiene un ruta 4 de nodos seria 1-2, 2-3, 3-4. (3 posibles vecinos)
 			int number = vector.getCriticalPaths().get(0).getRoute().size()-1;
 			assertTrue(number==neighbor.calculateNeighborhood(vector, 100).size());

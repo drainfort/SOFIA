@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import structure.IOperation;
 import structure.factory.impl.VectorFactory;
-import structure.impl.Operation;
 import structure.impl.Vector;
+import structure.impl.decoding.NonDelayDecoding;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 
@@ -19,8 +19,7 @@ public class Test_DecodeNonDelay {
 	// Attributes
 	// -----------------------------------------------
 
-	private Vector vectorScenario1;
-	private Vector vectorScenario2;
+	private Vector vectorScenario;
 
 	// -----------------------------------------------
 	// Setup scenarios
@@ -29,65 +28,45 @@ public class Test_DecodeNonDelay {
 	@Before
 	public void setUpScenario() throws Exception {
 
-		// Building scenario 1
-		vectorScenario1 = new Vector(2, 2);
-		vectorScenario1.setTotalMachines(4);
-
-		OperationIndexVO[][] problem = new OperationIndexVO[2][4];
-		problem[0][0] = new OperationIndexVO(10, 0, 0, 0);
-		problem[0][1] = new OperationIndexVO(10, 0, 0, 1);
-		problem[0][2] = new OperationIndexVO(20, 0, 1, 2);
-		problem[0][3] = new OperationIndexVO(20, 0, 1, 3);
-		problem[1][0] = new OperationIndexVO(5, 1, 0, 0);
-		problem[1][1] = new OperationIndexVO(5, 1, 0, 1);
-		problem[1][2] = new OperationIndexVO(5, 1, 1, 2);
-		problem[1][3] = new OperationIndexVO(5, 1, 1, 3);
-
-		vectorScenario1.setProblem(problem);
-		vectorScenario1.scheduleOperation(problem[0][0]);
-		vectorScenario1.scheduleOperation(problem[0][2]);
-		vectorScenario1.scheduleOperation(problem[1][0]);
-		vectorScenario1.scheduleOperation(problem[1][2]);
-
 		ArrayList<String> problemFiles = new ArrayList<String>();
 
-		String TFile = "./data/CasoEspecial/1-T/T-04x04-01.txt";
-		String TTFile = "./data/CasoEspecial/2-TT/TT-04x04-01.txt";
+		String TFile = "./data/04x04x02/1-T/T-04x04x02-02.txt";
+		String TTFile = "./data/04x04x02/2-TT/TT-04x04x02-02.txt";
+		String MFile = "./data/04x04x02/4-M/M-04x04x02-02.txt";
 
 		problemFiles.add(TFile);
 		problemFiles.add(TTFile);
+		problemFiles.add(MFile);
 
 		ArrayList<BetaVO> betas = new ArrayList<BetaVO>();
 		ArrayList<String> informationFiles = new ArrayList<String>();
 		informationFiles.add(TTFile);
 
-		BetaVO TTBeta = new BetaVO("TravelTimes", "beta.impl.TravelTimes",
-				informationFiles, true);
-		BetaVO TearDownTT = new BetaVO("TearDownTravelTime",
-				"beta.impl.TearDownTravelTime", informationFiles, true);
+		BetaVO TTBeta = new BetaVO("TravelTimes", "beta.impl.TravelTimes", informationFiles, true);
+		BetaVO TearDownTT = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", informationFiles, true);
 		betas.add(TTBeta);
 		betas.add(TearDownTT);
 
-		vectorScenario2 = (Vector) VectorFactory.createNewInstance(
+		vectorScenario = (Vector) VectorFactory.createNewInstance(
 				"structure.factory.impl.VectorFactory")
-				.createSolutionStructure(problemFiles, betas);
+				.createSolutionStructure(problemFiles, betas, new NonDelayDecoding());
 
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 0, 0));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 1, 1));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 2, 2));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 0, 3, 3));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 0, 0));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 1, 1));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 2, 2));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 1, 3, 3));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 0, 0));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 1, 1));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 2, 2));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 2, 3, 3));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 0, 0));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 1, 1));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 2, 2));
-		vectorScenario2.scheduleOperation(new OperationIndexVO(0, 3, 3, 3));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 2, 0, 0));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 0, 0, 1));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 1, 2, 3));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 3, 2, 4));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 2, 1, 2));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 0, 3, 5));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 1, 1, 2));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 3, 0, 0));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 2, 3, 5));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 0, 2, 3));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 1, 0, 0));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 3, 1, 2));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 2, 2, 3));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 0, 1, 2));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 3, 3, 5));
+		vectorScenario.scheduleOperation(new OperationIndexVO(0, 1, 3, 5));
 
 	}
 
@@ -96,32 +75,55 @@ public class Test_DecodeNonDelay {
 	// -----------------------------------------------
 
 	@Test
-	public void testCriticalPathScenario1() throws InterruptedException {
+	public void testNonDelayDecodingOperationsOrder() throws InterruptedException {
 
-		vectorScenario1.calculateCMatrix();
-
-		ArrayList<IOperation> vector = vectorScenario1.getVectorDecodNonDelay();
-
-		// Aqui hay que tener en cuenta el orden de la cosa.
-		Assert.assertTrue(vector.contains(new Operation(new OperationIndexVO(
-				10, 0, 0, 0))));
-		Assert.assertTrue(vector.contains(new Operation(new OperationIndexVO(
-				10, 0, 1, 2))));
-		Assert.assertTrue(vector.contains(new Operation(new OperationIndexVO(
-				10, 1, 0, 1))));
-		Assert.assertTrue(vector.contains(new Operation(new OperationIndexVO(
-				10, 1, 1, 2))));
+		// Calling the decoding method
+		vectorScenario.decodeSolution();
+		
+		// Checking the order of the operations
+		ArrayList<IOperation> decode = vectorScenario.getOperations();
+		
+		Assert.assertEquals(new OperationIndexVO(0, 2, 0, 0), decode.get(0).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 0, 0, 1), decode.get(1).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 1, 2, 3), decode.get(2).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 3, 2, 4), decode.get(3).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 2, 1, 2), decode.get(4).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 0, 3, 5), decode.get(5).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 1, 1, 2), decode.get(6).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 3, 0, 0), decode.get(7).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 2, 3, 5), decode.get(8).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 0, 2, 3), decode.get(9).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 1, 0, 0), decode.get(10).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 3, 1, 2), decode.get(11).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 2, 2, 3), decode.get(12).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 0, 1, 2), decode.get(13).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 3, 3, 5), decode.get(14).getOperationIndex());
+		Assert.assertEquals(new OperationIndexVO(0, 1, 3, 5), decode.get(15).getOperationIndex());
 	}
-
+	
 	@Test
-	public void testCriticalPathScenario2() throws InterruptedException {
-
-		vectorScenario2.calculateCMatrix();
-		// System.out.println(vectorScenario2.getVectorDecodSimple());
-		// System.out.println(vectorScenario2.getVectorDecodNonDelay());
-
-		vectorScenario2.decodeSolutionActiveSchedule();
+	public void testNonDelayDecodingSchedule(){
+		// Calling the decoding method
+		vectorScenario.decodeSolution();
+		
+		// Checking the order of the operations
+		ArrayList<IOperation> decode = vectorScenario.getOperations();
+		
+		Assert.assertEquals(12, decode.get(0).getFinalTime());
+		Assert.assertEquals(13, decode.get(1).getFinalTime());
+		Assert.assertEquals(18, decode.get(2).getFinalTime());
+		Assert.assertEquals(18, decode.get(3).getFinalTime());
+		Assert.assertEquals(27, decode.get(4).getFinalTime());
+		Assert.assertEquals(28, decode.get(5).getFinalTime());
+		Assert.assertEquals(38, decode.get(6).getFinalTime());
+		Assert.assertEquals(40, decode.get(7).getFinalTime());
+		Assert.assertEquals(43, decode.get(8).getFinalTime());
+		Assert.assertEquals(47, decode.get(9).getFinalTime());
+		Assert.assertEquals(55, decode.get(10).getFinalTime());
+		Assert.assertEquals(55, decode.get(11).getFinalTime());
+		Assert.assertEquals(60, decode.get(12).getFinalTime());
+		Assert.assertEquals(68, decode.get(13).getFinalTime());
+		Assert.assertEquals(69, decode.get(14).getFinalTime());
+		Assert.assertEquals(78, decode.get(15).getFinalTime());
 	}
-
-	// TODO Necesitamos un caso de prueba m�s grande. Por ejemplo 4x4x2
 }

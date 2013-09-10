@@ -3,7 +3,6 @@ package gammaCalculator.impl;
 import gammaCalculator.IGammaCalculator;
 import common.types.PairVO;
 import structure.IStructure;
-import structure.impl.Vector;
 
 public class CMaxCalculator implements IGammaCalculator {
 
@@ -13,27 +12,8 @@ public class CMaxCalculator implements IGammaCalculator {
 
 	@Override
 	public int calculateGamma(IStructure vector) throws Exception {
+		vector.decodeSolution();
 		int cmax = calculateGammaMatrix(vector.calculateCMatrix(), vector.getTotalJobs(), vector.getTotalStations());
-		
-		if(vector instanceof Vector){
-			((Vector) vector).decodeSolutionActiveSchedule();
-			((Vector) vector).decodeSolution();
-			int[][] CActiveSchedule = ((Vector)vector).getCActiveSchedule();
-			int[][] CIntepretation = ((Vector)vector).getCIntepretation();
-			int cmax3 = calculateGammaMatrix(CActiveSchedule, vector.getTotalJobs(), vector.getTotalStations());
-			int cmax2 = calculateGammaMatrix(CIntepretation, vector.getTotalJobs(), vector.getTotalStations());
-			
-			if(cmax3<cmax)
-				cmax =cmax3;
-			if(cmax2<cmax){
-				cmax = cmax2;
-				((Vector) vector).setNonDelayActive(true);
-			}
-			else{
-				((Vector) vector).setNonDelayActive(false);
-			}
-		}	
-			
 		return cmax;
 	}
 	

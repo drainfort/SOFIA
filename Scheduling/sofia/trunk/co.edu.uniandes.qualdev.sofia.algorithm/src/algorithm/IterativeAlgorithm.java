@@ -3,6 +3,7 @@ package algorithm;
 import java.util.Properties;
 
 import structure.IStructure;
+import structure.impl.decoding.Decoding;
 import common.utils.ExecutionResults;
 import control.Control;
 import control.IParametersLoader;
@@ -53,6 +54,8 @@ public class IterativeAlgorithm {
 	 * The file with the information about the configuration of the algorithm 
 	 */
 	private Properties algorithmConfiguration;
+	
+	private Decoding decodingStrategy;
 
 	// -----------------------------------------------
 	// Constructor
@@ -90,6 +93,11 @@ public class IterativeAlgorithm {
 		
 		initialSolutionFile = (String) algorithmConfiguration
 				.getProperty("scheduling.initialSolutionFile");
+		
+		decodingStrategy = (Decoding) getClass()
+				.getClassLoader()
+				.loadClass(algorithmConfiguration.getProperty("scheduling.decodingStrategy"))
+				.newInstance();
 	}
 
 	// -----------------------------------------------
@@ -147,5 +155,13 @@ public class IterativeAlgorithm {
 
 	public void setInitialSolutionFile(String initialSolutionFile) {
 		this.initialSolutionFile = initialSolutionFile;
+	}
+	
+	public Decoding getDecodingStrategy() {
+		return decodingStrategy;
+	}
+
+	public void setDecodingStrategy(Decoding decodingStrategy) {
+		this.decodingStrategy = decodingStrategy;
 	}
 }

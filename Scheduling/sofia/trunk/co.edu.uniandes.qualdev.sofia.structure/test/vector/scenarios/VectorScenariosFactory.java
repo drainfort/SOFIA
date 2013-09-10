@@ -1,9 +1,9 @@
 package vector.scenarios;
 
 import common.types.OperationIndexVO;
-
 import structure.impl.Operation;
 import structure.impl.Vector;
+import structure.impl.decoding.SequencialDecoding;
 
 /**
  * Class that is able to build a simple scenario for testing the vector structure
@@ -23,7 +23,7 @@ public class VectorScenariosFactory {
 	 * @return vector
 	 */
 	public static Vector buildDummySolution(){
-		Vector vector = new Vector(3, 3);
+		Vector vector = new Vector(3, 3, new SequencialDecoding());
 		
 		Operation o1 = new Operation(new OperationIndexVO(0, 0, 0));
 		vector.scheduleOperation(o1.getOperationIndex());

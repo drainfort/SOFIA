@@ -29,7 +29,8 @@ public class MultiStartAlgorithm extends SchedulingAlgorithm {
 		int neighborAmount = 0;
 		
 		for (int i = 0; i < startsNumber && !optimal; i++) {
-			IStructure initialSolution = constructiveAlgorithm.getInitialSolutionBuilder().createInitialSolution(problem.getProblemFiles(), problem.getBetas(), problem.getStructrureFactory(), iterativeAlgorithm.getGammaCalculator());
+			IStructure initialSolution = constructiveAlgorithm.getInitialSolutionBuilder().createInitialSolution(problem.getProblemFiles(), problem.getBetas(), 
+					problem.getStructrureFactory(), iterativeAlgorithm.getGammaCalculator(), iterativeAlgorithm.getDecodingStrategy());
 			
 			System.out.print("s"+i+": ");
 			ExecutionResults results = iterativeAlgorithm.execute(problem, initialSolution);

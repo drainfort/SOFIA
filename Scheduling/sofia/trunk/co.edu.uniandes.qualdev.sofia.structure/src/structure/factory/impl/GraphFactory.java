@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
-
 import structure.IOperation;
 import structure.IStructure;
 import structure.factory.AbstractStructureFactory;
 import structure.impl.Graph;
 import structure.impl.Operation;
+import structure.impl.decoding.Decoding;
 
 /**
  * Factory that is able to create a graph
@@ -23,7 +23,7 @@ public class GraphFactory extends AbstractStructureFactory {
 
 	@Override
 	public IStructure createSolutionStructure(Integer[][] A,
-			ArrayList<String> problemFiles, ArrayList<BetaVO> betas)
+			ArrayList<String> problemFiles, ArrayList<BetaVO> betas, Decoding decondingStrategy)
 			throws Exception {
 		IStructure graph = createSolutionGraph(A, problemFiles.get(0), betas);
 		return graph;
@@ -31,7 +31,7 @@ public class GraphFactory extends AbstractStructureFactory {
 
 	@Override
 	public IStructure createSolutionStructure(ArrayList<String> problemFiles,
-			ArrayList<BetaVO> betas) throws Exception {
+			ArrayList<BetaVO> betas, Decoding decondingStrategy) throws Exception {
 		return new Graph(problemFiles.get(0), betas);
 	}
 

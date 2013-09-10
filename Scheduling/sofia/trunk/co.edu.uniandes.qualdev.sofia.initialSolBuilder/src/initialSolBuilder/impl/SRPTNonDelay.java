@@ -1,7 +1,6 @@
 package initialSolBuilder.impl;
 
 import gammaCalculator.IGammaCalculator;
-
 import initialSolBuilder.IInitialSolBuilder;
 
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import structure.IOperation;
 import structure.IStructure;
 import structure.factory.AbstractStructureFactory;
-
+import structure.impl.decoding.Decoding;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.utils.MatrixUtils;
@@ -49,7 +48,8 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 	// -----------------------------------------------
 	
 	@Override
-	public IStructure createInitialSolution(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator) throws Exception {
+	public IStructure createInitialSolution(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, 
+			String structureFactory, IGammaCalculator gammaCalculator, Decoding decodingStrategy) throws Exception {
 		boolean travelTimesIncluded = false;
 		boolean setupTimesIncluded = false;
 		
@@ -90,12 +90,12 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 		}
 		
 		// -------------------------------------------------------------------------------------------------------------------
-		// ALGORITMO CONSTRUCTIVO: CONSTRUYENDO LA SOLUCIÓN INICIAL
+		// ALGORITMO CONSTRUCTIVO: CONSTRUYENDO LA SOLUCIï¿½N INICIAL
 		// -------------------------------------------------------------------------------------------------------------------
 	
-		// Construyendo un arreglo con las operaciones sin programar basandose en el problema que ya está definido
+		// Construyendo un arreglo con las operaciones sin programar basandose en el problema que ya estï¿½ definido
 		// Este arreglo incluye TODAS las operaciones posibles. Por ejemplo: <0,0,0>, <0,0,1>, <0,0,2> ...
-		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas);
+		IStructure finalList = AbstractStructureFactory.createNewInstance(structureFactory).createSolutionStructure(problemFiles, betas, decodingStrategy);
 		OperationIndexVO[][] problem = finalList.getProblem();
 		
 		// Arreglo con las operaciones sin programar
@@ -116,8 +116,8 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			IOperation operationI = operations.get(i);
 			int remainingTime = 0;
 			
-			// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitó. De esta manera 
-			// se cumple la restricción de no visitar más de una máquina en la misma estación. 
+			// Esta lista me sirve para saber cuales son las estaciones que el job actual (identificado con i) ya visitï¿½. De esta manera 
+			// se cumple la restricciï¿½n de no visitar mï¿½s de una mï¿½quina en la misma estaciï¿½n. 
 			ArrayList<Integer> listStations = new ArrayList<Integer>();
 			for (int j = 0; j < operations.size(); j++) {
 				IOperation operationJ = operations.get(j);
@@ -139,7 +139,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 		int operationsAmount = T.length * T[0].length;
 		int index = 0;
 		
-		// CICLO PRINCIPAL: Iteracion del algoritmo constructivo. Por cada iteración, programa una operacion
+		// CICLO PRINCIPAL: Iteracion del algoritmo constructivo. Por cada iteraciï¿½n, programa una operacion
 		while(index < operationsAmount){
 			
 			// Calcula el menor tiempo de inicio dentro de las operaciones sin programar.
@@ -248,7 +248,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 			travelTimesIncluded=true;
 		
 		// Esta es la lista de permutacion que se va a retornar.
-		// Arranca vacía y en cada iteración se le agrega una operación.
+		// Arranca vacï¿½a y en cada iteraciï¿½n se le agrega una operaciï¿½n.
 		IStructure finalList = structure;
 
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();

@@ -1185,6 +1185,12 @@ public class Graph extends AbstractStructure {
 			}
 		}
 	}
+
+	@Override
+	public void decodeSolution() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 	//	public int getTT(int stationId1, int stationId2){

@@ -7,7 +7,7 @@ import structure.IStructure;
 import structure.factory.AbstractStructureFactory;
 import structure.impl.Operation;
 import structure.impl.Vector;
-
+import structure.impl.decoding.Decoding;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 
@@ -25,10 +25,10 @@ public class VectorFactory extends AbstractStructureFactory {
 	
 	@Override
 	public IStructure createSolutionStructure(Integer[][] A,
-			ArrayList<String> problemFiles, ArrayList<BetaVO> betas)
+			ArrayList<String> problemFiles, ArrayList<BetaVO> betas, Decoding decondingStrategy)
 			throws Exception {
 			
-		IStructure solutionVector = new Vector(problemFiles.get(0), betas);
+		IStructure solutionVector = new Vector(problemFiles.get(0), betas, decondingStrategy);
 		
 		int jobsNumber = A.length;
 		int totalStations = A[0].length;
@@ -60,13 +60,13 @@ public class VectorFactory extends AbstractStructureFactory {
 	}
 
 	@Override
-	public IStructure createSolutionStructure(ArrayList<String> problemFiles, ArrayList<BetaVO> betas) throws Exception {
+	public IStructure createSolutionStructure(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, Decoding decondingStrategy) throws Exception {
 		if(problemFiles.size()<3){
-			IStructure solutionVector = new Vector(problemFiles.get(0), betas);
+			IStructure solutionVector = new Vector(problemFiles.get(0), betas, decondingStrategy);
 			return solutionVector;
 		}
 		else{
-			IStructure solutionVector = new Vector(problemFiles.get(0), problemFiles.get(2) , betas);
+			IStructure solutionVector = new Vector(problemFiles.get(0), problemFiles.get(2) , betas, decondingStrategy);
 			
 			return solutionVector;
 		}

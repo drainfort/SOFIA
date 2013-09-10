@@ -2,13 +2,12 @@
 package initialSolBuilder.impl;
 
 import gammaCalculator.IGammaCalculator;
-
 import initialSolBuilder.IInitialSolBuilder;
 
 import java.util.ArrayList;
 
 import structure.IStructure;
-
+import structure.impl.decoding.Decoding;
 import common.types.BetaVO;
 
 /**
@@ -47,7 +46,7 @@ public class BestDispatchingRule implements IInitialSolBuilder{
 	
 	@Override
 	public IStructure createInitialSolution(ArrayList<String> problemFiles,
-			ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator) throws Exception {
+			ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator, Decoding decodingStrategy) throws Exception {
 		
 		LPTNonDelay lpt = new LPTNonDelay();
 		LRPTNonDelay lrpt = new LRPTNonDelay();
@@ -58,10 +57,10 @@ public class BestDispatchingRule implements IInitialSolBuilder{
 //		AFSSPTNonDelay afsspt = new AFSSPTNonDelay();
 //		AFSSRPTNonDelay afssrpt = new AFSSRPTNonDelay();
 		
-		IStructure lptSolution = lpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
-		IStructure lrptSolution = lrpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
-		IStructure sptSolution = spt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
-		IStructure srptSolution = srpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
+		IStructure lptSolution = lpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator, decodingStrategy);
+		IStructure lrptSolution = lrpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator, decodingStrategy);
+		IStructure sptSolution = spt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator, decodingStrategy);
+		IStructure srptSolution = srpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator, decodingStrategy);
 //		IStructure afslptSolution = afslpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
 //		IStructure afslrptSolution = afslrpt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);
 //		IStructure afssptSolution = afsspt.createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator);

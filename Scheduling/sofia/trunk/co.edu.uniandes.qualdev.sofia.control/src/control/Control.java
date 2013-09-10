@@ -111,10 +111,6 @@ public abstract class Control {
 		ArrayList<GanttTask> tasksFinalSolution = new ArrayList<GanttTask>();
 		ArrayList<OperationIndexVO> operationIndexesFinalSolution = new ArrayList<OperationIndexVO>();
 		ArrayList<IOperation> operations = solution.getOperations();
-		if(solution instanceof Vector){
-			if(((Vector)solution).isNonDelayActive())
-				operations = ((Vector)solution).getVectorDecodNonDelay();
-		}
 		
 		for (IOperation operation : operations) {
 			if (operation!=null && !machineNotDefinedInGantt(tasksFinalSolution, operation.getOperationIndex().getStationId())) {
@@ -122,7 +118,7 @@ public abstract class Control {
 				task.setStationIdentifier(operation.getOperationIndex().getStationId());
 				Station temp = findStation(stations, operation.getOperationIndex().getStationId()+1);
 				if(temp==null){
-					task.setName("Estación " + operation.getOperationIndex().getStationId());
+					task.setName("Station " + operation.getOperationIndex().getStationId());
 				}
 				else{
 					task.setName(temp.getNameClass()+" "+ temp.getAtributes().get(0).getValue());
@@ -142,7 +138,7 @@ public abstract class Control {
 			}
 			else{
 				operationIndex.setNameJob("Trabajo "+operation.getOperationIndex().getJobId());
-				operationIndex.setNameMachine("Máquina " + operation.getOperationIndex().getMachineId());
+				operationIndex.setNameMachine("Mï¿½quina " + operation.getOperationIndex().getMachineId());
 			}
 			operationIndexesFinalSolution.add(operationIndex);
 			

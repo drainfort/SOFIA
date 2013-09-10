@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//src/initialSolBuilder/impl/LPTNonDelay.java=UTF-8
+encoding//src/initialSolBuilder/impl/LRPTNonDelay.java=UTF-8
+encoding//src/initialSolBuilder/impl/SPTNonDelay.java=UTF-8
+encoding//src/initialSolBuilder/impl/SRPTNonDelay.java=UTF-8
+encoding//src/initialSolBuilder/impl/StochasticERM.java=UTF-8
+encoding//src/initialSolBuilder/impl/StochasticLPTNonDelay.java=UTF-8
+encoding//src/initialSolBuilder/impl/StochasticSPTNonDelay.java=UTF-8
+encoding//test/initialSolBuilder/test/LPTNonDelayTest.java=UTF-8
+encoding//test/initialSolBuilder/test/LRPTNonDelayTest.java=UTF-8
+encoding//test/initialSolBuilder/test/SPTNonDelayTest.java=UTF-8
+encoding//test/initialSolBuilder/test/SRPTNonDelayTest.java=UTF-8

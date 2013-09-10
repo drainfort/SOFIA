@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import structure.IOperation;
 import structure.IStructure;
-
+import structure.impl.decoding.Decoding;
 import common.types.BetaVO;
 
 
@@ -42,7 +42,7 @@ public abstract class AbstractStructureFactory {
 	 * @throws Exception
 	 */
 	public abstract IStructure createSolutionStructure(Integer[][] A,
-			ArrayList<String> problemFiles, ArrayList<BetaVO> betas)
+			ArrayList<String> problemFiles, ArrayList<BetaVO> betas, Decoding decondingStrategy)
 					throws Exception;
 	
 	/**
@@ -51,7 +51,7 @@ public abstract class AbstractStructureFactory {
 	 * @return vector Empty solution vector
 	 * @throws Exception
 	 */
-	public abstract IStructure createSolutionStructure(ArrayList<String> problemFiles, ArrayList<BetaVO> betas)
+	public abstract IStructure createSolutionStructure(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, Decoding decondingStrategy)
 					throws Exception;
 	
 	/**

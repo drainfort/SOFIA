@@ -274,6 +274,8 @@ public interface IStructure {
 	// Manipulation methods
 	// -------------------------------------------------
 
+	public void decodeSolution();
+	
 	/**
 	 * Add an operation to the current operation
 	 * 
