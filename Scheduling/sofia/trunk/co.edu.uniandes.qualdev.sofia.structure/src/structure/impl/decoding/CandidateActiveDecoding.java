@@ -2,7 +2,10 @@ package structure.impl.decoding;
 
 import java.util.ArrayList;
 
+import common.types.OperationIndexVO;
+
 import structure.IOperation;
+import structure.impl.Operation;
 
 /**
  * Class that implements an active decoding for permutation lists. 
@@ -19,13 +22,93 @@ public class CandidateActiveDecoding extends Decoding{
 	
 	@Override
 	public ArrayList<IOperation> decode(ArrayList<IOperation> originalVector) {
-
-//		System.out.println();
-//		System.out.println();
-//		System.out.println("Decoding: " + originalVector);
-//		System.out.println("Decoding.size: " + originalVector.size());
-//		System.out.println();
 		
+		ArrayList<IOperation> unscheduledOperations = new ArrayList<IOperation>();
+		for(int i =0; i< vector.getProblem().length;i++){
+			for(int j =0; j< vector.getProblem()[i].length;j++){
+				unscheduledOperations.add(new Operation(vector.getProblem()[i][j]));
+			}
+		}
+		
+		
+		vector.setVectorDecodSimple(new ArrayList<IOperation>());
+		int pos = 0;
+		for(int i=0; i< originalVector.size();i++){
+			IOperation actual = originalVector.get(i);
+			
+			ArrayList<IOperation> candidateMachines = vector.getOperationsbyJobAndStation(actual.getOperationIndex());
+			int minStartTime = Integer.MAX_VALUE;
+			IOperation minStartTimeOperation = null;
+			for(int j =0; j< candidateMachines.size();j++){
+				vector.scheduleOperation(candidateMachines.get(j).getOperationIndex());
+				vector.calculateCMatrix();
+				IOperation candidate = vector.getVector().get(pos);
+				if(candidate.getInitialTime()<minStartTime){
+					minStartTime = candidate.getInitialTime();
+					minStartTimeOperation = candidate;
+				}
+				vector.getOperations().remove(pos);
+				
+			}
+			
+			int minStartTime2 = Integer.MAX_VALUE;
+			IOperation minStartTimeUnschedulledOperation = null;
+			int minfinalTime = Integer.MAX_VALUE;
+			
+			for(int j =0; j< unscheduledOperations.size();j++){
+				boolean a = vector.scheduleOperation(unscheduledOperations.get(j).getOperationIndex());
+				if(a){
+					vector.calculateCMatrix();
+					IOperation candidate = vector.getVector().get(pos);
+					if(candidate.getInitialTime()<minStartTime2){
+						minStartTime2 = candidate.getInitialTime();
+						minStartTimeUnschedulledOperation = candidate;
+						minfinalTime = candidate.getFinalTime();
+					}
+					vector.getOperations().remove(pos);
+				}
+			}
+			
+			OperationIndexVO newOperation = minStartTimeOperation.getOperationIndex();
+			if(minStartTimeOperation.equals(minStartTimeUnschedulledOperation)){
+				newOperation = minStartTimeOperation.getOperationIndex();
+			}
+			else if(minStartTimeOperation.getOperationIndex().getJobId()==minStartTimeUnschedulledOperation.getOperationIndex().getJobId()){
+				if(minStartTime2<minStartTime && minfinalTime< minStartTime - vector.getTT(minStartTimeUnschedulledOperation.getOperationIndex().getStationId(), minStartTimeOperation.getOperationIndex().getStationId()))
+				{
+					newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
+				}
+			}
+			else if(minStartTimeOperation.getOperationIndex().getStationId()==minStartTimeUnschedulledOperation.getOperationIndex().getStationId()){
+				if(minStartTime2<minStartTime){
+					newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
+				}
+			}
+			
+			vector.scheduleOperation(newOperation);
+			vector.calculateCMatrix();
+			pos++;
+			
+			for(int j =0; j< unscheduledOperations.size();j++){
+				OperationIndexVO candidate = unscheduledOperations.get(j).getOperationIndex();
+				if(candidate.getJobId()== newOperation.getJobId()&& candidate.getStationId()== newOperation.getStationId()){
+					unscheduledOperations.remove(j);
+					j--;
+				}
+			}
+			for(int j = 0; j< originalVector.size();j++){
+				OperationIndexVO candidate = originalVector.get(j).getOperationIndex();
+				if(candidate.getJobId()== newOperation.getJobId()&& candidate.getStationId()== newOperation.getStationId()){
+					originalVector.remove(j);
+					i--;
+				}
+			}
+
+		}
+		
+		return vector.getVector();
+		
+		/*
 		ArrayList<IOperation> candidateActiveSchedule = new ArrayList<IOperation>();
 		
 		for (int i = 0; i < originalVector.size(); i++){
@@ -33,7 +116,6 @@ public class CandidateActiveDecoding extends Decoding{
 			candidateActiveSchedule.addAll(iOperations);
 		}
 
-		
 		// Updating the initial times
 		for (int i = 0; i < candidateActiveSchedule.size(); i++){
 			IOperation iOperation = candidateActiveSchedule.get(i);
@@ -42,14 +124,9 @@ public class CandidateActiveDecoding extends Decoding{
 			iOperation.setScheduled(false);
 		}
 		this.calculateCMatrix(candidateActiveSchedule);
-		
-//		System.out.println("candidateActiveSchedule: " + candidateActiveSchedule);
-//		System.out.println("candidateActiveSchedule.size: " + candidateActiveSchedule.size());
-//		System.out.println();
-		
+				
 		for (int i = 0; i < originalVector.size(); i++){
 			IOperation current = candidateActiveSchedule.get(i);
-//			System.out.println("current: " + current);
 			
 			// Obtaining the candidates operations and selecting the one with lowest initial time
 			IOperation candidate = null;
@@ -84,20 +161,13 @@ public class CandidateActiveDecoding extends Decoding{
 					}
 				}
 			}
-			
-//			System.out.println();
-//			System.out.println("candidate:" + candidate);
-//			System.out.println("firstStartOperation: " + firstStartOperation);
-			
-			
-			
+
 			if(firstStartOperation != null){
 				int minEndTime = firstStartOperation.getFinalTime();
 				
 				if(candidate.getOperationIndex().getJobId() == firstStartOperation.getOperationIndex().getJobId()
 						&& minEndTime <= minInitialTime - vector.getTT(candidate.getOperationIndex().getStationId(), firstStartOperation.getOperationIndex().getStationId())){
 					
-//					System.out.println("Schedule firstStartOperation");
 //					Schedule firstStartOperation i.e., remove the machine operations and insert it in the current index
 					firstStartOperation.setScheduled(true);
 					ArrayList<IOperation> toRemove = new ArrayList<IOperation>();
@@ -119,8 +189,7 @@ public class CandidateActiveDecoding extends Decoding{
 					
 				}else if(candidate.getOperationIndex().getJobId() != firstStartOperation.getOperationIndex().getJobId()
 						&& minEndTime <= minInitialTime){
-					
-//					System.out.println("Schedule firstStartOperation");
+
 					//Schedule firstStartOperation i.e., remove the machine operations and insert it in the current index
 					firstStartOperation.setScheduled(true);
 					ArrayList<IOperation> toRemove = new ArrayList<IOperation>();
@@ -141,7 +210,6 @@ public class CandidateActiveDecoding extends Decoding{
 					this.calculateCMatrix(candidateActiveSchedule);
 					
 				}else{
-//					System.out.println("Schedule candidate");
 					//Schedule candidate i.e., remove the machine operations
 					candidate.setScheduled(true);
 					ArrayList<IOperation> toRemove = new ArrayList<IOperation>();
@@ -163,7 +231,6 @@ public class CandidateActiveDecoding extends Decoding{
 				}
 			}else{
 				// Last operation. Schedule current
-//				System.out.println("Schedule last candidate");
 				candidate.setScheduled(true);
 				ArrayList<IOperation> toRemove = new ArrayList<IOperation>();
 				for (int j = i; j < candidateActiveSchedule.size(); j++) {
@@ -182,10 +249,6 @@ public class CandidateActiveDecoding extends Decoding{
 				
 				this.calculateCMatrix(candidateActiveSchedule);
 			}
-//			System.out.println("candidateActiveSchedule: " + candidateActiveSchedule);
-//			System.out.println("candidateActiveSchedule.size: " + candidateActiveSchedule.size());
-//			System.out.println();
-//			System.out.println();
 		}
 		
 		if(candidateActiveSchedule.size() != 16){
@@ -193,5 +256,6 @@ public class CandidateActiveDecoding extends Decoding{
 		}
 		
 		return candidateActiveSchedule;
+		*/
 	}
 }
