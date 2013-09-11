@@ -18,7 +18,7 @@ public class ConfigurationFileLauncher {
 	// Constants
 	// ----------------------------------------------
 	
-	public static final String CONFIGURATION_FILE = "./data/config/configuration.properties";
+	public static final String CONFIGURATION_FILE = "./config/configuration.properties";
 	
 	// ----------------------------------------------
 	// Constants
