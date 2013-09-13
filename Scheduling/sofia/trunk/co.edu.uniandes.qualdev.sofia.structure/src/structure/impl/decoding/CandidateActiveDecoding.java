@@ -41,7 +41,7 @@ public class CandidateActiveDecoding extends Decoding{
 			IOperation minStartTimeOperation = null;
 			for(int j =0; j< candidateMachines.size();j++){
 				vector.scheduleOperation(candidateMachines.get(j).getOperationIndex());
-				vector.calculateCMatrix(i);
+				vector.calculateCMatrix(pos);
 				IOperation candidate = vector.getVector().get(pos);
 				if(candidate.getInitialTime()<minStartTime){
 					minStartTime = candidate.getInitialTime();
@@ -58,7 +58,7 @@ public class CandidateActiveDecoding extends Decoding{
 			for(int j =0; j< unscheduledOperations.size();j++){
 				boolean a = vector.scheduleOperation(unscheduledOperations.get(j).getOperationIndex());
 				if(a){
-					vector.calculateCMatrix(i + 1);
+					vector.calculateCMatrix(pos);
 					IOperation candidate = vector.getVector().get(pos);
 					if(candidate.getInitialTime()<minStartTime2){
 						minStartTime2 = candidate.getInitialTime();
@@ -86,7 +86,7 @@ public class CandidateActiveDecoding extends Decoding{
 			}
 			
 			vector.scheduleOperation(newOperation);
-			vector.calculateCMatrix(i);
+			vector.calculateCMatrix(0);
 			pos++;
 			
 			for(int j =0; j< unscheduledOperations.size();j++){
