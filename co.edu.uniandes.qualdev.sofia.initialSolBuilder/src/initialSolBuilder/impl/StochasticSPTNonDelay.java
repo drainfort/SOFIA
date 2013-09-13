@@ -163,7 +163,7 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 			if(selectedOperation!=null)
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
 			
-			finalList.calculateCMatrix();
+			finalList.calculateCMatrix(index);
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
@@ -294,7 +294,7 @@ public class StochasticSPTNonDelay implements IInitialSolBuilder{
 					if(selectedOperation!=null)
 						finalList.scheduleOperation(selectedOperation.getOperationIndex());
 					
-					finalList.calculateCMatrix();
+					finalList.calculateCMatrix(index);
 
 					// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 					for (IOperation iOperation : operations) {

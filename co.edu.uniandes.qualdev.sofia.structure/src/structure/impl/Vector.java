@@ -250,14 +250,13 @@ public class Vector extends AbstractStructure{
 	}
 	
 	@Override
-	public int[][] calculateCMatrix() {
+	public int[][] calculateCMatrix(int initialPosition) {
 		if(synch){
 			return C;
 		}else{
-			// Decodificaci�n simple en la que la lista de permutaci�n representa el orden en el que las operaciones deben ser programadas. 
 			int [][] CSolution = new int[getTotalJobs()][getTotalStations() + 1];
 			
-			for (int i = 0; i < vector.size(); i++) {
+			for (int i = initialPosition; i < vector.size(); i++) {
 				IOperation Cij = vector.get(i);
 				
 				int Ciminus1J = getCiminus1J(Cij, i, vector) != null ? getCiminus1J(Cij, i, vector).getFinalTime() : 0;
@@ -345,7 +344,7 @@ public class Vector extends AbstractStructure{
 	@Override
 	public int[][] calculateInitialTimesMatrix() {
 		int [][] matrix = new int[getTotalJobs()][getTotalStations()];
-		int [][] CMatrix = calculateCMatrix();
+		int [][] CMatrix = calculateCMatrix(0);
 		for(int i=0; i<matrix.length;i++)
 		{
 			for(int j=0; j<matrix[i].length;j++)
@@ -658,7 +657,7 @@ public class Vector extends AbstractStructure{
 	 */
 	public ArrayList<CriticalPath> getCriticalPaths(){
 		synch=false;
-		calculateCMatrix();
+		calculateCMatrix(0);
 		int [][] cmatrix = C;
 		
 		ArrayList<CriticalPath> routes = new ArrayList<CriticalPath>();

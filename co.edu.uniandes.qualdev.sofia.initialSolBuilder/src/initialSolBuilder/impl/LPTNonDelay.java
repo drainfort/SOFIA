@@ -166,7 +166,7 @@ public class LPTNonDelay implements IInitialSolBuilder{
 			}
 			
 			// Calcula C con la nueva operaci�n programada
-			finalList.calculateCMatrix();
+			finalList.calculateCMatrix(index);
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
@@ -297,7 +297,7 @@ public class LPTNonDelay implements IInitialSolBuilder{
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
 			}
 				
-			finalList.calculateCMatrix();
+			finalList.calculateCMatrix(index);
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {

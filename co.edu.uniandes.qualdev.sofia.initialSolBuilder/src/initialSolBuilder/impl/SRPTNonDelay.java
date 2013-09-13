@@ -180,7 +180,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
 			}
 			
-			finalList.calculateCMatrix();
+			finalList.calculateCMatrix(index);
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
@@ -322,7 +322,7 @@ public class SRPTNonDelay implements IInitialSolBuilder{
 				removeAll(operations, selectedOperation);
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
 			}
-			finalList.calculateCMatrix();
+			finalList.calculateCMatrix(index);
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {

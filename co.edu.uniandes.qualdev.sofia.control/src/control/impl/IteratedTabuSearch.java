@@ -247,7 +247,7 @@ public class IteratedTabuSearch extends Control {
 		for (int i = 0; i < toStruggle.size(); i++) {
 			Sa.scheduleOperation(toStruggle.get(i).getOperationIndex());
 		}
-		Sa.calculateCMatrix();
+		Sa.calculateCMatrix(0);
 		
 		return Sa;
 	}

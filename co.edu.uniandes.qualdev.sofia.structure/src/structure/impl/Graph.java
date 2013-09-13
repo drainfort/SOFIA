@@ -485,7 +485,7 @@ public class Graph extends AbstractStructure {
 	}
 
 	@Override
-	public int[][] calculateCMatrix() throws Exception{
+	public int[][] calculateCMatrix(int initialPosition) throws Exception{
 		C = new int[totalJobs][totalStations + 1];
 		for (int i = 0; i < totalJobs; i++) {
 			for (int j = 0; j < totalStations; j++) {
