@@ -48,7 +48,6 @@ public class CandidateActiveDecoding extends Decoding{
 					minStartTimeOperation = candidate;
 				}
 				vector.getOperations().remove(pos);
-				
 			}
 			
 			int minStartTime2 = Integer.MAX_VALUE;
