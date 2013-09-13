@@ -75,7 +75,7 @@ public class Test_ParallelMachines {
 		vector.scheduleOperation(new OperationIndexVO(0, 3, 3, 7));
 		
 		System.out.println(vector.getVector());
-		MatrixUtils.printMatrix(vector.calculateCMatrix());
+		MatrixUtils.printMatrix(vector.calculateCMatrix(0));
 	}
 	
 	@Test

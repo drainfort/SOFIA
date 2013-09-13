@@ -6,4 +6,5 @@ encoding//src/structure/impl/decoding/Decoding.java=UTF-8
 encoding//src/structure/impl/decoding/NonDelayDecoding.java=UTF-8
 encoding//src/structure/impl/decoding/SequencialDecoding.java=UTF-8
 encoding//test/vector/testcases/Test_CalculateCMatrix.java=UTF-8
+encoding//test/vector/testcases/Test_DecodeCandidateActive.java=UTF-8
 encoding//test/vector/testcases/Test_DecodeNonDelay.java=UTF-8

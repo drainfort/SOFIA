@@ -44,7 +44,7 @@ public class Test_CalculateCMatrix {
 	@Test
 	public void testCalculateCMatrix() throws Exception {
 		// Initial route for the Job 0: EMPTY
-		int[][] c = problem.calculateCMatrix();
+		int[][] c = problem.calculateCMatrix(0);
 		MatrixUtils.printMatrix(c);
 		
 		Assert.assertTrue("Invalid value of C for the operation <0, 0>", 

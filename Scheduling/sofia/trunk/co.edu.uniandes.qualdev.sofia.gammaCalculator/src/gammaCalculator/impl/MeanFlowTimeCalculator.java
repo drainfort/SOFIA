@@ -26,7 +26,7 @@ public class MeanFlowTimeCalculator implements IGammaCalculator {
 	@Override
 	public int calculateGamma(IStructure vector) throws Exception {
 		vector.decodeSolution();
-		C = vector.calculateCMatrix();
+		C = vector.calculateCMatrix(0);
 		int meanFlowTime = 0;
 		for (int i = 0; i < C.length; i++) {
 			meanFlowTime += C[i][vector.getTotalStations()];

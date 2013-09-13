@@ -220,11 +220,11 @@ public class ConfigurationFileLauncher {
 			}
 			ChartPrinter.getInstance().addResults(results);
 		}
-		File destinationFolder = new File("./results/Om_TT/" + userId);
+		File destinationFolder = new File("./results/" + userId);
 		if(!destinationFolder.exists()){
-			destinationFolder.mkdir();
+			destinationFolder.mkdirs();
 		}
-		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/" + userId + "/experiment-results-" + System.currentTimeMillis() + ".html");
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/" + userId + "/experiment-results-" + System.currentTimeMillis() + ".html");
 	}
 	
 	/**

@@ -149,7 +149,7 @@ public class StochasticERM implements IInitialSolBuilder{
 				finalList.scheduleOperation(selectedOperation.getOperationIndex());
 			
 			//Calcular nuevos cij
-			finalList.calculateCMatrix();
+			finalList.calculateCMatrix(index);
 
 			// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 			for (IOperation iOperation : operations) {
@@ -266,7 +266,7 @@ public class StochasticERM implements IInitialSolBuilder{
 						finalList.scheduleOperation(selectedOperation.getOperationIndex());
 					
 					//Calcular nuevos cij
-					finalList.calculateCMatrix();
+					finalList.calculateCMatrix(index);
 
 					// Actualizando los tiempos de inicio de las operaciones que quedan por programar
 					for (IOperation iOperation : operations) {

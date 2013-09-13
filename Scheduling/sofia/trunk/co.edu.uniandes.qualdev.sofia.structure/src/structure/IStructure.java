@@ -178,7 +178,7 @@ public interface IStructure {
 	 * Calculates the C matrix of the current solution. That is calculate the
 	 * initial and final time for each node (operation)
 	 */
-	public int[][] calculateCMatrix() throws Exception;
+	public int[][] calculateCMatrix(int initialPosition) throws Exception;
 
 	/**
 	 * Updates the C matrix according to an interchange (swap) given by the pair

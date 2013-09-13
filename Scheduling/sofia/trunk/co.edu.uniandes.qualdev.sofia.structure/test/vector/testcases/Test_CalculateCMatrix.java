@@ -69,7 +69,7 @@ public class Test_CalculateCMatrix {
 	public void testCalculateCMatrix(){
 		System.out.println("vector: " + vector.getOperations());
 		
-		int[][] C = vector.calculateCMatrix();
+		int[][] C = vector.calculateCMatrix(0);
 		
 		MatrixUtils.printMatrix(C);
 		

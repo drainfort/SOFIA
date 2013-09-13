@@ -76,7 +76,7 @@ public abstract class Control {
 	 * @throws Exception 
 	 */
 	protected ExecutionResults obtainExecutionResults(IStructure S0, IGammaCalculator gammaCalculator, boolean printTable, boolean printSolution, boolean printInitialSolution, boolean printLog) throws Exception {
-		S0.calculateCMatrix();
+		S0.calculateCMatrix(0);
 		executionResults.setBestCmax(gammaCalculator.calculateGamma(S0));
 		executionResults.setInitialCmax(gammaCalculator.calculateGamma(So));
 		executionResults.setPrintTable(printTable);
@@ -87,7 +87,7 @@ public abstract class Control {
 		//System.out.println("Valida la solucion:"+ validateSolution(S0));
 
 		if(printInitialSolution){
-			So.calculateCMatrix();
+			So.calculateCMatrix(0);
 			generateGanttTasks(So, true);
 		}
 		if(printSolution){

@@ -62,7 +62,7 @@ public class Test_DecodeActive {
 				vectorScenario.scheduleOperation(vectorScenario.getProblem()[i][j]);
 			}
 		}
-		vectorScenario.calculateCMatrix();
+		vectorScenario.calculateCMatrix(0);
 	}
 
 	// -----------------------------------------------
