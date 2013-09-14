@@ -96,7 +96,7 @@ public class TabuSearchRN extends Control {
 			neighborhodSize = nPr;
 		
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
-
+		
 		while (iterations >= 0 && nonImprovingOut >= 0 && !optimalAchieved) {
 			IStructure bestCandidate = null;
 			int gammaBestCandidate = Integer.MAX_VALUE;
