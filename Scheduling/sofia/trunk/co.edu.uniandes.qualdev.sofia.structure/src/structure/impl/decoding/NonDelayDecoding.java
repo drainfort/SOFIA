@@ -42,25 +42,20 @@ public class NonDelayDecoding extends Decoding{
 		// Main loop: Schedules one operation for each iteration according the constructive algorithm
 		while(index < operationsAmount){
 			
-			// Calculating the lowest initial time
+			// Calculating the lowest initial time and 
+			// selects the next operation to schedule according the lowest initial time
 			int minInitialTime = Integer.MAX_VALUE;
+			IOperation selectedOperation = null;
 			for (int i = index; i < vectorDecodNonDelay.size(); i++) {
 				IOperation operation = vectorDecodNonDelay.get(i);
 				int currentInitialTime = operation.getInitialTime();
 				
-				if(currentInitialTime < minInitialTime)
-					minInitialTime = currentInitialTime;
-			}
-			
-			// Selects the next operation to schedule according the lowest initial time 
-			IOperation selectedOperation = null;
-			for (int i = index; i < vectorDecodNonDelay.size(); i++) {
-				IOperation operation = vectorDecodNonDelay.get(i);
-				if(operation.getInitialTime() == minInitialTime){
+				if(currentInitialTime < minInitialTime){
 					selectedOperation = operation;
-					break;
+					minInitialTime = currentInitialTime;
 				}
-			}
+					
+			} 
 			
 			if(selectedOperation!=null){
 				selectedOperation.setScheduled(true);
