@@ -99,12 +99,12 @@ project0.addTask(parentTask011);
 ganttChartControl.addProject(project0);
 var project1 = new GanttProjectInfo(1, "Station 2", new Date(2010, 5, 2))
 var parentTask110= new GanttTaskInfo(110, "M?quina 3", new Date(2010, 5, 2),298.0, 100, "");
-parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 0", new Date(2010, 5, 2,144,0,0), 12, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 3", new Date(2010, 5, 2,144,0,0), 12, 100, ""));
 parentTask110.addChildTask(new GanttTaskInfo(1110, "Trabajo 1", new Date(2010, 5, 2,912,0,0), 12, 100, ""));
 parentTask110.addChildTask(new GanttTaskInfo(1120, "Trabajo 2", new Date(2010, 5, 2,1200,0,0), 10, 100, ""));
 project1.addTask(parentTask110);
 var parentTask111= new GanttTaskInfo(111, "M?quina 4", new Date(2010, 5, 2),298.0, 100, "");
-parentTask111.addChildTask(new GanttTaskInfo(1101, "Trabajo 3", new Date(2010, 5, 2,144,0,0), 12, 100, ""));
+parentTask111.addChildTask(new GanttTaskInfo(1101, "Trabajo 0", new Date(2010, 5, 2,144,0,0), 12, 100, ""));
 project1.addTask(parentTask111);
 ganttChartControl.addProject(project1);
 var project2 = new GanttProjectInfo(2, "Station 1", new Date(2010, 5, 2))
@@ -165,20 +165,20 @@ ganttChartControl.addProject(project3);
 ganttChartControl.create(htmlDiv1);}
 function createChartControl2(htmlDiv1){var ganttChartControl = new GanttChart();ganttChartControl.setImagePath("codebase/imgs/");ganttChartControl.setEditable(false);ganttChartControl.showContextMenu(true);ganttChartControl.showDescTask(false,'n,e');ganttChartControl.showDescProject(false,'n,d');	ganttChartControl.getMonthScaleLabel = function(date) {	return "";}
 ganttChartControl.num=0;
-var project0 = new GanttProjectInfo(0, "Station 0", new Date(2010, 5, 2))
-var parentTask010= new GanttTaskInfo(010, "M?quina 0", new Date(2010, 5, 2),308.0, 100, "");
-parentTask010.addChildTask(new GanttTaskInfo(0100, "Trabajo 3", new Date(2010, 5, 2,48,0,0), 12, 100, ""));
-parentTask010.addChildTask(new GanttTaskInfo(0110, "Trabajo 1", new Date(2010, 5, 2,336,0,0), 13, 100, ""));
-parentTask010.addChildTask(new GanttTaskInfo(0120, "Trabajo 2", new Date(2010, 5, 2,648,0,0), 11, 100, ""));
-parentTask010.addChildTask(new GanttTaskInfo(0130, "Trabajo 0", new Date(2010, 5, 2,1296,0,0), 8, 100, ""));
+var project0 = new GanttProjectInfo(0, "Station 2", new Date(2010, 5, 2))
+var parentTask010= new GanttTaskInfo(010, "M?quina 3", new Date(2010, 5, 2),308.0, 100, "");
+parentTask010.addChildTask(new GanttTaskInfo(0100, "Trabajo 1", new Date(2010, 5, 2,48,0,0), 8, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0110, "Trabajo 3", new Date(2010, 5, 2,408,0,0), 13, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0120, "Trabajo 0", new Date(2010, 5, 2,984,0,0), 10, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0130, "Trabajo 2", new Date(2010, 5, 2,1536,0,0), 14, 100, ""));
 project0.addTask(parentTask010);
 ganttChartControl.addProject(project0);
-var project1 = new GanttProjectInfo(1, "Station 2", new Date(2010, 5, 2))
-var parentTask110= new GanttTaskInfo(110, "M?quina 3", new Date(2010, 5, 2),308.0, 100, "");
-parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 1", new Date(2010, 5, 2,48,0,0), 8, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1110, "Trabajo 3", new Date(2010, 5, 2,408,0,0), 13, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1120, "Trabajo 0", new Date(2010, 5, 2,984,0,0), 10, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1130, "Trabajo 2", new Date(2010, 5, 2,1536,0,0), 14, 100, ""));
+var project1 = new GanttProjectInfo(1, "Station 0", new Date(2010, 5, 2))
+var parentTask110= new GanttTaskInfo(110, "M?quina 0", new Date(2010, 5, 2),308.0, 100, "");
+parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 3", new Date(2010, 5, 2,48,0,0), 12, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1110, "Trabajo 1", new Date(2010, 5, 2,336,0,0), 13, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1120, "Trabajo 2", new Date(2010, 5, 2,648,0,0), 11, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1130, "Trabajo 0", new Date(2010, 5, 2,1296,0,0), 8, 100, ""));
 project1.addTask(parentTask110);
 ganttChartControl.addProject(project1);
 var project2 = new GanttProjectInfo(2, "Station 1", new Date(2010, 5, 2))
@@ -241,8 +241,8 @@ function createChartControl3(htmlDiv1){var ganttChartControl = new GanttChart();
 ganttChartControl.num=0;
 var project0 = new GanttProjectInfo(0, "Station 3", new Date(2010, 5, 2))
 var parentTask010= new GanttTaskInfo(010, "M?quina 6", new Date(2010, 5, 2),299.0, 100, "");
-parentTask010.addChildTask(new GanttTaskInfo(0100, "Trabajo 2", new Date(2010, 5, 2,72,0,0), 11, 100, ""));
-parentTask010.addChildTask(new GanttTaskInfo(0110, "Trabajo 1", new Date(2010, 5, 2,528,0,0), 14, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0100, "Trabajo 1", new Date(2010, 5, 2,72,0,0), 14, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0110, "Trabajo 2", new Date(2010, 5, 2,624,0,0), 11, 100, ""));
 parentTask010.addChildTask(new GanttTaskInfo(0120, "Trabajo 0", new Date(2010, 5, 2,1320,0,0), 10, 100, ""));
 parentTask010.addChildTask(new GanttTaskInfo(0130, "Trabajo 3", new Date(2010, 5, 2,1560,0,0), 12, 100, ""));
 project0.addTask(parentTask010);
@@ -250,8 +250,8 @@ ganttChartControl.addProject(project0);
 var project1 = new GanttProjectInfo(1, "Station 0", new Date(2010, 5, 2))
 var parentTask110= new GanttTaskInfo(110, "M?quina 0", new Date(2010, 5, 2),299.0, 100, "");
 parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 0", new Date(2010, 5, 2,120,0,0), 12, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1110, "Trabajo 2", new Date(2010, 5, 2,456,0,0), 12, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1120, "Trabajo 1", new Date(2010, 5, 2,984,0,0), 9, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1110, "Trabajo 1", new Date(2010, 5, 2,528,0,0), 9, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1120, "Trabajo 2", new Date(2010, 5, 2,1008,0,0), 12, 100, ""));
 project1.addTask(parentTask110);
 var parentTask111= new GanttTaskInfo(111, "M?quina 1", new Date(2010, 5, 2),299.0, 100, "");
 parentTask111.addChildTask(new GanttTaskInfo(1101, "Trabajo 3", new Date(2010, 5, 2,120,0,0), 11, 100, ""));
@@ -259,9 +259,9 @@ project1.addTask(parentTask111);
 ganttChartControl.addProject(project1);
 var project2 = new GanttProjectInfo(2, "Station 1", new Date(2010, 5, 2))
 var parentTask210= new GanttTaskInfo(210, "M?quina 2", new Date(2010, 5, 2),299.0, 100, "");
-parentTask210.addChildTask(new GanttTaskInfo(2100, "Trabajo 1", new Date(2010, 5, 2,144,0,0), 10, 100, ""));
+parentTask210.addChildTask(new GanttTaskInfo(2100, "Trabajo 2", new Date(2010, 5, 2,144,0,0), 14, 100, ""));
 parentTask210.addChildTask(new GanttTaskInfo(2110, "Trabajo 0", new Date(2010, 5, 2,960,0,0), 9, 100, ""));
-parentTask210.addChildTask(new GanttTaskInfo(2120, "Trabajo 2", new Date(2010, 5, 2,1248,0,0), 14, 100, ""));
+parentTask210.addChildTask(new GanttTaskInfo(2120, "Trabajo 1", new Date(2010, 5, 2,1344,0,0), 10, 100, ""));
 project2.addTask(parentTask210);
 var parentTask211= new GanttTaskInfo(211, "M?quina 3", new Date(2010, 5, 2),299.0, 100, "");
 parentTask211.addChildTask(new GanttTaskInfo(2101, "Trabajo 3", new Date(2010, 5, 2,984,0,0), 12, 100, ""));
@@ -270,8 +270,8 @@ ganttChartControl.addProject(project2);
 var project3 = new GanttProjectInfo(3, "Station 2", new Date(2010, 5, 2))
 var parentTask310= new GanttTaskInfo(310, "M?quina 4", new Date(2010, 5, 2),299.0, 100, "");
 parentTask310.addChildTask(new GanttTaskInfo(3100, "Trabajo 3", new Date(2010, 5, 2,480,0,0), 13, 100, ""));
-parentTask310.addChildTask(new GanttTaskInfo(3110, "Trabajo 2", new Date(2010, 5, 2,840,0,0), 9, 100, ""));
-parentTask310.addChildTask(new GanttTaskInfo(3120, "Trabajo 1", new Date(2010, 5, 2,1296,0,0), 13, 100, ""));
+parentTask310.addChildTask(new GanttTaskInfo(3110, "Trabajo 1", new Date(2010, 5, 2,840,0,0), 13, 100, ""));
+parentTask310.addChildTask(new GanttTaskInfo(3120, "Trabajo 2", new Date(2010, 5, 2,1392,0,0), 9, 100, ""));
 project3.addTask(parentTask310);
 var parentTask311= new GanttTaskInfo(311, "M?quina 5", new Date(2010, 5, 2),299.0, 100, "");
 parentTask311.addChildTask(new GanttTaskInfo(3101, "Trabajo 0", new Date(2010, 5, 2,504,0,0), 11, 100, ""));
@@ -323,11 +323,11 @@ function createChartControl4(htmlDiv1){var ganttChartControl = new GanttChart();
 ganttChartControl.num=0;
 var project0 = new GanttProjectInfo(0, "Station 1", new Date(2010, 5, 2))
 var parentTask010= new GanttTaskInfo(010, "M?quina 1", new Date(2010, 5, 2),367.0, 100, "");
-parentTask010.addChildTask(new GanttTaskInfo(0100, "Trabajo 3", new Date(2010, 5, 2,144,0,0), 14, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0100, "Trabajo 2", new Date(2010, 5, 2,144,0,0), 14, 100, ""));
 parentTask010.addChildTask(new GanttTaskInfo(0110, "Trabajo 1", new Date(2010, 5, 2,528,0,0), 9, 100, ""));
 project0.addTask(parentTask010);
 var parentTask011= new GanttTaskInfo(011, "M?quina 2", new Date(2010, 5, 2),367.0, 100, "");
-parentTask011.addChildTask(new GanttTaskInfo(0101, "Trabajo 2", new Date(2010, 5, 2,144,0,0), 14, 100, ""));
+parentTask011.addChildTask(new GanttTaskInfo(0101, "Trabajo 3", new Date(2010, 5, 2,144,0,0), 14, 100, ""));
 parentTask011.addChildTask(new GanttTaskInfo(0111, "Trabajo 0", new Date(2010, 5, 2,552,0,0), 12, 100, ""));
 project0.addTask(parentTask011);
 ganttChartControl.addProject(project0);
@@ -399,38 +399,38 @@ function createChartControl5(htmlDiv1){var ganttChartControl = new GanttChart();
 ganttChartControl.num=0;
 var project0 = new GanttProjectInfo(0, "Station 1", new Date(2010, 5, 2))
 var parentTask010= new GanttTaskInfo(010, "M?quina 1", new Date(2010, 5, 2),263.0, 100, "");
-parentTask010.addChildTask(new GanttTaskInfo(0100, "Trabajo 0", new Date(2010, 5, 2,48,0,0), 11, 100, ""));
-parentTask010.addChildTask(new GanttTaskInfo(0110, "Trabajo 2", new Date(2010, 5, 2,1056,0,0), 14, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0100, "Trabajo 3", new Date(2010, 5, 2,48,0,0), 10, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0110, "Trabajo 1", new Date(2010, 5, 2,1080,0,0), 8, 100, ""));
 project0.addTask(parentTask010);
 var parentTask011= new GanttTaskInfo(011, "M?quina 2", new Date(2010, 5, 2),263.0, 100, "");
-parentTask011.addChildTask(new GanttTaskInfo(0101, "Trabajo 3", new Date(2010, 5, 2,48,0,0), 10, 100, ""));
-parentTask011.addChildTask(new GanttTaskInfo(0111, "Trabajo 1", new Date(2010, 5, 2,1272,0,0), 8, 100, ""));
+parentTask011.addChildTask(new GanttTaskInfo(0101, "Trabajo 2", new Date(2010, 5, 2,48,0,0), 14, 100, ""));
+parentTask011.addChildTask(new GanttTaskInfo(0111, "Trabajo 0", new Date(2010, 5, 2,1152,0,0), 11, 100, ""));
 project0.addTask(parentTask011);
 ganttChartControl.addProject(project0);
 var project1 = new GanttProjectInfo(1, "Station 0", new Date(2010, 5, 2))
 var parentTask110= new GanttTaskInfo(110, "M?quina 0", new Date(2010, 5, 2),263.0, 100, "");
-parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 2", new Date(2010, 5, 2,120,0,0), 8, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 0", new Date(2010, 5, 2,120,0,0), 10, 100, ""));
 parentTask110.addChildTask(new GanttTaskInfo(1110, "Trabajo 1", new Date(2010, 5, 2,504,0,0), 14, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1120, "Trabajo 0", new Date(2010, 5, 2,840,0,0), 10, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1130, "Trabajo 3", new Date(2010, 5, 2,1080,0,0), 11, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1120, "Trabajo 3", new Date(2010, 5, 2,1032,0,0), 11, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1130, "Trabajo 2", new Date(2010, 5, 2,1296,0,0), 8, 100, ""));
 project1.addTask(parentTask110);
 ganttChartControl.addProject(project1);
 var project2 = new GanttProjectInfo(2, "Station 3", new Date(2010, 5, 2))
 var parentTask210= new GanttTaskInfo(210, "M?quina 4", new Date(2010, 5, 2),263.0, 100, "");
 parentTask210.addChildTask(new GanttTaskInfo(2100, "Trabajo 1", new Date(2010, 5, 2,144,0,0), 13, 100, ""));
-parentTask210.addChildTask(new GanttTaskInfo(2110, "Trabajo 0", new Date(2010, 5, 2,552,0,0), 8, 100, ""));
-parentTask210.addChildTask(new GanttTaskInfo(2120, "Trabajo 3", new Date(2010, 5, 2,744,0,0), 10, 100, ""));
+parentTask210.addChildTask(new GanttTaskInfo(2110, "Trabajo 3", new Date(2010, 5, 2,744,0,0), 10, 100, ""));
 project2.addTask(parentTask210);
 var parentTask211= new GanttTaskInfo(211, "M?quina 5", new Date(2010, 5, 2),263.0, 100, "");
-parentTask211.addChildTask(new GanttTaskInfo(2101, "Trabajo 2", new Date(2010, 5, 2,360,0,0), 12, 100, ""));
+parentTask211.addChildTask(new GanttTaskInfo(2101, "Trabajo 0", new Date(2010, 5, 2,408,0,0), 8, 100, ""));
+parentTask211.addChildTask(new GanttTaskInfo(2111, "Trabajo 2", new Date(2010, 5, 2,936,0,0), 12, 100, ""));
 project2.addTask(parentTask211);
 ganttChartControl.addProject(project2);
 var project3 = new GanttProjectInfo(3, "Station 2", new Date(2010, 5, 2))
 var parentTask310= new GanttTaskInfo(310, "M?quina 3", new Date(2010, 5, 2),263.0, 100, "");
 parentTask310.addChildTask(new GanttTaskInfo(3100, "Trabajo 3", new Date(2010, 5, 2,336,0,0), 10, 100, ""));
-parentTask310.addChildTask(new GanttTaskInfo(3110, "Trabajo 2", new Date(2010, 5, 2,816,0,0), 8, 100, ""));
-parentTask310.addChildTask(new GanttTaskInfo(3120, "Trabajo 1", new Date(2010, 5, 2,1032,0,0), 8, 100, ""));
-parentTask310.addChildTask(new GanttTaskInfo(3130, "Trabajo 0", new Date(2010, 5, 2,1272,0,0), 14, 100, ""));
+parentTask310.addChildTask(new GanttTaskInfo(3110, "Trabajo 2", new Date(2010, 5, 2,576,0,0), 8, 100, ""));
+parentTask310.addChildTask(new GanttTaskInfo(3120, "Trabajo 0", new Date(2010, 5, 2,768,0,0), 14, 100, ""));
+parentTask310.addChildTask(new GanttTaskInfo(3130, "Trabajo 1", new Date(2010, 5, 2,1320,0,0), 8, 100, ""));
 project3.addTask(parentTask310);
 ganttChartControl.addProject(project3);
 ganttChartControl.create(htmlDiv1);}
@@ -649,20 +649,20 @@ parentTask011.addChildTask(new GanttTaskInfo(0101, "Trabajo 0", new Date(2010, 5
 parentTask011.addChildTask(new GanttTaskInfo(0111, "Trabajo 1", new Date(2010, 5, 2,624,0,0), 12, 100, ""));
 project0.addTask(parentTask011);
 ganttChartControl.addProject(project0);
-var project1 = new GanttProjectInfo(1, "Station 3", new Date(2010, 5, 2))
-var parentTask110= new GanttTaskInfo(110, "M?quina 4", new Date(2010, 5, 2),348.0, 100, "");
-parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 3", new Date(2010, 5, 2,168,0,0), 14, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1110, "Trabajo 2", new Date(2010, 5, 2,504,0,0), 11, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1120, "Trabajo 1", new Date(2010, 5, 2,984,0,0), 12, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1130, "Trabajo 0", new Date(2010, 5, 2,1632,0,0), 11, 100, ""));
+var project1 = new GanttProjectInfo(1, "Station 1", new Date(2010, 5, 2))
+var parentTask110= new GanttTaskInfo(110, "M?quina 2", new Date(2010, 5, 2),348.0, 100, "");
+parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 1", new Date(2010, 5, 2,168,0,0), 12, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1110, "Trabajo 2", new Date(2010, 5, 2,936,0,0), 10, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1120, "Trabajo 0", new Date(2010, 5, 2,1176,0,0), 12, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1130, "Trabajo 3", new Date(2010, 5, 2,1464,0,0), 13, 100, ""));
 project1.addTask(parentTask110);
 ganttChartControl.addProject(project1);
-var project2 = new GanttProjectInfo(2, "Station 1", new Date(2010, 5, 2))
-var parentTask210= new GanttTaskInfo(210, "M?quina 2", new Date(2010, 5, 2),348.0, 100, "");
-parentTask210.addChildTask(new GanttTaskInfo(2100, "Trabajo 1", new Date(2010, 5, 2,168,0,0), 12, 100, ""));
-parentTask210.addChildTask(new GanttTaskInfo(2110, "Trabajo 2", new Date(2010, 5, 2,936,0,0), 10, 100, ""));
-parentTask210.addChildTask(new GanttTaskInfo(2120, "Trabajo 0", new Date(2010, 5, 2,1176,0,0), 12, 100, ""));
-parentTask210.addChildTask(new GanttTaskInfo(2130, "Trabajo 3", new Date(2010, 5, 2,1464,0,0), 13, 100, ""));
+var project2 = new GanttProjectInfo(2, "Station 3", new Date(2010, 5, 2))
+var parentTask210= new GanttTaskInfo(210, "M?quina 4", new Date(2010, 5, 2),348.0, 100, "");
+parentTask210.addChildTask(new GanttTaskInfo(2100, "Trabajo 3", new Date(2010, 5, 2,168,0,0), 14, 100, ""));
+parentTask210.addChildTask(new GanttTaskInfo(2110, "Trabajo 2", new Date(2010, 5, 2,504,0,0), 11, 100, ""));
+parentTask210.addChildTask(new GanttTaskInfo(2120, "Trabajo 1", new Date(2010, 5, 2,984,0,0), 12, 100, ""));
+parentTask210.addChildTask(new GanttTaskInfo(2130, "Trabajo 0", new Date(2010, 5, 2,1632,0,0), 11, 100, ""));
 project2.addTask(parentTask210);
 ganttChartControl.addProject(project2);
 var project3 = new GanttProjectInfo(3, "Station 2", new Date(2010, 5, 2))
@@ -713,23 +713,23 @@ ganttChartControl.addProject(project3);
 ganttChartControl.create(htmlDiv1);}
 function createChartControl9(htmlDiv1){var ganttChartControl = new GanttChart();ganttChartControl.setImagePath("codebase/imgs/");ganttChartControl.setEditable(false);ganttChartControl.showContextMenu(true);ganttChartControl.showDescTask(false,'n,e');ganttChartControl.showDescProject(false,'n,d');	ganttChartControl.getMonthScaleLabel = function(date) {	return "";}
 ganttChartControl.num=0;
-var project0 = new GanttProjectInfo(0, "Station 2", new Date(2010, 5, 2))
-var parentTask010= new GanttTaskInfo(010, "M?quina 2", new Date(2010, 5, 2),288.0, 100, "");
-parentTask010.addChildTask(new GanttTaskInfo(0100, "Trabajo 0", new Date(2010, 5, 2,48,0,0), 10, 100, ""));
-parentTask010.addChildTask(new GanttTaskInfo(0110, "Trabajo 1", new Date(2010, 5, 2,408,0,0), 11, 100, ""));
+var project0 = new GanttProjectInfo(0, "Station 0", new Date(2010, 5, 2))
+var parentTask010= new GanttTaskInfo(010, "M?quina 0", new Date(2010, 5, 2),288.0, 100, "");
+parentTask010.addChildTask(new GanttTaskInfo(0100, "Trabajo 1", new Date(2010, 5, 2,48,0,0), 10, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0110, "Trabajo 2", new Date(2010, 5, 2,384,0,0), 11, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0120, "Trabajo 0", new Date(2010, 5, 2,768,0,0), 14, 100, ""));
+parentTask010.addChildTask(new GanttTaskInfo(0130, "Trabajo 3", new Date(2010, 5, 2,1392,0,0), 9, 100, ""));
 project0.addTask(parentTask010);
-var parentTask011= new GanttTaskInfo(011, "M?quina 3", new Date(2010, 5, 2),288.0, 100, "");
-parentTask011.addChildTask(new GanttTaskInfo(0101, "Trabajo 2", new Date(2010, 5, 2,48,0,0), 9, 100, ""));
-parentTask011.addChildTask(new GanttTaskInfo(0111, "Trabajo 3", new Date(2010, 5, 2,480,0,0), 14, 100, ""));
-project0.addTask(parentTask011);
 ganttChartControl.addProject(project0);
-var project1 = new GanttProjectInfo(1, "Station 0", new Date(2010, 5, 2))
-var parentTask110= new GanttTaskInfo(110, "M?quina 0", new Date(2010, 5, 2),288.0, 100, "");
-parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 1", new Date(2010, 5, 2,48,0,0), 10, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1110, "Trabajo 2", new Date(2010, 5, 2,384,0,0), 11, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1120, "Trabajo 0", new Date(2010, 5, 2,768,0,0), 14, 100, ""));
-parentTask110.addChildTask(new GanttTaskInfo(1130, "Trabajo 3", new Date(2010, 5, 2,1392,0,0), 9, 100, ""));
+var project1 = new GanttProjectInfo(1, "Station 2", new Date(2010, 5, 2))
+var parentTask110= new GanttTaskInfo(110, "M?quina 2", new Date(2010, 5, 2),288.0, 100, "");
+parentTask110.addChildTask(new GanttTaskInfo(1100, "Trabajo 2", new Date(2010, 5, 2,48,0,0), 9, 100, ""));
+parentTask110.addChildTask(new GanttTaskInfo(1110, "Trabajo 1", new Date(2010, 5, 2,408,0,0), 11, 100, ""));
 project1.addTask(parentTask110);
+var parentTask111= new GanttTaskInfo(111, "M?quina 3", new Date(2010, 5, 2),288.0, 100, "");
+parentTask111.addChildTask(new GanttTaskInfo(1101, "Trabajo 0", new Date(2010, 5, 2,48,0,0), 10, 100, ""));
+parentTask111.addChildTask(new GanttTaskInfo(1111, "Trabajo 3", new Date(2010, 5, 2,480,0,0), 14, 100, ""));
+project1.addTask(parentTask111);
 ganttChartControl.addProject(project1);
 var project2 = new GanttProjectInfo(2, "Station 1", new Date(2010, 5, 2))
 var parentTask210= new GanttTaskInfo(210, "M?quina 1", new Date(2010, 5, 2),288.0, 100, "");
@@ -833,8 +833,8 @@ createChartInitialControl9('gantt_initial_04x04x02_10');closeInformation('initia
 <td>286</td>
 <td>291</td>
 <td>291.0</td>
-<td>2</td>
-<td>91259</td>
+<td>0</td>
+<td>100010</td>
 <tr>
 <td>04x04x02_03</td>
 <td>308.0</td>
@@ -842,15 +842,15 @@ createChartInitialControl9('gantt_initial_04x04x02_10');closeInformation('initia
 <td>297</td>
 <td>297.0</td>
 <td>0</td>
-<td>96987</td>
+<td>100010</td>
 <tr>
 <td>04x04x02_04</td>
 <td>299.0</td>
 <td>290</td>
 <td>294</td>
 <td>294.0</td>
-<td>2</td>
-<td>77627</td>
+<td>0</td>
+<td>100010</td>
 <tr>
 <td>04x04x02_05</td>
 <td>367.0</td>
@@ -858,23 +858,23 @@ createChartInitialControl9('gantt_initial_04x04x02_10');closeInformation('initia
 <td>357</td>
 <td>357.0</td>
 <td>0</td>
-<td>97077</td>
+<td>100010</td>
 <tr>
 <td>04x04x02_06</td>
 <td>263.0</td>
 <td>253</td>
-<td>261</td>
-<td>261.0</td>
-<td>2</td>
-<td>91761</td>
+<td>260</td>
+<td>260.0</td>
+<td>0</td>
+<td>100010</td>
 <tr>
 <td>04x04x02_07</td>
 <td>280.0</td>
 <td>263</td>
 <td>279</td>
 <td>279.0</td>
-<td>2</td>
-<td>81737</td>
+<td>0</td>
+<td>100010</td>
 <tr>
 <td>04x04x02_08</td>
 <td>274.0</td>
@@ -882,7 +882,7 @@ createChartInitialControl9('gantt_initial_04x04x02_10');closeInformation('initia
 <td>272*</td>
 <td>272.0</td>
 <td>0</td>
-<td>253</td>
+<td>10</td>
 <tr>
 <td>04x04x02_09</td>
 <td>348.0</td>
@@ -890,15 +890,15 @@ createChartInitialControl9('gantt_initial_04x04x02_10');closeInformation('initia
 <td>334</td>
 <td>334.0</td>
 <td>0</td>
-<td>97148</td>
+<td>100010</td>
 <tr>
 <td class ="leftBottomCorner"> 04x04x02_10</td>
 <td>288.0</td>
 <td>273</td>
 <td>287</td>
 <td>287.0</td>
-<td>2</td>
-<td class ="rightBottomCorner"> 83863</td>
+<td>0</td>
+<td class ="rightBottomCorner"> 100010</td>
 </tr></tbody></table></div>
 <div id="view4" class="tabcontent">
 <table id="roundTable"><thead><tr><th scope="col" class="leftTopCorner">Key</th>
@@ -926,11 +926,11 @@ createChartInitialControl9('gantt_initial_04x04x02_10');closeInformation('initia
 </tr>
 <tr>
 <td>scheduling.modifier</td>
-<td>modifier.impl.Swap</td>
+<td>modifier.impl.RandomNeighbor</td>
 </tr>
 <tr>
 <td>params.iterations</td>
-<td>390</td>
+<td>10000</td>
 </tr>
 <tr>
 <td>report.gantt.bestsolutions</td>
@@ -938,7 +938,7 @@ createChartInitialControl9('gantt_initial_04x04x02_10');closeInformation('initia
 </tr>
 <tr>
 <td>params.neighborhodSize</td>
-<td>16000</td>
+<td>10</td>
 </tr>
 <tr>
 <td>scheduling.parametersLoader</td>
@@ -946,7 +946,7 @@ createChartInitialControl9('gantt_initial_04x04x02_10');closeInformation('initia
 </tr>
 <tr>
 <td>params.non-improving-in</td>
-<td>50</td>
+<td>-1</td>
 </tr>
 <tr>
 <td>report.consolidationTable</td>
