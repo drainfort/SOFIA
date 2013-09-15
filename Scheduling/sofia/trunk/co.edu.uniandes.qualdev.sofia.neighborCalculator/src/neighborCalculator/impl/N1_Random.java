@@ -2,8 +2,6 @@ package neighborCalculator.impl;
 
 import java.util.ArrayList;
 
-import org.omg.PortableInterceptor.InterceptorOperations;
-
 import neighborCalculator.INeighborCalculator;
 import structure.IOperation;
 import structure.IStructure;
@@ -63,7 +61,7 @@ public class N1_Random implements INeighborCalculator{
 				exit=0;
 			}else{
 				exit++;
-				if(exit>=100){
+				if(exit>=50){
 					return pairs;
 				}
 			}
