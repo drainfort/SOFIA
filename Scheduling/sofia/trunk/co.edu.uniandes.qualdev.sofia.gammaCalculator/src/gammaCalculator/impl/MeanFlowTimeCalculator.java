@@ -6,10 +6,8 @@ import java.util.ArrayList;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
-import common.utils.MatrixUtils;
 
 import structure.IStructure;
-import structure.impl.Vector;
 
 public class MeanFlowTimeCalculator implements IGammaCalculator {
 
