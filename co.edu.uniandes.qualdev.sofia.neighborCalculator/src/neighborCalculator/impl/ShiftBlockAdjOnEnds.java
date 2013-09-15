@@ -56,7 +56,7 @@ public class ShiftBlockAdjOnEnds implements INeighborCalculator{
 //		        System.out.println(routes);
 		        
 		        // Selecting one of the critical paths
-		        int numberRoutes= routes.size();
+//		        int numberRoutes= routes.size();
 //		        System.out.println("rutas:"+numberRoutes);
 		        int exit = 0;
 		        while(neighborhood.size() < size){

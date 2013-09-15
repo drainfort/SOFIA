@@ -7,7 +7,6 @@ import structure.impl.Graph;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
-import common.utils.MatrixUtils;
 
 import neighborCalculator.INeighborCalculator;
 
