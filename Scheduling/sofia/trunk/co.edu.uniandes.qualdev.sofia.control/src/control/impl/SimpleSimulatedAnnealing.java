@@ -34,21 +34,25 @@ public class SimpleSimulatedAnnealing extends Control {
 			throws Exception {
 
 		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
+		
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
+		
 		if(params.get("maxExecutionTime")!=null){
 			if((Integer) params.get("maxExecutionTime")!=-1)
 				stopTime = (Integer) params.get("maxExecutionTime") *1000;	
 		}
-		executionResults = new ExecutionResults();
+		
 		int numberOfVisitedNeighbors=0;
 		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
+		
+		executionResults = new ExecutionResults();
+		executionResults = new ExecutionResults();
 		executionResults.setInitialCmax(GammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 		
 		Double temperature = (Double) params.get("T0");
 
-		
 		// Provides an initial solution (X) from the problem
 		IStructure X = initialSolution;
 		int XCMax = gammaCalculator.calculateGamma(X);
@@ -61,8 +65,10 @@ public class SimpleSimulatedAnnealing extends Control {
 		
 		// Obtaining the parameters from the algorithm configuration.
 		Integer nonImprovingOut = (Integer) params.get("non-improving-out");
+		
 		if(nonImprovingOut==-1)
 			nonImprovingOut= Integer.MAX_VALUE;
+
 		Double boltzmann = (Double) params.get("boltzmann");
 		Double finalTemperature = (Double) params.get("Tf");
 		executionResults.setOptimal(optimal);
@@ -82,22 +88,24 @@ public class SimpleSimulatedAnnealing extends Control {
 			}
 		}
 		
-		
 		int temperatureReductions = 0;
 		
 		while (temperature >= finalTemperature &&  temperatureReductions < nonImprovingOut && !optimalAchieved) {
 			Integer k = (Integer) params.get("k");
 			Integer nonImprovingIn = (Integer) params.get("non-improving-in");
+
 			if(nonImprovingIn==-1)
 				nonImprovingIn= Integer.MAX_VALUE;
+			
 			while (k > 0 && !optimalAchieved && nonImprovingIn>=0){
 				
 				// Obtains a next solution (Y) from the current one (X)
 				PairVO YMovement = neighborCalculator.calculateNeighbor(X);
 				IStructure Y = modifier.performModification(YMovement, X);
-				numberOfVisitedNeighbors++;
-				int YCMax = gammaCalculator.calculateGamma(Y);
 				
+				numberOfVisitedNeighbors++;
+
+				int YCMax = gammaCalculator.calculateGamma(Y);
 				int deltaXY = YCMax - XCMax;
 
 				if(deltaXY > 0){
@@ -108,6 +116,7 @@ public class SimpleSimulatedAnnealing extends Control {
 						X = Y.cloneStructure();
 						XCMax = gammaCalculator.calculateGamma(X);
 						nonImprovingIn = (Integer) params.get("non-improving-in");
+					
 						if(nonImprovingIn<=0)
 							nonImprovingIn=Integer.MAX_VALUE;
 					}
@@ -115,6 +124,7 @@ public class SimpleSimulatedAnnealing extends Control {
 					X = Y.cloneStructure();
 					XCMax = gammaCalculator.calculateGamma(X);
 					nonImprovingIn = (Integer) params.get("non-improving-in");
+				
 					if(nonImprovingIn<=0)
 						nonImprovingIn=Integer.MAX_VALUE;
 				}
@@ -124,6 +134,7 @@ public class SimpleSimulatedAnnealing extends Control {
 					XBestCMax = gammaCalculator.calculateGamma(XBest);
 					temperatureReductions = 0;
 					nonImprovingIn = (Integer) params.get("non-improving-in");
+					
 					System.out.println("CMax improvement: " + XBestCMax);
 					ExecutionLogger.getInstance().printLog("Improvement: "+XBestCMax);
 					
@@ -140,22 +151,25 @@ public class SimpleSimulatedAnnealing extends Control {
 							if(maxNumberImprovements==0){
 								optimalAchieved = true;
 								executionResults.setStopCriteria(3);
+					
 								System.out.println("Stop Criteria: Max number of improvements");
 								ExecutionLogger.getInstance().printLog("Stop Criteria: Max number of improvements");
 							}
 						}
 					}
-
 				}
-				
+			    
 				long actualTime = System.currentTimeMillis();
 			    long elapsedTime = actualTime - startTime;
-			    if(elapsedTime>=stopTime){
+
+				if(elapsedTime>=stopTime){
 			    	optimalAchieved = true;
 			    	executionResults.setStopCriteria(2);
+
 			    	System.out.println("Stop Criteria: Max execution time");
 			    	ExecutionLogger.getInstance().printLog("Stop Criteria: Max execution time");
 			    }
+			    
 			    nonImprovingIn--;
 				k--;
 				Y.clean();
@@ -166,15 +180,19 @@ public class SimpleSimulatedAnnealing extends Control {
 			temperature = temperature * (coolingFactor);
 			temperatureReductions ++;
 		}
+		
 		if(temperatureReductions>=nonImprovingOut){
 			executionResults.setStopCriteria(1);
+		
 			System.out.println("Stop Criteria: Non improving");
 			ExecutionLogger.getInstance().printLog("Stop Criteria: Non improving");
 		}
 		
 		System.out.println();
+		
 		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"));
 		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
+		
 		return result;
 	}
 }
