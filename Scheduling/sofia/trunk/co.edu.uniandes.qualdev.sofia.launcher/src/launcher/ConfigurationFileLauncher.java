@@ -145,13 +145,24 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("scheduling.parametersLoader", control + "ParametersLoader");
 		algorithmConfiguration.setProperty("scheduling.decodingStrategy", decodingStrategy);
 		
+		// Params Taboo search
 		algorithmConfiguration.setProperty("params.iterations", data.getProperty("params.iterations"));
-		algorithmConfiguration.setProperty("params.non-improving-in", data.getProperty("params.non-improving-in"));
-		algorithmConfiguration.setProperty("params.non-improving-out", data.getProperty("params.non-improving-out"));
 		algorithmConfiguration.setProperty("params.tabulist-size", data.getProperty("params.tabulist-size"));
 		algorithmConfiguration.setProperty("params.neighborhodSize", data.getProperty("params.neighborhodSize"));
+		
+		// Params simulated annealing
+		algorithmConfiguration.setProperty("params.T0", data.getProperty("params.T0"));
+		algorithmConfiguration.setProperty("params.Tf", data.getProperty("params.Tf"));
+		algorithmConfiguration.setProperty("params.k", data.getProperty("params.k"));
+		algorithmConfiguration.setProperty("params.coolingFactor", data.getProperty("params.coolingFactor"));
+		algorithmConfiguration.setProperty("params.restarts", data.getProperty("params.restarts"));
+		algorithmConfiguration.setProperty("params.boltzmann", data.getProperty("params.boltzmann"));
+
+		// Params general
 		algorithmConfiguration.setProperty("params.maxNumberImprovements", data.getProperty("params.maxNumberImprovements"));
 		algorithmConfiguration.setProperty("params.maxExecutionTime", data.getProperty("params.maxExecutionTime"));
+		algorithmConfiguration.setProperty("params.non-improving-in", data.getProperty("params.non-improving-in"));
+		algorithmConfiguration.setProperty("params.non-improving-out", data.getProperty("params.non-improving-out"));
 		
 		// Loading selected betas
 		considerTravelTimes = data.getProperty("betas.considerTravelTimes");
