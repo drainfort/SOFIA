@@ -186,8 +186,8 @@ public class ChartPrinter {
 			String stopCriteria = results.get(0).getStopCriteria()+"";
 			
 			int bestCmax = Integer.MAX_VALUE;
-			int sumBestCMax = 0;
-			int iterations = 0;
+			double sumBestCMax = 0;
+			double iterations = 0;
 			ExecutionResults bestResults = null;
 			for (ExecutionResults executionResults : results) {
 				if(bestCmax > executionResults.getBestCmax()){
@@ -201,6 +201,7 @@ public class ChartPrinter {
 			if(bestCmax == results.get(0).getOptimal())bestCMaxString+="*";
 			if(bestCmax<results.get(0).getOptimal())bestCMaxString+="**";
 			double average = sumBestCMax/iterations;
+			System.out.println(average);
 			
 			if(i ==globalExecutionResults.size()-1){
 				pw.println("<tr>");
