@@ -6,7 +6,7 @@ import structure.IStructure;
 
 public interface IGammaCalculator {
 
-	public int calculateGamma(IStructure graph) throws Exception;
+	public double calculateGamma(IStructure graph) throws Exception;
 
-	public int updateGamma(IStructure candidate, PairVO pairCandidate) throws Exception;
+	public double updateGamma(IStructure candidate, PairVO pairCandidate) throws Exception;
 }
