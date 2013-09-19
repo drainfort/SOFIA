@@ -22,10 +22,10 @@ public class TotalFlowTimeCalculator implements IGammaCalculator {
 	// -----------------------------------------
 	
 	@Override
-	public int calculateGamma(IStructure vector) throws Exception {
+	public double calculateGamma(IStructure vector) throws Exception {
 		vector.decodeSolution();
 		C = vector.calculateCMatrix(0);
-		int meanFlowTime = 0;
+		double meanFlowTime = 0;
 		for (int i = 0; i < C.length; i++) {
 			meanFlowTime += C[i][vector.getTotalStations()];
 		}		
@@ -34,7 +34,7 @@ public class TotalFlowTimeCalculator implements IGammaCalculator {
 	}
 
 	@Override
-	public int updateGamma(IStructure initialVector, PairVO pair) throws Exception {
+	public double updateGamma(IStructure initialVector, PairVO pair) throws Exception {
 		C = initialVector.updateCMatrix(pair);
 		
 		ArrayList<OperationIndexVO> maxs = new ArrayList<OperationIndexVO>();
@@ -50,7 +50,7 @@ public class TotalFlowTimeCalculator implements IGammaCalculator {
 			maxs.add(maxOperationIndex);
 		}
 		
-		int meanFlowTime = 0;
+		double meanFlowTime = 0;
 		for (OperationIndexVO max : maxs) {
 			meanFlowTime += C[max.getJobId()][max.getStationId()];
 		}

@@ -11,14 +11,14 @@ public class CMaxCalculator implements IGammaCalculator {
 	// -----------------------------------------
 
 	@Override
-	public int calculateGamma(IStructure vector) throws Exception {
+	public double calculateGamma(IStructure vector) throws Exception {
 		vector.decodeSolution();
-		int cmax = calculateGammaMatrix(vector.calculateCMatrix(0), vector.getTotalJobs(), vector.getTotalStations());
+		double cmax = calculateGammaMatrix(vector.calculateCMatrix(0), vector.getTotalJobs(), vector.getTotalStations());
 		return cmax;
 	}
 	
-	private int calculateGammaMatrix(int[][] C, int jobs, int stations){
-		int cmax = -1;
+	private double calculateGammaMatrix(int[][] C, int jobs, int stations){
+		double cmax = -1;
 		for (int i = 0; i < jobs; i++) {
 			if (C[i][stations] > cmax) {
 				cmax = C[i][stations];
@@ -40,11 +40,11 @@ public class CMaxCalculator implements IGammaCalculator {
 	}
 
 	@Override
-	public int updateGamma(IStructure initialVector, PairVO pair) throws Exception {
+	public double updateGamma(IStructure initialVector, PairVO pair) throws Exception {
 		System.out.println("Entro gamma update");
 		int[][] C = initialVector.calculateCMatrix(0);
 
-		int cmax = -1;
+		double cmax = -1;
 		for (int i = 0; i < initialVector.getTotalJobs(); i++) {
 			if (C[i][initialVector.getTotalStations()] > cmax) {
 				cmax = C[i][initialVector.getTotalStations()];
