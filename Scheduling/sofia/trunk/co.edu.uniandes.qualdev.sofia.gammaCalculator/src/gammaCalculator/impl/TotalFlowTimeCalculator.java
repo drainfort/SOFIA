@@ -9,7 +9,7 @@ import common.types.PairVO;
 
 import structure.IStructure;
 
-public class MeanFlowTimeCalculator implements IGammaCalculator {
+public class TotalFlowTimeCalculator implements IGammaCalculator {
 
 	// -----------------------------------------
 	// Attributes 
