@@ -34,7 +34,7 @@ public class EnrichedSimulatedAnnealing extends Control {
 		
 		executionResults = new ExecutionResults();
 		int numberOfVisitedNeighbors=0;
-		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
+		double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		executionResults.setInitialCmax(GammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 		
@@ -42,11 +42,11 @@ public class EnrichedSimulatedAnnealing extends Control {
 
 		// Creates an initial solution (Sk) from the problem
 		IStructure Sk = initialSolution;
-		int GammaSk = gammaCalculator.calculateGamma(Sk);
+		double GammaSk = gammaCalculator.calculateGamma(Sk);
 
 		// Initializes the best solution (S0) as the first one (Sk)
 		IStructure S0 = Sk.cloneStructure();
-		int GammaS0 = gammaCalculator.calculateGamma(S0);
+		double GammaS0 = gammaCalculator.calculateGamma(S0);
 		System.out.println("initial solution: " + GammaS0);
 		
 		Integer nonImproving = (Integer) params.get("non-improving");
@@ -90,7 +90,7 @@ public class EnrichedSimulatedAnnealing extends Control {
 					PairVO ScMovement = neighborCalculator.calculateNeighbor(Sk);
 					IStructure Sc = modifier.performModification(ScMovement, Sk);
 					numberOfVisitedNeighbors++;
-					int GammaSc = gammaCalculator.calculateGamma(Sc);
+					double GammaSc = gammaCalculator.calculateGamma(Sc);
 
 					if ((GammaS0 < GammaSc)
 							&& (GammaSc < GammaSk)) {

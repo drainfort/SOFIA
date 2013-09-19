@@ -44,7 +44,7 @@ public class SimpleSimulatedAnnealing extends Control {
 		}
 		
 		int numberOfVisitedNeighbors=0;
-		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
+		double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		
 		executionResults = new ExecutionResults();
 		executionResults = new ExecutionResults();
@@ -55,11 +55,11 @@ public class SimpleSimulatedAnnealing extends Control {
 
 		// Provides an initial solution (X) from the problem
 		IStructure X = initialSolution;
-		int XCMax = gammaCalculator.calculateGamma(X);
+		double XCMax = gammaCalculator.calculateGamma(X);
 		
 		// Initializes the best solution (XBest) as the first one (X)
 		IStructure XBest = X.cloneStructure();
-		int XBestCMax = gammaCalculator.calculateGamma(XBest);
+		double XBestCMax = gammaCalculator.calculateGamma(XBest);
 		System.out.println("initial solution (XBestCMax): " + XBestCMax);
 		ExecutionLogger.getInstance().printLog("initial solution (XBestCMax): " + XBestCMax);
 		
@@ -105,8 +105,8 @@ public class SimpleSimulatedAnnealing extends Control {
 				
 				numberOfVisitedNeighbors++;
 
-				int YCMax = gammaCalculator.calculateGamma(Y);
-				int deltaXY = YCMax - XCMax;
+				double YCMax = gammaCalculator.calculateGamma(Y);
+				double deltaXY = YCMax - XCMax;
 
 				if(deltaXY > 0){
 					double acceptaceValue = Math.pow(Math.E, (-deltaXY/(boltzmann*temperature)));
