@@ -185,7 +185,7 @@ public class ChartPrinter {
 			String neighbor =  results.get(0).getNumberOfVisitedNeighbors()+"";
 			String stopCriteria = results.get(0).getStopCriteria()+"";
 			
-			int bestCmax = Integer.MAX_VALUE;
+			double bestCmax = Integer.MAX_VALUE;
 			double sumBestCMax = 0;
 			double iterations = 0;
 			ExecutionResults bestResults = null;
