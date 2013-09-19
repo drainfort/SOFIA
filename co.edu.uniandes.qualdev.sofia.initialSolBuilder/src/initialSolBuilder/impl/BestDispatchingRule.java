@@ -98,11 +98,11 @@ public class BestDispatchingRule implements IInitialSolBuilder{
 //		solutions.add(afssptSolution);
 //		solutions.add(afssrptSolution);
 		
-		int menor=Integer.MAX_VALUE;
+		double menor=Integer.MAX_VALUE;
 		
 		IStructure bestSolution=null;
 		for(int i=0; i< solutions.size();i++ ){
-			int solutionGamma = gammaCalculator.calculateGamma(solutions.get(i));
+			double solutionGamma = gammaCalculator.calculateGamma(solutions.get(i));
 			if(solutionGamma<menor){
 				menor = solutionGamma;
 				bestSolution = solutions.get(i);
@@ -162,11 +162,11 @@ public class BestDispatchingRule implements IInitialSolBuilder{
 //		solutions.add(afssptSolution);
 //		solutions.add(afssrptSolution);
 		
-		int menor=Integer.MAX_VALUE;
+		double menor=Integer.MAX_VALUE;
 		
 		IStructure bestSolution=null;
 		for(int i=0; i< solutions.size();i++ ){
-			int solutionGamma = gammaCalculator.calculateGamma(solutions.get(i));
+			double solutionGamma = gammaCalculator.calculateGamma(solutions.get(i));
 			if(solutionGamma<menor){
 				menor = solutionGamma;
 				bestSolution = solutions.get(i);
