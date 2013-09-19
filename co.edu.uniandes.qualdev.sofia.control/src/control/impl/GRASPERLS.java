@@ -42,12 +42,12 @@ public class GRASPERLS extends Control {
 
 		executionResults = new ExecutionResults();
 		int numberOfNeighbors[]=new int[1];  numberOfNeighbors[0]=0;
-		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
+		double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		executionResults.setInitialCmax(GammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 		
 		IStructure best = initialSolution.cloneStructure();
-		int bestGamma = gammaCalculator.calculateGamma(best);
+		double bestGamma = gammaCalculator.calculateGamma(best);
 		
 		// Obtaining the parameters from the algorithm configuration.
 		executionResults.setOptimal(optimal);
@@ -62,12 +62,12 @@ public class GRASPERLS extends Control {
 		}else{
 			System.out.print("Iniciando fase de busqueda local.....");
 			boolean continua[]=new boolean[1];   continua[0]=true;
-			int gammaBestSolution[]=new int[1];  gammaBestSolution[0]=bestGamma;
+			double gammaBestSolution[]=new double[1];  gammaBestSolution[0]=bestGamma;
 			Set<String> controlExplorados[] = new HashSet[1];  
 			controlExplorados[0]=new HashSet<String>();
 			
 			//Keep the minimum values obtained at each depth
-			int bounds[]=new int[(Integer) params.get("maxLSDepth")];			
+			double bounds[]=new double[(Integer) params.get("maxLSDepth")];			
 			for (int i=0; i<bounds.length;i++)  
 				bounds[i]=Integer.MAX_VALUE;			
 			
@@ -110,10 +110,10 @@ public class GRASPERLS extends Control {
 					 int optimal,
 					 boolean continua[], 
 					 int depth,
-					 int gammaBestSolution[],
+					 double[] gammaBestSolution,
 					 int maxLSDepth,
 					 int strategyLS,
-					 int bounds[],
+					 double bounds[],
 					 int numberOfNeighbors[],
 					 int maxNeighbors,
 					 HashSet<String> ctrlExp[])throws Exception{
@@ -124,7 +124,7 @@ public class GRASPERLS extends Control {
 		
 		if((depth<maxLSDepth) && (numberOfNeighbors[0]<maxNeighbors)){
 			//gamma of the best solution
-			int gammaCurrentSolution=gammaCalculator.calculateGamma(currentSolution);
+			double gammaCurrentSolution=gammaCalculator.calculateGamma(currentSolution);
 
 			ArrayList<PairVO> neighborsImproving = new ArrayList<PairVO>();
 			ArrayList<PairVO> worstNeighborsImproving = new ArrayList<PairVO>();
@@ -132,11 +132,11 @@ public class GRASPERLS extends Control {
 			
 			
 			//Local search phase: List of movements that generate the best improvement to the current solution.
-			int minGamma=gammaCurrentSolution;   int maxGamma=-1;
+			double minGamma=gammaCurrentSolution;   double maxGamma=-1;
 			for (PairVO pair : arrayNeighbors) {
 				IStructure candidate = modifier.performModification(pair, currentSolution);
 				if(!ctrlExp[0].contains(candidate.toString())){
-					int gammaCandidate = gammaCalculator.calculateGamma(candidate);
+					double gammaCandidate = gammaCalculator.calculateGamma(candidate);
 			
 					//Considers only the pairs that generate improvement in the current solution
 					if(gammaCurrentSolution > gammaCandidate){ 
@@ -250,7 +250,7 @@ public class GRASPERLS extends Control {
 												numberOfNeighbors,maxNeighbors,
 												ctrlExp);
 			
-				int gammaImprovedSolution=gammaCalculator.calculateGamma(improvedSolution);
+				double gammaImprovedSolution=gammaCalculator.calculateGamma(improvedSolution);
 			
 				if(gammaImprovedSolution < gammaCurrentSolution){
 					gammaCurrentSolution=gammaImprovedSolution;

@@ -35,7 +35,7 @@ public class TabuSearchCN extends Control {
 		
 		executionResults = new ExecutionResults();
 		int numberOfVisitedNeighbors=0;
-		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
+		double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		executionResults.setInitialCmax(GammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 
@@ -46,7 +46,7 @@ public class TabuSearchCN extends Control {
 
 		// Initializes the best solution (XBest) as the first one (X)
 		IStructure best = current.cloneStructure();
-		int bestGamma = gammaCalculator.calculateGamma(best);
+		double bestGamma = gammaCalculator.calculateGamma(best);
 		int maxNumberImprovements =0;
 		System.out.println("initial solution (XBestCMax): " + bestGamma);
 		if(params.get("maxNumberImprovements")!=null){
@@ -78,7 +78,7 @@ public class TabuSearchCN extends Control {
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateCompleteNeighborhood(current);
 		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
 			IStructure bestCandidate = null;
-			int gammaBestCandidate = Integer.MAX_VALUE;
+			double gammaBestCandidate = Integer.MAX_VALUE;
 			PairVO bestPairCandidate = null;
 
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved; index++) {
@@ -86,7 +86,7 @@ public class TabuSearchCN extends Control {
 				IStructure candidate = modifier.performModification(pairCandidate,current);
 				
 				numberOfVisitedNeighbors++;
-				int gammaCandidate = gammaCalculator.calculateGamma(candidate);
+				double gammaCandidate = gammaCalculator.calculateGamma(candidate);
 				if (gammaCandidate <= gammaBestCandidate) {
 					boolean tabu = false;
 					for (int i = 0; i < arrayTabu.size() && !tabu; i++) {

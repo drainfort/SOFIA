@@ -43,13 +43,13 @@ public class IteratedTabuSearch extends Control {
 		// Sg		S^ - current solution
 		
 		this.So = So.cloneStructure();
-		int GammaSo = gammaCalculator.calculateGamma(So);
+		double GammaSo = gammaCalculator.calculateGamma(So);
 		System.out.println("initial solution: " + GammaSo);
 		executionResults.setInitialCmax(GammaSo);
 		
 		boolean optimalAchieved = false;
 		IStructure Sb = null;
-		int GammaSb = 0;
+		double GammaSb = 0;
 		
 		if (optimal.intValue() >= GammaSo) {
 			if(isOptimal){
@@ -62,7 +62,7 @@ public class IteratedTabuSearch extends Control {
 
 		if(!optimalAchieved){
 			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, GammaSo);
-			int GammaSg = gammaCalculator.calculateGamma(Sg);
+			double GammaSg = gammaCalculator.calculateGamma(Sg);
 			
 			if (optimal.intValue() >= GammaSg) {
 				Sb = Sg.cloneStructure();
@@ -114,7 +114,7 @@ public class IteratedTabuSearch extends Control {
 	 */
 	private IStructure improveByTabuSearch(IStructure Sa,
 			INeighborCalculator neighborCalculator, IModifier modifier,
-			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal, int GammaInitialSolution)
+			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal, double gammaSo)
 			throws Exception{
 		executionResults.setOptimal(optimal);
 		
@@ -129,7 +129,7 @@ public class IteratedTabuSearch extends Control {
 		int Ts = (Integer) params.get("tabulist-size");
 
 		IStructure Sb = Sa.cloneStructure();
-		int GammaSb = gammaCalculator.calculateGamma(Sb);
+		double GammaSb = gammaCalculator.calculateGamma(Sb);
 
 		boolean optimalAchieved = false;
 
@@ -151,14 +151,14 @@ public class IteratedTabuSearch extends Control {
 
 		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
 			IStructure Skb = null;
-			int GammaSkb = Integer.MAX_VALUE;
+			double GammaSkb = Integer.MAX_VALUE;
 			PairVO PairSkb = null;
 
 			// Scanning the neighborhood to find the best candidate solution
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved; index++) {
 				PairVO PairSk = arrayNeighbors.get(index);
 				IStructure Sk = modifier.performModification(PairSk, Sa);
-				int GammaSk = gammaCalculator.calculateGamma(Sk);
+				double GammaSk = gammaCalculator.calculateGamma(Sk);
 
 				if (GammaSk <= GammaSkb) {
 					boolean tabu = false;

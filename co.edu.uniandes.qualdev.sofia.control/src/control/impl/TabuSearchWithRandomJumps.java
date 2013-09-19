@@ -35,7 +35,7 @@ public class TabuSearchWithRandomJumps extends Control {
 		
 		executionResults = new ExecutionResults();
 		 int numberOfVisitedNeighbors=0;
-		 int GammaInitialSolution = gammaCalculator
+		 double GammaInitialSolution = gammaCalculator
 		 .calculateGamma(initialSolution);
 		 executionResults.setInitialCmax(GammaInitialSolution);
 		 this.So = initialSolution.cloneStructure();
@@ -49,11 +49,11 @@ public class TabuSearchWithRandomJumps extends Control {
 		 // Provides an initial solution (X) from the problem
 		 // TODO SE DEBE CAMBIAR LA FUNCION OBJETIVO
 		 IStructure X = initialSolution;
-		 int XCMax = gammaCalculator.calculateGamma(X);
+		 double XCMax = gammaCalculator.calculateGamma(X);
 		
 		 // Initializes the best solution (XBest) as the first one (X)
 		 IStructure XBest = X.cloneStructure();
-		 int XBestCMax = gammaCalculator.calculateGamma(XBest);
+		 double XBestCMax = gammaCalculator.calculateGamma(XBest);
 		 System.out.println("initial solution (XBestCMax): " + XBestCMax);
 		
 		 // Obtaining the parameters from the algorithm configuration.
@@ -82,9 +82,9 @@ public class TabuSearchWithRandomJumps extends Control {
 				 // ESTE CAMBIO EN LA LISTA TABU
 				 IStructure Y = X.cloneStructure();
 				 IStructure BestY = X.cloneStructure();
-				 int deltaXY;
-				 int deltaBestYY;
-				 int BestYCmax = 999999999;
+				 double deltaXY;
+				 double deltaBestYY;
+				 double BestYCmax = 999999999;
 				 int movementX = 0;
 				 int movementY = 0;
 				 boolean isTabu;
@@ -116,7 +116,7 @@ public class TabuSearchWithRandomJumps extends Control {
 					 // TODO Actualizar el criterio de Aspiracion para poder
 					 // evaluar un vecino aun siendo un movimiento Tabu
 					 if (!isTabu) {
-						 int YCMax = gammaCalculator.calculateGamma(Y);
+						 double YCMax = gammaCalculator.calculateGamma(Y);
 						 deltaBestYY = YCMax - BestYCmax;
 						 if (deltaBestYY < 0) {
 							 BestY = Y.cloneStructure();

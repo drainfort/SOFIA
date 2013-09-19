@@ -40,13 +40,13 @@ public class GRASP extends Control {
 			throws Exception {
 
 		int numberOfVisitedNeighbors=0;
-		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
+		double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		executionResults.setInitialCmax(GammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 		
 		// Initializes the best solution (XBest) as the first one (X)
 		IStructure best = initialSolution.cloneStructure();
-		int bestGamma = gammaCalculator.calculateGamma(best);
+		double bestGamma = gammaCalculator.calculateGamma(best);
 		
 		// Obtaining the parameters from the algorithm configuration.
 		executionResults.setOptimal(optimal);
@@ -79,8 +79,8 @@ public class GRASP extends Control {
 			while (k > 0 && !optimalAchieved){
 				IStructure candidate = modifier.performModification(arrayNeighbors.get(k-1), best);
 				numberOfVisitedNeighbors++;
-				int gammaCandidate = gammaCalculator.calculateGamma(candidate);
-				int delta = bestGamma-gammaCandidate;
+				double gammaCandidate = gammaCalculator.calculateGamma(candidate);
+				double delta = bestGamma-gammaCandidate;
 				
 				if(delta > 0){
 					best = candidate.cloneStructure();

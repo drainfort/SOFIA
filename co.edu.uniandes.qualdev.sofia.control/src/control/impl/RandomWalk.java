@@ -33,13 +33,13 @@ public class RandomWalk extends Control {
 			throws Exception {
 		executionResults = new ExecutionResults();
 		int numberOfVisitedNeighbors=0;
-		int GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
+		double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		executionResults.setInitialCmax(GammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 		
 		// Initializes the best solution (XBest) as the first one (X)
 		IStructure best = initialSolution.cloneStructure();
-		int bestGamma = gammaCalculator.calculateGamma(best);
+		double bestGamma = gammaCalculator.calculateGamma(best);
 		System.out.println("initial solution (XBestCMax): " + bestGamma);
 		
 		IStructure candidate =best.cloneStructure();
@@ -63,7 +63,7 @@ public class RandomWalk extends Control {
 				PairVO arrayNeighbor = neighborCalculator.calculateNeighbor(best);
 				candidate = modifier.performModification(arrayNeighbor, candidate);
 				numberOfVisitedNeighbors++;
-				int gammaCandidate = gammaCalculator.calculateGamma(candidate);
+				double gammaCandidate = gammaCalculator.calculateGamma(candidate);
 				
 				if(bestGamma > gammaCandidate){
 					best = candidate.cloneStructure();
