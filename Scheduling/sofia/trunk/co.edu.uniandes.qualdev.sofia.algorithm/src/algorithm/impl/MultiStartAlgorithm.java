@@ -23,7 +23,7 @@ public class MultiStartAlgorithm extends SchedulingAlgorithm {
 	public ExecutionResults execute(String instanceName, String instanceFile)
 			throws Exception {
 
-		int bestGamma = Integer.MAX_VALUE;
+		double bestGamma = Integer.MAX_VALUE;
 		ExecutionResults bestResults = null;
 		boolean optimal = false;
 		int neighborAmount = 0;
