@@ -37,9 +37,9 @@ public class ExecutionResults {
 	
 	private Properties parameters;
 	
-	private int bestCmax;
+	private double bestCmax;
 	
-	private int initialCmax;
+	private double initialCmax;
 	
 	private String instanceName;
 	
@@ -146,19 +146,19 @@ public class ExecutionResults {
 		this.instanceName = instanceName;
 	}
 
-	public int getBestCmax() {
+	public double getBestCmax() {
 		return bestCmax;
 	}
 
-	public void setBestCmax(int bestCmax) {
+	public void setBestCmax(double bestCmax) {
 		this.bestCmax = bestCmax;
 	}
 
-	public float getInitialCmax() {
+	public double getInitialCmax() {
 		return initialCmax;
 	}
 
-	public void setInitialCmax(int initialCmax) {
+	public void setInitialCmax(double initialCmax) {
 		this.initialCmax = initialCmax;
 	}
 
