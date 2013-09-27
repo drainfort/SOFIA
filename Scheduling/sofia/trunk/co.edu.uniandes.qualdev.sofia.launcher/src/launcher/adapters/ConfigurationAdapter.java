@@ -62,6 +62,7 @@ public class ConfigurationAdapter {
 	
 	public static String CMAX_BKS = "cmax";
 	public static String MEAN_FLOW_TIME_BKS = "mft";
+	public static String TOTAL_FLOW_TIME_BKS = "tft";
 	
 	// ------------------------------------------------------------
 	// Constructor
