@@ -59,6 +59,7 @@ public class ConfigurationAdapter {
 	// Objective function
 	public static String CMAX = "gammaCalculator.impl.CMaxCalculator";
 	public static String MEAN_FLOW_TIME = "gammaCalculator.impl.MeanFlowTimeCalculator";
+	public static String TOTAL_FLOW_TIME = "gammaCalculator.impl.TotalFlowTimeCalculator";
 	
 	public static String CMAX_BKS = "cmax";
 	public static String MEAN_FLOW_TIME_BKS = "mft";
