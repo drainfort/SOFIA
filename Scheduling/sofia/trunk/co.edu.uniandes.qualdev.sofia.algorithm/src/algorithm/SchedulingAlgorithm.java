@@ -178,6 +178,18 @@ public abstract class SchedulingAlgorithm {
 		
 		int gamma_mft_bks_om_tt_s = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.mft.bks.om.tt.s"));
 		bkss.put("gamma.mft.bks.om.tt.s", gamma_mft_bks_om_tt_s);
+	
+		int gamma_tft_bks_om = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.mft.bks.om"));
+		bkss.put("gamma.tft.bks.om", gamma_tft_bks_om);
+		
+		int gamma_tft_bks_om_s = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.mft.bks.om.s"));
+		bkss.put("gamma.tft.bks.om.s", gamma_tft_bks_om_s);
+		
+		int gamma_tft_bks_om_tt = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.mft.bks.om.tt"));
+		bkss.put("gamma.tft.bks.om.tt", gamma_tft_bks_om_tt);
+		
+		int gamma_tft_bks_om_tt_s = (int) Integer.parseInt(problemConfiguration.getProperty("gamma.mft.bks.om.tt.s"));
+		bkss.put("gamma.tft.bks.om.tt.s", gamma_tft_bks_om_tt_s);
 		
 		return bkss;
 	}
