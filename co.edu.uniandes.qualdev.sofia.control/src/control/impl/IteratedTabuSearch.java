@@ -64,7 +64,7 @@ public class IteratedTabuSearch extends Control {
 		}
 
 		if(!optimalAchieved){
-			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, GammaSo);
+			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal);
 			double GammaSg = gammaCalculator.calculateGamma(Sg);
 			
 			if (optimal.intValue() >= GammaSg) {
@@ -86,7 +86,7 @@ public class IteratedTabuSearch extends Control {
 				System.out.println();
 				System.out.println("Perturbation** " + gammaCalculator.calculateGamma(Sa));
 				
-				IStructure Sv = improveByTabuSearch(Sa, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, GammaSg);
+				IStructure Sv = improveByTabuSearch(Sa, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal);
 				
 				Sg = Sv.cloneStructure();
 				GammaSg = gammaCalculator.calculateGamma(Sg);
@@ -112,122 +112,6 @@ public class IteratedTabuSearch extends Control {
 		return result;
 	}
 
-	/**
-	 * Improvement procedure: Tabu search
-	 */
-	private IStructure improveByTabuSearch(IStructure Sa,
-			INeighborCalculator neighborCalculator, IModifier modifier,
-			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal, double gammaSo)
-			throws Exception{
-		executionResults.setOptimal(optimal);
-		
-		// Sa		S' - solution to improve
-		// nm		n * m - vector size
-		// Ts		tabu list size
-		// Sb		Best solution known
-		// Skb		Best candidate solution
-		// Sk		Candidate solution
-		int Ts = (Integer) params.get("tabulist-size");
-
-		IStructure Sb = Sa.cloneStructure();
-		double GammaSb = gammaCalculator.calculateGamma(Sb);
-
-		boolean optimalAchieved = false;
-
-		ArrayList<PairVO> arrayTabu = new ArrayList<PairVO>();
-		int tabuIndex = 0;
-
-		// Parameters loading
-		int iterations =(Integer) params.get("iterations");
-		int nonimproving = (Integer) params.get("non-improving-out");
-		int maxNumberImprovements = 0;
-		long neighborhodSize =  (Integer) params.get("neighborhodSize");	
-		
-		if(params.get("maxNumberImprovements")!=null){
-			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
-		}
-
-		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(Sa, neighborhodSize);
-
-		while (iterations >= 0 && nonimproving >= 0 && !optimalAchieved) {
-			IStructure Skb = null;
-			double GammaSkb = Integer.MAX_VALUE;
-			PairVO PairSkb = null;
-
-			// Scanning the neighborhood to find the best candidate solution
-			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved; index++) {
-				PairVO PairSk = arrayNeighbors.get(index);
-				IStructure Sk = modifier.performModification(PairSk, Sa);
-				double GammaSk = gammaCalculator.calculateGamma(Sk);
-
-				if (GammaSk <= GammaSkb) {
-					boolean tabu = false;
-					for (int i = 0; i < arrayTabu.size() && !tabu; i++) {
-						PairVO PairTk = arrayTabu.get(i);
-						
-						if (PairTk.equals(PairSk))
-							tabu = true;
-					}
-					if (tabu) {
-						// Aspiration criterion
-						double acceptaceValue = Math.random();
-						if (acceptaceValue <= 0.5) {
-							Skb = Sk.cloneStructure();
-							GammaSkb = GammaSk;
-							PairSkb = PairSk;
-						}
-					} else {
-						Skb = Sk.cloneStructure();
-						GammaSkb = GammaSk;
-						PairSkb = PairSk;
-					}
-				}
-			}
-
-			// If there is a best candidate
-			if (Skb != null) {
-				if (GammaSkb < GammaSb) {
-					Sb = Skb.cloneStructure();
-					GammaSb = GammaSkb;
-					nonimproving = (int) (iterations * (Double) params.get("non-improving"));
-					System.out.println("Improvement: " + GammaSb);
-					
-					if (optimal.intValue() >= GammaSb) {
-						if(isOptimal){
-							optimalAchieved = true;
-							break;
-						}
-						else{
-							if (optimal.intValue() >GammaSb)
-								maxNumberImprovements--;
-							if(maxNumberImprovements<=0){
-								//System.out.println("Yu improved " + (Integer)params.get("maxNumberImprovements") + " times during iterative phase!");
-								optimalAchieved = true;
-							}
-							
-							
-						}
-					}
-					
-					
-				}
-				Sa = Skb.cloneStructure();
-
-				if (tabuIndex > Ts) {
-					arrayTabu.remove(0);
-				}
-				arrayTabu.add(PairSkb);
-				tabuIndex++;
-
-			}
-			// Avance while
-			iterations--;
-			nonimproving--;
-			arrayNeighbors = neighborCalculator.calculateNeighborhood(Sa, neighborhodSize);
-		}
-		return Sb;
-	}
-	
 	
 	public IStructure improveByTabuSearch(IStructure initialSolution,
 			INeighborCalculator neighborCalculator, IModifier modifier,
@@ -256,9 +140,7 @@ public class IteratedTabuSearch extends Control {
 		// Initializes the best solution (XBest) as the first one (X)
 		IStructure best = current.cloneStructure();
 		double bestGamma = gammaCalculator.calculateGamma(best);
-		System.out.println("initial solution: " + bestGamma);
 		ExecutionLogger.getInstance().printLog("initial solution: " + bestGamma);
-
 		executionResults.setOptimal(optimal);
 
 		int maxNumberImprovements = -1;
