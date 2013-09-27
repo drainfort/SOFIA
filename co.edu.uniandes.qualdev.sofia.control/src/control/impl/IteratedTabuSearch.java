@@ -37,6 +37,15 @@ public class IteratedTabuSearch extends Control {
 			INeighborCalculator neighborCalculator, IModifier modifier,
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
+		
+		long startTime = System.currentTimeMillis();
+		long stopTime = Integer.MAX_VALUE;
+		
+		if(params.get("maxExecutionTime")!=null ){
+			if((Integer) params.get("maxExecutionTime")!=-1)
+				stopTime = (Integer) params.get("maxExecutionTime") * 1000;	
+		}
+		
 		executionResults = new ExecutionResults();
 		executionResults.setOptimal(optimal);
 		
@@ -64,7 +73,7 @@ public class IteratedTabuSearch extends Control {
 		}
 
 		if(!optimalAchieved){
-			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal);
+			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime);
 			double GammaSg = gammaCalculator.calculateGamma(Sg);
 			
 			if (optimal.intValue() >= GammaSg) {
@@ -86,7 +95,7 @@ public class IteratedTabuSearch extends Control {
 				System.out.println();
 				System.out.println("Perturbation** " + gammaCalculator.calculateGamma(Sa));
 				
-				IStructure Sv = improveByTabuSearch(Sa, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal);
+				IStructure Sv = improveByTabuSearch(Sa, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime);
 				
 				Sg = Sv.cloneStructure();
 				GammaSg = gammaCalculator.calculateGamma(Sg);
@@ -104,6 +113,16 @@ public class IteratedTabuSearch extends Control {
 				}
 				iter--;
 				Sa.clean();
+				
+				long actualTime = System.currentTimeMillis();
+			    long elapsedTime = actualTime - startTime;
+			    
+			    if(elapsedTime>=stopTime){
+			    	System.out.println("TIME!!!");
+			    	optimalAchieved = true;
+			    	executionResults.setStopCriteria(2);
+			    }
+			
 			}
 		}
 		
@@ -116,11 +135,11 @@ public class IteratedTabuSearch extends Control {
 	public IStructure improveByTabuSearch(IStructure initialSolution,
 			INeighborCalculator neighborCalculator, IModifier modifier,
 				IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
-					boolean isOptimal) throws Exception {
+					boolean isOptimal, long startTime) throws Exception {
 			
 		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
 		
-		long startTime = System.currentTimeMillis();
+
 		long stopTime = Integer.MAX_VALUE;
 		
 		if(params.get("maxExecutionTime")!=null ){
