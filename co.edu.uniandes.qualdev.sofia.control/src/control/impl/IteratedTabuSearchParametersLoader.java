@@ -12,12 +12,19 @@ public class IteratedTabuSearchParametersLoader  implements IParametersLoader{
 
 		params.put("non-improving", Double.parseDouble((String) algorithmConfiguration
 				.getProperty("params.non-improving")));
-
-		params.put("percent", Double.parseDouble((String) algorithmConfiguration
-				.getProperty("params.percent")));
 		
 		params.put("tabulist-size", Double.parseDouble((String) algorithmConfiguration
 				.getProperty("params.tabulist-size")));
+		
+		params.put("iterations", Integer.parseInt((String) algorithmConfiguration
+				.getProperty("params.iterations")));
+		
+		params.put("non-improving-out", Integer.parseInt((String) algorithmConfiguration
+				.getProperty("params.non-improving-out")));
+		
+		params.put("neighborhodSize", Integer.parseInt((String) algorithmConfiguration
+				.getProperty("params.neighborhodSize")));
+			
 		
 		if(algorithmConfiguration.getProperty("params.maxNumberImprovements")!=null){
 			params.put("maxNumberImprovements", Integer.parseInt(algorithmConfiguration.getProperty("params.maxNumberImprovements")));

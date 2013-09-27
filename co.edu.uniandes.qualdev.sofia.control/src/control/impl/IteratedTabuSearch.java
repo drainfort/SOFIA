@@ -124,8 +124,6 @@ public class IteratedTabuSearch extends Control {
 		// Sb		Best solution known
 		// Skb		Best candidate solution
 		// Sk		Candidate solution
-		
-		int nm = Sa.getVector().size();
 		int Ts = (Integer) params.get("tabulist-size");
 
 		IStructure Sb = Sa.cloneStructure();
@@ -137,11 +135,10 @@ public class IteratedTabuSearch extends Control {
 		int tabuIndex = 0;
 
 		// Parameters loading
-		int iterations = nm * 1000;
-		int nonimproving = (int) (iterations * (Double) params.get("non-improving"));
+		int iterations =(Integer) params.get("iterations");
+		int nonimproving = (Integer) params.get("non-improving-out");
 		int maxNumberImprovements = 0;
-		double percent =(Double) params.get("percent");
-		int neighborhodSize = (int) ((nm * (nm - 1)) / 2 * percent);
+		long neighborhodSize =  (Integer) params.get("neighborhodSize");	
 		
 		if(params.get("maxNumberImprovements")!=null){
 			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
