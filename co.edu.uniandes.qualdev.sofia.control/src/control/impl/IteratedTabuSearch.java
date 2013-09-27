@@ -299,16 +299,6 @@ public class IteratedTabuSearch extends Control {
 			arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 		}
 
-		if(executionResults.getStopCriteria() == 2){
-			System.out.println("Stop Criteria: Max execution time");
-	    	ExecutionLogger.getInstance().printLog("Stop Criteria: Max execution time");
-		}
-		
-		if(nonImprovingOut<=0){
-			executionResults.setStopCriteria(1);
-			System.out.println("Stop Criteria: Non Improving");
-			ExecutionLogger.getInstance().printLog("Stop Criteria: Non Improving");
-		}
 		return best;
 	}
 	
