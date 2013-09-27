@@ -10,10 +10,10 @@ public class IteratedTabuSearchParametersLoader  implements IParametersLoader{
 	public Properties loadParameters(Properties algorithmConfiguration) {
 		Properties params = new Properties();
 
-		params.put("non-improving", Double.parseDouble((String) algorithmConfiguration
-				.getProperty("params.non-improving")));
+		params.put("non-improving-in", Integer.parseInt((String) algorithmConfiguration
+				.getProperty("params.non-improving-in")));
 		
-		params.put("tabulist-size", Double.parseDouble((String) algorithmConfiguration
+		params.put("tabulist-size", Integer.parseInt((String) algorithmConfiguration
 				.getProperty("params.tabulist-size")));
 		
 		params.put("iterations", Integer.parseInt((String) algorithmConfiguration
