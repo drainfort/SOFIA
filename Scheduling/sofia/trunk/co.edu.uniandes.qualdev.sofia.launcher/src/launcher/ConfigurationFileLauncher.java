@@ -173,7 +173,10 @@ public class ConfigurationFileLauncher {
 			gammaBKS = ConfigurationAdapter.CMAX_BKS;
 		}else if(gammaCalculator.equals(ConfigurationAdapter.MEAN_FLOW_TIME)){
 			gammaBKS = ConfigurationAdapter.MEAN_FLOW_TIME_BKS;
+		}else if(gammaCalculator.equals(ConfigurationAdapter.TOTAL_FLOW_TIME)){
+			gammaBKS = ConfigurationAdapter.TOTAL_FLOW_TIME_BKS;
 		}
+		
 		
 		String currentBks = "gamma." + gammaBKS + ".bks.";
 		
