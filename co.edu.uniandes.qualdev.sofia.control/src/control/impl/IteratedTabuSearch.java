@@ -76,7 +76,6 @@ public class IteratedTabuSearch extends Control {
 		if(!optimalAchieved){
 			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime);
 			double GammaSg = gammaCalculator.calculateGamma(Sg);
-			
 			if (optimal.intValue() >= GammaSg) {
 				Sb = Sg.cloneStructure();
 				GammaSb = GammaSg;
