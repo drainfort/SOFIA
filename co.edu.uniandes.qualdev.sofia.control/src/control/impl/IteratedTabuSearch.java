@@ -56,7 +56,7 @@ public class IteratedTabuSearch extends Control {
 		// Sg		S^ - current solution
 		
 		this.So = So.cloneStructure();
-		double GammaSo = gammaCalculator.calculateGamma(So);
+		double GammaSo = gammaCalculator.calculateGamma(this.So);
 		System.out.println("initial solution: " + GammaSo);
 		executionResults.setInitialCmax(GammaSo);
 		
