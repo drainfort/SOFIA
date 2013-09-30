@@ -40,6 +40,7 @@ public class IteratedTabuSearch extends Control {
 		
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
+		int numberNeighbors= 0;
 		
 		if(params.get("maxExecutionTime")!=null ){
 			if((Integer) params.get("maxExecutionTime")!=-1)
@@ -73,7 +74,7 @@ public class IteratedTabuSearch extends Control {
 		}
 
 		if(!optimalAchieved){
-			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime);
+			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime, numberNeighbors);
 			double GammaSg = gammaCalculator.calculateGamma(Sg);
 			
 			if (optimal.intValue() >= GammaSg) {
@@ -95,7 +96,7 @@ public class IteratedTabuSearch extends Control {
 				System.out.println();
 				System.out.println("Perturbation** " + gammaCalculator.calculateGamma(Sa));
 				
-				IStructure Sv = improveByTabuSearch(Sa, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime);
+				IStructure Sv = improveByTabuSearch(Sa, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime, numberNeighbors);
 				
 				Sg = Sv.cloneStructure();
 				GammaSg = gammaCalculator.calculateGamma(Sg);
@@ -127,6 +128,8 @@ public class IteratedTabuSearch extends Control {
 		}
 		
 		ExecutionResults result = obtainExecutionResults(Sb, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"));
+		result.setExecutionTime(System.currentTimeMillis() - startTime);
+		result.setNumberOfVisitedNeighbors(numberNeighbors);
 		System.out.println();
 		return result;
 	}
@@ -135,7 +138,7 @@ public class IteratedTabuSearch extends Control {
 	public IStructure improveByTabuSearch(IStructure initialSolution,
 			INeighborCalculator neighborCalculator, IModifier modifier,
 				IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
-					boolean isOptimal, long startTime) throws Exception {
+					boolean isOptimal, long startTime, int numberNeighbors) throws Exception {
 			
 		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
 		
@@ -207,6 +210,7 @@ public class IteratedTabuSearch extends Control {
 				nonImprovingIn= Integer.MAX_VALUE;
 
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonImprovingIn>=0; index++) {
+				numberNeighbors++;
 				PairVO pairCandidate = arrayNeighbors.get(index);
 				IStructure candidate = modifier.performModification(pairCandidate,current);
 				
