@@ -74,8 +74,7 @@ public class IteratedTabuSearch extends Control {
 		}
 
 		if(!optimalAchieved){
-			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime, numberNeighbors);
-			System.out.println(numberNeighbors);
+			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime);
 			double GammaSg = gammaCalculator.calculateGamma(Sg);
 			
 			if (optimal.intValue() >= GammaSg) {
@@ -97,7 +96,7 @@ public class IteratedTabuSearch extends Control {
 				System.out.println();
 				System.out.println("Perturbation** " + gammaCalculator.calculateGamma(Sa));
 				
-				IStructure Sv = improveByTabuSearch(Sa, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime, numberNeighbors);
+				IStructure Sv = improveByTabuSearch(Sa, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime);
 				
 				Sg = Sv.cloneStructure();
 				GammaSg = gammaCalculator.calculateGamma(Sg);
@@ -139,10 +138,10 @@ public class IteratedTabuSearch extends Control {
 	public IStructure improveByTabuSearch(IStructure initialSolution,
 			INeighborCalculator neighborCalculator, IModifier modifier,
 				IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
-					boolean isOptimal, long startTime, int numberNeighbors) throws Exception {
+					boolean isOptimal, long startTime) throws Exception {
 			
 		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
-		
+		int numberNeighbors = executionResults.getNumberOfVisitedNeighbors();
 
 		long stopTime = Integer.MAX_VALUE;
 		
@@ -211,8 +210,7 @@ public class IteratedTabuSearch extends Control {
 				nonImprovingIn= Integer.MAX_VALUE;
 
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonImprovingIn>=0; index++) {
-				numberNeighbors++;
-				System.out.println(numberNeighbors);
+				numberNeighbors+=1;
 				PairVO pairCandidate = arrayNeighbors.get(index);
 				IStructure candidate = modifier.performModification(pairCandidate,current);
 				
@@ -304,6 +302,8 @@ public class IteratedTabuSearch extends Control {
 			nonImprovingOut--;
 			arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 		}
+
+		executionResults.setNumberOfVisitedNeighbors(numberNeighbors);
 
 		return best;
 	}
