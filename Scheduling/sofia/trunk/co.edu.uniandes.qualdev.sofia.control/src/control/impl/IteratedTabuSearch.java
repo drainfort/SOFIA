@@ -40,7 +40,7 @@ public class IteratedTabuSearch extends Control {
 		
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
-		int numberNeighbors= 0;
+		int numberNeighbors = 0;
 		
 		if(params.get("maxExecutionTime")!=null ){
 			if((Integer) params.get("maxExecutionTime")!=-1)
@@ -75,6 +75,7 @@ public class IteratedTabuSearch extends Control {
 
 		if(!optimalAchieved){
 			IStructure Sg = improveByTabuSearch(So, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, startTime, numberNeighbors);
+			System.out.println(numberNeighbors);
 			double GammaSg = gammaCalculator.calculateGamma(Sg);
 			
 			if (optimal.intValue() >= GammaSg) {
@@ -89,7 +90,7 @@ public class IteratedTabuSearch extends Control {
 			GammaSb = gammaCalculator.calculateGamma(Sb);
 			System.out.println("Improvement: " + GammaSb);
 			
-			int iter = 10;
+			int iter = 20;
 			while(iter > 0 && !optimalAchieved){
 				IStructure Sa = perturbate(Sg);
 				
@@ -211,6 +212,7 @@ public class IteratedTabuSearch extends Control {
 
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonImprovingIn>=0; index++) {
 				numberNeighbors++;
+				System.out.println(numberNeighbors);
 				PairVO pairCandidate = arrayNeighbors.get(index);
 				IStructure candidate = modifier.performModification(pairCandidate,current);
 				
