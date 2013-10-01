@@ -40,8 +40,9 @@ public class GRASP extends Control {
 			throws Exception {
 
 		int numberOfVisitedNeighbors=0;
-		double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
-		executionResults.setInitialCmax(GammaInitialSolution);
+		double gammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
+		executionResults = new ExecutionResults();
+		executionResults.setInitialCmax(gammaInitialSolution);
 		this.So = initialSolution.cloneStructure();
 		
 		// Initializes the best solution (XBest) as the first one (X)
@@ -56,6 +57,15 @@ public class GRASP extends Control {
 			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
 		}
 		
+		long startTime = System.currentTimeMillis();
+		
+		long stopTime = Integer.MAX_VALUE;
+		
+		if(params.get("maxExecutionTime")!=null ){
+			if((Integer) params.get("maxExecutionTime")!=-1)
+				stopTime = (Integer) params.get("maxExecutionTime") * 1000;	
+		}
+		
 		boolean optimalAchieved = false;
 		
 		if(optimal.intValue() >= bestGamma){
@@ -66,7 +76,7 @@ public class GRASP extends Control {
 					optimalAchieved = true;
 				}
 				else{
-					if(maxNumberImprovements<=0){
+					if(maxNumberImprovements==0){
 						optimalAchieved = true;
 					}
 				}
@@ -94,7 +104,7 @@ public class GRASP extends Control {
 						}
 						else{
 							maxNumberImprovements--;
-							if(maxNumberImprovements<=0){
+							if(maxNumberImprovements==0){
 								optimalAchieved = true;
 							}
 						}
@@ -104,6 +114,14 @@ public class GRASP extends Control {
 				}
 				k--;
 				candidate.clean();
+				
+				long actualTime = System.currentTimeMillis();
+			    long elapsedTime = actualTime - startTime;
+			    
+			    if(elapsedTime>=stopTime){
+			    	optimalAchieved = true;
+			    	executionResults.setStopCriteria(2);
+			    }
 			}
 		}
 		ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"));
