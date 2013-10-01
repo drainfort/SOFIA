@@ -157,6 +157,11 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("params.coolingFactor", data.getProperty("params.coolingFactor"));
 		algorithmConfiguration.setProperty("params.restarts", data.getProperty("params.restarts"));
 		algorithmConfiguration.setProperty("params.boltzmann", data.getProperty("params.boltzmann"));
+		
+		//Params grasperls
+		algorithmConfiguration.setProperty("params.strategyLS", data.getProperty("params.strategyLS"));
+		algorithmConfiguration.setProperty("params.maxLSDepth", data.getProperty("params.maxLSDepth"));
+		algorithmConfiguration.setProperty("params.maxNeighbors", data.getProperty("params.maxNeighbors"));
 
 		// Params general
 		algorithmConfiguration.setProperty("params.maxNumberImprovements", data.getProperty("params.maxNumberImprovements"));
