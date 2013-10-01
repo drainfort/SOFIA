@@ -158,6 +158,9 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("params.restarts", data.getProperty("params.restarts"));
 		algorithmConfiguration.setProperty("params.boltzmann", data.getProperty("params.boltzmann"));
 		
+		//Params iteratedTabu
+		algorithmConfiguration.setProperty("params.outerIterations", data.getProperty("params.outerIterations"));
+		
 		//Params grasperls
 		algorithmConfiguration.setProperty("params.strategyLS", data.getProperty("params.strategyLS"));
 		algorithmConfiguration.setProperty("params.maxLSDepth", data.getProperty("params.maxLSDepth"));
