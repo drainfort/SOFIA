@@ -50,12 +50,7 @@ public class GRASPERLS extends Control {
 		double bestGamma = gammaCalculator.calculateGamma(best);
 		
 		// Obtaining the parameters from the algorithm configuration.
-		executionResults.setOptimal(optimal);
-		int maxNumberImprovements =0;
-		if(params.get("maxNumberImprovements")!=null){
-			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
-		}
-		
+		executionResults.setOptimal(optimal);		
 		
 		if(optimal.intValue() >= bestGamma){
 			System.out.println("****Optimal CMax found! constructive stage");
@@ -86,8 +81,9 @@ public class GRASPERLS extends Control {
 			if(optimal.intValue() >= bestGamma){
 				if(optimal.intValue() == bestGamma)
 					System.out.println("****Optimal CMax found! local search stage");
-				else
+				else{
 					System.out.println("****NEW OPTIMAL CMax found! local search stage");
+				}
 			}	
 		}
 		ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"));
