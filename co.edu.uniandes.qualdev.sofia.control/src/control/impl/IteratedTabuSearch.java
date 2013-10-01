@@ -87,7 +87,7 @@ public class IteratedTabuSearch extends Control {
 			GammaSb = gammaCalculator.calculateGamma(Sb);
 			System.out.println("Improvement: " + GammaSb);
 			
-			int iter = 20;
+			int iter = (Integer) params.get("outerIterations");
 			while(iter > 0 && !optimalAchieved){
 				IStructure Sa = perturbate(Sg);
 				
