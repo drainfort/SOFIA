@@ -40,7 +40,6 @@ public class IteratedTabuSearch extends Control {
 		
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
-		int numberNeighbors = 0;
 		
 		if(params.get("maxExecutionTime")!=null ){
 			if((Integer) params.get("maxExecutionTime")!=-1)
@@ -128,7 +127,6 @@ public class IteratedTabuSearch extends Control {
 		
 		ExecutionResults result = obtainExecutionResults(Sb, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"));
 		result.setExecutionTime(System.currentTimeMillis() - startTime);
-		result.setNumberOfVisitedNeighbors(numberNeighbors);
 		System.out.println();
 		return result;
 	}
