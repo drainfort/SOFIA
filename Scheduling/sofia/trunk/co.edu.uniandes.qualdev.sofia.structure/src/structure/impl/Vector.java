@@ -657,6 +657,7 @@ public class Vector extends AbstractStructure{
 	 */
 	public ArrayList<CriticalPath> getCriticalPaths(){
 		synch=false;
+		decodeSolution();
 		calculateCMatrix(0);
 		int [][] cmatrix = C;
 		
@@ -688,17 +689,12 @@ public class Vector extends AbstractStructure{
 				}
 			}
 		}
-		
-		for(int i=0; i< totalJobs;i++){
-			
-			for(int j=0; j<totalStations;j++){
-				if(CMatrix[i][j]==lastTime){
-					IOperation temp= new Operation(new OperationIndexVO(i, j));
-					temp.setFinalTime(lastTime);
-					operations.add(temp);
-				}
-			}
+		for(int i =0; i < getOperations().size(); i++){
+			IOperation temp= getOperations().get(i);
+			if(temp.getFinalTime()==lastTime)
+				operations.add(temp);
 		}
+		
 		return operations;
 	}
 		
@@ -783,17 +779,14 @@ public class Vector extends AbstractStructure{
 	}
 	
 	public ArrayList<IOperation> getOperationsBeforeByJob(int [][] matrizC, IOperation operation){
-	
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		int jobid = operation.getOperationIndex().getJobId();
 		int finalTime = operation.getFinalTime();
 		
-		for(int i=0; i < this.totalStations; i++){
-			int cValue= matrizC[jobid][i];
-			if(cValue < finalTime){
-				IOperation temp = new Operation(new OperationIndexVO(jobid, i));
-				temp.setFinalTime(cValue);
-				operations.add(temp);
+		for(int i=0; i < getOperations().size(); i++){
+			IOperation actual = getOperations().get(i);
+			if(actual.getOperationIndex().getJobId()==jobid && actual.getFinalTime()<finalTime){
+				operations.add(actual);
 			}
 		}
 		sortArray(operations);
@@ -801,17 +794,14 @@ public class Vector extends AbstractStructure{
 	}
 	
 	public ArrayList<IOperation> getOperationsBeforeByStation(int [][] matrizC, IOperation operation){
-		
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		int stationid = operation.getOperationIndex().getStationId();
 		int finalTime = operation.getFinalTime();
 		
-		for(int i=0; i < this.totalJobs; i++){
-			int cValue= matrizC[i][stationid];
-			if(cValue < finalTime){
-				IOperation temp = new Operation(new OperationIndexVO(i, stationid));
-				temp.setFinalTime(cValue);
-				operations.add(temp);
+		for(int i=0; i < getOperations().size(); i++){
+			IOperation actual = getOperations().get(i);
+			if(actual.getOperationIndex().getStationId()==stationid && actual.getFinalTime()<finalTime){
+				operations.add(actual);
 			}
 		}
 		sortArray(operations);
