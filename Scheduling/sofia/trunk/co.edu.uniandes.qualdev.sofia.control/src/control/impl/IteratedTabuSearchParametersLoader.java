@@ -9,6 +9,10 @@ public class IteratedTabuSearchParametersLoader  implements IParametersLoader{
 	@Override
 	public Properties loadParameters(Properties algorithmConfiguration) {
 		Properties params = new Properties();
+		
+		
+		params.put("outerIterations", Integer.parseInt((String) algorithmConfiguration
+				.getProperty("params.outerIterations")));
 
 		params.put("non-improving-in", Integer.parseInt((String) algorithmConfiguration
 				.getProperty("params.non-improving-in")));
