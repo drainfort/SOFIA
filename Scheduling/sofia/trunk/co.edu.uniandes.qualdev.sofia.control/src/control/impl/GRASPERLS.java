@@ -6,8 +6,10 @@ import java.util.Properties;
 import java.util.Set;
 
 import structure.IStructure;
+import structure.impl.CriticalPath;
 
 import common.types.PairVO;
+import common.utils.ExecutionLogger;
 import common.utils.ExecutionResults;
 import control.Control;
 
@@ -136,6 +138,25 @@ public class GRASPERLS extends Control {
 			
 					//Considers only the pairs that generate improvement in the current solution
 					if(gammaCurrentSolution > gammaCandidate){ 
+						ExecutionLogger.getInstance().printLog("Improvement: "+gammaCandidate);
+						if(ExecutionLogger.getInstance().isUseLogger()){
+							ExecutionLogger.getInstance().printLog("Vector: "+best.getOperations());
+							ArrayList<CriticalPath> paths = best.getCriticalPaths();
+							ExecutionLogger.getInstance().printLog("Critical Paths: "+paths);
+							ExecutionLogger.getInstance().printLog("Pair X: "+pair.getX());
+							ExecutionLogger.getInstance().printLog("Pair X: "+pair.getY());
+							boolean contains = false;
+							for (int i = 0; i < paths.size() && !contains; i++) {
+								contains = paths.get(i).getRoute().contains(pair.getX());
+							}
+							boolean containsY = false;
+							for (int i = 0; i < paths.size() && !containsY; i++) {
+								containsY = paths.get(i).getRoute().contains(pair.getY());
+							}
+							ExecutionLogger.getInstance().printLog("In critical Path  X: "+ contains);
+							ExecutionLogger.getInstance().printLog("In critical Path  Y: "+ containsY);
+						}
+						
 						switch (strategyLS){
 							case 0: //Exhaustive search, it will explore all the choices
 								neighborsImproving.add(pair);
