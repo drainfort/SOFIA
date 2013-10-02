@@ -108,7 +108,9 @@ public class TabuSearchRN extends Control {
 				nonImprovingIn= Integer.MAX_VALUE;
 
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonImprovingIn>=0; index++) {
+				System.out.println("array: "+arrayNeighbors);
 				PairVO pairCandidate = arrayNeighbors.get(index);
+				System.out.println("pair: "+ pairCandidate);
 				IStructure candidate = modifier.performModification(pairCandidate,current);
 				
 				numberOfVisitedNeighbors++;
