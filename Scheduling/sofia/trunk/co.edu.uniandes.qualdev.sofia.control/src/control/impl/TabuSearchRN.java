@@ -163,7 +163,7 @@ public class TabuSearchRN extends Control {
 					
 					System.out.println("Improvement: " + bestGamma);
 					ExecutionLogger.getInstance().printLog("Improvement: "+bestGamma);
-					if(ExecutionLogger.getInstance().useLogger()){
+					if(ExecutionLogger.getInstance().isUseLogger()){
 						ExecutionLogger.getInstance().printLog("Vector: "+best.getOperations());
 						ArrayList<CriticalPath> paths = best.getCriticalPaths();
 						ExecutionLogger.getInstance().printLog("Critical Paths: "+paths);
