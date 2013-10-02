@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import chart.printer.ChartPrinter;
+import common.utils.ExecutionLogger;
 import common.utils.ExecutionResults;
 import algorithm.SchedulingAlgorithm;
 import algorithm.impl.TrajectoryBasedAlgorithm;
@@ -216,6 +217,9 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("report.gantt.initialsolutions", showInitialSolutions);
 		algorithmConfiguration.setProperty("report.gantt.bestsolutions", showFinalSolutions);
 		algorithmConfiguration.setProperty("report.gantt.log", showLog);
+		if(showLog.equals("true")){
+			ExecutionLogger.getInstance().setUseLogger(true);
+		}
 		
 		// Executing instances
 		for (int i = 0; i < instancesToExecute.size(); i++) {
