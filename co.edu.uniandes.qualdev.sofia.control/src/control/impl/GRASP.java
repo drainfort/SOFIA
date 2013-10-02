@@ -5,8 +5,10 @@ import java.util.Iterator;
 import java.util.Properties;
 
 import structure.IStructure;
+import structure.impl.CriticalPath;
 
 import common.types.PairVO;
+import common.utils.ExecutionLogger;
 import common.utils.ExecutionResults;
 import control.Control;
 
@@ -95,6 +97,25 @@ public class GRASP extends Control {
 				if(delta > 0){
 					best = candidate.cloneStructure();
 					bestGamma = gammaCandidate;
+					
+					ExecutionLogger.getInstance().printLog("Improvement: "+bestGamma);
+					if(ExecutionLogger.getInstance().isUseLogger()){
+						ExecutionLogger.getInstance().printLog("Vector: "+arrayNeighbors.get(k-1));
+						ArrayList<CriticalPath> paths = best.getCriticalPaths();
+						ExecutionLogger.getInstance().printLog("Critical Paths: "+paths);
+						ExecutionLogger.getInstance().printLog("Pair X: "+arrayNeighbors.get(k-1).getX());
+						ExecutionLogger.getInstance().printLog("Pair X: "+arrayNeighbors.get(k-1).getY());
+						boolean contains = false;
+						for (int i = 0; i < paths.size() && !contains; i++) {
+							contains = paths.get(i).getRoute().contains(arrayNeighbors.get(k-1).getX());
+						}
+						boolean containsY = false;
+						for (int i = 0; i < paths.size() && !containsY; i++) {
+							containsY = paths.get(i).getRoute().contains(arrayNeighbors.get(k-1).getY());
+						}
+						ExecutionLogger.getInstance().printLog("In critical Path  X: "+ contains);
+						ExecutionLogger.getInstance().printLog("In critical Path  Y: "+ containsY);
+					}
 					
 					if(optimal.intValue() >= bestGamma){
 						if(isOptimal){
