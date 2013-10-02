@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import structure.IStructure;
+import structure.impl.CriticalPath;
 
 import common.types.PairVO;
 import common.utils.ExecutionLogger;
@@ -162,6 +163,23 @@ public class TabuSearchRN extends Control {
 					
 					System.out.println("Improvement: " + bestGamma);
 					ExecutionLogger.getInstance().printLog("Improvement: "+bestGamma);
+					if(ExecutionLogger.getInstance().useLogger()){
+						ExecutionLogger.getInstance().printLog("Vector: "+best.getOperations());
+						ArrayList<CriticalPath> paths = best.getCriticalPaths();
+						ExecutionLogger.getInstance().printLog("Critical Paths: "+paths);
+						ExecutionLogger.getInstance().printLog("Pair X: "+bestPairCandidate.getX());
+						ExecutionLogger.getInstance().printLog("Pair X: "+bestPairCandidate.getY());
+						boolean contains = false;
+						for (int i = 0; i < paths.size() && !contains; i++) {
+							contains = paths.get(i).getRoute().contains(bestPairCandidate.getX());
+						}
+						boolean containsY = false;
+						for (int i = 0; i < paths.size() && !containsY; i++) {
+							containsY = paths.get(i).getRoute().contains(bestPairCandidate.getY());
+						}
+						ExecutionLogger.getInstance().printLog("In critical Path  X: "+ contains);
+						ExecutionLogger.getInstance().printLog("In critical Path  Y: "+ containsY);
+					}
 
 					if (optimal.intValue() >= bestGamma) {
 						if(isOptimal){
