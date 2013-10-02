@@ -1,8 +1,10 @@
 package control.impl;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 import structure.IStructure;
+import structure.impl.CriticalPath;
 
 import common.types.PairVO;
 import common.utils.ExecutionLogger;
@@ -137,6 +139,23 @@ public class SimpleSimulatedAnnealing extends Control {
 					
 					System.out.println("CMax improvement: " + XBestCMax);
 					ExecutionLogger.getInstance().printLog("Improvement: "+XBestCMax);
+					if(ExecutionLogger.getInstance().isUseLogger()){
+						ExecutionLogger.getInstance().printLog("Vector: "+YMovement);
+						ArrayList<CriticalPath> paths = XBest.getCriticalPaths();
+						ExecutionLogger.getInstance().printLog("Critical Paths: "+paths);
+						ExecutionLogger.getInstance().printLog("Pair X: "+YMovement.getX());
+						ExecutionLogger.getInstance().printLog("Pair X: "+YMovement.getY());
+						boolean contains = false;
+						for (int i = 0; i < paths.size() && !contains; i++) {
+							contains = paths.get(i).getRoute().contains(YMovement.getX());
+						}
+						boolean containsY = false;
+						for (int i = 0; i < paths.size() && !containsY; i++) {
+							containsY = paths.get(i).getRoute().contains(YMovement.getY());
+						}
+						ExecutionLogger.getInstance().printLog("In critical Path  X: "+ contains);
+						ExecutionLogger.getInstance().printLog("In critical Path  Y: "+ containsY);
+					}
 					
 					if(optimal.intValue() >= XBestCMax){
 						if(isOptimal){
