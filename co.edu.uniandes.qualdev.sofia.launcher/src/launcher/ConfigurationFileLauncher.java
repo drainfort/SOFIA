@@ -219,6 +219,8 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("report.gantt.log", showLog);
 		if(showLog.equals("true")){
 			ExecutionLogger.getInstance().setUseLogger(true);
+			ExecutionLogger.getInstance().initializeLogger (""+System.currentTimeMillis(), "");
+			
 		}
 		
 		// Executing instances
