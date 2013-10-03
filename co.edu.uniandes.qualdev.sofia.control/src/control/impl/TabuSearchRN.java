@@ -108,9 +108,7 @@ public class TabuSearchRN extends Control {
 				nonImprovingIn= Integer.MAX_VALUE;
 
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonImprovingIn>=0; index++) {
-				System.out.println("array: "+arrayNeighbors);
 				PairVO pairCandidate = arrayNeighbors.get(index);
-				System.out.println("pair: "+ pairCandidate);
 				IStructure candidate = modifier.performModification(pairCandidate,current);
 				
 				numberOfVisitedNeighbors++;
@@ -169,15 +167,15 @@ public class TabuSearchRN extends Control {
 						ExecutionLogger.getInstance().printLog("Vector: "+best.getOperations());
 						ArrayList<CriticalPath> paths = best.getCriticalPaths();
 						ExecutionLogger.getInstance().printLog("Critical Paths: "+paths);
-						ExecutionLogger.getInstance().printLog("Pair X: "+bestPairCandidate.getX());
-						ExecutionLogger.getInstance().printLog("Pair X: "+bestPairCandidate.getY());
+						ExecutionLogger.getInstance().printLog("Pair X: "+bestPairCandidate.getoX());
+						ExecutionLogger.getInstance().printLog("Pair Y: "+bestPairCandidate.getoY());
 						boolean contains = false;
 						for (int i = 0; i < paths.size() && !contains; i++) {
-							contains = paths.get(i).getRoute().contains(bestPairCandidate.getX());
+							contains = paths.get(i).getRoute().contains(bestPairCandidate.getoX());
 						}
 						boolean containsY = false;
 						for (int i = 0; i < paths.size() && !containsY; i++) {
-							containsY = paths.get(i).getRoute().contains(bestPairCandidate.getY());
+							containsY = paths.get(i).getRoute().contains(bestPairCandidate.getoY());
 						}
 						ExecutionLogger.getInstance().printLog("In critical Path  X: "+ contains);
 						ExecutionLogger.getInstance().printLog("In critical Path  Y: "+ containsY);
