@@ -143,15 +143,15 @@ public class SimpleSimulatedAnnealing extends Control {
 						ExecutionLogger.getInstance().printLog("Vector: "+YMovement);
 						ArrayList<CriticalPath> paths = XBest.getCriticalPaths();
 						ExecutionLogger.getInstance().printLog("Critical Paths: "+paths);
-						ExecutionLogger.getInstance().printLog("Pair X: "+YMovement.getX());
-						ExecutionLogger.getInstance().printLog("Pair X: "+YMovement.getY());
+						ExecutionLogger.getInstance().printLog("Pair X: "+YMovement.getoX());
+						ExecutionLogger.getInstance().printLog("Pair X: "+YMovement.getoY());
 						boolean contains = false;
 						for (int i = 0; i < paths.size() && !contains; i++) {
-							contains = paths.get(i).getRoute().contains(YMovement.getX());
+							contains = paths.get(i).getRoute().contains(YMovement.getoX());
 						}
 						boolean containsY = false;
 						for (int i = 0; i < paths.size() && !containsY; i++) {
-							containsY = paths.get(i).getRoute().contains(YMovement.getY());
+							containsY = paths.get(i).getRoute().contains(YMovement.getoY());
 						}
 						ExecutionLogger.getInstance().printLog("In critical Path  X: "+ contains);
 						ExecutionLogger.getInstance().printLog("In critical Path  Y: "+ containsY);
