@@ -2,6 +2,8 @@ package structure.impl;
 
 import java.util.ArrayList;
 
+import common.types.OperationIndexVO;
+
 import structure.IOperation;
 
 /**
@@ -44,6 +46,15 @@ public class CriticalPath {
 
 	public void addPreviusRoute(ArrayList<IOperation> nRoute) {
 		route.addAll(nRoute);
+	}
+	
+	public boolean containsOperationIndex(OperationIndexVO operationIndex){
+		for(int i=0; i<route.size();i++){
+			OperationIndexVO temp = route.get(i).getOperationIndex();
+			if(operationIndex.equals(temp))
+				return true;
+		}
+		return false;
 	}
 
 	public ArrayList<ArrayList<IOperation>> getBlocks() {
