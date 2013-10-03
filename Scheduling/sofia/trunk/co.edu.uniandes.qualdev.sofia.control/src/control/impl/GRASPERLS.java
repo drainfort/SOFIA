@@ -147,11 +147,11 @@ public class GRASPERLS extends Control {
 							ExecutionLogger.getInstance().printLog("Pair X: "+pair.getoY());
 							boolean contains = false;
 							for (int i = 0; i < paths.size() && !contains; i++) {
-								contains = paths.get(i).getRoute().contains(pair.getoX());
+								contains = paths.get(i).containsOperationIndex(pair.getoX());
 							}
 							boolean containsY = false;
 							for (int i = 0; i < paths.size() && !containsY; i++) {
-								containsY = paths.get(i).getRoute().contains(pair.getoY());
+								containsY = paths.get(i).containsOperationIndex(pair.getoY());
 							}
 							ExecutionLogger.getInstance().printLog("In critical Path  X: "+ contains);
 							ExecutionLogger.getInstance().printLog("In critical Path  Y: "+ containsY);

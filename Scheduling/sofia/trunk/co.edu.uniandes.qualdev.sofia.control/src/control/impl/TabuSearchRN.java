@@ -171,11 +171,11 @@ public class TabuSearchRN extends Control {
 						ExecutionLogger.getInstance().printLog("Pair Y: "+bestPairCandidate.getoY());
 						boolean contains = false;
 						for (int i = 0; i < paths.size() && !contains; i++) {
-							contains = paths.get(i).getRoute().contains(bestPairCandidate.getoX());
+							contains = paths.get(i).containsOperationIndex(bestPairCandidate.getoX());
 						}
 						boolean containsY = false;
 						for (int i = 0; i < paths.size() && !containsY; i++) {
-							containsY = paths.get(i).getRoute().contains(bestPairCandidate.getoY());
+							containsY = paths.get(i).containsOperationIndex(bestPairCandidate.getoY());
 						}
 						ExecutionLogger.getInstance().printLog("In critical Path  X: "+ contains);
 						ExecutionLogger.getInstance().printLog("In critical Path  Y: "+ containsY);
