@@ -107,11 +107,11 @@ public class GRASP extends Control {
 						ExecutionLogger.getInstance().printLog("Pair X: "+arrayNeighbors.get(k-1).getoY());
 						boolean contains = false;
 						for (int i = 0; i < paths.size() && !contains; i++) {
-							contains = paths.get(i).getRoute().contains(arrayNeighbors.get(k-1).getoX());
+							contains = paths.get(i).containsOperationIndex(arrayNeighbors.get(k-1).getoX());
 						}
 						boolean containsY = false;
 						for (int i = 0; i < paths.size() && !containsY; i++) {
-							containsY = paths.get(i).getRoute().contains(arrayNeighbors.get(k-1).getoY());
+							containsY = paths.get(i).containsOperationIndex(arrayNeighbors.get(k-1).getoY());
 						}
 						ExecutionLogger.getInstance().printLog("In critical Path  X: "+ contains);
 						ExecutionLogger.getInstance().printLog("In critical Path  Y: "+ containsY);

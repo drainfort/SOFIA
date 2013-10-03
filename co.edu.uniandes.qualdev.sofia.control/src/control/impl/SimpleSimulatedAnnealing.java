@@ -147,11 +147,11 @@ public class SimpleSimulatedAnnealing extends Control {
 						ExecutionLogger.getInstance().printLog("Pair X: "+YMovement.getoY());
 						boolean contains = false;
 						for (int i = 0; i < paths.size() && !contains; i++) {
-							contains = paths.get(i).getRoute().contains(YMovement.getoX());
+							contains = paths.get(i).containsOperationIndex(YMovement.getoX());
 						}
 						boolean containsY = false;
 						for (int i = 0; i < paths.size() && !containsY; i++) {
-							containsY = paths.get(i).getRoute().contains(YMovement.getoY());
+							containsY = paths.get(i).containsOperationIndex(YMovement.getoY());
 						}
 						ExecutionLogger.getInstance().printLog("In critical Path  X: "+ contains);
 						ExecutionLogger.getInstance().printLog("In critical Path  Y: "+ containsY);
