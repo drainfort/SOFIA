@@ -108,7 +108,6 @@ public class Vector extends AbstractStructure{
 		
 		IOperation initialOperation = this.getOperationByOperationIndex(initialOperationIndex);
 		IOperation finalOperation = this.getOperationByOperationIndex(finalOperationIndex);
-		
 		getOperations().set(initialOperationPosition, finalOperation);
 		getOperations().set(finalOperationPosition, initialOperation);
 		
@@ -205,7 +204,7 @@ public class Vector extends AbstractStructure{
 	@Override
 	public IOperation getOperationByOperationIndex(OperationIndexVO operationIndex) {
 		for (IOperation operation : getOperations()) {
-			if(operation.getOperationIndex().equals(operationIndex))
+			if(operation.getOperationIndex().getJobId()==operationIndex.getJobId() && operation.getOperationIndex().getStationId()==operationIndex.getStationId())
 				return operation;
 		}
 		return null;
@@ -215,7 +214,7 @@ public class Vector extends AbstractStructure{
 	public int getPositionByOperationIndex(OperationIndexVO operationIndex) {
 		int i = 0;
 		for (IOperation operation : getOperations()) {
-			if(operation.getOperationIndex().equals(operationIndex))
+			if(operation.getOperationIndex().getJobId()==operationIndex.getJobId() && operation.getOperationIndex().getStationId()==operationIndex.getStationId())
 				return i;
 			i++;
 		}
