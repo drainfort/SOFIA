@@ -259,7 +259,7 @@ public class ConfigurationFileLauncher {
 		if(showLog.equals("true")){
 			ExecutionLogger.getInstance().stopHandler();
 		}
-		ChartPrinter.getInstance().printGlobalResultsHTML("./results/" + userId + "/experiment-results-" + time + ".html");
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/" + userId + "/experiment-results-" + time + ".html", "Log-execution-" + time + ".html");
 		
 	}
 	
