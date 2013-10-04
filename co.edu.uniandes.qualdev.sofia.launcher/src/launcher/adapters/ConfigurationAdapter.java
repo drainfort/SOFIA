@@ -262,7 +262,7 @@ public class ConfigurationAdapter {
 			}
 			ChartPrinter.getInstance().addResults(results);
 		}
-		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/experiment-results-" + resultsFile + ".html");
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/Om_TT/experiment-results-" + resultsFile + ".html", "Log-execution-"+resultsFile + ".html");
 	}
 	
 	// ------------------------------------------------------------
