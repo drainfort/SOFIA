@@ -17,6 +17,8 @@ public class ExecutionLogger {
 	
 	private static boolean useLogger = false;
 	
+	private static FileHandler fileHTML;
+	
 	public ExecutionLogger(){
 		
 	}
@@ -35,20 +37,20 @@ public class ExecutionLogger {
 	
 	public void initializeLogger (String resultFile, String instanceName){
 		FileHandler fileTxt;
-		FileHandler fileHTML;
+		
 		try {
 			if(useLogger){
 				if(!loggerInitialize){
 					LOGGER.setUseParentHandlers(false);
-					fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
+					//fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
 					fileHTML = new FileHandler("./results/Om_TT/Log-execution-"+resultFile+".html");
 					
 					LOGGER.setLevel(Level.INFO);
 
 				    // Create txt Formatter
-				    SimpleFormatter formatterTxt = new SimpleFormatter();
-					fileTxt.setFormatter(formatterTxt);
-					LOGGER.addHandler(fileTxt);
+				    //SimpleFormatter formatterTxt = new SimpleFormatter();
+					//fileTxt.setFormatter(formatterTxt);
+					//LOGGER.addHandler(fileTxt);
 
 				    // Create HTML Formatter
 					HtmlFormatter formatterHTML = new HtmlFormatter();
@@ -62,6 +64,10 @@ public class ExecutionLogger {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
+	}
+	
+	public static void stopHandler(){
+		fileHTML.close();
 	}
 
 	public static boolean isUseLogger() {
