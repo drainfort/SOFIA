@@ -222,7 +222,7 @@ public class ConfigurationFileLauncher {
 		
 		if(showLog.equals("true")){
 			ExecutionLogger.getInstance().setUseLogger(true);
-			ExecutionLogger.getInstance().initializeLogger (""+time, "");
+			ExecutionLogger.getInstance().initializeLogger (""+time, userId);
 			
 		}
 		
