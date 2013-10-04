@@ -35,7 +35,7 @@ public class ExecutionLogger {
 			LOGGER.info(notice);
 	}
 	
-	public void initializeLogger (String resultFile, String instanceName){
+	public void initializeLogger (String resultFile, String userId){
 		FileHandler fileTxt;
 		
 		try {
@@ -43,7 +43,7 @@ public class ExecutionLogger {
 				if(!loggerInitialize){
 					LOGGER.setUseParentHandlers(false);
 					//fileTxt = new FileHandler("./log/Log-execution-"+resultFile+".txt");
-					fileHTML = new FileHandler("./results/Om_TT/Log-execution-"+resultFile+".html");
+					fileHTML = new FileHandler("./results/"+ userId +"/Log-execution-"+resultFile+".html");
 					
 					LOGGER.setLevel(Level.INFO);
 
@@ -59,7 +59,7 @@ public class ExecutionLogger {
 					
 					loggerInitialize=true;
 				}
-				LOGGER.info("Instance: "+instanceName);
+				LOGGER.info("User id: "+userId);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
