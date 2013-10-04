@@ -255,7 +255,12 @@ public class ConfigurationFileLauncher {
 		if(!destinationFolder.exists()){
 			destinationFolder.mkdirs();
 		}
+		
+		if(showLog.equals("true")){
+			ExecutionLogger.getInstance().stopHandler();
+		}
 		ChartPrinter.getInstance().printGlobalResultsHTML("./results/" + userId + "/experiment-results-" + time + ".html");
+		
 	}
 	
 	/**
