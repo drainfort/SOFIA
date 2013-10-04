@@ -217,9 +217,12 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("report.gantt.initialsolutions", showInitialSolutions);
 		algorithmConfiguration.setProperty("report.gantt.bestsolutions", showFinalSolutions);
 		algorithmConfiguration.setProperty("report.gantt.log", showLog);
+		
+		String time=""+System.currentTimeMillis();
+		
 		if(showLog.equals("true")){
 			ExecutionLogger.getInstance().setUseLogger(true);
-			ExecutionLogger.getInstance().initializeLogger (""+System.currentTimeMillis(), "");
+			ExecutionLogger.getInstance().initializeLogger (""+time, "");
 			
 		}
 		
@@ -252,7 +255,7 @@ public class ConfigurationFileLauncher {
 		if(!destinationFolder.exists()){
 			destinationFolder.mkdirs();
 		}
-		ChartPrinter.getInstance().printGlobalResultsHTML("./results/" + userId + "/experiment-results-" + System.currentTimeMillis() + ".html");
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/" + userId + "/experiment-results-" + time + ".html");
 	}
 	
 	/**
