@@ -56,14 +56,14 @@ public class ChartPrinter {
 	// Methods
 	// ------------------------------------------------------------
 
-	public void printGlobalResultsHTML(String resultsFile) {
+	public void printGlobalResultsHTML(String resultsFile, String LogFile) {
 		FileWriter fichero = null;
         PrintWriter pw = null;
         try
         {
             fichero = new FileWriter(resultsFile);
             System.out.println(resultsFile);
-            logFile = resultsFile.replace("./results/Om_TT/experiment-results", "Log-execution");
+            logFile = LogFile;
             System.out.println(logFile);
             pw = new PrintWriter(fichero);
             printHeaderHTML(pw);
