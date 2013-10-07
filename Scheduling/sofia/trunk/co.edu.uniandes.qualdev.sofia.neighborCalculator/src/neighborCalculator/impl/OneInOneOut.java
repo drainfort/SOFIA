@@ -32,7 +32,7 @@ public class OneInOneOut implements INeighborCalculator{
 		
 		IOperation finalNode = null;
 		
-		while (finalNode!=null){
+		while (finalNode==null){
 			int totalJobs = currentStructure.getTotalJobs();
 			int totalStations = currentStructure.getTotalStations();
 			int total = totalJobs*totalStations;
