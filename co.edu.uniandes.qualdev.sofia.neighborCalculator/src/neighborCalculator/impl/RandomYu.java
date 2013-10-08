@@ -30,10 +30,7 @@ public class RandomYu implements INeighborCalculator{
 				randomC = randomNumber(0, totalStations - 1);
 			}
 			PairVO pair = new PairVO(new OperationIndexVO(0, randomA, randomB, 0), new OperationIndexVO(0, randomA, randomC, 0));
-			System.out.println(pair);
 			return pair;
-			
-			
 		}
 		else{
 			
@@ -44,7 +41,6 @@ public class RandomYu implements INeighborCalculator{
 				randomC = randomNumber(0, totalJobs - 1);
 			}
 			PairVO pair = new PairVO(new OperationIndexVO(0, randomB, randomA), new OperationIndexVO(0, randomC,randomA));
-			System.out.println(pair);
 			return pair;
 			
 			
