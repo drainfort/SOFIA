@@ -42,11 +42,7 @@ public class RandomYu implements INeighborCalculator{
 			}
 			PairVO pair = new PairVO(new OperationIndexVO(0, randomB, randomA), new OperationIndexVO(0, randomC,randomA));
 			return pair;
-			
-			
 		}
-		
-		
 	}
 
 	@Override
