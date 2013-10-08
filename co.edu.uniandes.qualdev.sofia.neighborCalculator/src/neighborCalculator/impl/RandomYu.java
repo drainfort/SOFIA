@@ -56,19 +56,29 @@ public class RandomYu implements INeighborCalculator{
 		int exit=0;
 		while(size>0)
 		{
+			double random = Math.random();
 			int totalJobs = currentVector.getTotalJobs();
 			int totalStations = currentVector.getTotalStations();
-			int total = totalJobs*totalStations;
-			
-			ArrayList<IOperation>operations = currentVector.getOperations();
-			
-			int randomA = randomNumber(0, total - 1);
-			int randomB = randomNumber(0, total - 1);
-			
-			OperationIndexVO start = operations.get(randomA).getOperationIndex();
-			OperationIndexVO end = operations.get(randomB).getOperationIndex();
-			
-			PairVO pair = new PairVO(new OperationIndexVO(0, start.getJobId(),start.getStationId(), start.getMachineId()), new OperationIndexVO(0, end.getJobId(),end.getStationId(), end.getMachineId()));		
+			PairVO pair = null;
+			if(random<=0.5){
+				int randomA = randomNumber(0, totalJobs - 1);
+				int randomB = randomNumber(0, totalStations - 1);
+				int randomC = randomNumber(0, totalStations - 1);
+				while(randomB==randomC){
+					randomC = randomNumber(0, totalStations - 1);
+				}
+				pair = new PairVO(new OperationIndexVO(0, randomA, randomB, 0), new OperationIndexVO(0, randomA, randomC, 0));
+			}
+			else{
+				
+				int randomA = randomNumber(0, totalStations - 1);
+				int randomB = randomNumber(0, totalJobs - 1);
+				int randomC = randomNumber(0, totalJobs - 1);
+				while(randomB==randomC){
+					randomC = randomNumber(0, totalJobs - 1);
+				}
+				pair = new PairVO(new OperationIndexVO(0, randomB, randomA), new OperationIndexVO(0, randomC,randomA));
+			}
 			if(!pairs.contains(pair)){
 				pairs.add(pair);
 				size--;
