@@ -26,10 +26,10 @@ public class RandomYu implements INeighborCalculator{
 			int randomA = randomNumber(0, totalJobs - 1);
 			int randomB = randomNumber(0, totalStations - 1);
 			int randomC = randomNumber(0, totalStations - 1);
-			PairVO pair = null;
 			while(randomB==randomC){
-				pair = new PairVO(new OperationIndexVO(0, randomA, randomB), new OperationIndexVO(0, randomA,randomC));
+				randomC = randomNumber(0, totalStations - 1);
 			}
+			PairVO pair = new PairVO(new OperationIndexVO(0, randomA, randomB, 0), new OperationIndexVO(0, randomA, randomC, 0));
 			System.out.println(pair);
 			return pair;
 			
@@ -40,10 +40,10 @@ public class RandomYu implements INeighborCalculator{
 			int randomA = randomNumber(0, totalStations - 1);
 			int randomB = randomNumber(0, totalJobs - 1);
 			int randomC = randomNumber(0, totalJobs - 1);
-			PairVO pair = null;
 			while(randomB==randomC){
-			 pair = new PairVO(new OperationIndexVO(0, randomB, randomA), new OperationIndexVO(0, randomC,randomA));
+				randomC = randomNumber(0, totalJobs - 1);
 			}
+			PairVO pair = new PairVO(new OperationIndexVO(0, randomB, randomA), new OperationIndexVO(0, randomC,randomA));
 			System.out.println(pair);
 			return pair;
 			
