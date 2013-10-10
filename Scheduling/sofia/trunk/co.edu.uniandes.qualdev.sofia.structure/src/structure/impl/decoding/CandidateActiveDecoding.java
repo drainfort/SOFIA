@@ -109,6 +109,58 @@ public class CandidateActiveDecoding extends Decoding{
 		
 		
 		
+		/*OperationIndexVO newOperation = null;
+		if(minStartTimeOperation.getOperationIndex().getJobId()==minStartTimeUnschedulledOperation.getOperationIndex().getJobId()){
+			if(minStartTime2<minStartTime && minfinalTime< minStartTime - vector.getTT(minStartTimeUnschedulledOperation.getOperationIndex().getStationId(), minStartTimeOperation.getOperationIndex().getStationId()))
+			{
+				newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
+			}
+		}
+		else if(minStartTimeOperation.getOperationIndex().getStationId()==minStartTimeUnschedulledOperation.getOperationIndex().getStationId()){
+			if(minfinalTime<minStartTime){
+				newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
+			}
+		}
+		if(newOperation!=null)
+		{
+			vector.scheduleOperation(newOperation);
+			vector.calculateCMatrix(0);
+			pos++;
+			
+			for(int j =0; j< unscheduledOperations.size();j++){
+				OperationIndexVO candidate = unscheduledOperations.get(j).getOperationIndex();
+				if(candidate.getJobId()== newOperation.getJobId()&& candidate.getStationId()== newOperation.getStationId()){
+					unscheduledOperations.remove(j);
+					j--;
+				}
+			}
+			for(int j = 0; j< originalVector.size();j++){
+				OperationIndexVO candidate = originalVector.get(j).getOperationIndex();
+				if(candidate.getJobId()== newOperation.getJobId()&& candidate.getStationId()== newOperation.getStationId()){
+					originalVector.remove(j);
+				}
+			}
+		}
+		
+		newOperation = minStartTimeOperation.getOperationIndex();
+		vector.scheduleOperation(newOperation);
+		vector.calculateCMatrix(0);
+		pos++;
+		
+		for(int j =0; j< unscheduledOperations.size();j++){
+			OperationIndexVO candidate = unscheduledOperations.get(j).getOperationIndex();
+			if(candidate.getJobId()== newOperation.getJobId()&& candidate.getStationId()== newOperation.getStationId()){
+				unscheduledOperations.remove(j);
+				j--;
+			}
+		}
+		for(int j = 0; j< originalVector.size();j++){
+			OperationIndexVO candidate = originalVector.get(j).getOperationIndex();
+			if(candidate.getJobId()== newOperation.getJobId()&& candidate.getStationId()== newOperation.getStationId()){
+				originalVector.remove(j);
+				i--;
+			}
+		}*/
 		
 		/*
 		ArrayList<IOperation> candidateActiveSchedule = new ArrayList<IOperation>();
