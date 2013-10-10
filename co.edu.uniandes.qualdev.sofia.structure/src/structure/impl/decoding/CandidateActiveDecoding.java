@@ -107,6 +107,9 @@ public class CandidateActiveDecoding extends Decoding{
 		
 		return vector.getVector();
 		
+		
+		
+		
 		/*
 		ArrayList<IOperation> candidateActiveSchedule = new ArrayList<IOperation>();
 		
