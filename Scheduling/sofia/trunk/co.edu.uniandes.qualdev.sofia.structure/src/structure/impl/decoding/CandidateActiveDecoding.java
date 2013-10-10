@@ -79,7 +79,7 @@ public class CandidateActiveDecoding extends Decoding{
 				}
 			}
 			else if(minStartTimeOperation.getOperationIndex().getStationId()==minStartTimeUnschedulledOperation.getOperationIndex().getStationId()){
-				if(minStartTime2<minStartTime){
+				if(minfinalTime<minStartTime){
 					newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
 				}
 			}
