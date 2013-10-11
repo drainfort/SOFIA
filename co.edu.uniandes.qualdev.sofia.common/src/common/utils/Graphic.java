@@ -21,4 +21,12 @@ public class Graphic {
 	public void addPoint( Point newPoint){
 		points.add(newPoint);
 	}
+	
+	public String toString() {
+		String respuesta = "";
+		for (int i = 0; i < points.size(); i++) {
+			respuesta +=  points.get(i).toString();
+		}
+		return respuesta;
+	}
 }
