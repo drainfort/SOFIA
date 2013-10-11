@@ -35,6 +35,8 @@ public class ExecutionResults {
 	
 	private ArrayList<OperationIndexVO> operationsInitialSolution;
 	
+	private ArrayList<Graphic> graphics = new ArrayList<Graphic>();
+	
 	private Properties parameters;
 	
 	private double bestCmax;
@@ -217,7 +219,17 @@ public class ExecutionResults {
 	public void setStopCriteria(int stopCriteria) {
 		this.stopCriteria = stopCriteria;
 	}
+
+	public ArrayList<Graphic> getGraphics() {
+		return graphics;
+	}
+
+	public void setGraphics(ArrayList<Graphic> graphics) {
+		this.graphics = graphics;
+	}
 	
-	
+	public void addGraphic(Graphic newGraphic){
+		graphics.add(newGraphic);
+	}
 	
 }
