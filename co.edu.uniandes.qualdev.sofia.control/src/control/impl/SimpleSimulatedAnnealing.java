@@ -97,7 +97,8 @@ public class SimpleSimulatedAnnealing extends Control {
 		while (temperature >= finalTemperature &&  temperatureReductions < nonImprovingOut && !optimalAchieved) {
 			
 			Graphic graphic = new Graphic();
-			int x = 0;
+			graphic.addPoint(new Point(0, XBestCMax));
+			int x = 1;
 			Integer k = (Integer) params.get("k");
 			Integer nonImprovingIn = (Integer) params.get("non-improving-in");
 
@@ -205,7 +206,7 @@ public class SimpleSimulatedAnnealing extends Control {
 			Double coolingFactor = (Double) params.get("coolingFactor");
 			temperature = temperature * (coolingFactor);
 			temperatureReductions ++;
-			if(graphic.getPoints().size()>0)
+			if(graphic.getPoints().size()>1)
 				executionResults.addGraphic(graphic);
 		}
 		
