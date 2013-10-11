@@ -9,6 +9,8 @@ import structure.impl.CriticalPath;
 import common.types.PairVO;
 import common.utils.ExecutionLogger;
 import common.utils.ExecutionResults;
+import common.utils.Graphic;
+import common.utils.Point;
 import control.Control;
 
 import modifier.IModifier;
@@ -93,6 +95,9 @@ public class SimpleSimulatedAnnealing extends Control {
 		int temperatureReductions = 0;
 		
 		while (temperature >= finalTemperature &&  temperatureReductions < nonImprovingOut && !optimalAchieved) {
+			
+			Graphic graphic = new Graphic();
+			int x = 0;
 			Integer k = (Integer) params.get("k");
 			Integer nonImprovingIn = (Integer) params.get("non-improving-in");
 
@@ -139,6 +144,7 @@ public class SimpleSimulatedAnnealing extends Control {
 					
 					System.out.println("CMax improvement: " + XBestCMax);
 					ExecutionLogger.getInstance().printLog("Improvement: "+XBestCMax);
+					graphic.addPoint(new Point(x, XBestCMax));
 					if(ExecutionLogger.getInstance().isUseLogger()){
 						ExecutionLogger.getInstance().printLog("Vector: "+YMovement);
 						ArrayList<CriticalPath> paths = XBest.getCriticalPaths();
@@ -188,16 +194,18 @@ public class SimpleSimulatedAnnealing extends Control {
 			    	System.out.println("Stop Criteria: Max execution time");
 			    	ExecutionLogger.getInstance().printLog("Stop Criteria: Max execution time");
 			    }
-			    
+			    x++;
 			    nonImprovingIn--;
 				k--;
 				Y.clean();
 			}
 			
+			
 			// Temperature reductions
 			Double coolingFactor = (Double) params.get("coolingFactor");
 			temperature = temperature * (coolingFactor);
 			temperatureReductions ++;
+			executionResults.addGraphic(graphic);
 		}
 		
 		if(temperatureReductions>=nonImprovingOut){
