@@ -205,6 +205,7 @@ public class SimpleSimulatedAnnealing extends Control {
 			Double coolingFactor = (Double) params.get("coolingFactor");
 			temperature = temperature * (coolingFactor);
 			temperatureReductions ++;
+			if(!graphic.getPoints().isEmpty())
 			executionResults.addGraphic(graphic);
 		}
 		
