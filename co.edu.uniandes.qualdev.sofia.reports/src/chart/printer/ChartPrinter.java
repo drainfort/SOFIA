@@ -2,6 +2,7 @@ package chart.printer;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -175,6 +176,9 @@ public class ChartPrinter {
 				"<th scope=\"col\">BEST OBJECTIVE</th>"+
 				"<th scope=\"col\">AVERAGE OBJECTIVE</th>"+
 				"<th scope=\"col\">STOP CRITERIA</th>"+
+				"<th scope=\"col\">AVERAGE PT</th>"+
+				"<th scope=\"col\">MODE</th>"+
+				"<th scope=\"col\">GAP</th>"+
 				"<th scope=\"col\" class=\"rightTopCorner\">VISITED NEIGHBORS</th>"+
 				"</tr></thead><tbody>");
 		for ( int i =0; i< globalExecutionResults.size();i++) {
@@ -188,6 +192,7 @@ public class ChartPrinter {
 			double bestCmax = Integer.MAX_VALUE;
 			double sumBestCMax = 0;
 			double iterations = 0;
+			double processingTime =0;
 			ExecutionResults bestResults = null;
 			for (ExecutionResults executionResults : results) {
 				if(bestCmax > executionResults.getBestCmax()){
@@ -195,13 +200,32 @@ public class ChartPrinter {
 					bestResults = executionResults;
 				}
 				sumBestCMax += executionResults.getBestCmax();
+				processingTime += executionResults.getExecutionTime();
 				iterations++;
 			}
 			String bestCMaxString = bestCmax + ""; 
 			if(bestCmax == results.get(0).getOptimal())bestCMaxString+="*";
 			if(bestCmax<results.get(0).getOptimal())bestCMaxString+="**";
 			double average = sumBestCMax/iterations;
-			System.out.println(average);
+			double averageProcessing =processingTime/iterations;
+			
+			double mode = 0;
+			int maxCount = 0;
+
+		    for (ExecutionResults executionResults : results) {
+		        int count = 0;
+		        for (ExecutionResults executionResults2 : results) {
+		            if (executionResults.getBestCmax() == executionResults2.getBestCmax()) ++count;
+		        }
+		        if (count > maxCount) {
+		            maxCount = count;
+		            mode = executionResults.getBestCmax();
+		        }
+		    }
+		    double gap = ((bestCmax-results.get(0).getOptimal())/results.get(0).getOptimal())*100;
+		    DecimalFormat df2 = new DecimalFormat("###,##");
+			
+			//System.out.println(average);
 			
 			if(i ==globalExecutionResults.size()-1){
 				pw.println("<tr>");
@@ -211,6 +235,9 @@ public class ChartPrinter {
 				pw.println("<td>"+bestCMaxString+"</td>");
 				pw.println("<td>"+average+"</td>");
 				pw.println("<td>"+stopCriteria+"</td>");
+				pw.println("<td>"+averageProcessing+"</td>");
+				pw.println("<td>"+mode+"</td>");
+				pw.println("<td>"+Double.valueOf(df2.format(gap))+"%</td>");
 				pw.println("<td class =\"rightBottomCorner\"> "+neighbor+"</td>");
 			}
 			else{
