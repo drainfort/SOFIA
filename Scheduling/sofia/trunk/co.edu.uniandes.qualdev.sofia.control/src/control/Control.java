@@ -75,7 +75,7 @@ public abstract class Control {
 	 * @return
 	 * @throws Exception 
 	 */
-	protected ExecutionResults obtainExecutionResults(IStructure S0, IGammaCalculator gammaCalculator, boolean printTable, boolean printSolution, boolean printInitialSolution, boolean printLog) throws Exception {
+	protected ExecutionResults obtainExecutionResults(IStructure S0, IGammaCalculator gammaCalculator, boolean printTable, boolean printSolution, boolean printInitialSolution, boolean printLog, long executionTime) throws Exception {
 		S0.calculateCMatrix(0);
 		executionResults.setBestCmax(gammaCalculator.calculateGamma(S0));
 		executionResults.setInitialCmax(gammaCalculator.calculateGamma(So));
@@ -83,6 +83,7 @@ public abstract class Control {
 		executionResults.setPrintInitialSolution(printInitialSolution);
 		executionResults.setPrintFinalSolution(printSolution);
 		executionResults.setPrintLog(printLog);
+		executionResults.setExecutionTime(executionTime);
 		
 		//System.out.println("Valida la solucion:"+ validateSolution(S0));
 
