@@ -97,9 +97,7 @@ public class SimpleSimulatedAnnealing extends Control {
 		graphic.addPoint(new Point(0, XBestCMax));
 		
 		while (temperature >= finalTemperature &&  temperatureReductions < nonImprovingOut && !optimalAchieved) {
-			
-			
-			
+
 			int x = 1;
 			Integer k = (Integer) params.get("k");
 			Integer nonImprovingIn = (Integer) params.get("non-improving-in");
