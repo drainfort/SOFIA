@@ -218,8 +218,10 @@ public class SimpleSimulatedAnnealing extends Control {
 		}
 		
 		System.out.println();
+		long actualTime = System.currentTimeMillis();
+	    long elapsedTime = actualTime - startTime;
 		
-		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"));
+		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
 		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
 		
 		return result;
