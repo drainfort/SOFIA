@@ -9,6 +9,8 @@ import structure.impl.CriticalPath;
 import common.types.PairVO;
 import common.utils.ExecutionLogger;
 import common.utils.ExecutionResults;
+import common.utils.Graphic;
+import common.utils.Point;
 import control.Control;
 
 import modifier.IModifier;
@@ -97,8 +99,13 @@ public class TabuSearchRN extends Control {
 			neighborhodSize = nPr;
 		
 		ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
+
+		Graphic graphic = new Graphic();
+		graphic.addPoint(new Point(0, GammaInitialSolution));
+		int x= 0;
 		
 		while (iterations >= 0 && nonImprovingOut >= 0 && !optimalAchieved) {
+			
 			IStructure bestCandidate = null;
 			double gammaBestCandidate = Integer.MAX_VALUE;
 			PairVO bestPairCandidate = null;
@@ -108,6 +115,7 @@ public class TabuSearchRN extends Control {
 				nonImprovingIn= Integer.MAX_VALUE;
 
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonImprovingIn>=0; index++) {
+				x++;
 				PairVO pairCandidate = arrayNeighbors.get(index);
 				IStructure candidate = modifier.performModification(pairCandidate,current);
 				
@@ -163,6 +171,7 @@ public class TabuSearchRN extends Control {
 					
 					System.out.println("Improvement: " + bestGamma);
 					ExecutionLogger.getInstance().printLog("Improvement: "+bestGamma);
+					graphic.addPoint(new Point(x, bestGamma));
 					if(ExecutionLogger.getInstance().isUseLogger()){
 						ExecutionLogger.getInstance().printLog("Vector: "+best.getOperations());
 						ArrayList<CriticalPath> paths = best.getCriticalPaths();
@@ -217,6 +226,8 @@ public class TabuSearchRN extends Control {
 			nonImprovingOut--;
 			arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
 		}
+		if(graphic.getPoints().size()>1)
+			executionResults.addGraphic(graphic);
 
 		if(executionResults.getStopCriteria() == 2){
 			System.out.println("Stop Criteria: Max execution time");

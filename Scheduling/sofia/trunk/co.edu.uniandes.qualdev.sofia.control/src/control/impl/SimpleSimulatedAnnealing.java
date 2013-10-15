@@ -95,10 +95,10 @@ public class SimpleSimulatedAnnealing extends Control {
 		int temperatureReductions = 0;
 		Graphic graphic = new Graphic();
 		graphic.addPoint(new Point(0, XBestCMax));
+		int x = 0;
 		
 		while (temperature >= finalTemperature &&  temperatureReductions < nonImprovingOut && !optimalAchieved) {
 
-			int x = 1;
 			Integer k = (Integer) params.get("k");
 			Integer nonImprovingIn = (Integer) params.get("non-improving-in");
 
@@ -106,7 +106,7 @@ public class SimpleSimulatedAnnealing extends Control {
 				nonImprovingIn= Integer.MAX_VALUE;
 			
 			while (k > 0 && !optimalAchieved && nonImprovingIn>=0){
-				
+				x++;
 				// Obtains a next solution (Y) from the current one (X)
 				PairVO YMovement = neighborCalculator.calculateNeighbor(X);
 				IStructure Y = modifier.performModification(YMovement, X);
@@ -195,7 +195,6 @@ public class SimpleSimulatedAnnealing extends Control {
 			    	System.out.println("Stop Criteria: Max execution time");
 			    	ExecutionLogger.getInstance().printLog("Stop Criteria: Max execution time");
 			    }
-			    x++;
 			    nonImprovingIn--;
 				k--;
 				Y.clean();
