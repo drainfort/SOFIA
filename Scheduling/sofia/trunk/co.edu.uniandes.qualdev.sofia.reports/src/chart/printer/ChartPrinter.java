@@ -179,6 +179,7 @@ public class ChartPrinter {
 				"<th scope=\"col\">AVERAGE PT</th>"+
 				"<th scope=\"col\">MODE</th>"+
 				"<th scope=\"col\">GAP</th>"+
+				"<th scope=\"col\">TimesBetter</th>"+
 				"<th scope=\"col\" class=\"rightTopCorner\">VISITED NEIGHBORS</th>"+
 				"</tr></thead><tbody>");
 		for ( int i =0; i< globalExecutionResults.size();i++) {
@@ -194,11 +195,14 @@ public class ChartPrinter {
 			double iterations = 0;
 			double processingTime =0;
 			ExecutionResults bestResults = null;
+			int lessBKS = 0;
 			for (ExecutionResults executionResults : results) {
 				if(bestCmax > executionResults.getBestCmax()){
 					bestCmax = executionResults.getBestCmax();
 					bestResults = executionResults;
 				}
+				if(executionResults.getBestCmax()<=results.get(0).getOptimal())
+					lessBKS++;
 				sumBestCMax += executionResults.getBestCmax();
 				processingTime += executionResults.getExecutionTime();
 				iterations++;
@@ -211,6 +215,7 @@ public class ChartPrinter {
 			
 			double mode = 0;
 			int maxCount = 0;
+			
 
 		    for (ExecutionResults executionResults : results) {
 		        int count = 0;
@@ -238,6 +243,7 @@ public class ChartPrinter {
 				pw.println("<td>"+averageProcessing+"</td>");
 				pw.println("<td>"+mode+"</td>");
 				pw.println("<td>"+Double.valueOf(df2.format(gap))+"%</td>");
+				pw.println("<td>"+lessBKS+"</td>");
 				pw.println("<td class =\"rightBottomCorner\"> "+neighbor+"</td>");
 			}
 			else{
