@@ -19,6 +19,7 @@ import beta.impl.TearDownTravelTime;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.ExecutionLogger;
 
 /**
  * Implementation of a graph
@@ -286,7 +287,15 @@ public class Vector extends AbstractStructure{
 	@Override
     public void decodeSolution(){
 		decodingStrategy.setVector(this);
+		long startTime = System.currentTimeMillis();
+		
+		
 		vector = decodingStrategy.decode(vector);
+		if(ExecutionLogger.getInstance().isUseLogger()){
+			long actualTime = System.currentTimeMillis();
+		    long elapsedTime = actualTime - startTime;
+		    ExecutionLogger.getInstance().printLog("Time of decode: "+elapsedTime);
+		}
 	}
 	
 	public ArrayList<IOperation> getOperationsbyJobAndStation(OperationIndexVO operationIndex) {
