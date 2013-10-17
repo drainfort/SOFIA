@@ -9,6 +9,7 @@ import java.util.Properties;
 import common.types.OperationIndexVO;
 import common.utils.ExecutionResults;
 import common.utils.GanttTask;
+import common.utils.Point;
 
 /**
  * Class that is able to print a chart in a pdf using the JFreeChart and iText
@@ -34,6 +35,8 @@ public class ChartPrinter {
 	private boolean printSolutions;
 	
 	private boolean printLog;
+	
+	private boolean printCharts;
 	
 	private String logFile ="";
 	
@@ -101,6 +104,9 @@ public class ChartPrinter {
 		if(printLog){
 			pw.println("<li><a href=\"#\" rel=\"view5\">Log</a></li>");
 		}
+		if(printCharts){
+			pw.println("<li><a href=\"#\" rel=\"view6\">Improvement</a></li>");
+		}
 		
 		
 		pw.println("</ul><div class=\"tabcontents\">");
@@ -137,6 +143,17 @@ public class ChartPrinter {
 			pw.println("<div id=\"view5\" class=\"tabcontent\"> ");
 			pw.println("<iframe src=\""+ logFile+"\" width=\"90%\" height=\"70%\"></iframe> ");
 			pw.println("</div>");
+		}
+		if(printCharts){
+			pw.println("<div id=\"view6\" class=\"tabcontent\"><table>");
+			for ( int i =0; i< globalExecutionResults.size();i++) {
+				String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
+				pw.println("<tr><td><div id=\"title_chart_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformation('"+"chart_"+nombre+"');\">Open initial_"+nombre+"</a></div>" +
+						"<div class=\"informationbox\"  id=\"information_chart_"+nombre+"\"><div style=\"width:950px; height:500px; position:relative;\" id=\"chart_"+nombre+"\" ></div>"+
+						"</div></td><tr>");
+
+			}
+			pw.println("</table></div>");
 		}
 		
 		pw.println("</div></div>");
@@ -254,6 +271,10 @@ public class ChartPrinter {
 				pw.println("<td>"+bestCMaxString+"</td>");
 				pw.println("<td>"+average+"</td>");
 				pw.println("<td>"+stopCriteria+"</td>");
+				pw.println("<td>"+averageProcessing+"</td>");
+				pw.println("<td>"+mode+"</td>");
+				pw.println("<td>"+Double.valueOf(df2.format(gap))+"%</td>");
+				pw.println("<td>"+lessBKS+"</td>");
 				pw.println("<td>"+neighbor+"</td>");
 			}
 		}
@@ -272,13 +293,16 @@ public class ChartPrinter {
 				"<script type=\"text/javascript\" language=\"JavaScript\" src=\"codebase/dhtmlxcommon.js\"></script>" +
 				"<script type=\"text/javascript\" language=\"JavaScript\" src=\"codebase/dhtmlxgantt.js\"></script>" +
 				"<script type=\"text/javascript\" language=\"JavaScript\" src=\"js/openClose.js\"></script>"+
-				"<script type=\"text/javascript\" language=\"JavaScript\">" );
+				"<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>"+
+				"<script type=\"text/javascript\" language=\"JavaScript\">");
 		
 		for ( int i =0; i< globalExecutionResults.size();i++) {
 			if(printSolutions)
 				printGanttJs(pw, globalExecutionResults.get(i).get(0),i);
 			if(printInitialSolutions)
 				printGanttInitialJs(pw, globalExecutionResults.get(i).get(0),i);
+			if(printCharts)
+				printChartJs(pw, globalExecutionResults.get(i).get(0),i);
 			
 		}
 		
@@ -291,11 +315,43 @@ public class ChartPrinter {
 			if(printInitialSolutions){
 				pw.println("createChartInitialControl"+i+"('gantt_initial_"+nombre+"');closeInformation('initial_"+nombre+"');");
 			}
+			if(printCharts){
+				pw.println("closeInformation('chart_"+nombre+"');");
+			}
 		}
 		
 		pw.println("};</script></head>");
 		
 				
+	}
+
+	private void printChartJs(PrintWriter pw, ExecutionResults executionResults, int i) {
+		ArrayList<Point> points = executionResults.getGraphics().get(0).getPoints();
+		pw.println("google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});");
+		pw.println("  google.setOnLoadCallback(drawChart"+i+");");
+		pw.println("  function drawChart"+i+"() {");
+		pw.println("    var data = google.visualization.arrayToDataTable([");
+		pw.println("       ['Iterations', 'OF'],");
+		for(int j=0; j< points.size();j++){
+			Point temp = points.get(j);
+			if(j!=points.size()-1){
+				pw.println("["+temp.getX()+","+temp.getY()+"],");
+			}
+			else{
+				pw.println("["+temp.getX()+","+temp.getY()+"]");
+			}
+			
+		}
+	    pw.println("     ]);");
+
+	    pw.println("    var options = {");
+	    pw.println("       title: 'Iteration"+i+"'");
+	    pw.println(" };");
+
+	    pw.println("var chart = new google.visualization.LineChart(document.getElementById('chart_"+executionResults.getInstanceName()+"'));");
+	    pw.println("    chart.draw(data, options);");
+	    pw.println("  }");
+		
 	}
 
 	private void printGanttJs(PrintWriter pw,ExecutionResults executionResults, int num) {
@@ -391,5 +447,6 @@ public class ChartPrinter {
 		printInitialSolutions = globalExecutionResults.get(0).get(0).isPrintInitialSolution();
 		printSolutions = globalExecutionResults.get(0).get(0).isPrintFinalSolution();
 		printLog = globalExecutionResults.get(0).get(0).isPrintLog();
+		printCharts = true;
 	}
 }
