@@ -120,21 +120,21 @@ public class ChartPrinter {
 		}
 		if(printSolutions){
 			pw.println("<div id=\"view2\" class=\"tabcontent\"><table>");
+			pw.println("<div class=\"informationbox\" style=\"width:950px; height:620px; position:relative;\" id=\"ganttSolution\" ></div>");
 			for ( int i =0; i< globalExecutionResults.size();i++) {
 				String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
-				pw.println("<tr><td><div id=\"title_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformation('"+nombre+"');\">Open "+nombre+"</a></div>" +
-						"<div class=\"informationbox\"  id=\"information_"+nombre+"\"><div style=\"width:950px; height:620px; position:relative;\" id=\"gantt_"+nombre+"\" ></div>"+
-						"</div></td><tr>");
+				pw.println("<tr><td><div id=\"title_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformationGantt('"+"gantt_"+nombre+"', 'ganttSolution');\">Open "+nombre+"</a></div>"
+						+"</div></td><tr>");
 			}
 			pw.println("</table></div>");
 		}
 		if(printInitialSolutions){
 			pw.println("<div id=\"view3\" class=\"tabcontent\"> <table>");
+			pw.println("<div class=\"informationbox\" style=\"width:950px; height:620px; position:relative;\" id=\"initialSolution\" ></div>");
 			for ( int i =0; i< globalExecutionResults.size();i++) {
 				String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
-				pw.println("<tr><td><div id=\"title_initial_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformation('"+"initial_"+nombre+"');\">Open initial_"+nombre+"</a></div>" +
-						"<div class=\"informationbox\"  id=\"information_initial_"+nombre+"\"><div style=\"width:950px; height:620px; position:relative;\" id=\"gantt_initial_"+nombre+"\" ></div>"+
-						"</div></td><tr>");
+				pw.println("<tr><td><div id=\"title_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformationGantt('"+"initial_"+nombre+"', 'initialSolution');\">Open initial_"+nombre+"</a></div>"
+						+"</div></td><tr>");
 			}
 			pw.println("</table></div>");
 			
@@ -296,11 +296,20 @@ public class ChartPrinter {
 				"<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>"+
 				"<script type=\"text/javascript\" language=\"JavaScript\">");
 		
+		pw.println("function createChartControl(htmlDiv1, name){var ganttChartControl = new GanttChart();ganttChartControl.setImagePath(\"codebase/imgs/\");ganttChartControl.setEditable(false);ganttChartControl.showContextMenu(true);ganttChartControl.showDescTask(false,'n,e');ganttChartControl.showDescProject(false,'n,d');	ganttChartControl.getMonthScaleLabel = function(date) {	return \"\";}");
+		pw.println("ganttChartControl.num=0;");
+		
 		for ( int i =0; i< globalExecutionResults.size();i++) {
+			String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
 			if(printSolutions)
-				printGanttJs(pw, globalExecutionResults.get(i).get(0),i);
+				printGanttJs(pw, globalExecutionResults.get(i).get(0),"gantt_"+nombre);
 			if(printInitialSolutions)
-				printGanttInitialJs(pw, globalExecutionResults.get(i).get(0),i);
+				printGanttJs(pw, globalExecutionResults.get(i).get(0),"initial_"+nombre);
+			
+		}
+		pw.println("ganttChartControl.create(htmlDiv1);}");
+		
+		for ( int i =0; i< globalExecutionResults.size();i++) {
 			if(printCharts)
 				printChartJs(pw, globalExecutionResults.get(i).get(0),i);
 			
@@ -309,19 +318,12 @@ public class ChartPrinter {
 		pw.println("window.onload = function() {");
 		for ( int i =0; i< globalExecutionResults.size();i++) {
 			String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
-			if(printSolutions){
-				pw.println("createChartControl"+i+"('gantt_"+nombre+"');closeInformation('"+nombre+"');");
-			}
-			if(printInitialSolutions){
-				pw.println("createChartInitialControl"+i+"('gantt_initial_"+nombre+"');closeInformation('initial_"+nombre+"');");
-			}
 			if(printCharts){
 				pw.println("closeInformation('chart_"+nombre+"');");
 			}
 		}
 		
-		pw.println("};</script></head>");
-		
+		pw.println("};</script></head>");		
 				
 	}
 
@@ -354,10 +356,9 @@ public class ChartPrinter {
 		
 	}
 
-	private void printGanttJs(PrintWriter pw,ExecutionResults executionResults, int num) {
+	private void printGanttJs(PrintWriter pw,ExecutionResults executionResults, String name) {
 		ArrayList<GanttTask> tasks = executionResults.getTasksFinalSolution();
-		pw.println("function createChartControl"+num+"(htmlDiv1){var ganttChartControl = new GanttChart();ganttChartControl.setImagePath(\"codebase/imgs/\");ganttChartControl.setEditable(false);ganttChartControl.showContextMenu(true);ganttChartControl.showDescTask(false,'n,e');ganttChartControl.showDescProject(false,'n,d');	ganttChartControl.getMonthScaleLabel = function(date) {	return \"\";}");
-		pw.println("ganttChartControl.num=0;");
+		pw.println("if(name =='"+name+"'){");
 		for(int j=0; j< tasks.size();j++){	
 			int stationId= tasks.get(j).getStationIdentifier()+1;
 			pw.println("var project"+j+" = new GanttProjectInfo("+j+", \""+tasks.get(j).getName() +"\", new Date(2010, 5, 2))");
@@ -392,54 +393,10 @@ public class ChartPrinter {
 			pw.println("ganttChartControl.addProject(project"+j+");");
 
 		}
-		pw.println("ganttChartControl.create(htmlDiv1);}");
-		
+		pw.println("}");
 	}
 	
-	private void printGanttInitialJs(PrintWriter pw,ExecutionResults executionResults, int num) {
-		ArrayList<GanttTask> tasks = executionResults.getTasksInitialSolution();
-		pw.println("function createChartInitialControl"+num+"(htmlDiv1){var ganttChartControl = new GanttChart();ganttChartControl.setImagePath(\"codebase/imgs/\");ganttChartControl.setEditable(false);ganttChartControl.showContextMenu(true);ganttChartControl.showDescTask(false,'n,e');ganttChartControl.showDescProject(false,'n,d');	ganttChartControl.getMonthScaleLabel = function(date) {	return \"\";}");
-		pw.println("ganttChartControl.num=0;");
-		for(int j=0; j< tasks.size();j++){	
-			int stationId= tasks.get(j).getStationIdentifier()+1;
-			pw.println("var project"+j+" = new GanttProjectInfo("+j+", \""+tasks.get(j).getName() +"\", new Date(2010, 5, 2))");
-			ArrayList<OperationIndexVO> initialSolutions = executionResults.getOperationsInitialSolution();
-			
-			ArrayList<String> listStations = new ArrayList<String>();
-			
-			for(int i=0; i<initialSolutions.size();i++){
-				OperationIndexVO temp = initialSolutions.get(i);
-				if(temp.getStationId()==(stationId-1)&& !listStations.contains(temp.getNameMachine())){
-					listStations.add(temp.getNameMachine());
-				}
-			}
-
-			
-			for( int z=0; z< listStations.size();z++){
-				String machine =listStations.get(z);
-				ArrayList<OperationIndexVO> myOperations = new ArrayList<OperationIndexVO>();
-				for(int i=0; i<initialSolutions.size();i++){
-					OperationIndexVO temp = initialSolutions.get(i);
-					if(temp.getStationId()==(stationId-1) && temp.getNameMachine().equals(machine)){
-						myOperations.add(temp);
-					}
-				}
-				pw.println("var parentTask"+j+1+z+ "= new GanttTaskInfo("+j+1+z+", \""+machine+"\", new Date(2010, 5, 2),"+executionResults.getInitialCmax()+", 100, \"\");");
-				for(int i=0; i<myOperations.size();i++){
-					OperationIndexVO temp = myOperations.get(i);
-					pw.println("parentTask"+j+1+z+".addChildTask(new GanttTaskInfo("+j+1+i+z+", \""+temp.getNameJob()+"\", new Date(2010, 5, 2,"+temp.getInitialTime()*24+",0,0), "+(temp.getFinalTime()-temp.getInitialTime())+", 100, \"\"));");
-				}
-				pw.println("project"+j+".addTask(parentTask"+j+1+z+ ");");
-			}	
-			
-			
 	
-			pw.println("ganttChartControl.addProject(project"+j+");");
-
-		}
-		pw.println("ganttChartControl.create(htmlDiv1);}");
-		
-	}
 	
 	public void addResults(ArrayList<ExecutionResults> results) {
 		globalExecutionResults.add(results);
