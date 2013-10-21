@@ -38,29 +38,27 @@
 	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-weight:normal;
 	font-size:13px;
-	width:950px;
+	width:130px;
 	color:#012;
-	background-image: linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
-	background-image: -o-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
-	background-image: -moz-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
-	background-image: -webkit-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
-	background-image: -ms-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
+	background-image: linear-gradient(bottom, rgb(123,123,138) 1%, rgb(59,59,65) 51%, rgb(123,123,138) 99%);
+	background-image: -o-linear-gradient(bottom, rgb(123,123,138) 1%, rgb(59,59,65) 51%, rgb(123,123,138) 99%);
+	background-image: -moz-linear-gradient(bottom, rgb(123,123,138) 1%, rgb(59,59,65) 51%, rgb(123,123,138) 99%);
+	background-image: -webkit-linear-gradient(bottom, rgb(123,123,138) 1%, rgb(59,59,65) 51%, rgb(123,123,138) 99%);
+	background-image: -ms-linear-gradient(bottom, rgb(123,123,138) 1%, rgb(59,59,65) 51%, rgb(123,123,138) 99%);
 
 	background-image: -webkit-gradient(
 		linear,
 		left bottom,
 		left top,
-		color-stop(0.37, rgb(67,123,217)),
-		color-stop(0.69, rgb(94,160,255))
+		color-stop(0.01, rgb(123,123,138)),
+		color-stop(0.51, rgb(59,59,65)),
+		color-stop(0.99, rgb(123,123,138))
 	);
 	padding:8px;
-	position:relative;
-	border-radius: 15px;
 }
 .informationbox {
 	background:#e8edff;
 	border-top:1px solid #fff;
 	color:#669;
-	border-radius: 15px;
 	text-align:left;
 }
