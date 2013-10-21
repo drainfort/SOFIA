@@ -14,13 +14,13 @@
 }
 #roundTable th{
 	font-weight:normal;
-	font-size:13px;color:#039;
-	background:#b9c9fe;padding:8px;
+	font-size:13px;color:white;
+	background:#3B3B41;padding:8px;
 }
 #roundTable td{
-	background:#e8edff;
+	background:#E6E6E6;
 	border-top:1px solid #fff;
-	color:#669;
+	color:black;
 	padding:8px;
 }
 #roundTable tbody td.leftBottomCorner{
@@ -30,7 +30,7 @@
 	border-bottom-right-radius: 15px;
 }
 #roundTable tbody tr:hover td{
-	background:#d0dafd;
+	background:#D8D8D8;
 }
 
 .title {
@@ -57,7 +57,7 @@
 	padding:8px;
 }
 .informationbox {
-	background:#e8edff;
+	background:#FAFAFA;
 	border-top:1px solid #fff;
 	color:#669;
 	text-align:left;
