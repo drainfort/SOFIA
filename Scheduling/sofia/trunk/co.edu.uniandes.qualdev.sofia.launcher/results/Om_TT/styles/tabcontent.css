@@ -24,19 +24,20 @@ ul.tabs li a
     padding: 7px 16px;
     border: 1px solid #CCC;
     border-bottom-color:#B7B7B7;
-    color: #000;
-	background-image: linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
-	background-image: -o-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
-	background-image: -moz-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
-	background-image: -webkit-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
-	background-image: -ms-linear-gradient(bottom, rgb(67,123,217) 37%, rgb(94,160,255) 69%);
+    color: white;
+	background-image: linear-gradient(bottom, rgb(123,123,138) 1%, rgb(59,59,65) 51%, rgb(123,123,138) 99%);
+	background-image: -o-linear-gradient(bottom, rgb(123,123,138) 1%, rgb(59,59,65) 51%, rgb(123,123,138) 99%);
+	background-image: -moz-linear-gradient(bottom, rgb(123,123,138) 1%, rgb(59,59,65) 51%, rgb(123,123,138) 99%);
+	background-image: -webkit-linear-gradient(bottom, rgb(123,123,138) 1%, rgb(59,59,65) 51%, rgb(123,123,138) 99%);
+	background-image: -ms-linear-gradient(bottom, rgb(123,123,138) 1%, rgb(59,59,65) 51%, rgb(123,123,138) 99%);
 
 	background-image: -webkit-gradient(
 		linear,
 		left bottom,
 		left top,
-		color-stop(0.37, rgb(67,123,217)),
-		color-stop(0.69, rgb(94,160,255))
+		color-stop(0.01, rgb(123,123,138)),
+		color-stop(0.51, rgb(59,59,65)),
+		color-stop(0.99, rgb(123,123,138))
 	);
     border-radius: 2px 2px 0 0;
     outline:none;
@@ -50,7 +51,7 @@ ul.tabs li a:visited
 ul.tabs li a:hover
 {
     border: 1px solid #B7B7B7;
-    background:#437bd9;
+    background:#3B3B41;
 }
         
 ul.tabs li.selected a
@@ -59,7 +60,8 @@ ul.tabs li.selected a
     position: relative;
     top: 0px;
     font-weight:bold;
-    background: white;
+    background: #FAFAFA;
+	color: black;
     border: 1px solid #B7B7B7;
     border-bottom-color: white;
 }
@@ -79,6 +81,6 @@ div.tabcontent
 div.tabcontents
 {
     border-top: 1px solid #B7B7B7; padding: 30px;
-    background-color:#FFF;
+    background-color: #FAFAFA;
     border-radius: 0 2px 2px 2px;
 }
