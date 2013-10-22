@@ -89,7 +89,7 @@ public class ChartPrinter {
 	}
 	
 	private void printBodyHTML(PrintWriter pw) {
-		pw.println("<body><table style=\"width:100% height:50px;\"> <tr><td ><img src=\"styles/header.png\" style=\"max-width:80%; max-height:80%; display: block;margin-left: auto; margin-right: auto;\" border=\"0\"></td></tr></table>" +
+		pw.println("<body>" +
 			"<div  style=\"width: 1000px; margin: 0 auto; padding: 80px 0 40px; font: 0.85em arial;\"><ul class=\"tabs\" persist=\"true\">");
 		if(printTable){		
 			pw.println("<li><a href=\"#\" rel=\"view1\">Overview Results</a></li>");
@@ -119,23 +119,34 @@ public class ChartPrinter {
 			
 		}
 		if(printSolutions){
-			pw.println("<div id=\"view2\" class=\"tabcontent\"><table>");
-			pw.println("<div class=\"informationbox\" style=\"width:950px; height:620px; position:relative;\" id=\"ganttSolution\" ></div>");
+			pw.println("<div id=\"view2\" class=\"tabcontent\"><table cellspacing=\"0\"><tr><td valign=\"top\">");
+			pw.println("<table>");
+			
 			for ( int i =0; i< globalExecutionResults.size();i++) {
 				String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
 				pw.println("<tr><td><div id=\"title_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformationGantt('"+"gantt_"+nombre+"', 'ganttSolution');\">Open "+nombre+"</a></div>"
-						+"</div></td><tr>");
+						+"</div></td></tr>");
 			}
+			pw.println("</table>");
+			pw.println("</td><td>");
+			pw.println("<div class=\"informationbox\" style=\"width:850px; height:620px; position:relative;\" id=\"ganttSolution\" ></div>");
+			pw.println("</td></tr>");
+			
 			pw.println("</table></div>");
 		}
 		if(printInitialSolutions){
-			pw.println("<div id=\"view3\" class=\"tabcontent\"> <table>");
-			pw.println("<div class=\"informationbox\" style=\"width:950px; height:620px; position:relative;\" id=\"initialSolution\" ></div>");
+			pw.println("<div id=\"view3\" class=\"tabcontent\"><table cellspacing=\"0\"><tr><td valign=\"top\">");
+			pw.println("<table>");
+			
 			for ( int i =0; i< globalExecutionResults.size();i++) {
 				String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
 				pw.println("<tr><td><div id=\"title_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformationGantt('"+"initial_"+nombre+"', 'initialSolution');\">Open initial_"+nombre+"</a></div>"
 						+"</div></td><tr>");
 			}
+			pw.println("</table>");
+			pw.println("</td><td>");
+			pw.println("<div class=\"informationbox\" style=\"width:950px; height:620px; position:relative;\" id=\"initialSolution\" ></div>");
+			pw.println("</td></tr>");
 			pw.println("</table></div>");
 			
 		}
@@ -145,14 +156,25 @@ public class ChartPrinter {
 			pw.println("</div>");
 		}
 		if(printCharts){
-			pw.println("<div id=\"view6\" class=\"tabcontent\"><table>");
+			pw.println("<div id=\"view6\" class=\"tabcontent\"><table cellspacing=\"0\"><tr><td valign=\"top\">");
+			pw.println("<table>");
 			for ( int i =0; i< globalExecutionResults.size();i++) {
 				String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
 				pw.println("<tr><td><div id=\"title_chart_"+nombre+"\" class=\"title\"><a href=\"javascript:openInformation('"+"chart_"+nombre+"');\">Open initial_"+nombre+"</a></div>" +
-						"<div class=\"informationbox\"  id=\"information_chart_"+nombre+"\"><div style=\"width:950px; height:500px; position:relative;\" id=\"chart_"+nombre+"\" ></div>"+
+						"</td><tr>");
+
+			}
+			pw.println("</table>");
+			pw.println("</td><td valign=\"top\">");
+			pw.println("<table>");
+			for ( int i =0; i< globalExecutionResults.size();i++) {
+				String nombre = globalExecutionResults.get(i).get(0).getInstanceName();
+				pw.println("<tr><td><div class=\"informationbox\"  id=\"information_chart_"+nombre+"\"><div style=\"width:950px; height:500px; position:relative;\" id=\"chart_"+nombre+"\" ></div>"+
 						"</div></td><tr>");
 
 			}
+			pw.println("</table>");
+			pw.println("</td></tr>");
 			pw.println("</table></div>");
 		}
 		
