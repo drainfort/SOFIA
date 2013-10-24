@@ -302,16 +302,14 @@ public class Vector extends AbstractStructure{
 		int jobId = operationIndex.getJobId();
 		int stationId = operationIndex.getStationId();
 		ArrayList <IOperation> operations = new ArrayList<IOperation>();
-		for(int i =0; i< getProblem().length;i++){
 			
-			for(int j=0; j< getProblem()[i].length;j++){
-				OperationIndexVO temp = getProblem()[i][j];
-				if(temp.getJobId()==jobId && stationId == temp.getStationId()){
-					operations.add(new Operation(temp));
-				}
+		for(int j=0; j< getProblem()[jobId].length;j++){
+			OperationIndexVO temp = getProblem()[jobId][j];		
+			if(temp.getJobId()==jobId && stationId == temp.getStationId()){
+				operations.add(new Operation(temp));
 			}
-			
 		}
+			
 		return operations;
 	}
 	
