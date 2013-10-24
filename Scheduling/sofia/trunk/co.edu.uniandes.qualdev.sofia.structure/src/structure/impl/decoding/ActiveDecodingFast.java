@@ -34,12 +34,8 @@ public class ActiveDecodingFast extends Decoding{
 
 		// Creating an array with the set of unscheduled operations
 		int actualSize = 0;
-		ArrayList<OperationIndexVO> unscheduledOperations = new ArrayList<OperationIndexVO>();
-		for(int j = 0; j < vector.getProblem().length; j++){
-			for(int z = 0; z < vector.getProblem()[j].length; z++){	
-				unscheduledOperations.add(vector.getProblem()[j][z]);
-			}
-		}
+		ArrayList<OperationIndexVO> unscheduledOperations = getUnscheduledOperations();
+
 		
 		while (actualSize < sizeList){
 			

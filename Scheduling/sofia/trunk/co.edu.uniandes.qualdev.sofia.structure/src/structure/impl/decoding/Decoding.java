@@ -1,6 +1,8 @@
 package structure.impl.decoding;
 
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import common.types.OperationIndexVO;
 import structure.IOperation;
@@ -19,6 +21,8 @@ public abstract class Decoding {
 	
 	protected Vector vector;
 	
+	protected ArrayList<OperationIndexVO> unscheduledOperations;
+	
 	// ––––––––––––––––––––––––––––––––––––––––––––––
 	// Abstract methods
 	// ––––––––––––––––––––––––––––––––––––––––––––––
@@ -33,12 +37,23 @@ public abstract class Decoding {
 	// Concrete methods
 	// ––––––––––––––––––––––––––––––––––––––––––––––
 	
+	public void initialize(OperationIndexVO [][] problem){
+		unscheduledOperations = new ArrayList<OperationIndexVO>();
+		for(int j = 0; j < problem.length; j++){
+			for(int z = 0; z < problem[j].length; z++){	
+				unscheduledOperations.add(problem[j][z]);
+			}
+		}
+	}
+	
 	/**
 	 * Initializes the vector relationship with the reference given in the parameter
 	 * @param vector
 	 */
 	public void setVector(Vector vector){
 		this.vector = vector;
+		if(unscheduledOperations==null)
+			initialize(vector.getProblem());
 	}
 	
 	protected boolean canSchedule(OperationIndexVO operationIndexVO, ArrayList<IOperation> vectorToSchedule) {
@@ -91,4 +106,17 @@ public abstract class Decoding {
 	
 		return CSolution;
 	}
+
+	public ArrayList<OperationIndexVO> getUnscheduledOperations() {
+		ArrayList<OperationIndexVO> a= new ArrayList<OperationIndexVO>();
+		a.addAll(unscheduledOperations);
+		return a;
+	}
+
+	public void setUnscheduledOperations(
+			ArrayList<OperationIndexVO> unscheduledOperations) {
+		this.unscheduledOperations = unscheduledOperations;
+	}
+	
+	
 }
