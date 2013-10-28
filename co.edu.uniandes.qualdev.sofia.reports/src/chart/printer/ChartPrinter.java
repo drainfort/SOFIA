@@ -350,32 +350,33 @@ public class ChartPrinter {
 	}
 
 	private void printChartJs(PrintWriter pw, ExecutionResults executionResults, int i) {
-		ArrayList<Point> points = executionResults.getGraphics().get(0).getPoints();
-		pw.println("google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});");
-		pw.println("  google.setOnLoadCallback(drawChart"+i+");");
-		pw.println("  function drawChart"+i+"() {");
-		pw.println("    var data = google.visualization.arrayToDataTable([");
-		pw.println("       ['Iterations', 'OF'],");
-		for(int j=0; j< points.size();j++){
-			Point temp = points.get(j);
-			if(j!=points.size()-1){
-				pw.println("["+temp.getX()+","+temp.getY()+"],");
+		if(executionResults.getGraphics().size()>0){
+			ArrayList<Point> points = executionResults.getGraphics().get(0).getPoints();
+			pw.println("google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});");
+			pw.println("  google.setOnLoadCallback(drawChart"+i+");");
+			pw.println("  function drawChart"+i+"() {");
+			pw.println("    var data = google.visualization.arrayToDataTable([");
+			pw.println("       ['Iterations', 'OF'],");
+			for(int j=0; j< points.size();j++){
+				Point temp = points.get(j);
+				if(j!=points.size()-1){
+					pw.println("["+temp.getX()+","+temp.getY()+"],");
+				}
+				else{
+					pw.println("["+temp.getX()+","+temp.getY()+"]");
+				}
+				
 			}
-			else{
-				pw.println("["+temp.getX()+","+temp.getY()+"]");
-			}
-			
+		    pw.println("     ]);");
+	
+		    pw.println("    var options = {");
+		    pw.println("       title: 'Iteration"+i+"'");
+		    pw.println(" };");
+	
+		    pw.println("var chart = new google.visualization.LineChart(document.getElementById('chart_"+executionResults.getInstanceName()+"'));");
+		    pw.println("    chart.draw(data, options);");
+		    pw.println("  }");
 		}
-	    pw.println("     ]);");
-
-	    pw.println("    var options = {");
-	    pw.println("       title: 'Iteration"+i+"'");
-	    pw.println(" };");
-
-	    pw.println("var chart = new google.visualization.LineChart(document.getElementById('chart_"+executionResults.getInstanceName()+"'));");
-	    pw.println("    chart.draw(data, options);");
-	    pw.println("  }");
-		
 	}
 
 	private void printGanttJs(PrintWriter pw,ExecutionResults executionResults, String name) {
