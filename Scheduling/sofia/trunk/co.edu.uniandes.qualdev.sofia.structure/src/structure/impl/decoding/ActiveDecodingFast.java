@@ -90,6 +90,7 @@ public class ActiveDecodingFast extends Decoding{
 					if(temp.getJobId()==opIndex.getJobId() && temp.getStationId()== opIndex.getStationId()&& j<minIndex){
 						chosen = temp;
 						minIndex = j;
+						break;
 					}	
 				}
 			}
