@@ -24,10 +24,6 @@ public class ActiveDecodingFast extends Decoding{
 		// Creating a copy of the vector
 		int sizeList = originalVector.size();
 		ArrayList<IOperation> originalVectorCopy = originalVector;
-		/*for (int i = 0; i < sizeList; i++){
-			IOperation iOperation = new Operation (originalVector.get(i).getOperationIndex());
-			originalVectorCopy.add(iOperation);
-		}*/
 		
 		// Re-starting the original version so the new order can be proposed
 		originalVector = new ArrayList<IOperation>();
