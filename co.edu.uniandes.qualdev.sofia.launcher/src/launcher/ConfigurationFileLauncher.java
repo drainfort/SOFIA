@@ -1,8 +1,15 @@
 package launcher;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -21,11 +28,15 @@ public class ConfigurationFileLauncher {
 	
 	public static final String CONFIGURATION_FILE = "./config/configuration.properties";
 	
+	public static final String WEB_CONFIGURATION_FILE = "./config/web-configuration.properties";
+	
 	// ----------------------------------------------
 	// Constants
 	// ----------------------------------------------
 	
 	private String userId;
+	private String executionId;
+	private String webLocation;
 	
 	private String benchmark;
 	private int amountOfExecutionsPerInstance;
@@ -51,9 +62,13 @@ public class ConfigurationFileLauncher {
 	// ----------------------------------------------
 	
 	public void launchSofia() throws Exception{
-		Properties data = loadPropertiesFile(new File(CONFIGURATION_FILE));
 		
+		Properties webData = loadPropertiesFile(new File(WEB_CONFIGURATION_FILE));
+		webLocation = webData.getProperty("web-location");
+		
+		Properties data = loadPropertiesFile(new File(CONFIGURATION_FILE));
 		userId = data.getProperty("userId");
+		executionId = data.getProperty("executionId");
 		
 		// Loading the instances to execute
 		ArrayList<String> instancesToExecute = new ArrayList<String>();
@@ -259,8 +274,58 @@ public class ConfigurationFileLauncher {
 		if(showLog.equals("true")){
 			ExecutionLogger.getInstance().stopHandler();
 		}
-		ChartPrinter.getInstance().printGlobalResultsHTML("./results/" + userId + "/experiment-results-" + time + ".html", "Log-execution-" + time + ".html");
-		
+		ChartPrinter.getInstance().printGlobalResultsHTML("./results/" + userId + "/experiment-results-" + executionId + ".html", "Log-execution-" + executionId + ".html");
+		communicateResultsToWeTear("./results/" + userId + "/experiment-results-" + executionId + ".html");
+	}
+	
+	private void communicateResultsToWeTear(String path) {
+		String webResult="";
+		try{
+			File stream = new File(path);
+			FileReader in = new FileReader(stream);
+			BufferedReader reader = new BufferedReader(in);
+			String line=reader.readLine();
+			
+			while (line != null) {
+				webResult+=line+"\n";
+				line = reader.readLine();
+			}
+			reader.close();
+			in.close();
+			//  
+			System.out.println(webResult);
+			
+			//send POST request 
+			String data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(executionId, "UTF-8");
+	        data += "&" + URLEncoder.encode("result", "UTF-8") + "=" + URLEncoder.encode(webResult, "UTF-8");
+	 
+	        // Send data
+	        URL url = new URL(webLocation);
+	        
+	        URLConnection conn = url.openConnection();
+	        
+	        conn.setDoInput(true);
+	        conn.setDoOutput(true);
+	        conn.setUseCaches(false);
+	       
+	        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+	        conn.setRequestProperty("Content-Length", ""+ (webResult.length()+executionId.length()));
+	        
+	        DataOutputStream wr= new DataOutputStream(conn.getOutputStream());
+	        wr.writeBytes(data);
+
+	        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        String linew;
+	        while ((linew = rd.readLine()) != null) {
+	          //  System.out.println(linew);
+	        }
+	        wr.close();
+	        rd.close();
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	/**
