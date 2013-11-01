@@ -138,8 +138,8 @@ public abstract class Control {
 				operationIndex.setNameMachine(machine.getNameClass()+" "+machine.getAtributes().get(0).getValue());
 			}
 			else{
-				operationIndex.setNameJob("Trabajo "+operation.getOperationIndex().getJobId());
-				operationIndex.setNameMachine("M�quina " + operation.getOperationIndex().getMachineId());
+				operationIndex.setNameJob("Job "+operation.getOperationIndex().getJobId());
+				operationIndex.setNameMachine("Machine " + operation.getOperationIndex().getMachineId());
 			}
 			operationIndexesFinalSolution.add(operationIndex);
 			
