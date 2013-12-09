@@ -74,6 +74,17 @@ public class ConfigurationFileLauncher {
 		ArrayList<String> instancesToExecute = new ArrayList<String>();
 		
 		// 04x04
+		for (int i = 1; i <= 1; i++) {
+			String key = "02x02_";
+			if(i != 10) key += "0";
+			key += i;
+			
+			if(data.getProperty(key).equals("true")){
+				instancesToExecute.add(key);
+			}
+		}
+		
+		// 04x04
 		for (int i = 1; i <= 10; i++) {
 			String key = "04x04_";
 			if(i != 10) key += "0";
@@ -140,7 +151,7 @@ public class ConfigurationFileLauncher {
 		}
 		
 		benchmark = data.getProperty("benchmark");
-		amountOfExecutionsPerInstance = Integer.parseInt(data.getProperty("amountOfExecutionsPerInstance"));
+		amountOfExecutionsPerInstance = Integer.parseInt(data.getProperty("numberOfExecutionsPerInstance"));
 		
 		// Loading the solution method configuration
 		initialSolutionBuilder = data.getProperty("initialSolutionBuilder");
@@ -274,8 +285,9 @@ public class ConfigurationFileLauncher {
 		if(showLog.equals("true")){
 			ExecutionLogger.getInstance().stopHandler();
 		}
+		executionId = ""+System.currentTimeMillis();
 		ChartPrinter.getInstance().printGlobalResultsHTML("./results/" + userId + "/experiment-results-" + executionId + ".html", "Log-execution-" + executionId + ".html");
-		communicateResultsToWeTear("./results/" + userId + "/experiment-results-" + executionId + ".html");
+		//communicateResultsToWeTear("./results/" + userId + "/experiment-results-" + executionId + ".html");
 	}
 	
 	private void communicateResultsToWeTear(String path) {
