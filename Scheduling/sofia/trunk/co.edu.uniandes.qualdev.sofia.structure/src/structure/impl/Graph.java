@@ -892,6 +892,8 @@ public class Graph extends AbstractStructure {
 		for (int j = 0; j < this.totalStations; j++) {
 			initialStationNodesArray[j] = null;
 		}
+		
+		weightedNodesCriticaRoute = null;
 	}
 
 	/**
@@ -1020,7 +1022,7 @@ public class Graph extends AbstractStructure {
 					vector[1] = j;
 					vector[2] = 0;
 					incidenciasCriticaRoute.add(vector);
-					int c= nodes[i][j].calculateC();
+					int c = nodes[i][j].calculateC();
 					if (c>cmax){
 						cmax=c;
 					}	
