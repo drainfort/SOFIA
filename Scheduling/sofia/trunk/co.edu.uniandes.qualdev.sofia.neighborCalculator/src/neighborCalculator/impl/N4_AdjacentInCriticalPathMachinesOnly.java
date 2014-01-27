@@ -56,8 +56,8 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 			
 			if(initialNode.getOperationIndex().getStationId() == finalNode.getOperationIndex().getStationId()){
 				found = true;
-				initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
-				finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+				initialOperationIndex = new OperationIndexVO(0,initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId(), initialNode.getOperationIndex().getMachineId());
+				finalOperationIndex = new OperationIndexVO(0, finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId(), finalNode.getOperationIndex().getMachineId());
 			}
 		}
 		return new PairVO(initialOperationIndex, finalOperationIndex);
@@ -66,6 +66,7 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 	@Override
 	public ArrayList<PairVO> calculateNeighborhood(IStructure currentStructure, long size)
 			throws Exception {
+		//System.out.println(size);
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		IStructure clone = currentStructure.cloneStructure();
 		
@@ -75,6 +76,7 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 		// Selecting one of the critical paths
 		int number = randomNumber(0, routes.size() - 1);
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
+		//System.out.println(selectedCriticalPath);
 
 		int exit = 0;
 		while(neighborhood.size() < size){
@@ -87,11 +89,13 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 				int i = randomNumber(0, selectedCriticalPath.size() - 2);
 				IOperation initialNode = selectedCriticalPath.get(i);
 				IOperation finalNode = selectedCriticalPath.get(i + 1);
+				//System.out.println("initial:"+initialNode);
+				//System.out.println("final:"+finalNode);
 				
 				if(initialNode.getOperationIndex().getStationId() == finalNode.getOperationIndex().getStationId()){
 					found = true;
-					initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
-					finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+					initialOperationIndex = new OperationIndexVO(0,initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId(), initialNode.getOperationIndex().getMachineId());
+					finalOperationIndex = new OperationIndexVO(0, finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId(), finalNode.getOperationIndex().getMachineId());
 				
 					// Adding the new neighbor to the array if it is not previously considered
 					PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);

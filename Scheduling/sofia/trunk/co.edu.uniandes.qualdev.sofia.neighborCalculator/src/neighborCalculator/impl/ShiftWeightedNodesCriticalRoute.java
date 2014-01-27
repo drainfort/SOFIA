@@ -54,13 +54,12 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 			throws Exception {
 		
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
-		IStructure clone = currentGraph.cloneStructure();
-		clone.getCriticalPaths();
-		ArrayList<int[]>temp = clone.getWeightedNodesCriticaRoute();
-		int salida=0;
+		currentGraph.getCriticalPaths();
+		ArrayList<int[]>temp = currentGraph.getWeightedNodesCriticaRoute();
 		int i = 0;
 		int j = 1;
-		while(neighborhood.size()<size){
+		while(neighborhood.size()<size && i<temp.size()){
+			
 			if(temp.get(i)[2]>0 && temp.get(j)[2]>0  ){
 				OperationIndexVO initialOperationIndex = new OperationIndexVO(temp.get(i)[0],temp.get(i)[1]);
 				OperationIndexVO finalOperationIndex = new OperationIndexVO(temp.get(j)[0], temp.get(j)[1]);

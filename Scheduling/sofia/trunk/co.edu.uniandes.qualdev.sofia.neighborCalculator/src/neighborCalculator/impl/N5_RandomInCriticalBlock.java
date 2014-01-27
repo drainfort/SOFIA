@@ -56,9 +56,10 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
         IOperation finalNode = block.get(number4);
 		
 
-		OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
-		OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
-		
+        OperationIndexVO initialOperationIndex = new OperationIndexVO(0,initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId(), initialNode.getOperationIndex().getMachineId());
+        OperationIndexVO finalOperationIndex = new OperationIndexVO(0, finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId(), finalNode.getOperationIndex().getMachineId());
+        
+		clone.clean();
 		return new PairVO(initialOperationIndex,finalOperationIndex);
 		
 	}
@@ -68,23 +69,19 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
 			throws Exception {
 		
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
-        IStructure clone = currentGraph.cloneStructure();
         
         // Obtaining all the critical paths of the current solutions
-        ArrayList<CriticalPath> routes = clone.getCriticalPaths();
-        
-//        System.out.println(routes);
-        
-        // Selecting one of the critical paths
-//        int numberRoutes= routes.size();
-//        System.out.println("rutas:"+numberRoutes);
+        ArrayList<CriticalPath> routes = currentGraph.getCriticalPaths();
+                
         int exit = 0;
+        ArrayList<ArrayList<IOperation>> blocks= null;
+        ArrayList<IOperation> block = null;
         while(neighborhood.size() < size){
             
             int number = randomNumber(0, routes.size() - 1);
-            ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
+            blocks= routes.get(number).getBlocks();
             int number2 = randomNumber(0, blocks.size() - 1);
-            ArrayList<IOperation> block = blocks.get(number2);
+            block = blocks.get(number2);
             int number3= randomNumber(0, block.size()-1);
             int number4= randomNumber(0, block.size()-1);
             while(number4==number3)
@@ -93,8 +90,8 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
             IOperation finalNode = block.get(number4);
 
             		            
-            OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
-            OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+            OperationIndexVO initialOperationIndex = new OperationIndexVO(0,initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId(), initialNode.getOperationIndex().getMachineId());
+            OperationIndexVO finalOperationIndex = new OperationIndexVO(0, finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId(), finalNode.getOperationIndex().getMachineId());
             
             PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
             if(!neighborhood.contains(temp)){
