@@ -33,10 +33,11 @@ public class SimpleSimulatedAnnealing extends Control {
 
 	@Override
 	public ExecutionResults execute(IStructure initialSolution,
-			INeighborCalculator neighborCalculator, IModifier modifier,
+			INeighborCalculator neighborCalculator, ArrayList<IModifier> modifiers,
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 
+		IModifier modifier = modifiers.get(0);
 		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
 		
 		long startTime = System.currentTimeMillis();
@@ -110,6 +111,8 @@ public class SimpleSimulatedAnnealing extends Control {
 				// Obtains a next solution (Y) from the current one (X)
 				PairVO YMovement = neighborCalculator.calculateNeighbor(X);
 				IStructure Y = modifier.performModification(YMovement, X);
+				if(Y ==null)
+					continue;
 				
 				numberOfVisitedNeighbors++;
 

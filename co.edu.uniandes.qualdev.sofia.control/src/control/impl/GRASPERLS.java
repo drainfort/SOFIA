@@ -38,10 +38,11 @@ public class GRASPERLS extends Control {
 
 	@Override
 	public ExecutionResults execute(IStructure initialSolution,
-			INeighborCalculator neighborCalculator, IModifier modifier,
+			INeighborCalculator neighborCalculator, ArrayList<IModifier> modifiers,
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 
+		IModifier modifier = modifiers.get(0);
 		executionResults = new ExecutionResults();
 		int numberOfNeighbors[]=new int[1];  numberOfNeighbors[0]=0;
 		double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);

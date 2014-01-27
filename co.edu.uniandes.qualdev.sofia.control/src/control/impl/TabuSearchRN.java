@@ -33,10 +33,11 @@ public class TabuSearchRN extends Control {
 
 	@Override
 	public ExecutionResults execute(IStructure initialSolution,
-			INeighborCalculator neighborCalculator, IModifier modifier,
+			INeighborCalculator neighborCalculator, ArrayList<IModifier> modifiers,
 				IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
 					boolean isOptimal) throws Exception {
-			
+				
+		IModifier modifier = modifiers.get(0);
 		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
 		
 		long startTime = System.currentTimeMillis();
@@ -118,7 +119,8 @@ public class TabuSearchRN extends Control {
 				x++;
 				PairVO pairCandidate = arrayNeighbors.get(index);
 				IStructure candidate = modifier.performModification(pairCandidate,current);
-				
+				if(candidate ==null)
+					continue;
 				numberOfVisitedNeighbors++;
 				double gammaCandidate = gammaCalculator.calculateGamma(candidate);
 				if (gammaCandidate <= gammaBestCandidate) {
@@ -149,6 +151,7 @@ public class TabuSearchRN extends Control {
 					}
 				}
 				candidate.clean();
+				
 				nonImprovingIn--;
 				
 				long actualTime = System.currentTimeMillis();
