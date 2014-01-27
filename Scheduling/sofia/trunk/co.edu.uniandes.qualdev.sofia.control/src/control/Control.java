@@ -60,7 +60,7 @@ public abstract class Control {
 	 * @throws Exception
 	 */
 	abstract public ExecutionResults execute(IStructure initialSolution,
-			INeighborCalculator neighborCalculator, IModifier modifier,
+			INeighborCalculator neighborCalculator, ArrayList<IModifier> modifiers,
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal) throws Exception;
 	
 	// -----------------------------------------------

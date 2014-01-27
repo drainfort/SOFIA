@@ -34,10 +34,11 @@ public class IteratedTabuSearch extends Control {
 
 	@Override
 	public ExecutionResults execute(IStructure So,
-			INeighborCalculator neighborCalculator, IModifier modifier,
+			INeighborCalculator neighborCalculator, ArrayList<IModifier> modifiers,
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 		
+		IModifier modifier = modifiers.get(0);
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
 		

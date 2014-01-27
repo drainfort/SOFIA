@@ -37,10 +37,12 @@ public class GRASP extends Control {
 
 	@Override
 	public ExecutionResults execute(IStructure initialSolution,
-			INeighborCalculator neighborCalculator, IModifier modifier,
+			INeighborCalculator neighborCalculator, ArrayList<IModifier> modifiers,
 			IGammaCalculator gammaCalculator, Properties params, Integer optimal, boolean isOptimal)
 			throws Exception {
 
+		
+		IModifier modifier = modifiers.get(0);
 		int numberOfVisitedNeighbors=0;
 		double gammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 		executionResults = new ExecutionResults();
