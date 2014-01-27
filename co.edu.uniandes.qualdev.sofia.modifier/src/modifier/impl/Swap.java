@@ -5,6 +5,7 @@ import modifier.IModifier;
 import common.types.PairVO;
 
 import structure.IStructure;
+import structure.impl.Graph;
 
 /**
  * Implementation of the swap at random neighbor using the vector sequence
@@ -33,6 +34,17 @@ public class Swap implements IModifier {
 	public IStructure performModification(PairVO movement, IStructure currentVector) throws Exception {
 		IStructure vector = currentVector.cloneStructure();
 		vector.exchangeOperations(movement.getoX(), movement.getoY());
+		if(vector instanceof Graph){
+			try{
+				((Graph) vector).topologicalSort2();
+			}
+			catch (Exception e)
+			{
+				return null;
+			}
+			
+		}
+			
 		return vector;
 	}
 }
