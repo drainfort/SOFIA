@@ -77,7 +77,7 @@ public class AlgorithmConfigurationVO {
 	
 	private ArrayList<ParameterVO> metaheuristicParams;
 	
-	private String modifier;
+	private ArrayList<String> modifiers;
 	
 	private String neighborhood;
 	
@@ -121,12 +121,12 @@ public class AlgorithmConfigurationVO {
 		this.metaheuristic = metaheuristic;
 	}
 
-	public String getModifier() {
-		return modifier;
+	public ArrayList<String> getModifier() {
+		return modifiers;
 	}
 
-	public void setModifier(String modifier) {
-		this.modifier = modifier;
+	public void setModifier(ArrayList<String> modifiers) {
+		this.modifiers = modifiers;
 	}
 
 	public String getNeighborhood() {
@@ -184,7 +184,7 @@ public class AlgorithmConfigurationVO {
 	public String toString(){
 		return "Initial solution: " +  initialSolutionBuilder + "\n" +
 				"Metaheuristic: " + metaheuristic + "\n" + 
-				"Modifier: " + modifier + "\n" + 
+				"Modifier: " + modifiers.toString() + "\n" + 
 				"Neighborhood: " + neighborhood + "\n" + 
 				"Representation " +  representation + "\n" + 
 				"Gamma: " + objectiveFunction;
