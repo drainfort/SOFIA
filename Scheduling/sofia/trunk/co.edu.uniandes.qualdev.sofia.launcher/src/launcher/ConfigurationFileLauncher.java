@@ -44,7 +44,7 @@ public class ConfigurationFileLauncher {
 	private String initialSolutionBuilder;
 	private String structure;
 	private String neighborCalculator;
-	private String modifier;
+	private ArrayList<String> modifiers;
 	private String control;
 	private String gammaCalculator;
 	private String decodingStrategy;
@@ -158,7 +158,14 @@ public class ConfigurationFileLauncher {
 		structure = data.getProperty("structure");
 		neighborCalculator = data.getProperty("neighborCalculator");
 		gammaCalculator = data.getProperty("gammaCalculator");
-		modifier = data.getProperty("modifier");
+		int numberModifiers = Integer.parseInt(data.getProperty("numberModifiers"));
+		modifiers= new ArrayList<String>();
+		for(int i = 1; i< numberModifiers+1; i++)
+		{
+			String name = "modifier_"+i;
+			System.out.println(name);
+			modifiers.add(data.getProperty(name));
+		}
 		control = data.getProperty("control");
 		decodingStrategy = data.getProperty("decodingStrategy");
 		
@@ -167,7 +174,12 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("scheduling.structureFactory", structure);
 		algorithmConfiguration.setProperty("scheduling.neighborCalculator", neighborCalculator);
 		algorithmConfiguration.setProperty("scheduling.gammaCalculator", gammaCalculator);
-		algorithmConfiguration.setProperty("scheduling.modifier", modifier);
+		algorithmConfiguration.setProperty("scheduling.numberModifiers", ""+numberModifiers);
+		for(int i = 0; i< modifiers.size(); i++)
+		{
+			algorithmConfiguration.setProperty("scheduling.modifier"+i, modifiers.get(i));
+		}
+		
 		algorithmConfiguration.setProperty("scheduling.control", control);
 		algorithmConfiguration.setProperty("scheduling.parametersLoader", control + "ParametersLoader");
 		algorithmConfiguration.setProperty("scheduling.decodingStrategy", decodingStrategy);
