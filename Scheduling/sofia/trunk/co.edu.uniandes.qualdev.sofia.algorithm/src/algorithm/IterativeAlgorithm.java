@@ -1,5 +1,6 @@
 package algorithm;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 import structure.IStructure;
@@ -38,7 +39,7 @@ public class IterativeAlgorithm {
 	 */
 	private INeighborCalculator neighborCalculator;
 
-	private IModifier modifier;
+	private ArrayList<IModifier> modifiers;
 	
 	/**
 	 * Component that calculates the corresponding gamma for a given solution
@@ -76,11 +77,19 @@ public class IterativeAlgorithm {
 				.loadClass(algorithmConfiguration.getProperty("scheduling.neighborCalculator"))
 				.newInstance();
 		
-		modifier = (IModifier) getClass()
-				.getClassLoader()
-				.loadClass(algorithmConfiguration.getProperty("scheduling.modifier"))
-				.newInstance();
+		int numberModifiers = Integer.parseInt(algorithmConfiguration.getProperty("scheduling.numberModifiers"));
 		
+		modifiers = new ArrayList<IModifier>();
+		
+		for(int i = 0; i< numberModifiers;i++)
+		{
+		
+			IModifier modifier = (IModifier) getClass()
+					.getClassLoader()
+					.loadClass(algorithmConfiguration.getProperty("scheduling.modifier"+i))
+					.newInstance();
+			modifiers.add(modifier);
+		}
 		gammaCalculator = (IGammaCalculator) getClass()
 				.getClassLoader()
 				.loadClass(algorithmConfiguration.getProperty("scheduling.gammaCalculator"))
@@ -109,7 +118,7 @@ public class IterativeAlgorithm {
 		control.setInstanceName(problem.getInstanceName());
 		control.setResultFile(problem.getResultFile());
 
-		return control.execute(initialSolution, neighborCalculator, modifier, gammaCalculator,
+		return control.execute(initialSolution, neighborCalculator, modifiers, gammaCalculator,
 				parametersLoader.loadParameters(this.algorithmConfiguration),problem.getCurrentBksValue(), problem.isHasOptimal());
 	}
 
