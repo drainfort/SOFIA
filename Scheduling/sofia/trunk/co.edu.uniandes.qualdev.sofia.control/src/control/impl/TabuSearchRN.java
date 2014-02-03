@@ -119,8 +119,17 @@ public class TabuSearchRN extends Control {
 				x++;
 				PairVO pairCandidate = arrayNeighbors.get(index);
 				IStructure candidate = modifier.performModification(pairCandidate,current);
-				if(candidate ==null)
+				if(candidate ==null){
+					long actualTime = System.currentTimeMillis();
+				    long elapsedTime = actualTime - startTime;
+				    
+				    if(elapsedTime>=stopTime){
+				    	System.out.println("TIME!!!");
+				    	optimalAchieved = true;
+				    	executionResults.setStopCriteria(2);
+				    }
 					continue;
+				}
 				numberOfVisitedNeighbors++;
 				double gammaCandidate = gammaCalculator.calculateGamma(candidate);
 				if (gammaCandidate <= gammaBestCandidate) {
