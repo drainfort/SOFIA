@@ -111,8 +111,17 @@ public class SimpleSimulatedAnnealing extends Control {
 				// Obtains a next solution (Y) from the current one (X)
 				PairVO YMovement = neighborCalculator.calculateNeighbor(X);
 				IStructure Y = modifier.performModification(YMovement, X);
-				if(Y ==null)
+				if(Y ==null){
+					long actualTime = System.currentTimeMillis();
+				    long elapsedTime = actualTime - startTime;
+				    
+				    if(elapsedTime>=stopTime){
+				    	System.out.println("TIME!!!");
+				    	optimalAchieved = true;
+				    	executionResults.setStopCriteria(2);
+				    }
 					continue;
+				}
 				
 				numberOfVisitedNeighbors++;
 
