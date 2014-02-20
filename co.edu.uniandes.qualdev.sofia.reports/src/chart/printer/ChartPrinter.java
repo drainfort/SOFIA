@@ -6,6 +6,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import structure.impl.Graph;
+
 import common.types.OperationIndexVO;
 import common.utils.ExecutionResults;
 import common.utils.GanttTask;
@@ -419,6 +421,14 @@ public class ChartPrinter {
 		pw.println("}");
 	}
 	
+	public void restart(){
+		globalExecutionResults= new ArrayList<ArrayList<ExecutionResults>>();
+		printTable=false;
+		printInitialSolutions = false;
+		printSolutions = false;
+		printLog = false;
+		printCharts = false;
+	}
 	
 	
 	public void addResults(ArrayList<ExecutionResults> results) {
@@ -427,6 +437,92 @@ public class ChartPrinter {
 		printInitialSolutions = globalExecutionResults.get(0).get(0).isPrintInitialSolution();
 		printSolutions = globalExecutionResults.get(0).get(0).isPrintFinalSolution();
 		printLog = globalExecutionResults.get(0).get(0).isPrintLog();
-		printCharts = true;
+		printCharts = false;
+	}
+	
+	// ------------------------------------------------------------
+	// Draw Graph
+	// ------------------------------------------------------------
+	
+	public void drawGraph(Graph graph, String resultsFile){
+		FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter(resultsFile);
+            System.out.println(resultsFile);
+            pw = new PrintWriter(fichero);
+            
+            pw.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">");
+            pw.println("<html lang=\"en\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
+            pw.println("<title> Graph - </title> <link rel=\"stylesheet\" href=\"./style/style.css\" type=\"text/css\">");
+		    pw.println("</head> <body> <canvas id=\"viewport\" width=\"1000\" height=\"800\"></canvas>");
+		    pw.println("  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js\"></script>");
+		    pw.println("  <script src=\"./js/arbor.js\"></script>  ");
+		    pw.println("  <script type=\"text/javascript\" language=\"JavaScript\">");
+		    pw.println("  	(function($){");
+		    pw.println("  var Renderer = function(canvas){");
+		    pw.println("    var canvas = $(canvas).get(0)");
+		    pw.println("    var ctx = canvas.getContext(\"2d\");");
+		    pw.println("    var particleSystem");
+		    pw.println("    var that = {");
+		    pw.println("      init:function(system){");
+		    pw.println("        particleSystem = system");
+		    pw.println("        particleSystem.screenSize(canvas.width, canvas.height)");
+		    pw.println("        particleSystem.screenPadding(10)},");
+		    pw.println("      redraw:function(){");
+		    pw.println("        ctx.fillStyle = \"white\"");
+		    pw.println("        ctx.fillRect(0,0, canvas.width, canvas.height)");
+		    pw.println("        particleSystem.eachEdge(function(edge, pt1, pt2){");
+		    pw.println("          ctx.strokeStyle = \"rgba(0,0,0, .333)\"");
+		    pw.println("          ctx.lineWidth = 1");
+		    pw.println("          ctx.beginPath()");
+		    pw.println("          ctx.moveTo(pt1.x, pt1.y)");
+		    pw.println("          ctx.lineTo(pt2.x, pt2.y)");
+		    pw.println("          ctx.stroke()})");
+		    pw.println("        particleSystem.eachNode(function(node, pt){");
+		    pw.println("          var w = 50");
+		    pw.println("          ctx.fillStyle = (node.data.critical) ? \"#EEE8E8\" : (node.data.change) ? \"#22F9FF\": \"white\"");
+		    pw.println("          ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w)");
+		    pw.println("		  if(node.data.change){");
+		    pw.println("			ctx.fillStyle = \"#EEE8E8\""); 
+		    pw.println("			ctx.fillRect(pt.x-w/2+w/8, pt.y-w/2+w/8, 6*w/8,6*w/8)}");
+		    pw.println("		  label = node.data.label || \"\"");
+		    pw.println("		  if (label){");
+		    pw.println("            ctx.font = \"bold 11px Arial\"");
+		    pw.println("            ctx.textAlign = \"center\"");
+		    pw.println("            ctx.fillStyle = \"black\"");
+		    pw.println("            ctx.fillText(label||\"\", pt.x, pt.y+4)}})  },      }");
+		    pw.println("    return that}    ");
+		    pw.println("  $(document).ready(function(){");
+		    pw.println("    var sys = arbor.ParticleSystem(50, 800, 0) ");
+		    pw.println("    sys.parameters({gravity:false}) ");
+		    pw.println("    sys.renderer = Renderer(\"#viewport\")"); 
+		    
+		    //Iterar sobre el grafo
+		    
+		    
+		    
+		    pw.println("    sys.addNode('f', {label:'<1,2,3>', mass:1, critical:true})");
+		    pw.println("	sys.addNode('1', {label:'<1,1,1>', mass:1, change:true})");
+		    pw.println("	sys.addEdge('f','1')");
+		    pw.println("	sys.addNode('2', {label:'<1,2,1>', mass:1})");
+		    pw.println("	sys.addEdge('2','1') })");
+		    
+		    //Iterar sobre el grafo
+		    pw.println("})(this.jQuery)");
+		    pw.println("</script></body></html>");
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           try {
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
 	}
 }
