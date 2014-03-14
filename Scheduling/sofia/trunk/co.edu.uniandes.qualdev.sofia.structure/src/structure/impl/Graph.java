@@ -1,5 +1,8 @@
 package structure.impl;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -561,7 +564,8 @@ public class Graph extends AbstractStructure {
 		// Put the nodes in an array
 		for (int i = 0; i < totalJobs; i++) {
 			for (int j = 0; j < totalStations; j++) {
-				operations.add(new Operation(operationsMatrix[i][j]));
+				Operation a = (Operation)nodes[i][j].getOperation().clone();
+				operations.add(a);
 			}
 		}
 
@@ -1151,6 +1155,739 @@ public class Graph extends AbstractStructure {
 		if(l.size() !=totalJobs*totalStations-getNumberNullNodes())
 			throw new Exception("Prensence of cycles");
 		return l;
+	}
+	
+	
+	public void drawGraph(String resultsFile, boolean critical, PairVO pair){
+		FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter(resultsFile);
+            System.out.println(resultsFile);
+            pw = new PrintWriter(fichero);
+            
+            pw.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">");
+            pw.println("<html lang=\"en\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
+            pw.println("<title> Graph - </title> <link rel=\"stylesheet\" href=\"./style/style.css\" type=\"text/css\">");
+		    pw.println("</head> <body> <canvas id=\"viewport\" width=\"1000\" height=\"1000\"></canvas>");
+		    pw.println("  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js\"></script>");
+		    pw.println("  <script src=\"./js/arbor.js\"></script>  ");
+		    pw.println("  <script type=\"text/javascript\" language=\"JavaScript\">");
+		    pw.println("  	(function($){");
+		    pw.println("  var Renderer = function(canvas){");
+		    pw.println("    var canvas = $(canvas).get(0)");
+		    pw.println("    var ctx = canvas.getContext(\"2d\");");
+		    pw.println("    var particleSystem");
+		    pw.println("    var that = {");
+		    pw.println("      init:function(system){");
+		    pw.println("        particleSystem = system");
+		    pw.println("        particleSystem.screenSize(canvas.width-100, canvas.height-100)");
+		    pw.println("        particleSystem.screenPadding(40)},");
+		    pw.println("      redraw:function(){");
+		    pw.println("        ctx.fillStyle = \"white\"");
+		    pw.println("        ctx.fillRect(0,0, canvas.width, canvas.height)");
+		    pw.println("        particleSystem.eachEdge(function(edge, pt1, pt2){");
+		    pw.println("          ctx.strokeStyle = (edge.data.route) ? 'green' :'blue'");
+		    pw.println("          ctx.lineWidth = 1");
+		    pw.println("          ctx.beginPath()");
+
+		    pw.println(" var headlen = 10; ");
+			pw.println("  toy = pt2.y");
+			pw.println("  tox = pt2.x");
+			pw.println("  fromy = pt1.y");
+			pw.println("  fromx = pt1.x");
+			pw.println("  var angle = Math.atan2(toy-fromy,tox-fromx);");
+			pw.println("  ctx.moveTo(fromx, fromy);");
+			pw.println("  ctx.lineTo(tox, toy);");
+			pw.println("  ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6));");
+			pw.println("  ctx.moveTo(tox, toy);");
+			pw.println("  ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6));");
+		    pw.println("          ctx.stroke()})");
+		    pw.println("        particleSystem.eachNode(function(node, pt){");
+		    pw.println("          var w = 50");
+		    pw.println("          ctx.fillStyle = (node.data.critical) ? \"#22F9FF\" : (node.data.change) ? \"#22F9FF\": \"white\"");
+		    pw.println("ctx.globalAlpha=0.2;");
+		    pw.println("          ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w)");
+		    pw.println("		  if(node.data.change){");
+		    pw.println("			ctx.fillStyle = \"black\""); 
+		    pw.println("			ctx.fillRect(pt.x-w/2+w/8, pt.y-w/2+w/8, 6*w/8,6*w/8)}");
+		    pw.println("		  label = node.data.label || \"\"");
+		    pw.println("		  if (label){");
+		    pw.println("ctx.globalAlpha=1;");
+		    pw.println("            ctx.font = \"bold 11px Arial\"");
+		    pw.println("            ctx.textAlign = \"center\"");
+		    pw.println("            ctx.fillStyle = \"black\"");
+		    pw.println("            ctx.fillText(label||\"\", pt.x, pt.y+4)}})  },      }");
+		    pw.println("    return that}    ");
+		    pw.println("  $(document).ready(function(){");
+		    pw.println("    var sys = arbor.ParticleSystem(2600, 412, 0.5) ");
+		    pw.println("    sys.parameters({gravity:false}) ");
+		    pw.println("    sys.renderer = Renderer(\"#viewport\")"); 
+		    ArrayList<IOperation> operationsCritical= new ArrayList<IOperation>();
+		    if(critical){
+		    	ArrayList<CriticalPath> paths = getCriticalPaths();
+		    	System.out.println(paths);
+		    	for(int i = 0; i < paths.size() ;i++){
+		    		operationsCritical.addAll(paths.get(i).getRoute());
+		    	}
+		    	System.out.println(operationsCritical);
+
+		    }
+		    	
+		    //Iterar sobre el grafo
+		    ArrayList<IOperation> l = new ArrayList<IOperation>();
+			ArrayList<Node> s = new ArrayList<Node>();
+
+			for (int i = 0; i < totalJobs; i++) {
+				for (int j = 0; j < totalStations; j++) {
+					if (nodes[i][j] != null){
+						if (nodes[i][j].getPreviousRouteNode()==null && nodes[i][j].getPreviousSequenceNode()==null){
+							s.add(nodes[i][j]);
+							String nameA = nodes[i][j].getOperation().toString();
+							if(critical){
+								if(operationsCritical.contains(nodes[i][j].getOperation()))
+									pw.println("    sys.addNode('"+nameA+"', {label:'"+nameA+"', mass:2, critical:true})");
+								else
+									pw.println("    sys.addNode('"+nameA+"', {label:'"+nameA+"', mass:2, critical:false})");
+							}
+							else
+								pw.println("    sys.addNode('"+nameA+"', {label:'"+nameA+"', mass:2, critical:false})");
+						}	
+					}
+				}
+			}
+		    
+			while(s.size()>0)
+			{
+
+				Node temp = s.get(0);
+				String nameA = temp.getOperation().toString();
+							
+				Node nextRoute = temp.getNextRouteNode();
+				Node nextSequence = temp.getNextSequenceNode();
+				s.remove(0);
+				l.add(temp.getOperation());
+				if(nextRoute !=null){
+					String nameB = nextRoute.getOperation().toString();
+					boolean impreso= false;
+					if(pair!=null){
+						if(pair.getoX().equals(nextRoute.getOperation().getOperationIndex())||pair.getoY().equals(nextRoute.getOperation().getOperationIndex())){
+							impreso =true;
+							pw.println("    sys.addNode('"+nameB+"', {label:'"+nameB+"', mass:2, change:true})");
+						}
+					}
+					if(critical && !impreso){
+						if(operationsCritical.contains(nextRoute.getOperation())){
+							impreso =true;
+							pw.println("    sys.addNode('"+nameB+"', {label:'"+nameB+"', mass:2, critical:true})");
+						}
+						
+					}
+					if(!impreso)
+						pw.println("    sys.addNode('"+nameB+"', {label:'"+nameB+"', mass:2})");
+					
+					pw.println("	sys.addEdge('"+nameA+"','"+nameB+"',{route:true})");
+					
+					Node previosRoute = nextRoute.getPreviousRouteNode();
+					Node previousSequence = nextRoute.getPreviousSequenceNode();
+					boolean condition1=false;
+					boolean condition2 =false;
+
+					if(previosRoute==null){
+						condition1=true;
+					}
+					else{
+						if(l.contains(previosRoute.getOperation()))
+							condition1=true;
+					}
+
+					if(previousSequence==null){
+						condition2=true;
+					}
+					else{
+						if(l.contains(previousSequence.getOperation()))
+							condition2=true;
+					}
+					if(condition1 && condition2)
+						s.add(nextRoute);
+						
+				}
+
+				if(nextSequence !=null){
+					
+					String nameC = nextSequence.getOperation().toString();
+					boolean impreso= false;
+					if(pair!=null){
+						if(pair.getoX().equals(nextSequence.getOperation().getOperationIndex())||pair.getoY().equals(nextSequence.getOperation().getOperationIndex())){
+							impreso =true;
+							pw.println("    sys.addNode('"+nameC+"', {label:'"+nameC+"', mass:2, change:true})");
+						}
+					}
+					if(critical && !impreso){
+						if(operationsCritical.contains(nextSequence.getOperation())){
+							impreso =true;
+							pw.println("    sys.addNode('"+nameC+"', {label:'"+nameC+"', mass:2, critical:true})");
+						}
+						
+					}
+					if(!impreso)
+						pw.println("    sys.addNode('"+nameC+"', {label:'"+nameC+"', mass:2})");
+					pw.println("	sys.addEdge('"+nameA+"','"+nameC+"')");
+					Node previosRoute = nextSequence.getPreviousRouteNode();
+					Node previousSequence = nextSequence.getPreviousSequenceNode();
+					boolean condition1=false;
+					boolean condition2 =false;
+
+					if(previosRoute==null){
+						condition1=true;
+					}
+					else{
+						if(l.contains(previosRoute.getOperation()))
+							condition1=true;
+					}
+
+					if(previousSequence==null){
+						condition2=true;
+					}
+					else{
+						if(l.contains(previousSequence.getOperation()))
+							condition2=true;
+					}
+					if(condition1 && condition2)
+						s.add(nextSequence);
+				}
+
+			}
+		    //Iterar sobre el grafo
+		    pw.println("})})");
+		    pw.println(		"(this.jQuery)");
+		    pw.println("</script></body></html>");
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           try {
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
+	}
+	
+	public void drawGraph2(String resultsFile, boolean critical, PairVO pair){
+		FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter(resultsFile);
+            System.out.println(resultsFile);
+            pw = new PrintWriter(fichero);
+            
+            pw.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">");
+            pw.println("<html lang=\"en\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
+            pw.println("<title> Graph - </title> <link rel=\"stylesheet\" href=\"./style/style.css\" type=\"text/css\">");
+		    int width = (getTotalJobs()+1)*110;
+            pw.println("</head> <body> <canvas id=\"viewport\" width=\""+width+"\" height=\""+width+"\"></canvas>");
+		    pw.println("  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js\"></script>");
+		    pw.println("  <script src=\"./js/arbor.js\"></script>  ");
+		    pw.println("  <script type=\"text/javascript\" language=\"JavaScript\">");
+		    pw.println("  	(function($){");
+		    pw.println(" var addNode = function(x1,y1,critical,change, label){");
+		    pw.println("	var ctx = document.getElementById(\"viewport\").getContext( \"2d\");");
+		    pw.println("	var ancho = 50");
+		    pw.println("	var entre = 10");
+		    pw.println("	var x = 100*x1+ancho+entre*x1");
+		    pw.println("	var y = 100*y1+ancho+entre*y1");
+		    pw.println("	var w = 50");
+		    pw.println("      ctx.fillStyle = (critical) ? \"#22F9FF\" : (change) ? \"#22F9FF\": \"white\"");
+		    pw.println("	  ctx.globalAlpha=0.2;");
+		    pw.println("      ctx.fillRect(x-w/2, y-w/2, w,w)");
+		    pw.println("	  if(change){");
+		    pw.println("		ctx.fillStyle = \"black\" ");
+		    pw.println("		ctx.fillRect(x-w/2+w/8, y-w/2+w/8, 6*w/8,6*w/8)");
+		    pw.println("	 }");
+		    pw.println("	  if (label){");
+		    pw.println("		ctx.globalAlpha=1;");
+		    pw.println("        ctx.font = \"bold 11px Arial\"");
+		    pw.println("        ctx.textAlign = \"center\"");
+		    pw.println("        ctx.fillStyle = \"black\"");
+		    pw.println("        ctx.fillText(label||\"\", x, y+4)");
+		    pw.println("      }");
+		    pw.println("};");
+		    pw.println("var addEdge = function (x1,y1,x2,y2,route){");
+		    pw.println("	var ctx = document.getElementById(\"viewport\").getContext(\"2d\");");
+		    pw.println("	var ancho = 50");
+		    pw.println("	var entre = 10");
+		    pw.println("	var fromx = 100*x1+ancho+entre*x1");
+		    pw.println("	var fromy = 100*y1+ancho+entre*y1");
+		    pw.println("	var tox = 100*x2+ancho+entre*x2");
+		    pw.println("	var toy = 100*y2+ancho+entre*y2");
+		    pw.println("	ctx.strokeStyle = route ? 'green' :'blue'");
+		    pw.println("	ctx.globalAlpha=0.4;");
+		    pw.println("    ctx.lineWidth = 2");
+		    pw.println("    ctx.beginPath()");
+		    pw.println("	var headlen = 15; ");
+		    pw.println("	var angle = Math.atan2(toy-fromy,tox-fromx);");
+		    pw.println("	ctx.moveTo(fromx, fromy);");
+		    pw.println("	ctx.lineTo(tox, toy);");
+		    pw.println("	ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6));");
+		    pw.println("	ctx.moveTo(tox, toy);");
+		    pw.println("	ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6));");
+		    pw.println("   ctx.stroke()");
+		    pw.println("	ctx.globalAlpha=1;");
+		    pw.println("};	");
+		    pw.println("$(document).ready(function(){");
+
+		    ArrayList<IOperation> operationsCritical= new ArrayList<IOperation>();
+		    if(critical){
+		    	ArrayList<CriticalPath> paths = getCriticalPaths();
+		    	System.out.println(paths);
+		    	for(int i = 0; i < paths.size() ;i++){
+		    		operationsCritical.addAll(paths.get(i).getRoute());
+		    	}
+		    }
+		    	
+		    //Iterar sobre el grafo
+		    ArrayList<IOperation> l = new ArrayList<IOperation>();
+			ArrayList<Node> s = new ArrayList<Node>();
+
+			for (int i = 0; i < totalJobs; i++) {
+				for (int j = 0; j < totalStations; j++) {
+					if (nodes[i][j] != null){
+						if (nodes[i][j].getPreviousRouteNode()==null && nodes[i][j].getPreviousSequenceNode()==null){
+							s.add(nodes[i][j]);
+							String nameA = nodes[i][j].getOperation().toString();
+							int jobId= nodes[i][j].getOperation().getOperationIndex().getJobId();
+							int machineId = nodes[i][j].getOperation().getOperationIndex().getStationId();
+							boolean impreso= false;
+							if(pair!=null){
+								if(pair.getoX().equals(nodes[i][j].getOperation().getOperationIndex())||pair.getoY().equals(nodes[i][j].getOperation().getOperationIndex())){
+									impreso =true;
+									pw.println("addNode ("+machineId+","+jobId+",false,true,'"+nameA+"')");
+								}
+							}
+							if(critical && !impreso){
+								if(operationsCritical.contains(nodes[i][j].getOperation())){
+									impreso =true;
+									pw.println("addNode ("+machineId+","+jobId+",true,false,'"+nameA+"')");
+								}
+								
+							}
+							if(!impreso)
+								pw.println("addNode ("+machineId+","+jobId+",false,false,'"+nameA+"')");
+							
+							
+						}	
+					}
+				}
+			}
+		    
+			while(s.size()>0)
+			{
+
+				Node temp = s.get(0);
+				String nameA = temp.getOperation().toString();
+				int jobIdA= temp.getOperation().getOperationIndex().getJobId();
+				int machineIdA = temp.getOperation().getOperationIndex().getStationId();
+							
+				Node nextRoute = temp.getNextRouteNode();
+				Node nextSequence = temp.getNextSequenceNode();
+				s.remove(0);
+				l.add(temp.getOperation());
+				if(nextRoute !=null){
+					String nameB = nextRoute.getOperation().toString();
+					int jobId= nextRoute.getOperation().getOperationIndex().getJobId();
+					int machineId = nextRoute.getOperation().getOperationIndex().getStationId();
+					boolean impreso= false;
+					if(pair!=null){
+						if(pair.getoX().equals(nextRoute.getOperation().getOperationIndex())||pair.getoY().equals(nextRoute.getOperation().getOperationIndex())){
+							impreso =true;
+							pw.println("addNode ("+machineId+","+jobId+",false,true,'"+nameB+"')");
+						}
+					}
+					if(critical && !impreso){
+						if(operationsCritical.contains(nextRoute.getOperation())){
+							impreso =true;
+							pw.println("addNode ("+machineId+","+jobId+",true,false,'"+nameB+"')");
+						}
+						
+					}
+					if(!impreso)
+						pw.println("addNode ("+machineId+","+jobId+",false,false,'"+nameB+"')");
+					
+					pw.println("addEdge("+machineIdA+","+jobIdA+","+machineId+","+jobId+",true)  ");
+					
+					Node previosRoute = nextRoute.getPreviousRouteNode();
+					Node previousSequence = nextRoute.getPreviousSequenceNode();
+					boolean condition1=false;
+					boolean condition2 =false;
+
+					if(previosRoute==null){
+						condition1=true;
+					}
+					else{
+						if(l.contains(previosRoute.getOperation()))
+							condition1=true;
+					}
+
+					if(previousSequence==null){
+						condition2=true;
+					}
+					else{
+						if(l.contains(previousSequence.getOperation()))
+							condition2=true;
+					}
+					if(condition1 && condition2)
+						s.add(nextRoute);
+						
+				}
+
+				if(nextSequence !=null){
+					
+					String nameC = nextSequence.getOperation().toString();
+					int jobId= nextSequence.getOperation().getOperationIndex().getJobId();
+					int machineId = nextSequence.getOperation().getOperationIndex().getStationId();
+					boolean impreso= false;
+					if(pair!=null){
+						if(pair.getoX().equals(nextSequence.getOperation().getOperationIndex())||pair.getoY().equals(nextSequence.getOperation().getOperationIndex())){
+							impreso =true;
+							pw.println("addNode ("+machineId+","+jobId+",false,true,'"+nameC+"')");
+						}
+					}
+					if(critical && !impreso){
+						if(operationsCritical.contains(nextSequence.getOperation())){
+							impreso =true;
+							pw.println("addNode ("+machineId+","+jobId+",true,false,'"+nameC+"')");
+						}
+						
+					}
+					if(!impreso)
+						pw.println("addNode ("+machineId+","+jobId+",false,false,'"+nameC+"')");
+					pw.println("addEdge("+machineIdA+","+jobIdA+","+machineId+","+jobId+",false)  ");
+					Node previosRoute = nextSequence.getPreviousRouteNode();
+					Node previousSequence = nextSequence.getPreviousSequenceNode();
+					boolean condition1=false;
+					boolean condition2 =false;
+
+					if(previosRoute==null){
+						condition1=true;
+					}
+					else{
+						if(l.contains(previosRoute.getOperation()))
+							condition1=true;
+					}
+
+					if(previousSequence==null){
+						condition2=true;
+					}
+					else{
+						if(l.contains(previousSequence.getOperation()))
+							condition2=true;
+					}
+					if(condition1 && condition2)
+						s.add(nextSequence);
+				}
+
+			}
+		    //Iterar sobre el grafo
+		    pw.println("})})");
+		    pw.println(		"(this.jQuery)");
+		    pw.println("</script></body></html>");
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           try {
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
+	}
+	
+	public void drawGraph3(String resultsFile, boolean critical, PairVO pair){
+		FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter(resultsFile);
+            System.out.println(resultsFile);
+            pw = new PrintWriter(fichero);
+            
+            pw.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">");
+            pw.println("<html lang=\"en\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
+            pw.println("<title> Graph - </title> <link rel=\"stylesheet\" href=\"./style/style.css\" type=\"text/css\">");
+		    int width = (getTotalJobs()+1)*110;
+            pw.println("</head> <body> <canvas id=\"viewport\" width=\""+width+"\" height=\""+width+"\"></canvas>");
+		    pw.println("  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js\"></script>");
+		    pw.println("  <script src=\"./js/arbor.js\"></script>  ");
+		    pw.println("  <script type=\"text/javascript\" language=\"JavaScript\">");
+		    pw.println("  	(function($){");
+		    pw.println(" var addNode = function(x1,y1,critical,change, label){");
+		    pw.println("	var ctx = document.getElementById(\"viewport\").getContext( \"2d\");");
+		    pw.println("	var ancho = 50");
+		    pw.println("	var entre = 10");
+		    pw.println("	var x = 100*x1+ancho+entre*x1");
+		    pw.println("	var y = 100*y1+ancho+entre*y1");
+		    pw.println("	var w = 50");
+		    pw.println("      ctx.fillStyle = (critical) ? \"#22F9FF\" : (change) ? \"#22F9FF\": \"white\"");
+		    pw.println("	  ctx.globalAlpha=0.2;");
+		    pw.println("      ctx.fillRect(x-w/2, y-w/2, w,w)");
+		    pw.println("	  if(change){");
+		    pw.println("		ctx.fillStyle = \"black\" ");
+		    pw.println("		ctx.fillRect(x-w/2+w/8, y-w/2+w/8, 6*w/8,6*w/8)");
+		    pw.println("	 }");
+		    pw.println("	  if (label){");
+		    pw.println("		ctx.globalAlpha=1;");
+		    pw.println("        ctx.font = \"bold 11px Arial\"");
+		    pw.println("        ctx.textAlign = \"center\"");
+		    pw.println("        ctx.fillStyle = \"black\"");
+		    pw.println("        ctx.fillText(label||\"\", x, y+4)");
+		    pw.println("      }");
+		    pw.println("};");
+		    pw.println(" var addEdge = function (x1,y1,x2,y2,route,xm,ym,x2m,y2m){");
+		    pw.println("	var ctx = document.getElementById(\"viewport\").getContext(\"2d\");");
+		    pw.println("var a = 0;");
+		    pw.println("if(route){");
+		    pw.println("	if(y2m<0){");
+		    pw.println("		a = -10;");
+		    pw.println("	}");
+		    pw.println("	else if(y2m>0){");
+		    pw.println("	  a = 10;");
+		    pw.println("	}");
+		    pw.println("}");
+		    pw.println("	var ancho = 50;");
+		    pw.println("	var entre = 10;");
+		    pw.println("	var fromx = 100*x1+ancho+entre*x1");
+		    pw.println("	var fromy = 100*y1+ancho+entre*y1+a");
+		    pw.println("	var tox = 100*x2+ancho+entre*x2");
+		    pw.println("	var toy = 100*y2+ancho+entre*y2");
+		    pw.println("	var sx = xm*(tox-fromx)+fromx+x2m;");
+		    pw.println("	var sy = ym*(toy-fromy+a)+fromy+a+y2m;");
+		    pw.println("	var ex = tox;");
+		    pw.println("	var ey = toy+a;");
+		    pw.println("if(!route){");
+		    pw.println("	var dif = fromy-toy;");
+		    pw.println("	if(dif<0){");
+		    pw.println("		fromy+=10;");
+		    pw.println("		ey-=10;");
+		    pw.println("	}");
+		    pw.println("	if(dif>0){");
+		    pw.println("		fromy-=10;");
+		    pw.println("		ey+=10;");
+		    pw.println("	}");
+		    pw.println("    sy = ym*(ey-fromy)+fromy+y2m;");
+		    pw.println("}");
+		    
+		    pw.println("	ctx.beginPath();");
+		    pw.println("	ctx.globalAlpha = 0.4;");
+		    pw.println("	ctx.lineWidth = 2");
+		    pw.println("	ctx.strokeStyle = route ? 'green' :'blue';");
+		    pw.println("	ctx.moveTo(fromx,fromy);");
+		    pw.println("	ctx.quadraticCurveTo(sx, sy, ex, ey);");
+		    pw.println("	ctx.stroke();");
+		    pw.println("	ctx.closePath();");
+		    pw.println("	var ang = Math.atan((ey - sy) / (ex - sx));");
+		    pw.println("	ctx.fillRect(ex, ey, 2, 2);");
+		    pw.println("	drawArrowhead(ex, ey, ang, 12, 12,route);");
+		    pw.println("	ctx.globalAlpha=1;");
+		    pw.println("};	");
+		    
+		    
+		    pw.println(" var drawArrowhead = function (locx, locy, angle, sizex, sizey, route) {");
+		    pw.println("	var ctx = document.getElementById(\"viewport\").getContext(\"2d\");");
+		    pw.println("	var hx = sizex / 2;");
+		    pw.println("	var hy = sizey / 2;");
+		    pw.println("	ctx.translate((locx ), (locy));");
+		    pw.println("	ctx.rotate(angle);");
+		    pw.println("	ctx.translate(-hx,-hy);");
+		    pw.println("	ctx.beginPath();");
+		    pw.println("	ctx.fillStyle = route ? 'green' :'blue';");
+		    pw.println("	ctx.moveTo(0,0);");
+		    pw.println("	ctx.lineTo(0,1*sizey); ");   
+		    pw.println("	ctx.lineTo(1*sizex,1*hy);");
+		    pw.println("	ctx.closePath();");
+		    pw.println("	ctx.fill();");
+		    pw.println("	ctx.setTransform(1, 0, 0, 1, 0, 0);");
+		    pw.println("};	");
+		    
+		    
+		    pw.println("$(document).ready(function(){");
+
+		    ArrayList<IOperation> operationsCritical= new ArrayList<IOperation>();
+		    if(critical){
+		    	ArrayList<CriticalPath> paths = getCriticalPaths();
+		    	for(int i = 0; i < paths.size() ;i++){
+		    		operationsCritical.addAll(paths.get(i).getRoute());
+		    	}
+		    }
+		    	
+		    //Iterar sobre el grafo
+		    ArrayList<IOperation> l = new ArrayList<IOperation>();
+			ArrayList<Node> s = new ArrayList<Node>();
+
+			for (int i = 0; i < totalJobs; i++) {
+				for (int j = 0; j < totalStations; j++) {
+					if (nodes[i][j] != null){
+						if (nodes[i][j].getPreviousRouteNode()==null && nodes[i][j].getPreviousSequenceNode()==null){
+							s.add(nodes[i][j]);
+							String nameA = nodes[i][j].getOperation().toString();
+							int jobId= nodes[i][j].getOperation().getOperationIndex().getJobId();
+							int machineId = nodes[i][j].getOperation().getOperationIndex().getStationId();
+							boolean impreso= false;
+							if(pair!=null){
+								if(pair.getoX().equals(nodes[i][j].getOperation().getOperationIndex())||pair.getoY().equals(nodes[i][j].getOperation().getOperationIndex())){
+									impreso =true;
+									pw.println("addNode ("+machineId+","+jobId+",false,true,'"+nameA+"')");
+								}
+							}
+							if(critical && !impreso){
+								if(operationsCritical.contains(nodes[i][j].getOperation())){
+									impreso =true;
+									pw.println("addNode ("+machineId+","+jobId+",true,false,'"+nameA+"')");
+								}
+								
+							}
+							if(!impreso)
+								pw.println("addNode ("+machineId+","+jobId+",false,false,'"+nameA+"')");
+							
+							
+						}	
+					}
+				}
+			}
+			int number = -60;
+			while(s.size()>0)
+			{
+				
+				Node temp = s.get(0);
+				String nameA = temp.getOperation().toString();
+				int jobIdA= temp.getOperation().getOperationIndex().getJobId();
+				int machineIdA = temp.getOperation().getOperationIndex().getStationId();
+							
+				Node nextRoute = temp.getNextRouteNode();
+				Node nextSequence = temp.getNextSequenceNode();
+				s.remove(0);
+				l.add(temp.getOperation());
+				if(nextRoute !=null){
+					String nameB = nextRoute.getOperation().toString();
+					int jobId= nextRoute.getOperation().getOperationIndex().getJobId();
+					int machineId = nextRoute.getOperation().getOperationIndex().getStationId();
+					boolean impreso= false;
+					if(pair!=null){
+						if(pair.getoX().equals(nextRoute.getOperation().getOperationIndex())||pair.getoY().equals(nextRoute.getOperation().getOperationIndex())){
+							impreso =true;
+							pw.println("addNode ("+machineId+","+jobId+",false,true,'"+nameB+"')");
+						}
+					}
+					if(critical && !impreso){
+						if(operationsCritical.contains(nextRoute.getOperation())){
+							impreso =true;
+							pw.println("addNode ("+machineId+","+jobId+",true,false,'"+nameB+"')");
+						}
+						
+					}
+					if(!impreso)
+						pw.println("addNode ("+machineId+","+jobId+",false,false,'"+nameB+"')");
+					
+					pw.println("addEdge("+machineIdA+","+jobIdA+","+machineId+","+jobId+",true, 1/2,1,0,"+number+")  ");
+					
+					Node previosRoute = nextRoute.getPreviousRouteNode();
+					Node previousSequence = nextRoute.getPreviousSequenceNode();
+					boolean condition1=false;
+					boolean condition2 =false;
+
+					if(previosRoute==null){
+						condition1=true;
+					}
+					else{
+						if(l.contains(previosRoute.getOperation()))
+							condition1=true;
+					}
+
+					if(previousSequence==null){
+						condition2=true;
+					}
+					else{
+						if(l.contains(previousSequence.getOperation()))
+							condition2=true;
+					}
+					if(condition1 && condition2)
+						s.add(nextRoute);
+						
+				}
+
+				if(nextSequence !=null){
+					
+					String nameC = nextSequence.getOperation().toString();
+					int jobId= nextSequence.getOperation().getOperationIndex().getJobId();
+					int machineId = nextSequence.getOperation().getOperationIndex().getStationId();
+					boolean impreso= false;
+					if(pair!=null){
+						if(pair.getoX().equals(nextSequence.getOperation().getOperationIndex())||pair.getoY().equals(nextSequence.getOperation().getOperationIndex())){
+							impreso =true;
+							pw.println("addNode ("+machineId+","+jobId+",false,true,'"+nameC+"')");
+						}
+					}
+					if(critical && !impreso){
+						if(operationsCritical.contains(nextSequence.getOperation())){
+							impreso =true;
+							pw.println("addNode ("+machineId+","+jobId+",true,false,'"+nameC+"')");
+						}
+						
+					}
+					if(!impreso)
+						pw.println("addNode ("+machineId+","+jobId+",false,false,'"+nameC+"')");
+					pw.println("addEdge("+machineIdA+","+jobIdA+","+machineId+","+jobId+",false,1,1/2,"+number+",0)  ");
+					Node previosRoute = nextSequence.getPreviousRouteNode();
+					Node previousSequence = nextSequence.getPreviousSequenceNode();
+					boolean condition1=false;
+					boolean condition2 =false;
+
+					if(previosRoute==null){
+						condition1=true;
+					}
+					else{
+						if(l.contains(previosRoute.getOperation()))
+							condition1=true;
+					}
+
+					if(previousSequence==null){
+						condition2=true;
+					}
+					else{
+						if(l.contains(previousSequence.getOperation()))
+							condition2=true;
+					}
+					if(condition1 && condition2)
+						s.add(nextSequence);
+				}
+				if(number==60)
+					number=-60;
+				number+=15;
+
+			}
+		    //Iterar sobre el grafo
+		    pw.println("})})");
+		    pw.println(		"(this.jQuery)");
+		    pw.println("</script></body></html>");
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           try {
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
 	}
 
 	public int getNumberNullNodes(){
