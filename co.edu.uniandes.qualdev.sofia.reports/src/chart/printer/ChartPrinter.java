@@ -131,7 +131,7 @@ public class ChartPrinter {
 			}
 			pw.println("</table>");
 			pw.println("</td><td>");
-			pw.println("<div class=\"informationbox\" style=\"width:850px; height:620px; position:relative;\" id=\"ganttSolution\" ></div>");
+			pw.println("<div class=\"informationbox\" style=\"width:1250px; height:620px; position:relative;\" id=\"ganttSolution\" ></div>");
 			pw.println("</td></tr>");
 			
 			pw.println("</table></div>");
@@ -147,7 +147,7 @@ public class ChartPrinter {
 			}
 			pw.println("</table>");
 			pw.println("</td><td>");
-			pw.println("<div class=\"informationbox\" style=\"width:950px; height:620px; position:relative;\" id=\"initialSolution\" ></div>");
+			pw.println("<div class=\"informationbox\" style=\"width:1250px; height:620px; position:relative;\" id=\"initialSolution\" ></div>");
 			pw.println("</td></tr>");
 			pw.println("</table></div>");
 			
@@ -407,7 +407,7 @@ public class ChartPrinter {
 						myOperations.add(temp);
 					}
 				}
-				pw.println("var parentTask"+j+1+z+ "= new GanttTaskInfo("+j+1+z+", \""+machine+"\", new Date(2010, 5, 2),"+executionResults.getInitialCmax()+", 100, \"\");");
+				pw.println("var parentTask"+j+1+z+ "= new GanttTaskInfo("+j+1+z+", \""+machine+"\", new Date(2010, 5, 2),"+executionResults.getBestCmax()+", 100, \"\");");
 				for(int i=0; i<myOperations.size();i++){
 					OperationIndexVO temp = myOperations.get(i);
 					pw.println("parentTask"+j+1+z+".addChildTask(new GanttTaskInfo("+j+1+i+z+", \""+temp.getNameJob()+"\", new Date(2010, 5, 2,"+temp.getInitialTime()*24+",0,0), "+(temp.getFinalTime()-temp.getInitialTime())+", 100, \"\"));");
