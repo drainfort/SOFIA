@@ -7,5 +7,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.modifier"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.neighborCalculator"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.structure"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.edu.uniandes.qualdev.sofia.reports"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

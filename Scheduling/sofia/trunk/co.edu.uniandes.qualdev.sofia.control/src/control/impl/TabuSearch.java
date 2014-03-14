@@ -141,7 +141,7 @@ public class TabuSearch extends Control{
 					nonImprovingIn= Integer.MAX_VALUE;
 				
 				numberOfVisitedNeighbors+=arrayNeighbors.size();
-				getBestCandidates(bestCandidates, arrayNeighbors, optimalAchieved, nonImprovingIn, current, modifier, numberOfVisitedNeighbors, iterations);
+				getBestCandidates(bestCandidates, arrayNeighbors, nonImprovingIn, current, modifier, numberOfVisitedNeighbors, iterations);
 
 				PairVO bestPair = bestCandidates.get(bestCandidates.size()-1);
 				if (bestPair != null) {
@@ -250,20 +250,20 @@ public class TabuSearch extends Control{
 			
 		}
 		
-		private void getBestCandidates(ArrayList<PairVO> bestCandidates, ArrayList<PairVO> arrayNeighbors, boolean optimalAchieved, int  nonImprovingIn, IStructure current, IModifier modifier, int numberOfVisitedNeighbors, int iterations) throws Exception{
+		private void getBestCandidates(ArrayList<PairVO> bestCandidates, ArrayList<PairVO> arrayNeighbors, int  nonImprovingIn, IStructure current, IModifier modifier, int numberOfVisitedNeighbors, int iterations) throws Exception{
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonImprovingIn>=0; index++) {
 				PairVO pairCandidate = arrayNeighbors.get(index);
-				if(current instanceof Graph){
+				//if(current instanceof Graph){
 				//	((Graph)current).drawGraph3("./results/graph/grafo"+iterations+index+".html", true, pairCandidate);
-				}
+				//}
 				IStructure candidate = modifier.performModification(pairCandidate,current);
 				if(candidate ==null){
 					timeAccomplished();
 					continue;
 				}
-				if(current instanceof Graph){
+				//if(current instanceof Graph){
 				//	((Graph)candidate).drawGraph3("./results/graph/grafo"+iterations+index+"a.html", true, pairCandidate);
-				}
+				//}
 				numberOfVisitedNeighbors++;
 				double gammaCandidate = gammaCalculator.calculateGamma(candidate);
 				pairCandidate.setGamma(gammaCandidate);

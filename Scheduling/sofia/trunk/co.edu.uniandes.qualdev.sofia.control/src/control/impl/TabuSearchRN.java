@@ -3,8 +3,11 @@ package control.impl;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import chart.printer.ChartPrinter;
+
 import structure.IStructure;
 import structure.impl.CriticalPath;
+import structure.impl.Graph;
 
 import common.types.PairVO;
 import common.utils.ExecutionLogger;
@@ -39,6 +42,9 @@ public class TabuSearchRN extends Control {
 				
 		IModifier modifier = modifiers.get(0);
 		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
+		
+		/*if(initialSolution instanceof Graph)
+			((Graph)initialSolution).drawGraph3("./results/graph/prueba.html", true, null);*/
 		
 		long startTime = System.currentTimeMillis();
 		long stopTime = Integer.MAX_VALUE;
