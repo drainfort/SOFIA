@@ -14,6 +14,8 @@ public class PairVO {
 	
 	private OperationIndexVO oY;
 	
+	private double gamma;
+	
 	// ---------------------------------------
 	// Constructor
 	// ---------------------------------------
@@ -82,4 +84,14 @@ public class PairVO {
 	public void setoY(OperationIndexVO oY) {
 		this.oY = oY;
 	}
+
+	public double getGamma() {
+		return gamma;
+	}
+
+	public void setGamma(double gamma) {
+		this.gamma = gamma;
+	}
+	
+	
 }
