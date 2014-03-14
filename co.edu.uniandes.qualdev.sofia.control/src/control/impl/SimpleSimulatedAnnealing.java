@@ -3,8 +3,11 @@ package control.impl;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import chart.printer.ChartPrinter;
+
 import structure.IStructure;
 import structure.impl.CriticalPath;
+import structure.impl.Graph;
 
 import common.types.PairVO;
 import common.utils.ExecutionLogger;
@@ -106,11 +109,24 @@ public class SimpleSimulatedAnnealing extends Control {
 			if(nonImprovingIn==-1)
 				nonImprovingIn= Integer.MAX_VALUE;
 			
+			/*if(X instanceof Graph){
+				((Graph)X).drawGraph3("./results/graph2/grafo"+temperature+".html", true, null);
+				ExecutionResults result = obtainExecutionResults(X, gammaCalculator, false, true,false,false, 0);
+				result.setNumberOfVisitedNeighbors(0);
+				ArrayList<ExecutionResults> results = new ArrayList<ExecutionResults>();
+				results.add(result);
+				ChartPrinter.getInstance().addResults(results);
+				ChartPrinter.getInstance().printGlobalResultsHTML("./results/graph2/grafo-gantt-"+temperature+".html", "./results/graph2/grafoL"+temperature+".html");
+				ChartPrinter.getInstance().restart();
+			}*/
+			
 			while (k > 0 && !optimalAchieved && nonImprovingIn>=0){
+				
 				x++;
 				// Obtains a next solution (Y) from the current one (X)
 				PairVO YMovement = neighborCalculator.calculateNeighbor(X);
 				IStructure Y = modifier.performModification(YMovement, X);
+
 				if(Y ==null){
 					long actualTime = System.currentTimeMillis();
 				    long elapsedTime = actualTime - startTime;
@@ -121,8 +137,7 @@ public class SimpleSimulatedAnnealing extends Control {
 				    	executionResults.setStopCriteria(2);
 				    }
 					continue;
-				}
-				
+				}				
 				numberOfVisitedNeighbors++;
 
 				double YCMax = gammaCalculator.calculateGamma(Y);
