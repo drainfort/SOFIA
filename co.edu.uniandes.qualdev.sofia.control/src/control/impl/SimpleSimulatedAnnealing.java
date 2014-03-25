@@ -26,6 +26,11 @@ public class SimpleSimulatedAnnealing extends Control {
 	// Constructor
 	// -----------------------------------------------
 
+	private long startTime;
+	private long stopTime;
+	private boolean optimalAchieved;
+	int numberOfVisitedNeighbors=0;
+	
 	public SimpleSimulatedAnnealing() {
 		super();
 	}
@@ -42,22 +47,33 @@ public class SimpleSimulatedAnnealing extends Control {
 
 		IModifier modifier = modifiers.get(0);
 		ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
+				
+		double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
+		executionResults = new ExecutionResults();
+		executionResults.setInitialCmax(GammaInitialSolution);
+		executionResults.setOptimal(optimal);
+		this.So = initialSolution.cloneStructure();
+		System.out.println();
+		long actualTime = System.currentTimeMillis();
+	    long elapsedTime = actualTime - startTime;
 		
-		long startTime = System.currentTimeMillis();
-		long stopTime = Integer.MAX_VALUE;
+	    IStructure XBest = simulatedAnnealing(params, initialSolution, gammaCalculator, neighborCalculator, modifier, optimal, isOptimal, executionResults);
+	    
+		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
+		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
+		
+		return result;
+	}
+	
+	public IStructure simulatedAnnealing (Properties params, IStructure initialSolution, IGammaCalculator gammaCalculator, INeighborCalculator neighborCalculator, IModifier modifier, Integer optimal, boolean isOptimal, ExecutionResults executionResults) throws Exception{
+		
+		startTime = System.currentTimeMillis();
+		stopTime = Integer.MAX_VALUE;
 		
 		if(params.get("maxExecutionTime")!=null){
 			if((Integer) params.get("maxExecutionTime")!=-1)
 				stopTime = (Integer) params.get("maxExecutionTime") *1000;	
 		}
-		
-		int numberOfVisitedNeighbors=0;
-		double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
-		
-		executionResults = new ExecutionResults();
-		executionResults = new ExecutionResults();
-		executionResults.setInitialCmax(GammaInitialSolution);
-		this.So = initialSolution.cloneStructure();
 		
 		Double temperature = (Double) params.get("T0");
 
@@ -79,14 +95,12 @@ public class SimpleSimulatedAnnealing extends Control {
 
 		Double boltzmann = (Double) params.get("boltzmann");
 		Double finalTemperature = (Double) params.get("Tf");
-		executionResults.setOptimal(optimal);
+		
 		
 		int maxNumberImprovements = -1;
 		if(params.get("maxNumberImprovements")!=null){
 			maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
 		}
-		
-		boolean optimalAchieved = false;
 		
 		if(optimal.intValue() >= XBestCMax){
 			if(isOptimal){
@@ -212,16 +226,7 @@ public class SimpleSimulatedAnnealing extends Control {
 					}
 				}
 			    
-				long actualTime = System.currentTimeMillis();
-			    long elapsedTime = actualTime - startTime;
-
-				if(elapsedTime>=stopTime){
-			    	optimalAchieved = true;
-			    	executionResults.setStopCriteria(2);
-
-			    	System.out.println("Stop Criteria: Max execution time");
-			    	ExecutionLogger.getInstance().printLog("Stop Criteria: Max execution time");
-			    }
+				timeAccomplished();
 			    nonImprovingIn--;
 				k--;
 				Y.clean();
@@ -244,13 +249,17 @@ public class SimpleSimulatedAnnealing extends Control {
 			ExecutionLogger.getInstance().printLog("Stop Criteria: Non improving");
 		}
 		
-		System.out.println();
+		return XBest;
+	}
+	
+	private void timeAccomplished(){
 		long actualTime = System.currentTimeMillis();
 	    long elapsedTime = actualTime - startTime;
-		
-		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
-		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
-		
-		return result;
+	    
+	    if(elapsedTime>=stopTime){
+	    	System.out.println("TIME!!!");
+	    	optimalAchieved = true;
+	    	executionResults.setStopCriteria(2);
+	    }
 	}
 }

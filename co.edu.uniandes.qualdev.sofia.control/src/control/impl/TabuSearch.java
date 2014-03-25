@@ -27,7 +27,7 @@ public class TabuSearch extends Control{
 		private long startTime;
 		private long stopTime;
 		int bestNeighborsSize;
-		IGammaCalculator gammaCalculator;
+		int numberOfVisitedNeighbors;
 		private boolean optimalAchieved;
 		
 		// -----------------------------------------------
@@ -48,13 +48,34 @@ public class TabuSearch extends Control{
 					IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
 						boolean isOptimal) throws Exception {
 					
-			this.gammaCalculator = gammaCalculator;
 			IModifier modifier = modifiers.get(0);
 			ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
 			
 			/*if(initialSolution instanceof Graph){
 				((Graph)initialSolution).drawGraph3("./results/graph1/grafo.html", true, null);
-			}*/
+			}*/	
+			
+			double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
+			executionResults = new ExecutionResults();
+			executionResults.setInitialCmax(GammaInitialSolution);
+			executionResults.setOptimal(optimal);
+		
+			this.So = initialSolution.cloneStructure();
+			
+			IStructure best = tabuSearch(initialSolution, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, GammaInitialSolution);
+
+			System.out.println();
+			long actualTime = System.currentTimeMillis();
+		    long elapsedTime = actualTime - startTime;
+			ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
+			result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
+			return result;
+		}
+		
+		private IStructure tabuSearch(IStructure initialSolution,
+				INeighborCalculator neighborCalculator, IModifier modifier,
+				IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
+					boolean isOptimal, double GammaInitialSolution) throws Exception{
 			
 			startTime = System.currentTimeMillis();
 			stopTime = Integer.MAX_VALUE;
@@ -64,13 +85,6 @@ public class TabuSearch extends Control{
 					stopTime = (Integer) params.get("maxExecutionTime") * 1000;	
 			}
 			
-			int numberOfVisitedNeighbors=0;
-			double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
-			
-			executionResults = new ExecutionResults();
-			executionResults.setInitialCmax(GammaInitialSolution);
-			
-			this.So = initialSolution.cloneStructure();
 			int tabuSize = (Integer) params.get("tabulist-size");
 			bestNeighborsSize = tabuSize+1;
 			IStructure current = initialSolution.cloneStructure();
@@ -80,16 +94,13 @@ public class TabuSearch extends Control{
 			double bestGamma = gammaCalculator.calculateGamma(best);
 			System.out.println("initial solution: " + bestGamma);
 			ExecutionLogger.getInstance().printLog("initial solution: " + bestGamma);
-
-			executionResults.setOptimal(optimal);
-
+			
 			int maxNumberImprovements = -1;
 			if(params.get("maxNumberImprovements")!=null){
 				maxNumberImprovements = (Integer)params.get("maxNumberImprovements");
 			}
 			
 			optimalAchieved = false;
-
 			if (optimal.intValue() >= bestGamma) {
 				if(isOptimal){
 					System.out.println("optimal found!");
@@ -141,7 +152,7 @@ public class TabuSearch extends Control{
 					nonImprovingIn= Integer.MAX_VALUE;
 				
 				numberOfVisitedNeighbors+=arrayNeighbors.size();
-				getBestCandidates(bestCandidates, arrayNeighbors, nonImprovingIn, current, modifier, numberOfVisitedNeighbors, iterations);
+				getBestCandidates(bestCandidates, arrayNeighbors, nonImprovingIn, current, modifier, gammaCalculator);
 
 				PairVO bestPair = bestCandidates.get(bestCandidates.size()-1);
 				if (bestPair != null) {
@@ -214,16 +225,9 @@ public class TabuSearch extends Control{
 				System.out.println("Stop Criteria: Non Improving");
 				ExecutionLogger.getInstance().printLog("Stop Criteria: Non Improving");
 			}
-
-			System.out.println();
-			long actualTime = System.currentTimeMillis();
-		    long elapsedTime = actualTime - startTime;
-			ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
-			result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
-			return result;
+			
+			return best;
 		}
-		
-		
 		
 		private void addToBestCandidates(ArrayList<PairVO> bestCandidates,
 				PairVO pairCandidate, int maxSize) {
@@ -250,7 +254,8 @@ public class TabuSearch extends Control{
 			
 		}
 		
-		private void getBestCandidates(ArrayList<PairVO> bestCandidates, ArrayList<PairVO> arrayNeighbors, int  nonImprovingIn, IStructure current, IModifier modifier, int numberOfVisitedNeighbors, int iterations) throws Exception{
+		private void getBestCandidates(ArrayList<PairVO> bestCandidates, ArrayList<PairVO> arrayNeighbors, int nonImprovingIn, IStructure current, IModifier modifier, IGammaCalculator gammaCalculator) throws Exception{
+			
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonImprovingIn>=0; index++) {
 				PairVO pairCandidate = arrayNeighbors.get(index);
 				//if(current instanceof Graph){
