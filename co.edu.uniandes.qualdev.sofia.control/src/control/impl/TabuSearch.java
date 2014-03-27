@@ -59,23 +59,6 @@ public class TabuSearch extends Control{
 			executionResults = new ExecutionResults();
 			executionResults.setInitialCmax(GammaInitialSolution);
 			executionResults.setOptimal(optimal);
-		
-			this.So = initialSolution.cloneStructure();
-			
-			IStructure best = tabuSearch(initialSolution, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, GammaInitialSolution);
-
-			System.out.println();
-			long actualTime = System.currentTimeMillis();
-		    long elapsedTime = actualTime - startTime;
-			ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
-			result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
-			return result;
-		}
-		
-		private IStructure tabuSearch(IStructure initialSolution,
-				INeighborCalculator neighborCalculator, IModifier modifier,
-				IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
-					boolean isOptimal, double GammaInitialSolution) throws Exception{
 			
 			startTime = System.currentTimeMillis();
 			stopTime = Integer.MAX_VALUE;
@@ -84,6 +67,27 @@ public class TabuSearch extends Control{
 				if((Integer) params.get("maxExecutionTime")!=-1)
 					stopTime = (Integer) params.get("maxExecutionTime") * 1000;	
 			}
+		
+			this.So = initialSolution.cloneStructure();
+			
+			IStructure best = tabuSearch(initialSolution, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, GammaInitialSolution, startTime, stopTime);
+			
+			System.out.println();
+			long actualTime = System.currentTimeMillis();
+		    long elapsedTime = actualTime - startTime;
+			ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
+			result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
+			return result;
+		}
+		
+		public IStructure tabuSearch(IStructure initialSolution,
+				INeighborCalculator neighborCalculator, IModifier modifier,
+				IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
+					boolean isOptimal, double GammaInitialSolution, long startTime, long stopTime) throws Exception{
+			
+			this.startTime = startTime;
+			this.stopTime = stopTime;
+			
 			
 			int tabuSize = (Integer) params.get("tabulist-size");
 			bestNeighborsSize = tabuSize+1;
