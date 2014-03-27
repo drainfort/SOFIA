@@ -70,7 +70,7 @@ public class TabuSearch extends Control{
 		
 			this.So = initialSolution.cloneStructure();
 			
-			IStructure best = tabuSearch(initialSolution, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, GammaInitialSolution, startTime, stopTime);
+			IStructure best = tabuSearch(initialSolution, neighborCalculator, modifier, gammaCalculator, params, optimal, isOptimal, GammaInitialSolution, executionResults, startTime, stopTime);
 			
 			System.out.println();
 			long actualTime = System.currentTimeMillis();
@@ -83,7 +83,7 @@ public class TabuSearch extends Control{
 		public IStructure tabuSearch(IStructure initialSolution,
 				INeighborCalculator neighborCalculator, IModifier modifier,
 				IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
-					boolean isOptimal, double GammaInitialSolution, long startTime, long stopTime) throws Exception{
+					boolean isOptimal, double GammaInitialSolution, ExecutionResults executionResults, long startTime, long stopTime) throws Exception{
 			
 			this.startTime = startTime;
 			this.stopTime = stopTime;
@@ -213,7 +213,7 @@ public class TabuSearch extends Control{
 				nonImprovingOut--;
 				//arrayNeighbors = neighborCalculator.calculateCompleteNeighborhood(current);
 				arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
-				timeAccomplished();
+				timeAccomplished(executionResults);
 				
 			}
 			if(graphic.getPoints().size()>1)
@@ -267,7 +267,7 @@ public class TabuSearch extends Control{
 				//}
 				IStructure candidate = modifier.performModification(pairCandidate,current);
 				if(candidate ==null){
-					timeAccomplished();
+					timeAccomplished(executionResults);
 					continue;
 				}
 				//if(current instanceof Graph){
@@ -281,11 +281,11 @@ public class TabuSearch extends Control{
 				candidate.clean();
 				nonImprovingIn--;
 				
-				timeAccomplished();
+				timeAccomplished(executionResults);
 			}
 		}
 		
-		private void timeAccomplished(){
+		private void timeAccomplished(ExecutionResults executionResults){
 			long actualTime = System.currentTimeMillis();
 		    long elapsedTime = actualTime - startTime;
 		    
