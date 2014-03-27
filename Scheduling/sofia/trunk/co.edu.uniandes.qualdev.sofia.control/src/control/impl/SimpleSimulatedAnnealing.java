@@ -229,7 +229,7 @@ public class SimpleSimulatedAnnealing extends Control {
 					}
 				}
 			    
-				timeAccomplished();
+				timeAccomplished(executionResults);
 			    nonImprovingIn--;
 				k--;
 				Y.clean();
@@ -255,7 +255,7 @@ public class SimpleSimulatedAnnealing extends Control {
 		return XBest;
 	}
 	
-	private void timeAccomplished(){
+	private void timeAccomplished(ExecutionResults executionResults){
 		long actualTime = System.currentTimeMillis();
 	    long elapsedTime = actualTime - startTime;
 	    
