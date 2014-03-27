@@ -52,21 +52,6 @@ public class SimpleSimulatedAnnealing extends Control {
 		executionResults = new ExecutionResults();
 		executionResults.setInitialCmax(GammaInitialSolution);
 		executionResults.setOptimal(optimal);
-		this.So = initialSolution.cloneStructure();
-		System.out.println();
-		long actualTime = System.currentTimeMillis();
-	    long elapsedTime = actualTime - startTime;
-		
-	    IStructure XBest = simulatedAnnealing(params, initialSolution, gammaCalculator, neighborCalculator, modifier, optimal, isOptimal, executionResults);
-	    
-		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
-		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
-		
-		return result;
-	}
-	
-	public IStructure simulatedAnnealing (Properties params, IStructure initialSolution, IGammaCalculator gammaCalculator, INeighborCalculator neighborCalculator, IModifier modifier, Integer optimal, boolean isOptimal, ExecutionResults executionResults) throws Exception{
-		
 		startTime = System.currentTimeMillis();
 		stopTime = Integer.MAX_VALUE;
 		
@@ -74,6 +59,24 @@ public class SimpleSimulatedAnnealing extends Control {
 			if((Integer) params.get("maxExecutionTime")!=-1)
 				stopTime = (Integer) params.get("maxExecutionTime") *1000;	
 		}
+		
+		this.So = initialSolution.cloneStructure();
+		System.out.println();
+		long actualTime = System.currentTimeMillis();
+	    long elapsedTime = actualTime - startTime;
+		
+	    IStructure XBest = simulatedAnnealing(params, initialSolution, gammaCalculator, neighborCalculator, modifier, optimal, isOptimal, executionResults, startTime, stopTime);
+	    
+		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
+		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
+		
+		return result;
+	}
+	
+	public IStructure simulatedAnnealing (Properties params, IStructure initialSolution, IGammaCalculator gammaCalculator, INeighborCalculator neighborCalculator, IModifier modifier, Integer optimal, boolean isOptimal, ExecutionResults executionResults, long startTime, long stopTime) throws Exception{
+		
+		this.startTime = startTime;
+		this.stopTime = stopTime;
 		
 		Double temperature = (Double) params.get("T0");
 
