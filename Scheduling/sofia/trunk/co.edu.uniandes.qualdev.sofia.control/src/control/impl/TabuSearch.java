@@ -85,6 +85,7 @@ public class TabuSearch extends Control{
 				IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
 					boolean isOptimal, double GammaInitialSolution, ExecutionResults executionResults, long startTime, long stopTime) throws Exception{
 			
+			optimalAchieved = false;
 			this.startTime = startTime;
 			this.stopTime = stopTime;
 			
