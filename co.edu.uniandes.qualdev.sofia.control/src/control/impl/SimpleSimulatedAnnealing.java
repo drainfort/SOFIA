@@ -75,6 +75,7 @@ public class SimpleSimulatedAnnealing extends Control {
 	
 	public IStructure simulatedAnnealing (Properties params, IStructure initialSolution, IGammaCalculator gammaCalculator, INeighborCalculator neighborCalculator, IModifier modifier, Integer optimal, boolean isOptimal, ExecutionResults executionResults, long startTime, long stopTime) throws Exception{
 		
+		optimalAchieved = false;
 		this.startTime = startTime;
 		this.stopTime = stopTime;
 		
