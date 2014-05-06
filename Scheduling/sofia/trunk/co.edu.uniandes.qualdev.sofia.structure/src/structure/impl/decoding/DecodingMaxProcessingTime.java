@@ -12,7 +12,7 @@ import structure.impl.Operation;
  * 
  * @author Jaime Romero
  */
-public class NewDecoding3 extends Decoding{
+public class DecodingMaxProcessingTime extends Decoding{
 
 	// ––––––––––––––––––––––––––––––––––––––––––––––
 	// Concrete methods
@@ -20,8 +20,7 @@ public class NewDecoding3 extends Decoding{
 	
 	@Override
 	public ArrayList<IOperation> decode(ArrayList<IOperation> originalVector) {
-		System.out.println(originalVector);
-		ArrayList<IOperation> unscheduledOperations = new ArrayList<IOperation>();
+		final ArrayList<IOperation> unscheduledOperations = new ArrayList<IOperation>();
 		for(int i =0; i< vector.getProblem().length;i++){
 			for(int j =0; j< vector.getProblem()[i].length;j++){
 				unscheduledOperations.add(new Operation(vector.getProblem()[i][j]));
@@ -36,6 +35,7 @@ public class NewDecoding3 extends Decoding{
 			
 			ArrayList<IOperation> candidateMachines = vector.getOperationsbyJobAndStation(actual.getOperationIndex());
 			int minStartTime = Integer.MAX_VALUE;
+			int minFinalTime = 0;
 			IOperation minStartTimeOperation = null;
 			for(int j =0; j< candidateMachines.size();j++){
 				vector.scheduleOperation(candidateMachines.get(j).getOperationIndex());
@@ -44,72 +44,60 @@ public class NewDecoding3 extends Decoding{
 				if(candidate.getInitialTime()<minStartTime){
 					minStartTime = candidate.getInitialTime();
 					minStartTimeOperation = candidate;
+					minFinalTime = candidate.getFinalTime();
 				}
 				vector.getOperations().remove(pos);
 			}
 			
-			int minfinalTime = Integer.MAX_VALUE;
-			for(int j =0; j< unscheduledOperations.size();j++){
-				IOperation temp = unscheduledOperations.get(j);
-				boolean a = vector.scheduleOperation(temp.getOperationIndex());
-				if(a){
-					vector.calculateCMatrix(pos);
-					IOperation candidate = vector.getVector().get(pos);
-					if(candidate.getFinalTime()<minfinalTime){
-						minfinalTime = candidate.getFinalTime();
-					}
-					vector.getOperations().remove(pos);
-				}
-			}
-			System.out.println(minfinalTime);
 			int minStartTime2 = Integer.MAX_VALUE;
 			IOperation minStartTimeUnschedulledOperation = null;
+			int minfinalTime = 0;
 			
-			for(int j = i+1; j< originalVector.size();j++){
-				IOperation temp = originalVector.get(j);
-				boolean a = vector.scheduleOperation(temp.getOperationIndex());
-				if(a){
-					vector.calculateCMatrix(pos);
-					IOperation candidate = vector.getVector().get(pos);
-					if(candidate.getInitialTime()<minfinalTime){
-						if(minStartTimeOperation.getOperationIndex().getJobId()==candidate.getOperationIndex().getJobId()){
-							if(minStartTime2<minStartTime && minfinalTime< minStartTime - vector.getTT(candidate.getOperationIndex().getStationId(), minStartTimeOperation.getOperationIndex().getStationId()))
-							{
-								minStartTimeUnschedulledOperation = candidate;
+			for(int j =0; j< unscheduledOperations.size();j++){
+				IOperation temp = unscheduledOperations.get(j);
+				if(temp.getOperationIndex().getJobId()==actual.getOperationIndex().getJobId() || temp.getOperationIndex().getStationId()==actual.getOperationIndex().getStationId())
+				{
+					
+					boolean a = vector.scheduleOperation(unscheduledOperations.get(j).getOperationIndex());
+					if(a){
+						vector.calculateCMatrix(pos);
+						IOperation candidate = vector.getVector().get(pos);
+						if(candidate.getInitialTime()<minStartTime2){
+							minStartTime2 = candidate.getInitialTime();
+							minStartTimeUnschedulledOperation = candidate;
+							minfinalTime = candidate.getFinalTime();
+						}
+						else if(candidate.getInitialTime() == minStartTime2){
+							if(candidate.getFinalTime()>minfinalTime){
 								minStartTime2 = candidate.getInitialTime();
-								break;
+								minStartTimeUnschedulledOperation = candidate;
+								minfinalTime = candidate.getFinalTime();
 							}
 						}
-						else if(minStartTimeOperation.getOperationIndex().getStationId()==candidate.getOperationIndex().getStationId()){
-							if(minfinalTime<minStartTime){
-								minStartTimeUnschedulledOperation = candidate;
-								minStartTime2 = candidate.getInitialTime();
-								break;
-							}
-						}
-
+						vector.getOperations().remove(pos);
 					}
-					vector.getOperations().remove(pos);
 				}
 			}
 			
 			OperationIndexVO newOperation = minStartTimeOperation.getOperationIndex();
-			if(minStartTimeUnschedulledOperation!=null){
-				if(minStartTimeOperation.equals(minStartTimeUnschedulledOperation)){
-					newOperation = minStartTimeOperation.getOperationIndex();
-				}
-				else if(minStartTimeOperation.getOperationIndex().getJobId()==minStartTimeUnschedulledOperation.getOperationIndex().getJobId()){
-					if(minStartTime2<minStartTime && minfinalTime< minStartTime - vector.getTT(minStartTimeUnschedulledOperation.getOperationIndex().getStationId(), minStartTimeOperation.getOperationIndex().getStationId()))
-					{
-						newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
-					}
-				}
-				else if(minStartTimeOperation.getOperationIndex().getStationId()==minStartTimeUnschedulledOperation.getOperationIndex().getStationId()){
-					if(minfinalTime<minStartTime){
-						newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
-					}
+			if(minStartTimeOperation.equals(minStartTimeUnschedulledOperation)){
+				newOperation = minStartTimeOperation.getOperationIndex();
+			}
+			else if(minStartTimeOperation.getOperationIndex().getJobId()==minStartTimeUnschedulledOperation.getOperationIndex().getJobId()){
+				if(minStartTime2<minStartTime && minfinalTime< minStartTime - vector.getTT(minStartTimeUnschedulledOperation.getOperationIndex().getStationId(), minStartTimeOperation.getOperationIndex().getStationId()))
+				{
+					newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
 				}
 			}
+			else if(minStartTimeOperation.getOperationIndex().getStationId()==minStartTimeUnschedulledOperation.getOperationIndex().getStationId()){
+				if(minfinalTime<minStartTime){
+					newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
+				}
+				else if(minfinalTime>minFinalTime){
+					newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
+				}
+			}
+			
 			vector.scheduleOperation(newOperation);
 			vector.calculateCMatrix(0);
 			pos++;
@@ -128,7 +116,7 @@ public class NewDecoding3 extends Decoding{
 					i--;
 				}
 			}
-			System.out.println(vector.getVector());
+
 		}	
 		return vector.getVector();
 	}

@@ -21,7 +21,8 @@ public class NewDecoding extends Decoding{
 	@Override
 	public ArrayList<IOperation> decode(ArrayList<IOperation> originalVector) {
 		
-		ArrayList<IOperation> unscheduledOperations = new ArrayList<IOperation>();
+		System.out.println(originalVector);
+		final ArrayList<IOperation> unscheduledOperations = new ArrayList<IOperation>();
 		for(int i =0; i< vector.getProblem().length;i++){
 			for(int j =0; j< vector.getProblem()[i].length;j++){
 				unscheduledOperations.add(new Operation(vector.getProblem()[i][j]));
@@ -36,6 +37,7 @@ public class NewDecoding extends Decoding{
 			
 			ArrayList<IOperation> candidateMachines = vector.getOperationsbyJobAndStation(actual.getOperationIndex());
 			int minStartTime = Integer.MAX_VALUE;
+			int minFinalTime = 0;
 			IOperation minStartTimeOperation = null;
 			for(int j =0; j< candidateMachines.size();j++){
 				vector.scheduleOperation(candidateMachines.get(j).getOperationIndex());
@@ -44,6 +46,7 @@ public class NewDecoding extends Decoding{
 				if(candidate.getInitialTime()<minStartTime){
 					minStartTime = candidate.getInitialTime();
 					minStartTimeOperation = candidate;
+					minFinalTime = candidate.getFinalTime();
 				}
 				vector.getOperations().remove(pos);
 			}
@@ -56,15 +59,24 @@ public class NewDecoding extends Decoding{
 				IOperation temp = unscheduledOperations.get(j);
 				if(temp.getOperationIndex().getJobId()==actual.getOperationIndex().getJobId() || temp.getOperationIndex().getStationId()==actual.getOperationIndex().getStationId())
 				{
+					
 					boolean a = vector.scheduleOperation(unscheduledOperations.get(j).getOperationIndex());
 					if(a){
 						vector.calculateCMatrix(pos);
 						IOperation candidate = vector.getVector().get(pos);
+						System.out.println(candidate);
 						if(candidate.getInitialTime()<minStartTime2){
 							minStartTime2 = candidate.getInitialTime();
 							minStartTimeUnschedulledOperation = candidate;
 							minfinalTime = candidate.getFinalTime();
 						}
+						/*else if(candidate.getInitialTime() == minStartTime2){
+							if(candidate.getFinalTime()<minfinalTime){
+								minStartTime2 = candidate.getInitialTime();
+								minStartTimeUnschedulledOperation = candidate;
+								minfinalTime = candidate.getFinalTime();
+							}
+						}*/
 						vector.getOperations().remove(pos);
 					}
 				}
@@ -84,6 +96,9 @@ public class NewDecoding extends Decoding{
 				if(minfinalTime<minStartTime){
 					newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
 				}
+				/*else if(minfinalTime<minFinalTime){
+					newOperation = minStartTimeUnschedulledOperation.getOperationIndex();
+				}*/
 			}
 			
 			vector.scheduleOperation(newOperation);
@@ -106,6 +121,7 @@ public class NewDecoding extends Decoding{
 			}
 
 		}	
+		System.out.println(vector.getVector());
 		return vector.getVector();
 	}
 }
