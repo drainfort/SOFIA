@@ -13,12 +13,15 @@ public class RandomDecoding extends Decoding{
 
 	@Override
 	public ArrayList<IOperation> decode(ArrayList<IOperation> operations) {
-		
+	
 		ArrayList<Decoding> decodings = new ArrayList<Decoding>();
 		decodings.add(active);
 		decodings.add(nonDelay);
 		decodings.add(sequencial);
-		return decodings.get(randomNumber(0, decodings.size()-1)).decode(operations);
+		int number =randomNumber(0, decodings.size()-1);
+		Decoding temp = decodings.get(number);
+		temp.setVector(this.vector);
+		return temp.decode(operations);
 	}
 
 	
@@ -32,7 +35,6 @@ public class RandomDecoding extends Decoding{
 	 * @return
 	 */
 	private static int randomNumber(int min, int max) {
-		Random number = new Random(0);
-		return number.nextInt(max)+min;
+		return (int) Math.round((Math.random() * (max - min)) + min);
 	}
 }
