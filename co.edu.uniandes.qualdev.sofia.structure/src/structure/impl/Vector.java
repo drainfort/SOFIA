@@ -116,6 +116,23 @@ public class Vector extends AbstractStructure{
 	}
 	
 	@Override
+	public void reverseOperationsBetween(OperationIndexVO initialOperationIndex, OperationIndexVO finalOperationIndex) {
+		int initialOperationPosition = this.getPositionByOperationIndex(initialOperationIndex);
+		int finalOperationPosition = this.getPositionByOperationIndex(finalOperationIndex);
+		
+		int operationsInBetween = Math.abs(finalOperationPosition-initialOperationPosition-1);
+		int numOfExchanges = (int)Math.floor(operationsInBetween/2);
+		
+		for (int i = 1; i < numOfExchanges+1; i++) {
+			IOperation initialOperation = this.getOperationByPosition(initialOperationPosition+i);
+			IOperation finalOperation = this.getOperationByPosition(finalOperationPosition-i);
+			getOperations().set(initialOperationPosition+i, finalOperation);
+			getOperations().set(finalOperationPosition-i, initialOperation);
+		}
+		synch = false;
+	}
+	
+	@Override
 	public void insertOperationBefore(int first, int second) {
 		IOperation secondOperation = getOperations().get(second);
 		
@@ -882,4 +899,6 @@ public class Vector extends AbstractStructure{
 	public OperationIndexVO[][] getOperationsMatrix() {
 		return operationsMatrix;
 	}
+
+	
 }
