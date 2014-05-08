@@ -1,6 +1,7 @@
 package neighborCalculator.impl;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import neighborCalculator.INeighborCalculator;
 import structure.IOperation;
@@ -10,6 +11,8 @@ import common.types.PairVO;
 
 public class N1_Random implements INeighborCalculator{
 
+	public static Random number;
+	
 	// -----------------------------------------------
 	// Methods
 	// -----------------------------------------------
@@ -105,6 +108,14 @@ public class N1_Random implements INeighborCalculator{
 	 * @return
 	 */
 	private static int randomNumber(int min, int max) {
-		return (int) Math.round((Math.random() * (max - min)) + min);
+		return getInstance().nextInt(max);
+		//return (int) Math.round((Math.random() * (max - min)) + min);
+	}
+	
+	public static Random getInstance(){
+		if(number==null){
+			number = new Random(0);
+		}
+		return number;
 	}
 }
