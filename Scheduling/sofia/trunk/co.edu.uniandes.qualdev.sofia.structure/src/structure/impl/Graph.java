@@ -1930,6 +1930,14 @@ public class Graph extends AbstractStructure {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void reverseOperationsBetween(
+			OperationIndexVO initialOperationIndex,
+			OperationIndexVO finalOperationIndex) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 	//	public int getTT(int stationId1, int stationId2){
