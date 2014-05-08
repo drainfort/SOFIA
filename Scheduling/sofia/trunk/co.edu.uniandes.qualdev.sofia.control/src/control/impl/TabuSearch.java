@@ -157,7 +157,7 @@ public class TabuSearch extends Control{
 					nonImprovingIn= Integer.MAX_VALUE;
 				
 				numberOfVisitedNeighbors+=arrayNeighbors.size();
-				getBestCandidates(bestCandidates, arrayNeighbors, nonImprovingIn, current, modifier, gammaCalculator);
+				getBestCandidates(bestCandidates, arrayNeighbors, nonImprovingIn, current, modifier, gammaCalculator,executionResults);
 
 				PairVO bestPair = bestCandidates.get(bestCandidates.size()-1);
 				if (bestPair != null) {
@@ -259,7 +259,7 @@ public class TabuSearch extends Control{
 			
 		}
 		
-		private void getBestCandidates(ArrayList<PairVO> bestCandidates, ArrayList<PairVO> arrayNeighbors, int nonImprovingIn, IStructure current, IModifier modifier, IGammaCalculator gammaCalculator) throws Exception{
+		private void getBestCandidates(ArrayList<PairVO> bestCandidates, ArrayList<PairVO> arrayNeighbors, int nonImprovingIn, IStructure current, IModifier modifier, IGammaCalculator gammaCalculator,ExecutionResults executionResults) throws Exception{
 			
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonImprovingIn>=0; index++) {
 				PairVO pairCandidate = arrayNeighbors.get(index);
@@ -293,7 +293,7 @@ public class TabuSearch extends Control{
 		    if(elapsedTime>=stopTime){
 		    	System.out.println("TIME!!!");
 		    	optimalAchieved = true;
-		    	executionResults.setStopCriteria(2);
+		    	executionResults.setStopCriteria(2); //aca sale null pointer!!!!!
 		    }
 		}
 
