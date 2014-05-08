@@ -45,6 +45,9 @@ public interface IStructure {
 	 */
 	public void exchangeOperations(OperationIndexVO initialOperationIndex,
 			OperationIndexVO finalOperationIndex);
+	
+	public void reverseOperationsBetween(OperationIndexVO initialOperationIndex,
+			OperationIndexVO finalOperationIndex);
 
 	/**
 	 * Inserts an operation before the given successor. The operations are
