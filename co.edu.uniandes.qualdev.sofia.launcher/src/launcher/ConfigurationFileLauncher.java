@@ -56,6 +56,7 @@ public class ConfigurationFileLauncher {
 	private String showInitialSolutions;
 	private String showFinalSolutions;
 	private String showLog;
+	private String showImprocement;
 	
 	// ----------------------------------------------
 	// Methods
@@ -255,6 +256,8 @@ public class ConfigurationFileLauncher {
 		algorithmConfiguration.setProperty("report.gantt.initialsolutions", showInitialSolutions);
 		algorithmConfiguration.setProperty("report.gantt.bestsolutions", showFinalSolutions);
 		algorithmConfiguration.setProperty("report.gantt.log", showLog);
+		algorithmConfiguration.setProperty("report.gantt.improvement", showImprocement);
+		
 		
 		String time=""+System.currentTimeMillis();
 		
