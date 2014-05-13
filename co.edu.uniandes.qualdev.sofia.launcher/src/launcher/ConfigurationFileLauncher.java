@@ -251,6 +251,7 @@ public class ConfigurationFileLauncher {
 		showInitialSolutions = data.getProperty("report.gantt.initialsolutions");
 		showFinalSolutions = data.getProperty("report.gantt.bestsolutions");
 		showLog = data.getProperty("report.gantt.log");
+		showImprocement = data.getProperty("report.gantt.improvement");
 		
 		algorithmConfiguration.setProperty("report.consolidationTable", showConfigurationTable);
 		algorithmConfiguration.setProperty("report.gantt.initialsolutions", showInitialSolutions);
