@@ -32,6 +32,9 @@ public class GRASPERLSParametersLoader implements IParametersLoader{
 		params.put("printLog", Boolean.parseBoolean((String) algorithmConfiguration
 				.getProperty("report.gantt.log")));
 		
+		params.put("printImprovement", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.gantt.improvement")));
+		
 		if(algorithmConfiguration.getProperty("params.maxNumberImprovements")!=null){
 			System.out.println("entro");
 			params.put("maxNumberImprovements", Integer.parseInt(algorithmConfiguration.getProperty("params.maxNumberImprovements")));

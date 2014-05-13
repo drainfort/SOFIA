@@ -14,6 +14,7 @@ import common.utils.ExecutionLogger;
 import common.utils.ExecutionResults;
 import common.utils.Graphic;
 import common.utils.Point;
+import common.utils.RandomNumber;
 import control.Control;
 
 import modifier.IModifier;
@@ -147,7 +148,7 @@ public class TabuSearchRN extends Control {
 					}
 					if (tabu) {
 						// Criterio de aspiracion
-						double acceptaceValue = Math.random();
+						double acceptaceValue = RandomNumber.getInstance().randomDouble();
 						if (acceptaceValue <= 0.5) {
 							bestCandidate = candidate.cloneStructure();
 							gammaBestCandidate = gammaCandidate;
@@ -261,7 +262,7 @@ public class TabuSearchRN extends Control {
 		System.out.println();
 		long actualTime = System.currentTimeMillis();
 	    long elapsedTime = actualTime - startTime;
-		ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
+		ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), (Boolean)params.get("printImprovement"), elapsedTime);
 		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
 		return result;
 	}

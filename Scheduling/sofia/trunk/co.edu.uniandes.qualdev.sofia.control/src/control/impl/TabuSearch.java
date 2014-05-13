@@ -75,7 +75,7 @@ public class TabuSearch extends Control{
 			System.out.println();
 			long actualTime = System.currentTimeMillis();
 		    long elapsedTime = actualTime - startTime;
-			ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
+			ExecutionResults result = obtainExecutionResults(best, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), (Boolean)params.get("printImprovement"),elapsedTime);
 			result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
 			return result;
 		}

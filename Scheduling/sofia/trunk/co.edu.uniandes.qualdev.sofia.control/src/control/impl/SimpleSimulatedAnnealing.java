@@ -14,6 +14,7 @@ import common.utils.ExecutionLogger;
 import common.utils.ExecutionResults;
 import common.utils.Graphic;
 import common.utils.Point;
+import common.utils.RandomNumber;
 import control.Control;
 
 import modifier.IModifier;
@@ -62,12 +63,13 @@ public class SimpleSimulatedAnnealing extends Control {
 		
 		this.So = initialSolution.cloneStructure();
 		System.out.println();
-		long actualTime = System.currentTimeMillis();
-	    long elapsedTime = actualTime - startTime;
 		
 	    IStructure XBest = simulatedAnnealing(params, initialSolution, gammaCalculator, neighborCalculator, modifier, optimal, isOptimal, executionResults, startTime, stopTime);
 	    
-		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), elapsedTime);
+	    long actualTime = System.currentTimeMillis();
+	    long elapsedTime = actualTime - startTime;
+	    
+		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), (Boolean)params.get("printImprovement"), elapsedTime);
 		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
 		
 		return result;
@@ -139,7 +141,6 @@ public class SimpleSimulatedAnnealing extends Control {
 			}*/
 			
 			while (k > 0 && !optimalAchieved && nonImprovingIn>=0){
-				
 				x++;
 				// Obtains a next solution (Y) from the current one (X)
 				PairVO YMovement = neighborCalculator.calculateNeighbor(X);
@@ -163,7 +164,7 @@ public class SimpleSimulatedAnnealing extends Control {
 
 				if(deltaXY > 0){
 					double acceptaceValue = Math.pow(Math.E, (-deltaXY/(boltzmann*temperature)));
-					double acceptanceRandom = Math.random();
+					double acceptanceRandom = RandomNumber.getInstance().randomDouble();
 					
 					if(acceptanceRandom <= acceptaceValue){
 						X = Y.cloneStructure();
@@ -235,7 +236,6 @@ public class SimpleSimulatedAnnealing extends Control {
 				k--;
 				Y.clean();
 			}
-			
 			
 			// Temperature reductions
 			Double coolingFactor = (Double) params.get("coolingFactor");
