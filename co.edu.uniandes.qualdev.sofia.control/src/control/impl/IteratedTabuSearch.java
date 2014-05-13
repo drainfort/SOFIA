@@ -126,7 +126,7 @@ public class IteratedTabuSearch extends Control {
 			}
 		}
 		
-		ExecutionResults result = obtainExecutionResults(Sb, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), 0);
+		ExecutionResults result = obtainExecutionResults(Sb, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), (Boolean)params.get("printImprovement"), 0);
 		result.setExecutionTime(System.currentTimeMillis() - startTime);
 		System.out.println();
 		return result;

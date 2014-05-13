@@ -189,7 +189,7 @@ public class TabuSearchWithRandomJumps extends Control {
 			 maxIter++;
 		 }
 		 System.out.println();
-		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), 0);
+		ExecutionResults result = obtainExecutionResults(XBest, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), (Boolean)params.get("printImprovement"), 0);
 		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
 		return result;
 

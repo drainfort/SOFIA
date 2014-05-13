@@ -169,7 +169,7 @@ public class EnrichedSimulatedAnnealing extends Control {
 			tries++;
 		}
 		System.out.println();
-		ExecutionResults result = obtainExecutionResults(S0, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"), 0);
+		ExecutionResults result = obtainExecutionResults(S0, gammaCalculator, (Boolean)params.get("printTable"), (Boolean)params.get("printSolutions"),(Boolean)params.get("printInitialSolution"), (Boolean)params.get("printLog"),(Boolean)params.get("printImprovement"), 0);
 		result.setNumberOfVisitedNeighbors(numberOfVisitedNeighbors);
 		return result;
 	}

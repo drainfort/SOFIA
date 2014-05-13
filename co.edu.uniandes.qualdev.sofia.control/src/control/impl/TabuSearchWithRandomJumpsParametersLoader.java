@@ -35,6 +35,9 @@ public class TabuSearchWithRandomJumpsParametersLoader  implements IParametersLo
 		
 		params.put("printLog", Boolean.parseBoolean((String) algorithmConfiguration
 				.getProperty("report.gantt.log")));
+		
+		params.put("printImprovement", Boolean.parseBoolean((String) algorithmConfiguration
+				.getProperty("report.gantt.improvement")));
 		return params;
 		
 	}
