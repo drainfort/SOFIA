@@ -61,6 +61,8 @@ public class ExecutionResults {
 	
 	private boolean printLog;
 	
+	private boolean printImprovement;
+	
 	// --------------------------------------------
 	// Constructor
 	// --------------------------------------------
@@ -231,5 +233,15 @@ public class ExecutionResults {
 	public void addGraphic(Graphic newGraphic){
 		graphics.add(newGraphic);
 	}
+
+	public boolean isPrintImprovement() {
+		return printImprovement;
+	}
+
+	public void setPrintImprovement(boolean printImprovement) {
+		this.printImprovement = printImprovement;
+	}
+	
+	
 	
 }
