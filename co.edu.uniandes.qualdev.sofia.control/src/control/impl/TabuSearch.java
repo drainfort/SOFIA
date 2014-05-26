@@ -168,6 +168,12 @@ public class TabuSearch extends Control{
 						current = best.cloneStructure();
 						nonImprovingOut = (Integer) params.get("non-improving-out");
 						
+						long actualTime = System.currentTimeMillis();
+					    long elapsedTime = actualTime - startTime;
+					    if(!graphic.getPoints().isEmpty())
+					    	graphic.addPoint(new Point(elapsedTime, graphic.getPoints().get(graphic.getPoints().size()-1).y));
+						graphic.addPoint(new Point(elapsedTime, bestPair.getGamma()));
+						
 						if(nonImprovingOut <= 0)
 							nonImprovingOut = Integer.MAX_VALUE;
 						if (optimal.intValue() >= bestGamma) {
@@ -217,6 +223,10 @@ public class TabuSearch extends Control{
 				timeAccomplished(executionResults);
 				
 			}
+			
+			long actualTime = System.currentTimeMillis();
+		    long elapsedTime = actualTime - startTime;
+			graphic.addPoint(new Point(elapsedTime, bestGamma));
 			if(graphic.getPoints().size()>1)
 				executionResults.addGraphic(graphic);
 

@@ -190,7 +190,11 @@ public class TabuSearchRN extends Control {
 					
 					System.out.println("Improvement: " + bestGamma);
 					ExecutionLogger.getInstance().printLog("Improvement: "+bestGamma);
-					graphic.addPoint(new Point(x, bestGamma));
+					long actualTime = System.currentTimeMillis();
+				    long elapsedTime = actualTime - startTime;
+				    if(!graphic.getPoints().isEmpty())
+				    	graphic.addPoint(new Point(elapsedTime, graphic.getPoints().get(graphic.getPoints().size()-1).y));
+					graphic.addPoint(new Point(elapsedTime, bestGamma));
 					if(ExecutionLogger.getInstance().isUseLogger()){
 						ExecutionLogger.getInstance().printLog("Vector: "+best.getOperations());
 						ArrayList<CriticalPath> paths = best.getCriticalPaths();
