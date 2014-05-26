@@ -11,6 +11,7 @@ import structure.factory.AbstractStructureFactory;
 import structure.impl.decoding.Decoding;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
+import common.utils.RandomNumber;
 
 /**
  * Class that calculates returns the best dispatching rule for the current
@@ -61,7 +62,7 @@ public class RandomDispatchingRule implements IInitialSolBuilder{
 		arrayClasses.add(spt);
 		arrayClasses.add(srpt);
 		
-		int number = randomNumber(0, arrayClasses.size()-1);
+		int number = RandomNumber.getInstance().randomNumber(0, arrayClasses.size()-1);
 		return arrayClasses.get(number).createInitialSolution(problemFiles, betas, structureFactory, gammaCalculator, decodingStrategy);
 	}
 
@@ -92,7 +93,7 @@ public class RandomDispatchingRule implements IInitialSolBuilder{
 //		arrayClasses.add(afsspt);
 //		arrayClasses.add(afssrpt);
 		
-		int number = randomNumber(0, arrayClasses.size()-1);
+		int number = RandomNumber.getInstance().randomNumber(0, arrayClasses.size()-1);
 		return arrayClasses.get(number).createInitialSolution(TMatrix, TTMatrix, STMatrix, structureFactory, gammaCalculator, structure);
 		
 	}
