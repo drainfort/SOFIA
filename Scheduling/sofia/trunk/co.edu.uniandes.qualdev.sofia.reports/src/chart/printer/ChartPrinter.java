@@ -358,7 +358,7 @@ public class ChartPrinter {
 			pw.println("  google.setOnLoadCallback(drawChart"+i+");");
 			pw.println("  function drawChart"+i+"() {");
 			pw.println("    var data = google.visualization.arrayToDataTable([");
-			pw.println("       ['Iterations', 'OF'],");
+			pw.println("       ['Time', 'OF'],");
 			for(int j=0; j< points.size();j++){
 				Point temp = points.get(j);
 				if(j!=points.size()-1){
@@ -437,7 +437,7 @@ public class ChartPrinter {
 		printInitialSolutions = globalExecutionResults.get(0).get(0).isPrintInitialSolution();
 		printSolutions = globalExecutionResults.get(0).get(0).isPrintFinalSolution();
 		printLog = globalExecutionResults.get(0).get(0).isPrintLog();
-		printCharts = false;
+		printCharts = true;
 	}
 	
 	// ------------------------------------------------------------
