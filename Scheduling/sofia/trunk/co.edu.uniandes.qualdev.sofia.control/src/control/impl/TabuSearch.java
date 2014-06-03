@@ -303,7 +303,7 @@ public class TabuSearch extends Control{
 		    if(elapsedTime>=stopTime){
 		    	System.out.println("TIME!!!");
 		    	optimalAchieved = true;
-		    	executionResults.setStopCriteria(2); //aca sale null pointer!!!!!
+		    	executionResults.setStopCriteria(2); 
 		    }
 		}
 
