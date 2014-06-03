@@ -7,6 +7,8 @@ import structure.IOperation;
 
 public class RandomDecoding extends Decoding{
 	
+	public static Random number;
+	
 	ActiveDecoding active = new ActiveDecoding();
 	NonDelayDecoding nonDelay = new NonDelayDecoding();
 	SequencialDecoding sequencial = new SequencialDecoding();
@@ -35,6 +37,14 @@ public class RandomDecoding extends Decoding{
 	 * @return
 	 */
 	private static int randomNumber(int min, int max) {
+		//return getInstance().nextInt(max);
 		return (int) Math.round((Math.random() * (max - min)) + min);
+	}
+	
+	public static Random getInstance(){
+		if(number==null){
+			number = new Random();
+		}
+		return number;
 	}
 }
