@@ -8,6 +8,7 @@ import structure.impl.CriticalPath;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.RandomNumber;
 
 import neighborCalculator.INeighborCalculator;
 
@@ -44,14 +45,14 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
 		IStructure clone = currentGraph.cloneStructure();
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
-		int number = randomNumber(0, routes.size() - 1);
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
         ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
-        int number2 = randomNumber(0, blocks.size() - 1);
+        int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
         ArrayList<IOperation> block = blocks.get(number2);
-        int number3= randomNumber(0, block.size()-1);
-        int number4= randomNumber(0, block.size()-1);
+        int number3= RandomNumber.getInstance().randomNumber(0, block.size()-1);
+        int number4= RandomNumber.getInstance().randomNumber(0, block.size()-1);
         while(number4==number3)
-        	number4= randomNumber(0, block.size()-1);
+        	number4= RandomNumber.getInstance().randomNumber(0, block.size()-1);
         IOperation initialNode= block.get(number3);
         IOperation finalNode = block.get(number4);
 		
@@ -78,14 +79,14 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
         ArrayList<IOperation> block = null;
         while(neighborhood.size() < size){
             
-            int number = randomNumber(0, routes.size() - 1);
+            int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
             blocks= routes.get(number).getBlocks();
-            int number2 = randomNumber(0, blocks.size() - 1);
+            int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
             block = blocks.get(number2);
-            int number3= randomNumber(0, block.size()-1);
-            int number4= randomNumber(0, block.size()-1);
+            int number3= RandomNumber.getInstance().randomNumber(0, block.size()-1);
+            int number4= RandomNumber.getInstance().randomNumber(0, block.size()-1);
             while(number4==number3)
-            	number4= randomNumber(0, block.size()-1);
+            	number4= RandomNumber.getInstance().randomNumber(0, block.size()-1);
             IOperation initialNode= block.get(number3);
             IOperation finalNode = block.get(number4);
 
@@ -141,11 +142,4 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
 		
 	}
 	
-	// -----------------------------------------------
-	// Utilities
-	// -----------------------------------------------
-	
-	private static int randomNumber(int min, int max) {
-		return (int) Math.round((Math.random() * (max - min)) + min);
-	}
 }

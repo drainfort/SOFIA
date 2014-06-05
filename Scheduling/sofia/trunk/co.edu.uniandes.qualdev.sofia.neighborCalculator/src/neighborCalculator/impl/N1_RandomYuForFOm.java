@@ -7,6 +7,7 @@ import structure.IOperation;
 import structure.IStructure;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.RandomNumber;
 
 public class N1_RandomYuForFOm implements INeighborCalculator{
 
@@ -28,8 +29,8 @@ public class N1_RandomYuForFOm implements INeighborCalculator{
 		
 		boolean found = false;
 		while(!found){
-			int randomA = randomNumber(0, total - 1);
-			int randomB = randomNumber(0, total - 1);
+			int randomA = RandomNumber.getInstance().randomNumber(0, total - 1);
+			int randomB = RandomNumber.getInstance().randomNumber(0, total - 1);
 			
 			OperationIndexVO start = operations.get(randomA).getOperationIndex();
 			OperationIndexVO end = operations.get(randomB).getOperationIndex();
@@ -55,8 +56,8 @@ public class N1_RandomYuForFOm implements INeighborCalculator{
 			
 			ArrayList<IOperation>operations = currentVector.getOperations();
 			
-			int randomA = randomNumber(0, total - 1);
-			int randomB = randomNumber(0, total - 1);
+			int randomA = RandomNumber.getInstance().randomNumber(0, total - 1);
+			int randomB = RandomNumber.getInstance().randomNumber(0, total - 1);
 			
 			OperationIndexVO start = operations.get(randomA).getOperationIndex();
 			OperationIndexVO end = operations.get(randomB).getOperationIndex();
@@ -98,20 +99,4 @@ public class N1_RandomYuForFOm implements INeighborCalculator{
 		return pairs;
 	}
 	
-	// -----------------------------------------------
-	// Utilities
-	// -----------------------------------------------
-	
-	/**
-	 * Returns a random number in the interval between the min and the max
-	 * parameters
-	 * 
-	 * @param min
-	 *            . Lower value of the interval
-	 * @param max
-	 * @return
-	 */
-	private static int randomNumber(int min, int max) {
-		return (int) Math.round((Math.random() * (max - min)) + min);
-	}
 }
