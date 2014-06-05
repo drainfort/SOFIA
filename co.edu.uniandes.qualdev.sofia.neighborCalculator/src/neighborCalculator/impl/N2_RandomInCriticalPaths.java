@@ -8,6 +8,7 @@ import structure.impl.CriticalPath;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.RandomNumber;
 
 import neighborCalculator.INeighborCalculator;
 
@@ -40,13 +41,16 @@ public class N2_RandomInCriticalPaths implements INeighborCalculator {
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
-		int number = randomNumber(0, routes.size() - 1);
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 		// Selecting an adjacent pair of operations
-		int i = randomNumber(0, selectedCriticalPath.size() - 2);
+		int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
 		IOperation initialNode = selectedCriticalPath.get(i);
-		IOperation finalNode = selectedCriticalPath.get(i + 1);
+		int j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+		while(i==j)
+			j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+		IOperation finalNode = selectedCriticalPath.get(j);
 		OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
 		OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
 		
@@ -58,27 +62,42 @@ public class N2_RandomInCriticalPaths implements INeighborCalculator {
 			throws Exception {
 	
 		int amount = 0;
+		int exit=0;
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
-		for(int j =0; j < routes.size()  && amount < size;j++){
-			ArrayList<IOperation> selectedCriticalPath = routes.get(j).getRoute();
+		while(amount < size){
 			
-			for (int i = 0; i < selectedCriticalPath.size()  && amount < size; i++) {
-				IOperation firstOperation = selectedCriticalPath.get(i);
-				
-				for (int i2 = 0; i2 < selectedCriticalPath.size() && amount < size; i2++) {
-					IOperation secondOperation = selectedCriticalPath.get(i2);
-					if(i!=i2){
-						PairVO temp = new PairVO(firstOperation.getOperationIndex(), secondOperation.getOperationIndex());
-						neighborhood.add(temp);
-						amount++;
-					}
+			// Selecting one of the critical paths
+			int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
+
+			// Selecting an adjacent pair of operations
+			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+			IOperation initialNode = selectedCriticalPath.get(i);
+			int j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+			while(i==j)
+				j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+			
+			IOperation finalNode = selectedCriticalPath.get(j);
+			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
+			OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+			PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+			if(!neighborhood.contains(temp)){
+				neighborhood.add(temp);
+				exit=0;
+				amount++;
+			}else{
+				exit++;
+				if(exit>=100){
+					return neighborhood;
 				}
 			}
+			
 		}
+
 		return neighborhood;
 	}
 	
@@ -109,11 +128,4 @@ public class N2_RandomInCriticalPaths implements INeighborCalculator {
 		return neighborhood;
 	}
 	
-	// -----------------------------------------------
-	// Utilities
-	// -----------------------------------------------
-	
-	private static int randomNumber(int min, int max) {
-		return (int) Math.round((Math.random() * (max - min)) + min);
-	}
 }

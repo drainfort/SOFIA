@@ -8,6 +8,7 @@ import structure.impl.CriticalPath;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.RandomNumber;
 
 import neighborCalculator.INeighborCalculator;
 
@@ -46,11 +47,11 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 			ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 			
 			// Selecting one of the critical paths
-			int number = randomNumber(0, routes.size() - 1);
+			int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
 			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 			// Selecting an adjacent pair of operations
-			int i = randomNumber(0, selectedCriticalPath.size() - 2);
+			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
 			IOperation initialNode = selectedCriticalPath.get(i);
 			IOperation finalNode = selectedCriticalPath.get(i + 1);
 			
@@ -74,7 +75,7 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
-		int number = randomNumber(0, routes.size() - 1);
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 		//System.out.println(selectedCriticalPath);
 
@@ -86,7 +87,7 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 			
 			while(!found){
 				// Selecting an adjacent pair of operations
-				int i = randomNumber(0, selectedCriticalPath.size() - 2);
+				int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
 				IOperation initialNode = selectedCriticalPath.get(i);
 				IOperation finalNode = selectedCriticalPath.get(i + 1);
 				//System.out.println("initial:"+initialNode);
@@ -144,11 +145,4 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 		return neighborhood;
 	}
 	
-	// -----------------------------------------------
-	// Utilities
-	// -----------------------------------------------
-	
-	private static int randomNumber(int min, int max) {
-		return (int) Math.round((Math.random() * (max - min)) + min);
-	}
 }

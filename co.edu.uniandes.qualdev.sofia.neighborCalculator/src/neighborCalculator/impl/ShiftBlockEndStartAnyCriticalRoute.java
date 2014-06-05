@@ -8,6 +8,7 @@ import structure.impl.CriticalPath;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.RandomNumber;
 
 import neighborCalculator.INeighborCalculator;
 
@@ -37,16 +38,16 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
 		IStructure clone = currentGraph.cloneStructure();
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
-		int number = randomNumber(0, routes.size() - 1);
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
         ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
-        int number2 = randomNumber(0, blocks.size() - 1);
+        int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
         ArrayList<IOperation> block = blocks.get(number2);
-        int number3= randomNumber(0, 1);
-        int number4 = randomNumber(1, block.size()-1);
+        int number3= RandomNumber.getInstance().randomNumber(0, 1);
+        int number4 = RandomNumber.getInstance().randomNumber(1, block.size()-1);
         IOperation initialNode= block.get(0);
         IOperation finalNode = block.get(number4);
         if(number3==1){
-        	number4 = randomNumber(0, block.size()-2);
+        	number4 = RandomNumber.getInstance().randomNumber(0, block.size()-2);
             finalNode= block.get(block.size()-1);
             initialNode = block.get(number4);
         }
@@ -70,16 +71,16 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
 		
 		while(neighborhood.size()<size){
 			
-			int number = randomNumber(0, routes.size() - 1);
+			int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
             ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
-            int number2 = randomNumber(0, blocks.size() - 1);
+            int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
             ArrayList<IOperation> block = blocks.get(number2);
-            int number3= randomNumber(0, 1);
-            int number4 = randomNumber(1, block.size()-1);
+            int number3= RandomNumber.getInstance().randomNumber(0, 1);
+            int number4 = RandomNumber.getInstance().randomNumber(1, block.size()-1);
             IOperation initialNode= block.get(0);
             IOperation finalNode = block.get(number4);
             if(number3==1){
-            	number4 = randomNumber(0, block.size()-2);
+            	number4 = RandomNumber.getInstance().randomNumber(0, block.size()-2);
                 finalNode= block.get(block.size()-1);
                 initialNode = block.get(number4);
             }
@@ -143,11 +144,4 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
 		return neighborhood;
 	}
 	
-	// -----------------------------------------------
-	// Utilities
-	// -----------------------------------------------
-	
-	private static int randomNumber(int min, int max) {
-		return (int) Math.round((Math.random() * (max - min)) + min);
-	}
 }

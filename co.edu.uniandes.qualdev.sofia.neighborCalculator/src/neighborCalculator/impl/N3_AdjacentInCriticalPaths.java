@@ -8,6 +8,7 @@ import structure.impl.CriticalPath;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.RandomNumber;
 
 import neighborCalculator.INeighborCalculator;
 
@@ -42,11 +43,11 @@ public class N3_AdjacentInCriticalPaths implements INeighborCalculator {
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
-		int number = randomNumber(0, routes.size() - 1);
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 		// Selecting an adjacent pair of operations
-		int i = randomNumber(0, selectedCriticalPath.size() - 2);
+		int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
 		IOperation initialNode = selectedCriticalPath.get(i);
 		IOperation finalNode = selectedCriticalPath.get(i + 1);
 		OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
@@ -66,11 +67,11 @@ public class N3_AdjacentInCriticalPaths implements INeighborCalculator {
 		int exit = 0;
 		while(neighborhood.size() < size){
 			//Selecting the critical route
-			int number = randomNumber(0, routes.size() - 1);
+			int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
 			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 			// Selecting an adjacent pair of operations
-			int i = randomNumber(0, selectedCriticalPath.size() - 2);
+			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
 			IOperation initialNode = selectedCriticalPath.get(i);
 			IOperation finalNode = selectedCriticalPath.get(i + 1);
 			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
@@ -116,11 +117,5 @@ public class N3_AdjacentInCriticalPaths implements INeighborCalculator {
 		return neighborhood;
 	}
 	
-	// -----------------------------------------------
-	// Utilities
-	// -----------------------------------------------
-	
-	private static int randomNumber(int min, int max) {
-		return (int) Math.round((Math.random() * (max - min)) + min);
-	}
+
 }

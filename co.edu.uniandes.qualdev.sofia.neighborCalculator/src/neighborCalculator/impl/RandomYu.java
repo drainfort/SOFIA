@@ -8,6 +8,7 @@ import structure.IStructure;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.RandomNumber;
 
 public class RandomYu implements INeighborCalculator{
 
@@ -19,26 +20,26 @@ public class RandomYu implements INeighborCalculator{
 	public PairVO calculateNeighbor(IStructure currentVector) throws Exception {
 		
 		
-		double random = Math.random();
+		double random = RandomNumber.getInstance().randomDouble();
 		int totalJobs = currentVector.getTotalJobs();
 		int totalStations = currentVector.getTotalStations();
 		if(random<=0.5){
-			int randomA = randomNumber(0, totalJobs - 1);
-			int randomB = randomNumber(0, totalStations - 1);
-			int randomC = randomNumber(0, totalStations - 1);
+			int randomA = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
+			int randomB = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
+			int randomC = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
 			while(randomB==randomC){
-				randomC = randomNumber(0, totalStations - 1);
+				randomC = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
 			}
 			PairVO pair = new PairVO(new OperationIndexVO(0, randomA, randomB, 0), new OperationIndexVO(0, randomA, randomC, 0));
 			return pair;
 		}
 		else{
 			
-			int randomA = randomNumber(0, totalStations - 1);
-			int randomB = randomNumber(0, totalJobs - 1);
-			int randomC = randomNumber(0, totalJobs - 1);
+			int randomA = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
+			int randomB = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
+			int randomC = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
 			while(randomB==randomC){
-				randomC = randomNumber(0, totalJobs - 1);
+				randomC = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
 			}
 			PairVO pair = new PairVO(new OperationIndexVO(0, randomB, randomA), new OperationIndexVO(0, randomC,randomA));
 			return pair;
@@ -52,26 +53,26 @@ public class RandomYu implements INeighborCalculator{
 		int exit=0;
 		while(size>0)
 		{
-			double random = Math.random();
+			double random = RandomNumber.getInstance().randomDouble();
 			int totalJobs = currentVector.getTotalJobs();
 			int totalStations = currentVector.getTotalStations();
 			PairVO pair = null;
 			if(random<=0.5){
-				int randomA = randomNumber(0, totalJobs - 1);
-				int randomB = randomNumber(0, totalStations - 1);
-				int randomC = randomNumber(0, totalStations - 1);
+				int randomA = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
+				int randomB = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
+				int randomC = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
 				while(randomB==randomC){
-					randomC = randomNumber(0, totalStations - 1);
+					randomC = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
 				}
 				pair = new PairVO(new OperationIndexVO(0, randomA, randomB, 0), new OperationIndexVO(0, randomA, randomC, 0));
 			}
 			else{
 				
-				int randomA = randomNumber(0, totalStations - 1);
-				int randomB = randomNumber(0, totalJobs - 1);
-				int randomC = randomNumber(0, totalJobs - 1);
+				int randomA = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
+				int randomB = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
+				int randomC = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
 				while(randomB==randomC){
-					randomC = randomNumber(0, totalJobs - 1);
+					randomC = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
 				}
 				pair = new PairVO(new OperationIndexVO(0, randomB, randomA), new OperationIndexVO(0, randomC,randomA));
 			}
@@ -111,20 +112,5 @@ public class RandomYu implements INeighborCalculator{
 		return pairs;
 	}
 	
-	// -----------------------------------------------
-	// Utilities
-	// -----------------------------------------------
-	
-	/**
-	 * Returns a random number in the interval between the min and the max
-	 * parameters
-	 * 
-	 * @param min
-	 *            . Lower value of the interval
-	 * @param max
-	 * @return
-	 */
-	private static int randomNumber(int min, int max) {
-		return (int) Math.round((Math.random() * (max - min)) + min);
-	}
+
 }

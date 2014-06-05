@@ -9,6 +9,7 @@ import structure.impl.CriticalPath;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.RandomNumber;
 
 public class OneInOneOut implements INeighborCalculator{
 
@@ -24,10 +25,10 @@ public class OneInOneOut implements INeighborCalculator{
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
-		int number = randomNumber(0, routes.size() - 1);
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
-		int i = randomNumber(0, selectedCriticalPath.size() - 2);
+		int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
 		IOperation initialNode = selectedCriticalPath.get(i);
 		
 		IOperation finalNode = null;
@@ -39,7 +40,7 @@ public class OneInOneOut implements INeighborCalculator{
 			
 			ArrayList<IOperation>operations = currentStructure.getOperations();
 			
-			int randomA = randomNumber(0, total - 1);
+			int randomA = RandomNumber.getInstance().randomNumber(0, total - 1);
 			IOperation temp = operations.get(randomA);
 			if(!selectedCriticalPath.contains(temp)){
 				finalNode = temp;
@@ -57,28 +58,51 @@ public class OneInOneOut implements INeighborCalculator{
 			throws Exception {
 	
 		int amount = 0;
+		int exit = 0;
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
 		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		ArrayList<IOperation>operations = currentStructure.getOperations();
-		for(int j =0; j < routes.size()  && amount < size;j++){
-			ArrayList<IOperation> selectedCriticalPath = routes.get(j).getRoute();
+		
+		while(amount < size){
+			int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
+
+			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
+			IOperation initialNode = selectedCriticalPath.get(i);
 			
-			for (int i = 0; i < selectedCriticalPath.size()  && amount < size; i++) {
-				IOperation firstOperation = selectedCriticalPath.get(i);
+			IOperation finalNode = null;
+			
+			while (finalNode==null){
+				int totalJobs = currentStructure.getTotalJobs();
+				int totalStations = currentStructure.getTotalStations();
+				int total = totalJobs*totalStations;
 				
-				for (int i2 = 0; i2 < operations.size() && amount < size; i2++) {
-					IOperation secondOperation = operations.get(i2);
-					if(!selectedCriticalPath.contains(secondOperation)){
-						PairVO temp = new PairVO(firstOperation.getOperationIndex(), secondOperation.getOperationIndex());
-						neighborhood.add(temp);
-						amount++;
-					}
+				
+				int randomA = RandomNumber.getInstance().randomNumber(0, total - 1);
+				IOperation temp = operations.get(randomA);
+				if(!selectedCriticalPath.contains(temp)){
+					finalNode = temp;
+				}
+				
+			}
+			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
+			OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
+			PairVO temp = new PairVO(initialOperationIndex,finalOperationIndex);
+			if(!neighborhood.contains(temp)){
+				neighborhood.add(temp);
+				exit=0;
+				amount++;
+			}else{
+				exit++;
+				if(exit>=100){
+					return neighborhood;
 				}
 			}
 		}
+		
 		return neighborhood;
 	}
 	
@@ -108,20 +132,5 @@ public class OneInOneOut implements INeighborCalculator{
 		}
 		return neighborhood;
 	}
-	// -----------------------------------------------
-	// Utilities
-	// -----------------------------------------------
-	
-	/**
-	 * Returns a random number in the interval between the min and the max
-	 * parameters
-	 * 
-	 * @param min
-	 *            . Lower value of the interval
-	 * @param max
-	 * @return
-	 */
-	private static int randomNumber(int min, int max) {
-		return (int) Math.round((Math.random() * (max - min)) + min);
-	}
+
 }

@@ -6,6 +6,7 @@ import structure.IStructure;
 
 import common.types.OperationIndexVO;
 import common.types.PairVO;
+import common.utils.RandomNumber;
 
 import neighborCalculator.INeighborCalculator;
 
@@ -41,7 +42,7 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 		clone.getCriticalPaths();
 		ArrayList<int[]>temp = clone.getWeightedNodesCriticaRoute();
 		int i = 0;
-		int number = randomNumber(0,temp.size()-1); 
+		int number = RandomNumber.getInstance().randomNumber(0,temp.size()-1); 
 		OperationIndexVO initialOperationIndex = new OperationIndexVO(temp.get(i)[0],temp.get(i)[1]);
 		OperationIndexVO finalOperationIndex = new OperationIndexVO(temp.get(number)[0], temp.get(number)[1]);
 			
@@ -103,11 +104,5 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 		return neighborhood;
 	}
 	
-	// -----------------------------------------------
-	// Utilities
-	// -----------------------------------------------
-	
-	private static int randomNumber(int min, int max) {
-		return (int) Math.round((Math.random() * (max - min)) + min);
-	}
+
 }
