@@ -25,7 +25,9 @@ public class OneInOneOut implements INeighborCalculator{
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
-		int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+		int number = 0;
+		if(routes.size()!=1)
+			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);;
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 		int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
@@ -67,7 +69,9 @@ public class OneInOneOut implements INeighborCalculator{
 		ArrayList<IOperation>operations = currentStructure.getOperations();
 		
 		while(amount < size){
-			int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+			int number = 0;
+			if(routes.size()!=1)
+				number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
 			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);

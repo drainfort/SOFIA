@@ -43,7 +43,9 @@ public class N3_AdjacentInCriticalPaths implements INeighborCalculator {
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
-		int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+		int number = 0;
+		if(routes.size()!=1)
+			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 		// Selecting an adjacent pair of operations
@@ -67,7 +69,10 @@ public class N3_AdjacentInCriticalPaths implements INeighborCalculator {
 		int exit = 0;
 		while(neighborhood.size() < size){
 			//Selecting the critical route
-			int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+			int number = 0;
+			if(routes.size()!=1)
+				number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+			
 			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 			// Selecting an adjacent pair of operations
