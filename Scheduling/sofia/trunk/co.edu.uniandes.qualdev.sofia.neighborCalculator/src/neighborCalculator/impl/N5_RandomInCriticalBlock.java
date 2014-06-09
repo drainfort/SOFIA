@@ -45,7 +45,9 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
 		IStructure clone = currentGraph.cloneStructure();
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
-		int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+		int number = 0;
+		if(routes.size()!=1)
+			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
         ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
         int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
         ArrayList<IOperation> block = blocks.get(number2);
@@ -79,7 +81,9 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
         ArrayList<IOperation> block = null;
         while(neighborhood.size() < size){
             
-            int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+        	int number = 0;
+    		if(routes.size()!=1)
+    			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
             blocks= routes.get(number).getBlocks();
             int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
             block = blocks.get(number2);

@@ -47,7 +47,9 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 			ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 			
 			// Selecting one of the critical paths
-			int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+			int number = 0;
+			if(routes.size()!=1)
+				number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
 			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 			// Selecting an adjacent pair of operations
@@ -75,7 +77,9 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
-		int number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+		int number = 0;
+		if(routes.size()!=1)
+			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 		//System.out.println(selectedCriticalPath);
 
