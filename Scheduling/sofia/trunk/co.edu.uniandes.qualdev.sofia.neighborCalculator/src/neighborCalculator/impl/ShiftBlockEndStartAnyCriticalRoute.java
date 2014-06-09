@@ -42,7 +42,9 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
 		if(routes.size()!=1)
 			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
         ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
-        int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
+        int number2 = 0;
+        if(blocks.size()!=1)
+        	number2 =RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
         ArrayList<IOperation> block = blocks.get(number2);
         int number3= RandomNumber.getInstance().randomNumber(0, 1);
         int number4 = RandomNumber.getInstance().randomNumber(1, block.size()-1);
@@ -77,7 +79,9 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
 			if(routes.size()!=1)
 				number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
             ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
-            int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
+            int number2 = 0;
+            if(blocks.size()!=1)
+            	number2 =RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
             ArrayList<IOperation> block = blocks.get(number2);
             int number3= RandomNumber.getInstance().randomNumber(0, 1);
             int number4 = RandomNumber.getInstance().randomNumber(1, block.size()-1);
