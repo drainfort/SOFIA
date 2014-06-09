@@ -49,12 +49,14 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
 		if(routes.size()!=1)
 			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
         ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
-        int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
+        int number2 = 0;
+        if(blocks.size()!=1)
+        		number2 =RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
         ArrayList<IOperation> block = blocks.get(number2);
         int number3= RandomNumber.getInstance().randomNumber(0, block.size()-1);
         int number4= RandomNumber.getInstance().randomNumber(0, block.size()-1);
         while(number4==number3)
-        	number4= RandomNumber.getInstance().randomNumber(0, block.size()-1);
+        	number4 = RandomNumber.getInstance().randomNumber(0, block.size()-1);
         IOperation initialNode= block.get(number3);
         IOperation finalNode = block.get(number4);
 		
@@ -75,7 +77,6 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
         
         // Obtaining all the critical paths of the current solutions
         ArrayList<CriticalPath> routes = currentGraph.getCriticalPaths();
-                
         int exit = 0;
         ArrayList<ArrayList<IOperation>> blocks= null;
         ArrayList<IOperation> block = null;
@@ -85,12 +86,15 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
     		if(routes.size()!=1)
     			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
             blocks= routes.get(number).getBlocks();
-            int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
+
+            int number2 = 0;
+            if(blocks.size()!=1)
+            	number2 =RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
             block = blocks.get(number2);
-            int number3= RandomNumber.getInstance().randomNumber(0, block.size()-1);
-            int number4= RandomNumber.getInstance().randomNumber(0, block.size()-1);
-            while(number4==number3)
-            	number4= RandomNumber.getInstance().randomNumber(0, block.size()-1);
+            int number3 = RandomNumber.getInstance().randomNumber(0, block.size()-1);
+            int number4 = RandomNumber.getInstance().randomNumber(0, block.size()-1);
+            while(number4 ==number3)
+            	number4 = RandomNumber.getInstance().randomNumber(0, block.size()-1);
             IOperation initialNode= block.get(number3);
             IOperation finalNode = block.get(number4);
 
