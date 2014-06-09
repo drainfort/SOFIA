@@ -41,17 +41,15 @@ public class N2_RandomInCriticalPaths implements INeighborCalculator {
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
-		int number = 0;
-		if(routes.size()!=1)
-			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size());
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 		// Selecting an adjacent pair of operations
-		int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+		int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size());
 		IOperation initialNode = selectedCriticalPath.get(i);
-		int j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+		int j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size());
 		while(i==j)
-			j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+			j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size());
 		IOperation finalNode = selectedCriticalPath.get(j);
 		OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
 		OperationIndexVO finalOperationIndex = new OperationIndexVO(finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId());
@@ -73,17 +71,15 @@ public class N2_RandomInCriticalPaths implements INeighborCalculator {
 		while(amount < size){
 			
 			// Selecting one of the critical paths
-			int number = 0;
-			if(routes.size()!=1)
-				number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+			int number = RandomNumber.getInstance().randomNumber(0, routes.size());
 			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 			// Selecting an adjacent pair of operations
-			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size());
 			IOperation initialNode = selectedCriticalPath.get(i);
-			int j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+			int j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size());
 			while(i==j)
-				j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
+				j = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size());
 			
 			IOperation finalNode = selectedCriticalPath.get(j);
 			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());

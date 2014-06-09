@@ -29,8 +29,8 @@ public class N1_RandomYuForFOm implements INeighborCalculator{
 		
 		boolean found = false;
 		while(!found){
-			int randomA = RandomNumber.getInstance().randomNumber(0, total - 1);
-			int randomB = RandomNumber.getInstance().randomNumber(0, total - 1);
+			int randomA = RandomNumber.getInstance().randomNumber(0, total);
+			int randomB = RandomNumber.getInstance().randomNumber(0, total);
 			
 			OperationIndexVO start = operations.get(randomA).getOperationIndex();
 			OperationIndexVO end = operations.get(randomB).getOperationIndex();
@@ -56,8 +56,8 @@ public class N1_RandomYuForFOm implements INeighborCalculator{
 			
 			ArrayList<IOperation>operations = currentVector.getOperations();
 			
-			int randomA = RandomNumber.getInstance().randomNumber(0, total - 1);
-			int randomB = RandomNumber.getInstance().randomNumber(0, total - 1);
+			int randomA = RandomNumber.getInstance().randomNumber(0, total);
+			int randomB = RandomNumber.getInstance().randomNumber(0, total);
 			
 			OperationIndexVO start = operations.get(randomA).getOperationIndex();
 			OperationIndexVO end = operations.get(randomB).getOperationIndex();

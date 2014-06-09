@@ -25,12 +25,10 @@ public class OneInOneOut implements INeighborCalculator{
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
-		int number = 0;
-		if(routes.size()!=1)
-			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);;
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size());;
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
-		int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
+		int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
 		IOperation initialNode = selectedCriticalPath.get(i);
 		
 		IOperation finalNode = null;
@@ -42,7 +40,7 @@ public class OneInOneOut implements INeighborCalculator{
 			
 			ArrayList<IOperation>operations = currentStructure.getOperations();
 			
-			int randomA = RandomNumber.getInstance().randomNumber(0, total - 1);
+			int randomA = RandomNumber.getInstance().randomNumber(0, total);
 			IOperation temp = operations.get(randomA);
 			if(!selectedCriticalPath.contains(temp)){
 				finalNode = temp;
@@ -69,12 +67,10 @@ public class OneInOneOut implements INeighborCalculator{
 		ArrayList<IOperation>operations = currentStructure.getOperations();
 		
 		while(amount < size){
-			int number = 0;
-			if(routes.size()!=1)
-				number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+			int number =  RandomNumber.getInstance().randomNumber(0, routes.size());
 			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
-			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
+			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
 			IOperation initialNode = selectedCriticalPath.get(i);
 			
 			IOperation finalNode = null;
@@ -85,7 +81,7 @@ public class OneInOneOut implements INeighborCalculator{
 				int total = totalJobs*totalStations;
 				
 				
-				int randomA = RandomNumber.getInstance().randomNumber(0, total - 1);
+				int randomA = RandomNumber.getInstance().randomNumber(0, total);
 				IOperation temp = operations.get(randomA);
 				if(!selectedCriticalPath.contains(temp)){
 					finalNode = temp;

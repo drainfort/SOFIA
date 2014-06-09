@@ -62,6 +62,16 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 				initialOperationIndex = new OperationIndexVO(0,initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId(), initialNode.getOperationIndex().getMachineId());
 				finalOperationIndex = new OperationIndexVO(0, finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId(), finalNode.getOperationIndex().getMachineId());
 			}
+			else{
+				i = RandomNumber.getInstance().randomNumber(0, currentStructure.getOperations().size() - 1);
+				initialNode = currentStructure.getOperations().get(i);
+				finalNode = currentStructure.getOperations().get(i + 1);
+				if(initialNode.getOperationIndex().getStationId() == finalNode.getOperationIndex().getStationId()){
+					found = true;
+					initialOperationIndex = new OperationIndexVO(0,initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId(), initialNode.getOperationIndex().getMachineId());
+					finalOperationIndex = new OperationIndexVO(0, finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId(), finalNode.getOperationIndex().getMachineId());
+				}
+			}
 		}
 		return new PairVO(initialOperationIndex, finalOperationIndex);
 	}
@@ -71,27 +81,21 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 			throws Exception {
 		//System.out.println(size);
 		ArrayList<PairVO> neighborhood = new ArrayList<PairVO>();
-		IStructure clone = currentStructure.cloneStructure();
 		
 		// Obtaining all the critical paths of the current solutions
-		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
-		
-		// Selecting one of the critical paths
-		int number = 0;
-		if(routes.size()!=1)
-			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
-		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
-		//System.out.println(selectedCriticalPath);
+		ArrayList<CriticalPath> routes = currentStructure.getCriticalPaths();
 
 		int exit = 0;
 		while(neighborhood.size() < size){
 			OperationIndexVO initialOperationIndex = null;
 			OperationIndexVO finalOperationIndex = null;
 			boolean found = false;
-			
+			int number = RandomNumber.getInstance().randomNumber(0, routes.size());
+			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 			while(!found){
 				// Selecting an adjacent pair of operations
-				int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
+				
+				int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
 				IOperation initialNode = selectedCriticalPath.get(i);
 				IOperation finalNode = selectedCriticalPath.get(i + 1);
 				//System.out.println("initial:"+initialNode);
@@ -111,6 +115,28 @@ public class N4_AdjacentInCriticalPathMachinesOnly implements INeighborCalculato
 						exit++;
 						if(exit>=100){
 							return neighborhood;
+						}
+					}
+				}
+				else{
+					i = RandomNumber.getInstance().randomNumber(0, currentStructure.getOperations().size() - 1);
+					initialNode = currentStructure.getOperations().get(i);
+					finalNode = currentStructure.getOperations().get(i + 1);
+					if(initialNode.getOperationIndex().getStationId() == finalNode.getOperationIndex().getStationId()){
+						found = true;
+						initialOperationIndex = new OperationIndexVO(0,initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId(), initialNode.getOperationIndex().getMachineId());
+						finalOperationIndex = new OperationIndexVO(0, finalNode.getOperationIndex().getJobId(), finalNode.getOperationIndex().getStationId(), finalNode.getOperationIndex().getMachineId());
+					
+						// Adding the new neighbor to the array if it is not previously considered
+						PairVO temp = new PairVO(initialOperationIndex, finalOperationIndex);
+						if(!neighborhood.contains(temp)){
+							neighborhood.add(temp);
+							exit=0;
+						}else{
+							exit++;
+							if(exit>=100){
+								return neighborhood;
+							}
 						}
 					}
 				}

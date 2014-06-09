@@ -38,20 +38,16 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
 		IStructure clone = currentGraph.cloneStructure();
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
-		int number = 0;
-		if(routes.size()!=1)
-			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size());
         ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
-        int number2 = 0;
-        if(blocks.size()!=1)
-        	number2 =RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
+        int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size());
         ArrayList<IOperation> block = blocks.get(number2);
         int number3= RandomNumber.getInstance().randomNumber(0, 1);
-        int number4 = RandomNumber.getInstance().randomNumber(1, block.size()-1);
+        int number4 = RandomNumber.getInstance().randomNumber(1, block.size());
         IOperation initialNode= block.get(0);
         IOperation finalNode = block.get(number4);
         if(number3==1){
-        	number4 = RandomNumber.getInstance().randomNumber(0, block.size()-2);
+        	number4 = RandomNumber.getInstance().randomNumber(0, block.size()-1);
             finalNode= block.get(block.size()-1);
             initialNode = block.get(number4);
         }
@@ -75,20 +71,16 @@ public class ShiftBlockEndStartAnyCriticalRoute implements INeighborCalculator {
 		
 		while(neighborhood.size()<size){
 			
-			int number = 0;
-			if(routes.size()!=1)
-				number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+			int number = RandomNumber.getInstance().randomNumber(0, routes.size());
             ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
-            int number2 = 0;
-            if(blocks.size()!=1)
-            	number2 =RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
+            int number2 =RandomNumber.getInstance().randomNumber(0, blocks.size());
             ArrayList<IOperation> block = blocks.get(number2);
             int number3= RandomNumber.getInstance().randomNumber(0, 1);
-            int number4 = RandomNumber.getInstance().randomNumber(1, block.size()-1);
+            int number4 = RandomNumber.getInstance().randomNumber(1, block.size());
             IOperation initialNode= block.get(0);
             IOperation finalNode = block.get(number4);
             if(number3==1){
-            	number4 = RandomNumber.getInstance().randomNumber(0, block.size()-2);
+            	number4 = RandomNumber.getInstance().randomNumber(0, block.size()-1);
                 finalNode= block.get(block.size()-1);
                 initialNode = block.get(number4);
             }

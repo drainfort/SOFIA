@@ -43,13 +43,11 @@ public class N3_AdjacentInCriticalPaths implements INeighborCalculator {
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
 		// Selecting one of the critical paths
-		int number = 0;
-		if(routes.size()!=1)
-			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size());
 		ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 		// Selecting an adjacent pair of operations
-		int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
+		int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
 		IOperation initialNode = selectedCriticalPath.get(i);
 		IOperation finalNode = selectedCriticalPath.get(i + 1);
 		OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());
@@ -69,14 +67,12 @@ public class N3_AdjacentInCriticalPaths implements INeighborCalculator {
 		int exit = 0;
 		while(neighborhood.size() < size){
 			//Selecting the critical route
-			int number = 0;
-			if(routes.size()!=1)
-				number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+			int number = RandomNumber.getInstance().randomNumber(0, routes.size());
 			
 			ArrayList<IOperation> selectedCriticalPath = routes.get(number).getRoute();
 
 			// Selecting an adjacent pair of operations
-			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 2);
+			int i = RandomNumber.getInstance().randomNumber(0, selectedCriticalPath.size() - 1);
 			IOperation initialNode = selectedCriticalPath.get(i);
 			IOperation finalNode = selectedCriticalPath.get(i + 1);
 			OperationIndexVO initialOperationIndex = new OperationIndexVO(initialNode.getOperationIndex().getJobId(), initialNode.getOperationIndex().getStationId());

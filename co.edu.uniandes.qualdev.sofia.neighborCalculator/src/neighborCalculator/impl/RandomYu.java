@@ -24,22 +24,22 @@ public class RandomYu implements INeighborCalculator{
 		int totalJobs = currentVector.getTotalJobs();
 		int totalStations = currentVector.getTotalStations();
 		if(random<=0.5){
-			int randomA = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
-			int randomB = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
-			int randomC = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
+			int randomA = RandomNumber.getInstance().randomNumber(0, totalJobs);
+			int randomB = RandomNumber.getInstance().randomNumber(0, totalStations);
+			int randomC = RandomNumber.getInstance().randomNumber(0, totalStations);
 			while(randomB==randomC){
-				randomC = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
+				randomC = RandomNumber.getInstance().randomNumber(0, totalStations);
 			}
 			PairVO pair = new PairVO(new OperationIndexVO(0, randomA, randomB, 0), new OperationIndexVO(0, randomA, randomC, 0));
 			return pair;
 		}
 		else{
 			
-			int randomA = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
-			int randomB = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
-			int randomC = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
+			int randomA = RandomNumber.getInstance().randomNumber(0, totalStations);
+			int randomB = RandomNumber.getInstance().randomNumber(0, totalJobs);
+			int randomC = RandomNumber.getInstance().randomNumber(0, totalJobs);
 			while(randomB==randomC){
-				randomC = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
+				randomC = RandomNumber.getInstance().randomNumber(0, totalJobs);
 			}
 			PairVO pair = new PairVO(new OperationIndexVO(0, randomB, randomA), new OperationIndexVO(0, randomC,randomA));
 			return pair;
@@ -58,21 +58,21 @@ public class RandomYu implements INeighborCalculator{
 			int totalStations = currentVector.getTotalStations();
 			PairVO pair = null;
 			if(random<=0.5){
-				int randomA = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
-				int randomB = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
-				int randomC = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
+				int randomA = RandomNumber.getInstance().randomNumber(0, totalJobs);
+				int randomB = RandomNumber.getInstance().randomNumber(0, totalStations);
+				int randomC = RandomNumber.getInstance().randomNumber(0, totalStations);
 				while(randomB==randomC){
-					randomC = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
+					randomC = RandomNumber.getInstance().randomNumber(0, totalStations);
 				}
 				pair = new PairVO(new OperationIndexVO(0, randomA, randomB, 0), new OperationIndexVO(0, randomA, randomC, 0));
 			}
 			else{
 				
-				int randomA = RandomNumber.getInstance().randomNumber(0, totalStations - 1);
-				int randomB = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
-				int randomC = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
+				int randomA = RandomNumber.getInstance().randomNumber(0, totalStations);
+				int randomB = RandomNumber.getInstance().randomNumber(0, totalJobs);
+				int randomC = RandomNumber.getInstance().randomNumber(0, totalJobs);
 				while(randomB==randomC){
-					randomC = RandomNumber.getInstance().randomNumber(0, totalJobs - 1);
+					randomC = RandomNumber.getInstance().randomNumber(0, totalJobs);
 				}
 				pair = new PairVO(new OperationIndexVO(0, randomB, randomA), new OperationIndexVO(0, randomC,randomA));
 			}
