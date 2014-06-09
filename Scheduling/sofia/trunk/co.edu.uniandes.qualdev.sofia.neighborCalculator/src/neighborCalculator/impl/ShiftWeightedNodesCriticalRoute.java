@@ -42,7 +42,7 @@ public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 		clone.getCriticalPaths();
 		ArrayList<int[]>temp = clone.getWeightedNodesCriticaRoute();
 		int i = 0;
-		int number = RandomNumber.getInstance().randomNumber(0,temp.size()-1); 
+		int number = RandomNumber.getInstance().randomNumber(0,temp.size()); 
 		OperationIndexVO initialOperationIndex = new OperationIndexVO(temp.get(i)[0],temp.get(i)[1]);
 		OperationIndexVO finalOperationIndex = new OperationIndexVO(temp.get(number)[0], temp.get(number)[1]);
 			

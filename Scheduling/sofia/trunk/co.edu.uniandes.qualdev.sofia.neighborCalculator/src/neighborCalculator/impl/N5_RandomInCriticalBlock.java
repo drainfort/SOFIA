@@ -45,13 +45,9 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
 		IStructure clone = currentGraph.cloneStructure();
 		ArrayList<CriticalPath> routes = clone.getCriticalPaths();
 		
-		int number = 0;
-		if(routes.size()!=1)
-			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+		int number = RandomNumber.getInstance().randomNumber(0, routes.size());
         ArrayList<ArrayList<IOperation>> blocks= routes.get(number).getBlocks();
-        int number2 = 0;
-        if(blocks.size()!=1)
-        		number2 =RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
+        int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size());
         ArrayList<IOperation> block = blocks.get(number2);
         int number3= RandomNumber.getInstance().randomNumber(0, block.size()-1);
         int number4= RandomNumber.getInstance().randomNumber(0, block.size()-1);
@@ -81,20 +77,15 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
         ArrayList<ArrayList<IOperation>> blocks= null;
         ArrayList<IOperation> block = null;
         while(neighborhood.size() < size){
-            
-        	int number = 0;
-    		if(routes.size()!=1)
-    			number = RandomNumber.getInstance().randomNumber(0, routes.size() - 1);
+    		int	number = RandomNumber.getInstance().randomNumber(0, routes.size());
             blocks= routes.get(number).getBlocks();
-
-            int number2 = 0;
-            if(blocks.size()!=1)
-            	number2 =RandomNumber.getInstance().randomNumber(0, blocks.size() - 1);
+            int number2 = RandomNumber.getInstance().randomNumber(0, blocks.size());
             block = blocks.get(number2);
-            int number3 = RandomNumber.getInstance().randomNumber(0, block.size()-1);
-            int number4 = RandomNumber.getInstance().randomNumber(0, block.size()-1);
-            while(number4 ==number3)
-            	number4 = RandomNumber.getInstance().randomNumber(0, block.size()-1);
+            int number3 = RandomNumber.getInstance().randomNumber(0, block.size());
+            int number4 = RandomNumber.getInstance().randomNumber(0, block.size());
+            while(number4 == number3){
+            	number4 = RandomNumber.getInstance().randomNumber(0, block.size());
+            }
             IOperation initialNode= block.get(number3);
             IOperation finalNode = block.get(number4);
 
@@ -108,7 +99,8 @@ public class N5_RandomInCriticalBlock implements INeighborCalculator {
                 exit=0;
             }else{
                 exit++;
-                if(exit>=100){
+                if(exit>=20){
+                
                     return neighborhood;
                 }
             }
