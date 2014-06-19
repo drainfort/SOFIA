@@ -9,7 +9,7 @@ import common.types.OperationIndexVO;
 /**
  * Class that contains the information of the results for a given execution
  * @author David Mendez-Acuna
- *
+ * @author Jaime Romero
  */
 public class ExecutionResults {
 
@@ -23,48 +23,104 @@ public class ExecutionResults {
 	private int numberOfIterations;
 	
 	/**
-	 * Metrics model required for the construction of the ganttChart
+	 * Gantt tasks for final solution gantt chart.
 	 */
-	private MetricsModel metricsModel;
-	
 	private ArrayList<GanttTask> tasksFinalSolution;
 	
+	/**
+	 * Operations for the final solution charts
+	 */
 	private ArrayList<OperationIndexVO> operationsFinalSolution;
 	
+	/**
+	 * Gantt tasks for initial solution gantt chart.
+	 */
 	private ArrayList<GanttTask> tasksInitialSolution;
 	
+	/**
+	 * Operations for the initial solution charts
+	 */
 	private ArrayList<OperationIndexVO> operationsInitialSolution;
 	
+	/**
+	 * Improvement Graphic
+	 */
 	private ArrayList<Graphic> graphics = new ArrayList<Graphic>();
 	
+	/**
+	 * Parameters of the heuristic
+	 */
 	private Properties parameters;
 	
+	/**
+	 * Best objective function
+	 */
 	private double bestCmax;
 	
+	/**
+	 * Initial objective function
+	 */
 	private double initialCmax;
 	
+	/**
+	 * Name of the instance
+	 */
 	private String instanceName;
 	
+	/**
+	 * Execution time of the instance
+	 */
 	private long executionTime;
 	
+	/**
+	 * Optimal value or best known solution
+	 */
 	private int optimal;
 	
+	/**
+	 * Number of visited neighbors
+	 */
 	private int numberOfVisitedNeighbors;
 	
+	/**
+	 * Stop criteria
+	 */
 	private int stopCriteria;
 	
+	/**
+	 * Attribute that specifies if in the result file will appear the table of results
+	 */
 	private boolean printTable;
-	
+	/**
+	 * Attribute that specifies if in the result file will appear the gantt of the initial solution
+	 */
 	private boolean printInitialSolution;
-	
+	/**
+	 * Attribute that specifies if in the result file will appear the gannt of the final solution
+	 */
 	private boolean printFinalSolution;
-	
+	/**
+	 * Attribute that specifies if in the result file will appear the log table
+	 */
 	private boolean printLog;
-	
+	/**
+	 * Attribute that specifies if in the result file will appear the chart of improvements
+	 */
 	private boolean printImprovement;
 	
 	// --------------------------------------------
 	// Constructor
+	// --------------------------------------------
+	
+	/**
+	 * Default constructor of the class
+	 */
+	public ExecutionResults(){
+	}
+	
+	
+	// --------------------------------------------
+	// Getters and setters
 	// --------------------------------------------
 	
 	public boolean isPrintLog() {
@@ -82,16 +138,6 @@ public class ExecutionResults {
 	public void setOptimal(int optimal) {
 		this.optimal = optimal;
 	}
-
-	/**
-	 * Default constructor of the class
-	 */
-	public ExecutionResults(){
-	}
-	
-	// --------------------------------------------
-	// Getters and setters
-	// --------------------------------------------
 	
 	public int getNumberOfIterations() {
 		return numberOfIterations;
@@ -99,14 +145,6 @@ public class ExecutionResults {
 
 	public void setNumberOfIterations(int numberOfIterations) {
 		this.numberOfIterations = numberOfIterations;
-	}
-
-	public MetricsModel getMetricsModel() {
-		return metricsModel;
-	}
-
-	public void setMetricsModel(MetricsModel metricsModel) {
-		this.metricsModel = metricsModel;
 	}
 
 	public ArrayList<GanttTask> getTasksFinalSolution() {

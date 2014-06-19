@@ -15,6 +15,7 @@ public class AlgorithmParameters {
 	/** Hash table that stores the parameters */
 	private Hashtable<String, String> algorithmParameters;
 	
+	/** Name of the instance that is going to be executed */
 	private static AlgorithmParameters instance;
 	
 	// --------------------------------------------
