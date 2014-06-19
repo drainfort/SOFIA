@@ -32,10 +32,13 @@ public class OperationIndexVO {
 	/** Processing time of the operation */
 	private int processingTime;
 	
+	/** Name of the Station */
 	private String nameStation;
 	
+	/** Name of the Job */
 	private String nameJob;
 	
+	/** Name of the Machine */
 	private String nameMachine;
 
 	// --------------------------------------------
@@ -44,11 +47,9 @@ public class OperationIndexVO {
 
 	/**
 	 * Constructor of the class
-	 * 
-	 * @param job
-	 *            Job index
-	 * @param station
-	 *            Station index
+	 * @param job - Job index
+	 * @param station - Station index
+	 * @param processingTime
 	 */
 	public OperationIndexVO( int processingTime, int job, int station) {
 		jobId = job;
@@ -57,6 +58,11 @@ public class OperationIndexVO {
 		this.processingTime = processingTime;
 	}
 	
+	/**
+	 * Constructor of the class
+	 * @param job - Job index
+	 * @param station - Station index
+	 */
 	public OperationIndexVO(int job, int station) {
 		jobId = job;
 		stationId = station;
@@ -66,13 +72,10 @@ public class OperationIndexVO {
 
 	/**
 	 * Constructor of the class
-	 * 
-	 * @param job
-	 *            Job index
-	 * @param station
-	 *            Station index
-	 * @param machine
-	 *            Machine index
+	 * @param job - Job index
+	 * @param station - Station index
+	 * @param machine - Machine index
+	 * @param processingTime
 	 */
 	public OperationIndexVO(int processingTime,int job, int station, int machine) {
 		jobId = job;
