@@ -4,7 +4,6 @@ import java.util.Properties;
 
 import modifier.IModifier;
 
-import common.types.NeighborInformation;
 import common.types.PairVO;
 
 import structure.IStructure;
