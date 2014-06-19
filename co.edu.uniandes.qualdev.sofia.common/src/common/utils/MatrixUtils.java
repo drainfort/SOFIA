@@ -6,6 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class MatrixUtils {
+	
+	
+	// ---------------------------------------
+	// Methods
+	// ---------------------------------------	
 
 	/**
 	 * Loads an integer matrix from a file given in the parameter
@@ -121,6 +126,12 @@ public class MatrixUtils {
 		System.out.println(matrix);
 	}
 	
+	/**
+	 * Prints in the console the matrix given in the parameter.
+	 * 
+	 * @param matrixToPrint
+	 *            . The matrix that is gonna be printed in the console.
+	 */
 	public static void printMatrix(float[][] matrixToPrint) {
 		String matrix = "";
 		for (int i = 0; i < matrixToPrint.length; i++) {
@@ -133,6 +144,12 @@ public class MatrixUtils {
 		System.out.println(matrix);
 	}
 	
+	/**
+	 * Prints in the console the matrix given in the parameter.
+	 * 
+	 * @param matrixToPrint
+	 *            . The matrix that is gonna be printed in the console.
+	 */
 	public static void printMatrix(Float[][] matrixToPrint) {
 		String matrix = "";
 		for (int i = 0; i < matrixToPrint.length; i++) {
