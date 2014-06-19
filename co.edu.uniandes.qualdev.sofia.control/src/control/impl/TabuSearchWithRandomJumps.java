@@ -44,7 +44,7 @@ public class TabuSearchWithRandomJumps extends Control {
 		 int tabuSize = initialSolution.getTotalJobs()
 		 * initialSolution.getTotalStations() - 2;
 		
-		 ArrayList<Integer> arrayTabu = new ArrayList<Integer>();
+		 ArrayList<PairVO> arrayTabu = new ArrayList<PairVO>();
 		 ArrayList<PairVO> arrayNeighbors = new ArrayList<PairVO>();
 		
 		 // Provides an initial solution (X) from the problem
@@ -86,28 +86,20 @@ public class TabuSearchWithRandomJumps extends Control {
 				 double deltaXY;
 				 double deltaBestYY;
 				 double BestYCmax = 999999999;
-				 int movementX = 0;
-				 int movementY = 0;
 				 boolean isTabu;
-
+				 PairVO y = null;
 				 int totalJobs = X.getTotalJobs();
 				 int totalStations = X.getTotalStations();
 				 arrayNeighbors = neighborCalculator.calculateNeighborhood(X, totalJobs * totalStations - 1);
 
 				 for (int i = 0; i < arrayNeighbors.size(); i++) {
 					 isTabu = false;
-					 PairVO y = arrayNeighbors.get(i);
+					 y = arrayNeighbors.get(i);
 					 Y = modifier.performModification(y, X);
 					 numberOfVisitedNeighbors++;
-
-					 movementX = y.getX();
-					 movementY = y.getY();
-
 					 if (arrayTabu.size() != 0) {
 						 for (int j = 0; j < arrayTabu.size() && !isTabu; j += 2) {
-							 int a = (Integer) arrayTabu.get(j);
-							 int b = (Integer) arrayTabu.get(j + 1);
-							 if (a == movementX && b == movementY) {
+							 if (arrayTabu.get(j).equals(y)) {
 								 isTabu = true;
 								 j = arrayTabu.size();
 							 }
@@ -141,18 +133,10 @@ public class TabuSearchWithRandomJumps extends Control {
 						 // XCMax);
 
 						 if (arrayTabu.size() < tabuSize) {
-							 if (movementY < movementX) {
-								 arrayTabu.add(movementY);
-								 arrayTabu.add(movementX - 1);
-							 } else {
-								 arrayTabu.add(movementY + 1);
-								 arrayTabu.add(movementX);
-							 }
+								 arrayTabu.add(y);
 						 } else {
 							 arrayTabu.remove(0);
-							 arrayTabu.remove(1);
-							 arrayTabu.add(movementY);
-							 arrayTabu.add(movementX + 1);
+							 arrayTabu.add(y);
 						 }
 
 					 }
@@ -161,13 +145,10 @@ public class TabuSearchWithRandomJumps extends Control {
 					 XCMax = gammaCalculator.calculateGamma(X);
 
 					 if (arrayTabu.size() < tabuSize) {
-						 arrayTabu.add(movementY);
-						 arrayTabu.add(movementX + 1);
+						 arrayTabu.add(y);
 					 } else {
 						 arrayTabu.remove(0);
-						 arrayTabu.remove(1);
-						 arrayTabu.add(movementY);
-						 arrayTabu.add(movementX + 1);
+						 arrayTabu.add(y);
 					 }
 				 }
 
