@@ -2,8 +2,6 @@ package neighborCalculator;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
-import common.types.NeighborInformation;
 import common.types.PairVO;
 
 import structure.IStructure;
