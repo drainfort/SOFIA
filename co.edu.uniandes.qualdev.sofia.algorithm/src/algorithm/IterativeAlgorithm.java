@@ -39,6 +39,9 @@ public class IterativeAlgorithm {
 	 */
 	private INeighborCalculator neighborCalculator;
 
+	/**
+	 * List of Components that perfom modifications over the data structure
+	 */
 	private ArrayList<IModifier> modifiers;
 	
 	/**
@@ -56,12 +59,22 @@ public class IterativeAlgorithm {
 	 */
 	private Properties algorithmConfiguration;
 	
+	/**
+	 * Component that decodify the data structure 
+	 */
 	private Decoding decodingStrategy;
 
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
 
+	/**
+	 * Creates an iterative algorithm
+	 * @param algorithmConfiguration configuration of the algorithm
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
 	public IterativeAlgorithm(Properties algorithmConfiguration)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException {
@@ -113,6 +126,13 @@ public class IterativeAlgorithm {
 	// Methods
 	// -----------------------------------------------
 
+	/**
+	 * Execute the iterative algorithm to solve and specific scheduling problem with an initial solution
+	 * @param problem The scheduling problem that the algorithm is going to solve
+	 * @param initialSolution - Initial solution for the scheduling problem
+	 * @return results for the problem
+	 * @throws Exception
+	 */
 	public ExecutionResults execute(SchedulingProblem problem, IStructure initialSolution) throws Exception {
 		//TODO fix the true always
 		control.setInstanceName(problem.getInstanceName());

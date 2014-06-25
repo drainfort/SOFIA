@@ -15,6 +15,9 @@ public class ConstructiveAlgorithm {
 	// Attributes
 	// -----------------------------------------------
 	
+	/**
+	 * Attribute that build an initial solution to the specific problem
+	 */
 	private IInitialSolBuilder initialSolutionBuilder;
 	
 	// -----------------------------------------------
@@ -38,6 +41,11 @@ public class ConstructiveAlgorithm {
 	// -----------------------------------------------
 	// Methods
 	// -----------------------------------------------
+	
+	// -----------------------------------------------
+	// Getters and Setters
+	// -----------------------------------------------
+		
 	
 	public IInitialSolBuilder getInitialSolutionBuilder() {
 		return initialSolutionBuilder;

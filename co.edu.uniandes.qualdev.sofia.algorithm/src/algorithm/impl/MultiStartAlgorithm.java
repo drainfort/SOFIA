@@ -9,8 +9,31 @@ import common.utils.ExecutionResults;
 
 public class MultiStartAlgorithm extends SchedulingAlgorithm {
 
+	// -----------------------------------------------
+	// Attributes
+	// -----------------------------------------------
+	
+	/**
+	 * Number of the start for the multistart algorithm
+	 */
 	private int startsNumber;
 	
+	
+	// -----------------------------------------------
+	// Constructor
+	// -----------------------------------------------
+	/**
+	 * Constructor of the class 
+	 * @param algorithmConfiguration
+	 * @param problemConfiguration
+	 * @param currentBks
+	 * @param instanceType
+	 * @param hasOptimal
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws Exception
+	 */
 	public MultiStartAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks, String instanceType, boolean hasOptimal)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, Exception {
@@ -18,6 +41,10 @@ public class MultiStartAlgorithm extends SchedulingAlgorithm {
 		
 		startsNumber = 500;
 	}
+	
+	// -----------------------------------------------
+	// Methods
+	// -----------------------------------------------
 
 	@Override
 	public ExecutionResults execute(String instanceName, String instanceFile)

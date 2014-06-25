@@ -40,6 +40,9 @@ public abstract class SchedulingAlgorithm {
 	 */
 	protected IterativeAlgorithm iterativeAlgorithm;
 	
+	/**
+	 * The parameters and properties of the algorithm specified by the user.
+	 */
 	protected Properties algorithmConfiguration;
 	
 	// -----------------------------------------------
@@ -152,6 +155,11 @@ public abstract class SchedulingAlgorithm {
 	// Methods
 	// -----------------------------------------------
 
+	/**
+	 * Method to create a HashMap with all the known solution for different problems with the same istance
+	 * @param problemConfiguration - Problem configuration
+	 * @return HashMap with the best known solutions
+	 */
 	private HashMap<String, Integer> getBkss(Properties problemConfiguration) {
 		HashMap<String, Integer> bkss = new HashMap<String, Integer>();
 		
