@@ -25,19 +25,39 @@ public class ChartPrinter {
 	// ------------------------------------------------------------
 	// Attribute
 	// ------------------------------------------------------------
-	
+	/**
+	 * Unique instance of the class
+	 */
 	private static ChartPrinter instance;
 	
+	/**
+	 * Total results to print
+	 */
 	private ArrayList<ArrayList<ExecutionResults>> globalExecutionResults;
 	
+	/**
+	 * Boolean that specifies if the table appear in the result file
+	 */
 	private boolean printTable;
 	
+	/**
+	 * Boolean that specifies if the gantt of the initial solution is  in the result file
+	 */
 	private boolean printInitialSolutions;
 	
+	/**
+	 * Boolean that specifies if the gantt of the final solution is  in the result file
+	 */
 	private boolean printSolutions;
 	
+	/**
+	 * Boolean that specifies if the gantt of the final solution is  in the result file
+	 */
 	private boolean printLog;
 	
+	/**
+	 * Boolean that specifies if the gantt of the charts is  in the result file
+	 */
 	private boolean printCharts;
 	
 	private String logFile ="";
@@ -46,10 +66,17 @@ public class ChartPrinter {
 	// Constructor
 	// ------------------------------------------------------------
 	
+	/**
+	 * Constructor of the class
+	 */
 	private ChartPrinter(){
 		globalExecutionResults = new ArrayList<ArrayList<ExecutionResults>>();
 	}
 	
+	/**
+	 * Get unique instance of this class
+	 * @return instance of the class
+	 */
 	public static ChartPrinter getInstance(){
 		if(instance == null){
 			System.out.println("Nueva instancia");
@@ -61,7 +88,12 @@ public class ChartPrinter {
 	// ------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------
-
+	
+	/**
+	 * Print the global results in the result file
+	 * @param resultsFile  - Name for the result file
+	 * @param LogFile - Name for the log file
+	 */
 	public void printGlobalResultsHTML(String resultsFile, String LogFile) {
 		FileWriter fichero = null;
         PrintWriter pw = null;
@@ -90,6 +122,10 @@ public class ChartPrinter {
        globalExecutionResults = new ArrayList<ArrayList<ExecutionResults>>();
 	}
 	
+	/**
+	 * Prints the void of the html
+	 * @param pw printwriter of the final file
+	 */
 	private void printBodyHTML(PrintWriter pw) {
 		pw.println("<body>" +
 			"<div  style=\"width: 1000px; margin: 0 auto; padding: 80px 0 40px; font: 0.85em arial;\"><ul class=\"tabs\" persist=\"true\">");
@@ -184,7 +220,10 @@ public class ChartPrinter {
 		pw.println("</body></html>");
 	}
 
-
+	/**
+	 * Print table of the parameters in the result file
+	 * @param pw - printwriter of the final file
+	 */
 	private void printParams(PrintWriter pw) {
 		
 		pw.println("<table id=\"roundTable\"><thead><tr>"+
@@ -209,6 +248,10 @@ public class ChartPrinter {
 		pw.println("</tr></tbody></table></div>");
 	}
 
+	/**
+	 * Print the global result table in the result file
+	 * @param pw - printwriter of the final file
+	 */
 	private void printResultTable(PrintWriter pw) {
 		pw.println("<table id=\"roundTable\"><thead>	<tr>"+
 				"<th scope=\"col\" class=\"leftTopCorner\">PROBLEM</th>"+
@@ -306,6 +349,10 @@ public class ChartPrinter {
 		
 	}
 
+	/**
+	 * Print the header of the html
+	 * @param pw - printwriter of the final file
+	 */
 	private void printHeaderHTML(PrintWriter pw) {
 		
 		pw.println("<!DOCTYPE html><html><head>	<title>Results</title>" +
@@ -351,6 +398,12 @@ public class ChartPrinter {
 				
 	}
 
+	/**
+	 * Print the gantt of the final solutions in the result file
+	 * @param pw -printwriter of the final file
+	 * @param executionResults - Global results
+	 * @param i - Number of the Instance
+	 */
 	private void printChartJs(PrintWriter pw, ExecutionResults executionResults, int i) {
 		if(executionResults.getGraphics().size()>0){
 			ArrayList<Point> points = executionResults.getGraphics().get(0).getPoints();
@@ -381,6 +434,12 @@ public class ChartPrinter {
 		}
 	}
 
+	/**
+	 * Print the javascript of the gantts in the result file
+	 * @param pw - printwriter of the final file
+	 * @param executionResults - Result of the instance
+	 * @param name - Name of the chart
+	 */
 	private void printGanttJs(PrintWriter pw,ExecutionResults executionResults, String name) {
 		ArrayList<GanttTask> tasks = executionResults.getTasksFinalSolution();
 		pw.println("if(name =='"+name+"'){");
@@ -421,6 +480,9 @@ public class ChartPrinter {
 		pw.println("}");
 	}
 	
+	/**
+	 * Restart the values of the instance of this class
+	 */
 	public void restart(){
 		globalExecutionResults= new ArrayList<ArrayList<ExecutionResults>>();
 		printTable=false;
@@ -430,7 +492,10 @@ public class ChartPrinter {
 		printCharts = false;
 	}
 	
-	
+	/**
+	 * Add new Results to the class
+	 * @param results new results
+	 */
 	public void addResults(ArrayList<ExecutionResults> results) {
 		globalExecutionResults.add(results);
 		printTable=globalExecutionResults.get(0).get(0).isPrintTable();
@@ -444,6 +509,11 @@ public class ChartPrinter {
 	// Draw Graph
 	// ------------------------------------------------------------
 	
+	/**
+	 * Draw a graph in certain file destination
+	 * @param graph - Graph to draw
+	 * @param resultsFile - File destination
+	 */
 	public void drawGraph(Graph graph, String resultsFile){
 		FileWriter fichero = null;
         PrintWriter pw = null;
