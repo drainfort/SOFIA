@@ -9,15 +9,25 @@ public class Interval {
 	// -----------------------------------------------------
 	// Attributes
 	// -----------------------------------------------------
-	
+	/**
+	 * Lower bound of the interval
+	 */
 	private int lowerBound;
 	
+	/**
+	 * Upper bound of the interval
+	 */
 	private int upperBound;
 	
 	// -----------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------
 	
+	/**
+	 * Constructor of the class
+	 * @param lowerBound - lower bound of the interval
+	 * @param upperBound - upper bound of the interval
+	 */
 	public Interval(int lowerBound, int upperBound){
 		this.lowerBound = lowerBound;
 		this.upperBound = upperBound;
