@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import neighborCalculator.impl.N3_AdjacentInCriticalPaths;
-import neighborCalculator.impl.ShiftBlockAdjOnEnds;
 import neighborCalculator.impl.ShiftBlockEndStartAnyCriticalRoute;
 
 import org.junit.Before;
@@ -14,12 +12,9 @@ import org.junit.Test;
 import common.types.OperationIndexVO;
 import common.types.PairVO;
 
-import structure.IOperation;
 import structure.impl.CriticalPath;
 import structure.impl.Graph;
-import structure.impl.Node;
 import structure.impl.Operation;
-import structure.impl.Vector;
 
 
 public class _EndsAnyBlockCriticalRouteTest {
