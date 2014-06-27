@@ -18,12 +18,7 @@ import neighborCalculator.INeighborCalculator;
  */
 public class ShiftWeightedNodesCriticalRoute implements INeighborCalculator {
 
-	// -----------------------------------------------
-	// Attributes
-	// -----------------------------------------------
 
-	private OperationIndexVO randomA;
-	private OperationIndexVO randomB;
 	// -----------------------------------------------
 	// Constructor
 	// -----------------------------------------------
