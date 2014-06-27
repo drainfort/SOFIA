@@ -195,7 +195,7 @@ public class ChartPrinter {
 		pw.println("</tr></thead><tbody>");
 		ArrayList<ExecutionResults> results =globalExecutionResults.get(0);
 		Properties properties= results.get(0).getParameters();
-		String instanceName = results.get(0).getInstanceName();
+		//String instanceName = results.get(0).getInstanceName();
 		for(String key : properties.stringPropertyNames()) {
 			  String value = properties.getProperty(key);
 			  pw.println("<tr>");
@@ -235,12 +235,12 @@ public class ChartPrinter {
 			double sumBestCMax = 0;
 			double iterations = 0;
 			double processingTime =0;
-			ExecutionResults bestResults = null;
+			//ExecutionResults bestResults = null;
 			int lessBKS = 0;
 			for (ExecutionResults executionResults : results) {
 				if(bestCmax > executionResults.getBestCmax()){
 					bestCmax = executionResults.getBestCmax();
-					bestResults = executionResults;
+					//bestResults = executionResults;
 				}
 				if(executionResults.getBestCmax()<=results.get(0).getOptimal())
 					lessBKS++;
