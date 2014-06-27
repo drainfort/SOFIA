@@ -1,7 +1,6 @@
 package neighborCalculator.impl;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import neighborCalculator.INeighborCalculator;
 import structure.IOperation;
