@@ -27,9 +27,15 @@ public class InstancesGenerator {
 	public final static Integer b = new Integer(127773);
 
 	public final static Integer c = new Integer(2836);
-
+	
+	/**
+	 * Current seed to generate an specific instance
+	 */
 	private Integer tempSeed;
 
+	/**
+	 * Name of the instance that is going to be generated
+	 */
 	private String nameinstance;
 
 	// ------------------------------------------------------
