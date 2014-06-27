@@ -24,14 +24,35 @@ import gammaCalculator.IGammaCalculator;
 public class SimpleSimulatedAnnealing extends Control {
 
 	// -----------------------------------------------
-	// Constructor
+	// Attributes
 	// -----------------------------------------------
-
+	/**
+	 * Attribute that save the start time of the control execution
+	 */
 	private long startTime;
+	
+	/**
+	 * Attribute that save the max time of the control execution
+	 */
 	private long stopTime;
+	
+	/**
+	 * Attribute that is used to stop the execution of the control
+	 */
 	private boolean optimalAchieved;
+	
+	/**
+	 * The Number of visited neighbors during the execution of the control
+	 */
 	int numberOfVisitedNeighbors=0;
 	
+	// -----------------------------------------------
+	// Constructor
+	// -----------------------------------------------
+	
+	/**
+	 * Constructor of the class
+	 */
 	public SimpleSimulatedAnnealing() {
 		super();
 	}
@@ -75,6 +96,21 @@ public class SimpleSimulatedAnnealing extends Control {
 		return result;
 	}
 	
+	/**
+	 * Executes the simulated annealing metaheuristic
+	 * @param params - Parameters of the algorithm
+	 * @param initialSolution - Initial solution
+	 * @param gammaCalculator - Component that calculates the objective function
+	 * @param neighborCalculator - Component that calculates the neighbors
+	 * @param modifier - Component that modifies the structure 
+	 * @param optimal - The best solution or the optimal solution
+	 * @param isOptimal - If the instance has an optimal solution
+	 * @param executionResults - The consolidated results
+	 * @param startTime - Initial time
+	 * @param stopTime - Max Time
+	 * @return IStructure - The best solution. 
+	 * @throws Exception
+	 */
 	public IStructure simulatedAnnealing (Properties params, IStructure initialSolution, IGammaCalculator gammaCalculator, INeighborCalculator neighborCalculator, IModifier modifier, Integer optimal, boolean isOptimal, ExecutionResults executionResults, long startTime, long stopTime) throws Exception{
 		
 		optimalAchieved = false;
@@ -260,6 +296,10 @@ public class SimpleSimulatedAnnealing extends Control {
 		return XBest;
 	}
 	
+	/**
+	 * Checks if the control exceeds that max time of execution
+	 * @param executionResults - Consolidated results
+	 */
 	private void timeAccomplished(ExecutionResults executionResults){
 		long actualTime = System.currentTimeMillis();
 	    long elapsedTime = actualTime - startTime;

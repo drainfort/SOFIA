@@ -3,8 +3,6 @@ package control.impl;
 import gammaCalculator.IGammaCalculator;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Properties;
 
 import modifier.IModifier;
@@ -26,13 +24,13 @@ public class VNS extends Control{
 	// Constructor
 	// -----------------------------------------------
 	
-	int numberOfVisitedNeighbors=0;
-	int neighSize =0; // size of the neighborhood to perform the local search
-	int bestNeighborsSize;
-	boolean optimalAchieved = false;
+	private int numberOfVisitedNeighbors=0;
+	private int neighSize =0; // size of the neighborhood to perform the local search
+	private int bestNeighborsSize;
+	private boolean optimalAchieved = false;
 	
-	SimpleSimulatedAnnealing simulated = new SimpleSimulatedAnnealing();
-	TabuSearch tabu = new TabuSearch();
+	private SimpleSimulatedAnnealing simulated = new SimpleSimulatedAnnealing();
+	private TabuSearch tabu = new TabuSearch();
 	
 	
 	public VNS(){

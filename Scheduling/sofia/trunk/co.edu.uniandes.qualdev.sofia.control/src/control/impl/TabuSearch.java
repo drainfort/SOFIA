@@ -24,16 +24,41 @@ import control.Control;
 
 public class TabuSearch extends Control{
 	
+		// -----------------------------------------------
+		// Attributes
+		// -----------------------------------------------
+	
+		/**
+		 * Attribute that save the start time of the control execution
+		 */
 		private long startTime;
+		
+		/**
+		 * Attribute that save the max time of the control execution
+		 */
 		private long stopTime;
+		
+		/**
+		 * The Number of the size of the neighbors
+		 */
 		int bestNeighborsSize;
+		
+		/**
+		 * The Number of visited neighbors during the execution of the control
+		 */
 		int numberOfVisitedNeighbors;
+		
+		/**
+		 * Attribute that is used to stop the execution of the control
+		 */
 		private boolean optimalAchieved;
 		
 		// -----------------------------------------------
 		// Constructor
 		// -----------------------------------------------
-
+		/**
+		 * Constructor of the class
+		 */
 		public TabuSearch() {
 			super();
 		}
@@ -80,6 +105,22 @@ public class TabuSearch extends Control{
 			return result;
 		}
 		
+		/**
+		 * Executes the tabu search metaheuristic
+		 * @param params - Parameters of the algorithm
+		 * @param initialSolution - Initial solution
+		 * @param gammaCalculator - Component that calculates the objective function
+		 * @param neighborCalculator - Component that calculates the neighbors
+		 * @param modifier - Component that modifies the structure 
+		 * @param optimal - The best solution or the optimal solution
+		 * @param isOptimal - If the instance has an optimal solution
+		 * @param executionResults - The consolidated results
+		 * @param startTime - Initial time
+		 * @param stopTime - Max Time
+		 * @param GammaInitialSolution - gamma of the initial solution
+		 * @return IStructure - The best solution. 
+		 * @throws Exception
+		 */
 		public IStructure tabuSearch(IStructure initialSolution,
 				INeighborCalculator neighborCalculator, IModifier modifier,
 				IGammaCalculator gammaCalculator, Properties params, Integer optimal, 
