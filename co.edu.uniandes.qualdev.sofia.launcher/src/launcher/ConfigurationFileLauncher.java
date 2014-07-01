@@ -26,42 +26,123 @@ public class ConfigurationFileLauncher {
 	// Constants
 	// ----------------------------------------------
 	
+	/**
+	 * Constant with the location of the properties file
+	 */
 	public static final String CONFIGURATION_FILE = "./config/configuration.properties";
 	
+	/**
+	 * Constant with the location of the web properties file
+	 */
 	public static final String WEB_CONFIGURATION_FILE = "./config/web-configuration.properties";
 	
 	// ----------------------------------------------
 	// Constants
 	// ----------------------------------------------
 	
+	/**
+	 * Name of the user
+	 */
 	private String userId;
+	
+	/**
+	 * Id of the execution
+	 */
 	private String executionId;
+	
+	/**
+	 * Web location
+	 */
 	private String webLocation;
 	
+	/**
+	 * Type of scheduling problem
+	 */
 	private String benchmark;
+	
+	/**
+	 * Number of executions per instance
+	 */
 	private int amountOfExecutionsPerInstance;
 	
+	/**
+	 * Component to build the initial solution
+	 */
 	private String initialSolutionBuilder;
+	
+	/**
+	 * Component of the representation structure
+	 */
 	private String structure;
+	
+	/**
+	 * Component of that calculates neighbors
+	 */
 	private String neighborCalculator;
+	
+	/**
+	 * List of components that modify the representation structure
+	 */
 	private ArrayList<String> modifiers;
+	
+	/**
+	 * Component that executes the metaheuristic
+	 */
 	private String control;
+	
+	/**
+	 * Component that calculate the gamma function
+	 */
 	private String gammaCalculator;
+	
+	/**
+	 * Component for the decoding strategy
+	 */
 	private String decodingStrategy;
 	
+	/**
+	 * Boolean to considerate travel times
+	 */
 	private String considerTravelTimes;
+	
+	/**
+	 * Boolean to considerate setup times
+	 */
 	private String considerSetupTimes;
 	
+	/**
+	 * Boolean to print in the result table the parameters
+	 */
 	private String showConfigurationTable;
+	
+	/**
+	 * Boolean to print the initial solution gantt
+	 */
 	private String showInitialSolutions;
+	
+	/**
+	 * Boolean to print the final solution gantt
+	 */
 	private String showFinalSolutions;
+	
+	/**
+	 * Boolean to print the log in the result file
+	 */
 	private String showLog;
+	
+	/**
+	 * Boolean to print the chart of improvement
+	 */
 	private String showImprocement;
 	
 	// ----------------------------------------------
 	// Methods
 	// ----------------------------------------------
 	
+	/**
+	 * Method that executes the framework
+	 * @throws Exception
+	 */
 	public void launchSofia() throws Exception{
 		
 		Properties webData = loadPropertiesFile(new File(WEB_CONFIGURATION_FILE));
@@ -306,6 +387,10 @@ public class ConfigurationFileLauncher {
 		//communicateResultsToWeTear("./results/" + userId + "/experiment-results-" + executionId + ".html");
 	}
 	
+	/**
+	 * Method that communicate the results to the web application
+	 * @param path - path to communicate the results
+	 */
 	private void communicateResultsToWeTear(String path) {
 		String webResult="";
 		try{
