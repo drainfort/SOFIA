@@ -1,19 +1,34 @@
 package launcher.vos;
 
+/**
+ * Class that represent a parameter of an algorithm
+ * @author David Mendez
+ * @author Jaime Romero
+ *
+ */
 public class ParameterVO {
 
 	// -------------------------------------------------------------------------------
 	// Attributes
 	// -------------------------------------------------------------------------------
 	
+	/**
+	 * Name of the parameter
+	 */
 	private String name;
 	
+	/**
+	 * Value of the parameter
+	 */
 	private String value;
 	
 	// -------------------------------------------------------------------------------
 	// Constructor
 	// -------------------------------------------------------------------------------
 	
+	/**
+	 * Constructor of the class
+	 */
 	public ParameterVO(){
 		
 	}
@@ -22,6 +37,9 @@ public class ParameterVO {
 	// Methods
 	// -------------------------------------------------------------------------------
 
+	// -------------------------------------------------------------------------------
+	// Getters and Setters
+	// -------------------------------------------------------------------------------	
 	public String getName() {
 		return name;
 	}

@@ -69,32 +69,68 @@ public class AlgorithmConfigurationVO {
 	// Attributes
 	// ----------------------------------------------------
 	
+	/**
+	 * Type of problem 
+	 */
 	private String instanceType;
 	
+	/**
+	 * Class name for the component to build the initial solution
+	 */
 	private String initialSolutionBuilder;
 	
+	/**
+	 * Class name for the control component
+	 */
 	private String metaheuristic;
 	
+	/**
+	 * Parameters of the metaheuristic
+	 */
 	private ArrayList<ParameterVO> metaheuristicParams;
 	
+	/**
+	 * list of class names for the modifier component
+	 */
 	private ArrayList<String> modifiers;
 	
+	/**
+	 * Class name for the neighbor calculator component
+	 */
 	private String neighborhood;
 	
+	/**
+	 * Class name of the structure component
+	 */
 	private String representation;
 	
+	/**
+	 * Class name for the gamma calculator
+	 */
 	private String objectiveFunction;
 	
+	/**
+	 * List of betas
+	 */
 	private ArrayList<String> selectedBetas;
 	
+	/**
+	 * Configuration for the report
+	 */
 	private ArrayList<String> reportConfiguration;
 	
+	/**
+	 * Amount of executions per instance
+	 */
 	private int amountOfExecutionsPerInstance;
 	
 	// ----------------------------------------------------
 	// Constructor
 	// ----------------------------------------------------
 	
+	/**
+	 * Constructor of the class
+	 */
 	public AlgorithmConfigurationVO(){
 		selectedBetas = new ArrayList<String>();
 		reportConfiguration = new ArrayList<String>();

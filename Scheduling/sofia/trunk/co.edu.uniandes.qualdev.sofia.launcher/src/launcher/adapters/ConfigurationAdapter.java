@@ -69,6 +69,9 @@ public class ConfigurationAdapter {
 	// Constructor
 	// ------------------------------------------------------------
 	
+	/**
+	 * Constructor of the class
+	 */
 	public ConfigurationAdapter(){
 		
 	}
@@ -76,7 +79,18 @@ public class ConfigurationAdapter {
 	// ------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------
-
+	
+	/**
+	 * Launch the execute of the problem with the parameters needed
+	 * @param instancesToExecute - instances to execute
+	 * @param instanceType - instance type
+	 * @param algorithmDefinition - algorithm definition and parameters
+	 * @param resultsFile - file destination for the results
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws Exception
+	 */
 	public void launch(ArrayList<String> instancesToExecute, String instanceType,
 			AlgorithmConfigurationVO algorithmDefinition, String resultsFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, Exception {
 		boolean multiStart = false;
