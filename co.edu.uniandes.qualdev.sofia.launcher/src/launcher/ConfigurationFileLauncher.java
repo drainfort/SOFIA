@@ -20,6 +20,12 @@ import algorithm.SchedulingAlgorithm;
 import algorithm.impl.TrajectoryBasedAlgorithm;
 import launcher.adapters.ConfigurationAdapter;
 
+/**
+ * Class that reads the configuration file and executes the framework
+ * @author David Mendez
+ * @author Jaime Romero
+ *
+ */
 public class ConfigurationFileLauncher {
 
 	// ----------------------------------------------

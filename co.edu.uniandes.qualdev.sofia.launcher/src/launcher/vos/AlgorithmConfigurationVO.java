@@ -2,6 +2,12 @@ package launcher.vos;
 
 import java.util.ArrayList;
 
+/**
+ * Class that contains all the elements of the algorithm
+ * @author David Mendez
+ * @author Jaime Romero
+ *
+ */
 public class AlgorithmConfigurationVO {
 
 	// ----------------------------------------------------

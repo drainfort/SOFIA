@@ -13,6 +13,12 @@ import algorithm.impl.TrajectoryBasedAlgorithm;
 import launcher.vos.AlgorithmConfigurationVO;
 import launcher.vos.ParameterVO;
 
+/**
+ * Class that interpret the data found in the configuration file
+ * @author David Mendez
+ * @author Jaime Romero
+ *
+ */
 public class ConfigurationAdapter {
 
 	// ------------------------------------------------------------
