@@ -23,14 +23,23 @@ public class TravelTimes extends TTBeta {
 	// Attributes
 	// --------------------------------------------------------
 
+	/**
+	 * Matrix with the values of the beta
+	 */
 	private Float[][] TTMatrix;
 	
+	/**
+	 * Files with the values of the beta
+	 */
 	private ArrayList<String> informationFiles = new ArrayList<String>();
 
 	// --------------------------------------------------------
 	// Constructor
 	// --------------------------------------------------------
 
+	/**
+	 * Constructor of the class
+	 */
 	public TravelTimes() {
 
 	}
@@ -83,14 +92,7 @@ public class TravelTimes extends TTBeta {
 			if(reader!=null)reader.close();
 		}
 	}
-
-	@Override
-	public float getValue(int initialStationId, int finalStationId) {
-		if(isConsidered())
-			return TTMatrix[initialStationId + 1][finalStationId + 1];
-		else
-			return 0;
-	}
+	
 	
 	@Override
 	public Beta clone() {
@@ -112,6 +114,18 @@ public class TravelTimes extends TTBeta {
 		clone.informationFiles = clionedInformationFiles;
 		clone.setConsidered(this.isConsidered());
 		return clone;
+	}
+	
+	
+	// --------------------------------------------------------
+	// Getter and Setters
+	// --------------------------------------------------------	
+	@Override
+	public float getValue(int initialStationId, int finalStationId) {
+		if(isConsidered())
+			return TTMatrix[initialStationId + 1][finalStationId + 1];
+		else
+			return 0;
 	}
 
 	@Override

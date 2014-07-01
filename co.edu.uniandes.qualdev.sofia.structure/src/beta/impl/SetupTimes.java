@@ -22,15 +22,23 @@ public class SetupTimes extends SetupBeta {
 	// --------------------------------------------------------
 	// Attributes
 	// --------------------------------------------------------
-
+	/**
+	 * Matrix with the values of the beta
+	 */
 	private Float[][] SMatrix;
 	
+	/**
+	 * Files with the values of the beta
+	 */
 	private ArrayList<String> informationFiles = new ArrayList<String>();
 
 	// --------------------------------------------------------
 	// Constructor
 	// --------------------------------------------------------
 
+	/**
+	 * Constructor of the class
+	 */
 	public SetupTimes() {
 
 	}
@@ -85,26 +93,6 @@ public class SetupTimes extends SetupBeta {
 		}
 	}
 	
-	
-	public Float[][] getSMatrix() {
-		return SMatrix;
-	}
-
-	public void setSMatrix(Float[][] sMatrix) {
-		SMatrix = sMatrix;
-	}
-
-	@Override
-	public ArrayList<String> getInformationFiles() {
-		return informationFiles;
-	}
-
-	@Override
-	public void setInformationFiles(ArrayList<String> informationFiles) {
-		this.informationFiles = informationFiles;
-		
-	}
-
 	@Override
 	public Beta clone() {
 		SetupTimes clone = new SetupTimes();
@@ -136,5 +124,28 @@ public class SetupTimes extends SetupBeta {
 		}else{
 			return 0;
 		}
+	}
+	
+	// --------------------------------------------------------
+	// Getter and Setters
+	// --------------------------------------------------------	
+	
+	public Float[][] getSMatrix() {
+		return SMatrix;
+	}
+
+	public void setSMatrix(Float[][] sMatrix) {
+		SMatrix = sMatrix;
+	}
+
+	@Override
+	public ArrayList<String> getInformationFiles() {
+		return informationFiles;
+	}
+
+	@Override
+	public void setInformationFiles(ArrayList<String> informationFiles) {
+		this.informationFiles = informationFiles;
+		
 	}
 }

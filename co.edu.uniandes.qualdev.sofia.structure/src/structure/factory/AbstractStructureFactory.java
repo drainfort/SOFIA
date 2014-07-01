@@ -10,6 +10,9 @@ import common.types.BetaVO;
 
 public abstract class AbstractStructureFactory {
 
+	// -------------------------------------------------
+	// Methods
+	// -------------------------------------------------
 	/**
 	 * Creates a new instance of the factory according to the name of the
 	 * concrete factory

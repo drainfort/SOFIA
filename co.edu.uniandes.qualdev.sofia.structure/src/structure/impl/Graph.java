@@ -2,7 +2,6 @@ package structure.impl;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -54,11 +53,24 @@ public class Graph extends AbstractStructure {
 	 */
 	public Node[] initialStationNodesArray = null;
 
-
+	/**
+	 * Array of jobs and characteristics
+	 */
 	private ArrayList<Job> jobs;
+	
+	/**
+	 * Array of machines and characteristics
+	 */
 	private ArrayList<Machine> machines;
+	
+	/**
+	 * Array of stations and characteristics
+	 */
 	private ArrayList<Station> stations;
 
+	/**
+	 * Array with the occurrences of operations in critical routes
+	 */
 	private ArrayList<int[]> weightedNodesCriticaRoute;
 
 	// -----------------------------------------------
@@ -67,6 +79,8 @@ public class Graph extends AbstractStructure {
 
 	/**
 	 * Constructor of the class
+	 * @param totalJobs - number of jobs in the problem
+	 * @param totalStations - number of stations in the problem
 	 */
 	public Graph(int totalJobs, int totalStations) {
 		super(totalJobs, totalStations);
@@ -89,6 +103,8 @@ public class Graph extends AbstractStructure {
 
 	/**
 	 * Constructor of the class
+	 * @param processingTimesFile - File of the processing time of the problem
+	 * @param pBetas - Betas of the problem
 	 */
 	public Graph(String processingTimesFile, ArrayList<BetaVO> pBetas) throws Exception {
 		super(processingTimesFile, pBetas);
@@ -113,7 +129,11 @@ public class Graph extends AbstractStructure {
 	// Construction auxiliary methods
 	// -------------------------------------------------
 
-
+	/**
+	 * Create a route arc between two operations
+	 * @param start - Initial operations
+	 * @param end - Final operations
+	 */
 	public void createRouteArc(OperationIndexVO start, OperationIndexVO end) {
 		nodes[start.getJobId()][start.getStationId()]
 				.setNextRouteNode(nodes[end.getJobId()][end.getStationId()]);
@@ -123,6 +143,11 @@ public class Graph extends AbstractStructure {
 
 	}
 
+	/**
+	 * Create a sequence arc between two operations
+	 * @param start - Initial operations
+	 * @param end - Final operations
+	 */
 	public void createSequenceArc(OperationIndexVO start, OperationIndexVO end) {
 		nodes[start.getJobId()][start.getStationId()]
 				.setNextSequenceNode(nodes[end.getJobId()][end.getStationId()]);
@@ -131,26 +156,52 @@ public class Graph extends AbstractStructure {
 				                                                 .getStationId()]);
 	}
 
+	/**
+	 * Get initial node for an specific job
+	 * @param job - job id
+	 * @return initial node for a particular job
+ 	 */
 	public Node getInitialJobNode(int job) {
 		return initialJobNodesArray[job];
 	}
 
+	/**
+	 * Set initial node for an specific job
+	 * @param job - job id
+	 * @param initialJobNode - initial node to add.
+	 */
 	public void setInitialJobNode(int job, Node initialJobNode) {
 		assert ((job > -1) && (job < totalJobs));
 		this.initialJobNodesArray[job] = initialJobNode;
 		initialJobNode.setPreviousRouteNode(null);
 	}
 
+	/**
+	 * Get initial node for an specific station
+	 * @param station - station id
+	 * @return initial node for a particular station
+ 	 */
 	public Node getInitialStationNode(int station) {
 		return initialStationNodesArray[station];
 	}
 
+	/**
+	 * Set initial node for an specific station
+	 * @param station - station id
+	 * @param initialStationNode - initial node to add.
+	 */
 	public void setInitialStationNode(int station,
 			Node initialStationNode) {
 		this.initialStationNodesArray[station] = initialStationNode;
 		initialStationNode.setPreviousSequenceNode(null);
 	}
 
+	/**
+	 * Get the node in an specific position of the matrix of nodes
+	 * @param job - job id 
+	 * @param station - station id
+	 * @return node that is found in the specified position of the matrix
+	 */
 	public Node getNode(int job, int station){
 		return nodes[job][station];
 	}
@@ -237,6 +288,12 @@ public class Graph extends AbstractStructure {
 
 	}
 
+	/**
+	 * Find an id over an array of values
+	 * @param id - id that we are searching for
+	 * @param routearray - array of values 
+	 * @return position where the method finds the id
+	 */
 	private int find(int id, Integer[] routearray) {
 		for (int i = 0; i < routearray.length; i++) {
 			if (routearray[i] == id)
@@ -634,6 +691,10 @@ public class Graph extends AbstractStructure {
 		return sumBetas;
 	}
 
+	/**
+	 * Method that applies the tear down betas
+	 * @return new C Matrix - after aplling the tear down beta
+	 */
 	private int[][] applyTearDownBetas() {
 		int[][] newC = null;
 		if (this.betas != null) {
@@ -675,6 +736,12 @@ public class Graph extends AbstractStructure {
 		return sequence;
 	}
 
+	/**
+	 * Search for an operation with the specified job and station id
+	 * @param job - job id
+	 * @param station - station id
+	 * @return Operation that satisfies the search parameters
+	 */
 	private IOperation getOperation(int job, int station) {
 		
 		for (int i = 0; i < this.totalJobs; i++) {
@@ -1004,10 +1071,43 @@ public class Graph extends AbstractStructure {
 		return sumBetas;
 	}
 	
-	// -------------------------------------------------
-	// TODO Metodos aun por arreglar...
-	// -------------------------------------------------
+	@Override
+	public boolean validateStructure() {
+		try {
+			this.restartC();
+			this.topologicalSort2();
+			return true;
+		} catch (Exception e) {
+			//e.printStackTrace();
+			return false;
+		}
+	}
 
+	public void restartC(){
+		C=null;
+		for (int i = 0; i < totalJobs; i++) {
+			for (int j = 0; j < totalStations; j++) {
+				if (nodes[i][j] != null){
+					nodes[i][j].restartC();
+				}
+			}
+		}
+	}
+
+	@Override
+	public void decodeSolution() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void reverseOperationsBetween(
+			OperationIndexVO initialOperationIndex,
+			OperationIndexVO finalOperationIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	/**
 	 * Calculates the longest paths of the graph.
 	 * @throws Exception 
@@ -1070,7 +1170,11 @@ public class Graph extends AbstractStructure {
 
 	
 
-	//Topological sort no destruye el grafo
+	/**
+	 * Calculates the topological sort in the graph, also we check presence of cycles in it.
+	 * @return array of operations ordered by this sort.
+	 * @throws Exception - Precence of cycles.
+	 */
 	public ArrayList<IOperation> topologicalSort2()  throws Exception{
 		ArrayList<IOperation> l = new ArrayList<IOperation>();
 		ArrayList<Node> s = new ArrayList<Node>();
@@ -1157,7 +1261,9 @@ public class Graph extends AbstractStructure {
 		return l;
 	}
 	
-	
+	// -------------------------------------------------
+	// Methods to drawGraphs
+	// -------------------------------------------------
 	public void drawGraph(String resultsFile, boolean critical, PairVO pair){
 		FileWriter fichero = null;
         PrintWriter pw = null;
@@ -1902,42 +2008,7 @@ public class Graph extends AbstractStructure {
 		return number;
 	}
 
-	@Override
-	public boolean validateStructure() {
-		try {
-			this.restartC();
-			this.topologicalSort2();
-			return true;
-		} catch (Exception e) {
-			//e.printStackTrace();
-			return false;
-		}
-	}
-
-	public void restartC(){
-		C=null;
-		for (int i = 0; i < totalJobs; i++) {
-			for (int j = 0; j < totalStations; j++) {
-				if (nodes[i][j] != null){
-					nodes[i][j].restartC();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void decodeSolution() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void reverseOperationsBetween(
-			OperationIndexVO initialOperationIndex,
-			OperationIndexVO finalOperationIndex) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 
 	//	public int getTT(int stationId1, int stationId2){

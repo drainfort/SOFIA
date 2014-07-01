@@ -4,38 +4,83 @@ import java.util.ArrayList;
 
 import structure.IOperation;
 
+/**
+ * Class that represent a node in the graph
+ * @author Rubby Casallas
+ * @author David Mendez-Acuna
+ * @author Jaime Romero
+ *
+ */
 public class Node {
 
 	// -------------------------------------
 	// Attributes
 	// -------------------------------------
 	
+	/**
+	 * Operation that conforms the node
+	 */
 	private IOperation operation;
 	
+	/**
+	 * Reference to the next node in route
+	 */
 	private Node nextRouteNode;
 	
+	/**
+	 * reference to the next node in sequence
+	 */
 	private Node nextSequenceNode;
 	
+	/**
+	 * Reference to the previous node in route
+	 */
 	private Node previousRouteNode;
 	
+	/**
+	 * Reference to the previous node in sequence
+	 */
 	private Node previousSequenceNode;
-
+	
+	/**
+	 * Attribute that tells if the objective function was calculated.
+	 */
 	private boolean cCalculated = false;
-
+	
+	/**
+	 * Attribute that tells if the rank was calculated
+	 */
 	private boolean rankCalculated = false;
 	
+	/**
+	 * Rank of the node
+	 */
 	private int rank;
 	
+	/**
+	 * Owner graph of the node
+	 */
 	private Graph onwerGraph;
 	
+	/**
+	 * If the node has the initial time 
+	 */
 	private boolean sameInitialTime= false;
 	
+	/**
+	 * Sort position
+	 */
 	private int positionSort = -1;
 	
 	// -------------------------------------
 	// Constructor
 	// -------------------------------------
 	
+	/**
+	 * Constructor of the class
+	 * @param operation - operation of the node
+	 * @param ownerGraph - owner graph
+	 */
 	public Node(IOperation operation, Graph ownerGraph){
 		this.operation = operation;
 		this.onwerGraph = ownerGraph;
@@ -45,6 +90,11 @@ public class Node {
 	// Methods
 	// -------------------------------------
 	
+	/**
+	 * Calculate the final time for the node
+	 * @return int value of the ending time of the operation
+	 * @throws Exception
+	 */
 	public int calculateC() throws Exception{
 
 		if(cCalculated){
@@ -75,15 +125,27 @@ public class Node {
 		}
 	}
 	
+	/**
+	 * Calculate the initial time of the node
+	 * @return int - initial time
+	 * @throws Exception
+	 */
 	public int calculateInitialTime() throws Exception {
 		return this.calculateC() - this.operation.getOperationIndex().getProcessingTime();
 	}
 	
+	/**
+	 * Restart the final time of the node
+	 */
 	public void restartC() {
 		this.operation.setFinalTime(0);
 		cCalculated = false;
 	}
 	
+	/**
+	 * Return the rank of the node
+	 * @return rank of the node
+	 */
 	public int getRank() {
 		// Base case 1: The C is already calculated. Returns the current
 		// calculated value.
@@ -114,7 +176,13 @@ public class Node {
 		}
 	}
 	
-	
+	/**
+	 * Recursion method to calculate the critical route of the graph
+	 * @param criticalRoutes current critical routes
+	 * @param incidencias - number of appearances in the routes
+	 * @return the critical routes that this node is part off.
+	 * @throws Exception
+	 */
 	public ArrayList<CriticalPath> getCriticalRoutes(ArrayList<CriticalPath> criticalRoutes, ArrayList<int[]> incidencias)throws Exception{
 		//Caso Base
 		for(int i=0; i<criticalRoutes.size();i++)

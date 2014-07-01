@@ -315,6 +315,11 @@ public class Vector extends AbstractStructure{
 		}
 	}
 	
+	/**
+	 * Serach all the operations with the same job and stations id
+	 * @param operationIndex - operation with the job and station id
+	 * @return array with all the operations that satifies the search
+	 */
 	public ArrayList<IOperation> getOperationsbyJobAndStation(OperationIndexVO operationIndex) {
 		int jobId = operationIndex.getJobId();
 		int stationId = operationIndex.getStationId();
@@ -558,6 +563,11 @@ public class Vector extends AbstractStructure{
 		return schedule;
 	}
 	
+	/**
+	 * Method that tells if an operation can be scheduled
+	 * @param operationIndexVO- operation index that want to be scheduled
+	 * @return boolean if the operation can be scheduled
+	 */
 	private boolean canSchedule(OperationIndexVO operationIndexVO) {
 		for(int i=0; i<getOperations().size();i++){
 			OperationIndexVO temp = getOperations().get(i).getOperationIndex();
@@ -653,6 +663,11 @@ public class Vector extends AbstractStructure{
 		return rank;
 	}
 	
+	/**
+	 * Method that applies the tear down betas to the c matrix
+	 * @param matrix - initial matrix
+	 * @return matrix with the tear down betas
+	 */
 	public int[][] applyTearDownBetas(int [][] matrix) {
 		int[][] newC = null;
 		if (this.betas != null) {
@@ -721,7 +736,10 @@ public class Vector extends AbstractStructure{
 		return operations;
 	}
 		
-	
+	/**
+	 * Sort an array of operations by final time
+	 * @param vector array of operations to sort
+	 */
 	public void sortArray(ArrayList<IOperation> vector){
 		Collections.sort(vector, new Comparator<IOperation>() {
 			@Override
@@ -734,6 +752,12 @@ public class Vector extends AbstractStructure{
 		});
 	}
 	
+	/**
+	 * Calculates all the critical routes for the structure
+	 * @param matrizC - matrix of finish times
+	 * @param route - current critical path
+	 * @return - array of all critical routes
+	 */
 	public ArrayList<CriticalPath> getCriticalRoute(int [][] matrizC, CriticalPath route){
 		ArrayList<CriticalPath> routes = new ArrayList<CriticalPath>();
 		IOperation lastOperation = route.getRoute().get(0);
@@ -801,6 +825,12 @@ public class Vector extends AbstractStructure{
 		
 	}
 	
+	/**
+	 * Get operations with the same job id 
+	 * @param matrizC - matrix of finish times
+	 * @param operation - operation with the specified job id
+	 * @return array of operations that has the same job id
+	 */
 	public ArrayList<IOperation> getOperationsBeforeByJob(int [][] matrizC, IOperation operation){
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		int jobid = operation.getOperationIndex().getJobId();
@@ -816,6 +846,12 @@ public class Vector extends AbstractStructure{
 		return operations;
 	}
 	
+	/**
+	 * Get operations with the same station id 
+	 * @param matrizC - matrix of finish times
+	 * @param operation - operation with the specified station id
+	 * @return array of operations that has the same station id
+	 */
 	public ArrayList<IOperation> getOperationsBeforeByStation(int [][] matrizC, IOperation operation){
 		ArrayList<IOperation> operations = new ArrayList<IOperation>();
 		int stationid = operation.getOperationIndex().getStationId();

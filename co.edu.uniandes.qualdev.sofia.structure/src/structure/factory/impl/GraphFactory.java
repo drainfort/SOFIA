@@ -1,10 +1,6 @@
 package structure.factory.impl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
-
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
 import structure.IOperation;
@@ -21,6 +17,11 @@ import structure.impl.decoding.Decoding;
  */
 public class GraphFactory extends AbstractStructureFactory {
 
+	
+	// -------------------------------------------------
+	// Methods
+	// -------------------------------------------------
+	
 	@Override
 	public IStructure createSolutionStructure(Integer[][] A,
 			ArrayList<String> problemFiles, ArrayList<BetaVO> betas, Decoding decondingStrategy)
@@ -40,6 +41,14 @@ public class GraphFactory extends AbstractStructureFactory {
 		return new Operation();
 	}
 
+	/**
+	 * Creation a graph by means of an initial solution matrix, a problem matrix and betas
+	 * @param A - Initial solution matrix
+	 * @param problemMatrix - File of the problem matrix
+	 * @param betas - Betas of the problem
+	 * @return graph that represents the problem
+	 * @throws Exception
+	 */
 	public IStructure createSolutionGraph(Integer[][] A,
 			String problemMatrix, ArrayList<BetaVO> betas) throws Exception{
 
