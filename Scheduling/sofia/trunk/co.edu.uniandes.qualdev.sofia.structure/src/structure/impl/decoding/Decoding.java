@@ -1,9 +1,6 @@
 package structure.impl.decoding;
 
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import common.types.OperationIndexVO;
 import structure.IOperation;
 import structure.impl.Operation;
@@ -18,9 +15,14 @@ public abstract class Decoding {
 	// ––––––––––––––––––––––––––––––––––––––––––––––
 	// Attributes
 	// ––––––––––––––––––––––––––––––––––––––––––––––
-	
+	/**
+	 * Vector to decode
+	 */
 	protected Vector vector;
 	
+	/**
+	 * Unscheduled operations
+	 */
 	protected ArrayList<OperationIndexVO> unscheduledOperations;
 	
 	// ––––––––––––––––––––––––––––––––––––––––––––––
@@ -37,6 +39,10 @@ public abstract class Decoding {
 	// Concrete methods
 	// ––––––––––––––––––––––––––––––––––––––––––––––
 	
+	/**
+	 * Initialize the array of unscheduled operations
+	 * @param problem
+	 */
 	public void initialize(OperationIndexVO [][] problem){
 		unscheduledOperations = new ArrayList<OperationIndexVO>();
 		for(int j = 0; j < problem.length; j++){
@@ -56,6 +62,12 @@ public abstract class Decoding {
 			initialize(vector.getProblem());
 	}
 	
+	/**
+	 * Verifies if the operation can be scheduled in the vector specified
+	 * @param operationIndexVO - operation that is going to be scheduled
+	 * @param vectorToSchedule - structure to schedule the operation
+	 * @return boolean to know if the operation can be scheduled
+	 */
 	protected boolean canSchedule(OperationIndexVO operationIndexVO, ArrayList<IOperation> vectorToSchedule) {
 		for(int i=0; i< vectorToSchedule.size();i++){
 			OperationIndexVO temp = vectorToSchedule.get(i).getOperationIndex();
@@ -65,6 +77,12 @@ public abstract class Decoding {
 		return true;
 	}
 	
+	/**
+	 * Schedule an specific operation on an array of operations
+	 * @param operationIndexVO - operation to schedule
+	 * @param vectorToSchedule - vector where we are going to schedule the operation
+	 * @return boolean - if the operation was schedule
+	 */
 	public boolean scheduleOperation(OperationIndexVO operationIndexVO,  ArrayList<IOperation> vectorToSchedule) {
 
 		Operation newOperation = new Operation(operationIndexVO);
@@ -77,6 +95,11 @@ public abstract class Decoding {
 		return schedule;
 	}
 	
+	/**
+	 * Calculate the finish time matrix of an array of operations
+	 * @param vectorToSchedule - array of operations
+	 * @return return the matrix of finish times
+	 */
 	public int[][] calculateCMatrix(ArrayList<IOperation> vectorToSchedule) {
 
 		int [][] CSolution = new int[vector.getTotalJobs()][vector.getTotalStations() + 1];

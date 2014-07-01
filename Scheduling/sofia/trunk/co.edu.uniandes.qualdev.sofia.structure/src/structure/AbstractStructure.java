@@ -6,11 +6,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import structure.impl.Operation;
 import common.types.BetaVO;
 import common.types.OperationIndexVO;
-import common.utils.MatrixUtils;
 
 import beta.Beta;
 
@@ -75,6 +72,8 @@ public abstract class AbstractStructure  implements IStructure{
 	/**
 	 * Constructor of the class. It is able to create a structure
 	 * with a non-defined problem: Neither processing times nor betas.
+	 * @param totalJobs - number of jobs
+	 * @param totalSations - number of stations
 	 */
 	public AbstractStructure(int totalJobs, int totalStations){
 		this.totalJobs = totalJobs;
@@ -90,6 +89,13 @@ public abstract class AbstractStructure  implements IStructure{
 		}
 	}
 	
+	/**
+	 * Constructor of the class. It is able to create a structure by means of files.
+	 * @param processingTimesFile - Processing time file
+	 * @param mVector - File of initial solution of the vector
+	 * @param pBetas - Betas of the problem
+	 * @throws Exception
+	 */
 	public AbstractStructure(String processingTimesFile, String mVector, ArrayList<BetaVO> pBetas)throws Exception{
 		betas = new HashMap<String, Beta>();
 		
@@ -141,6 +147,10 @@ public abstract class AbstractStructure  implements IStructure{
 	// Methods
 	// ---------------------------------------------
 	
+	// ---------------------------------------------
+	// Getters and Setters
+	// ---------------------------------------------
+	
 	@Override
 	public OperationIndexVO[][] getProblem(){
 		return operationsMatrix;
@@ -165,7 +175,7 @@ public abstract class AbstractStructure  implements IStructure{
 	/**
 	 * Loads an IOperation matrix from a file in the parameter
 	 * @param processingTimesFile File with the processing times of the problem
-	 * @return
+	 * @return OperationIndexVO[][] - matrix of operations
 	 * @throws Exception
 	 */
 	private OperationIndexVO[][] loadProblemMatrix(String processingTimesFile)
@@ -223,6 +233,13 @@ public abstract class AbstractStructure  implements IStructure{
 		return problemMatrix;
 	}
 	
+	/**
+	 * Loads an IOperation matrix from a file in the parameter
+	 * @param processingTimesFile - File with the processing times of the problem
+	 * @param mVector - File with the initial solution of the problem
+	 * @return OperationIndexVO[][] - matrix of operations
+	 * @throws Exception
+	 */
 	private OperationIndexVO[][] loadParallelProblemMatrix(
 			String processingTimesFile, String mVector)  throws Exception {
 		OperationIndexVO[][] problemMatrix = null;

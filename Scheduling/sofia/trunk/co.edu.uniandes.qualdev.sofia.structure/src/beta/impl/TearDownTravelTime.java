@@ -14,15 +14,24 @@ public class TearDownTravelTime extends TearDownBeta{
 	// --------------------------------------------------------
 	// Attributes
 	// --------------------------------------------------------
-
+	
+	/**
+	 * Matrix with the values of the beta
+	 */
 	private int[][] TTMatrix;
 	
+	/**
+	 * Files with the values of the beta
+	 */
 	private ArrayList<String> informationFiles= new ArrayList<String>();
 
 	// --------------------------------------------------------
 	// Constructor
 	// --------------------------------------------------------
 	
+	/**
+	 * Constructor of the class
+	 */
 	public TearDownTravelTime() {
 
 	}
@@ -98,15 +107,6 @@ public class TearDownTravelTime extends TearDownBeta{
 		return clone;
 	}
 
-	@Override
-	public ArrayList<String> getInformationFiles() {
-		return informationFiles;
-	}
-
-	@Override
-	public void setInformationFiles(ArrayList<String> informationFiles) {
-		this.informationFiles = informationFiles;
-	}
 
 	@Override
 	public int[][] applyBeta(int[][] C) {
@@ -139,6 +139,10 @@ public class TearDownTravelTime extends TearDownBeta{
 			return newC;
 	}
 
+	
+	// --------------------------------------------------------
+	// Getter and Setters
+	// --------------------------------------------------------	
 	public int[][] getTTMatrix() {
 		return TTMatrix;
 	}
@@ -147,5 +151,14 @@ public class TearDownTravelTime extends TearDownBeta{
 		TTMatrix = tTMatrix;
 	}
 	
+	@Override
+	public ArrayList<String> getInformationFiles() {
+		return informationFiles;
+	}
+
+	@Override
+	public void setInformationFiles(ArrayList<String> informationFiles) {
+		this.informationFiles = informationFiles;
+	}
 	
 }

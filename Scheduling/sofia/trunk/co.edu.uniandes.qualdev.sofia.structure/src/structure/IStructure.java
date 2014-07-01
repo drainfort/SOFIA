@@ -45,7 +45,11 @@ public interface IStructure {
 	 */
 	public void exchangeOperations(OperationIndexVO initialOperationIndex,
 			OperationIndexVO finalOperationIndex);
-	
+	/**
+	 * Reverse the operations between the given operation indexes
+	 * @param initialOperationIndex- Operation index of the initial operation
+	 * @param finalOperationIndex - Operations index of the final operation
+	 */
 	public void reverseOperationsBetween(OperationIndexVO initialOperationIndex,
 			OperationIndexVO finalOperationIndex);
 
@@ -180,6 +184,8 @@ public interface IStructure {
 	/**
 	 * Calculates the C matrix of the current solution. That is calculate the
 	 * initial and final time for each node (operation)
+	 * @param initialPosition - Initial position of the operation to recalculate part of the matrix
+	 * @return CMatrix
 	 */
 	public int[][] calculateCMatrix(int initialPosition) throws Exception;
 
@@ -259,18 +265,64 @@ public interface IStructure {
 	 */
 	public int geFinalTime(OperationIndexVO operationIndex);
 	
+	/**
+	 * Search for an operation with the same job id, that is scheduled before from the the operation that enter by parameter
+	 * @param Cij - Operation that we want to search
+	 * @param vectorPos - Position of this operation
+	 * @param vector - Array of operations
+	 * @return Operation - with same job id as operation in the parameter but was scheduled before or null
+	 */
 	public IOperation getCiminus1J(IOperation Cij, int vectorPos, ArrayList<IOperation> vector);
 
+	/**
+	 * Search for an operation with the same station id, that is scheduled before from the the operation that enter by parameter
+	 * @param Cij - Operation that we want to search
+	 * @param vectorPos - Position of this operation
+	 * @param vector - Array of operations
+	 * @return Operation - with same station id as operation in the parameter but was scheduled before or null
+	 */
 	public IOperation getCiJminus1(IOperation Cij, int vectorPos, ArrayList<IOperation> vector);
 	
+	/**
+	 * Get the operation in the position that enter as parameter
+	 * @param pos - position of the query
+	 * @return Operation - in the specified position
+	 * @throws Exception
+	 */
 	public IOperation getPosition(int pos) throws Exception;
 	
+	/**
+	 * Get betas of the problem
+	 * @return array with the betas present in the problem
+	 */
 	public ArrayList<BetaVO> getBetas();
 	
+	/**
+	 * Get the travel time between two station given their indexes
+	 * @param initialPosition - index of first station
+	 * @param finalPosition - position of the second station
+	 * @return int - value with the travel time between the two stations
+	 * @throws Exception
+	 */
 	public int getTT(int initialPosition, int finalPosition) throws Exception;
 	
+	/**
+	 * Get the travel time between an operation an the position of the predecessor
+	 * @param Cij - Operation that we want to find the travel time with the predecessor
+	 * @param predecessor - Position of the predecessor in the structure
+	 * @param vector - Array of operations
+	 * @return int - value with the travel time
+	 * @throws Exception
+	 */
 	public int getTTBetas(IOperation Cij, int predecessor, ArrayList<IOperation> vector) throws Exception;
 	
+	/**
+	 * Get the travel time between two given operations
+	 * @param origin - Origin operation
+	 * @param destination - Destination operation
+	 * @return int - value of the travel time among the specified operations
+	 * @throws Exception
+	 */
 	public int getTTBetas(IOperation origin, IOperation destination) throws Exception;
 	
 	// -------------------------------------------------

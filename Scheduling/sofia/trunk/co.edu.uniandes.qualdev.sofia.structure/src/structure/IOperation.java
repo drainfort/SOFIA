@@ -7,7 +7,10 @@ public interface IOperation {
 	// -----------------------------------------
 	// Methods
 	// -----------------------------------------
-	
+	/**
+	 * Method that clone the object
+	 * @return IOperation - the cloned object
+	 */
 	public IOperation clone();
 	
 	// -----------------------------------------
@@ -17,7 +20,6 @@ public interface IOperation {
 	public OperationIndexVO getOperationIndex();
 
 	public void setOperationIndex(OperationIndexVO operationIndex);
-	
 	
 	public int getInitialTime();
 

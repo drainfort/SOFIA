@@ -9,24 +9,45 @@ public class Operation implements IOperation{
 	// Attributes
 	// -------------------------------------
 	
+	/**
+	 * Operation index of the operation
+	 */
 	private OperationIndexVO operationIndex;
-		
+	
+	/**
+	 * Initial time of the operation
+	 */
 	private int initialTime;
 	
+	/**
+	 * Time in which the operation ends
+	 */
 	private int finalTime;
 	
+	/**
+	 * Time to finish the job
+	 */
 	private int jobRemainingTime;
 	
+	/**
+	 * If the operation is schedulled or not
+	 */
 	private boolean scheduled;
 	
 	// -------------------------------------
 	// Constructor
 	// -------------------------------------
-	
+	/**
+	 * Constructor of the class
+	 */
 	public Operation(){
 		
 	}
 
+	/**
+	 * Co0nstructor of the class
+	 * @param operationIndex- index of the operation
+	 */
 	public Operation(OperationIndexVO operationIndex){
 		this.operationIndex = operationIndex;
 	}
