@@ -13,7 +13,7 @@ import structure.IStructure;
 public interface IModifier {
 
 	/**
-	 * Perfom the modification of the candidate pair and the structure
+	 * Perform the modification of the candidate pair and the structure
 	 * @param movement - candidate pair
 	 * @param structure - current structure that is going to be modified
 	 * @return structure - new structure after the modification
