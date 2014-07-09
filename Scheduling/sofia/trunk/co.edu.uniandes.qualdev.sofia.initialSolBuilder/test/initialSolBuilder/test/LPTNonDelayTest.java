@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import structure.IStructure;
 import structure.impl.Operation;
 import structure.impl.Vector;
 import structure.impl.decoding.SequencialDecoding;
@@ -30,6 +31,10 @@ public class LPTNonDelayTest {
 	
 	private int[][] constructiveInitialSolution;
 	
+	private IStructure vector;
+	
+	private IStructure graph;
+	
 	// ------------------------------------------
 	// Scenarios
 	// ------------------------------------------
@@ -53,6 +58,10 @@ public class LPTNonDelayTest {
 		tearDownTravelTimeFiles.add("./data/TT-04x04-01.txt");
 		BetaVO tearDownTravelTimes = new BetaVO("TearDownTravelTime", "beta.impl.TearDownTravelTime", tearDownTravelTimeFiles, true);
 		betas.add(tearDownTravelTimes);
+		
+		vector = testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null, new SequencialDecoding());
+		
+		graph = testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.GraphFactory", null, new SequencialDecoding());
 		
 		constructiveInitialSolution = testRule.createInitialSolution(problemFiles, betas , "structure.factory.impl.VectorFactory", null, new SequencialDecoding()).calculateAMatrix();
 	}
@@ -150,5 +159,13 @@ public class LPTNonDelayTest {
 		
 		Assert.assertEquals("La doceava posicion deberia ser las <1,2,5>",vector.getOperations().get(11), new Operation(new OperationIndexVO(0, 1, 2, 5)));
 		Assert.assertEquals("La doceava posicion deberia comenzar en 33 y terminar en 45",vector.getOperations().get(11).getInitialTime()==33 && vector.getOperations().get(11).getFinalTime()==45, true );
+	}
+	
+	@Test
+	public void testLPTNonDelaySameCriticalRoute() throws Exception{
+		
+		System.out.println(vector.getCriticalPaths());
+		System.out.println(graph.getCriticalPaths());
+		Assert.assertEquals("Deben ser la rutas criticas iguales", vector.getCriticalPaths(), graph.getCriticalPaths());
 	}
 }
