@@ -174,7 +174,6 @@ public class TabuSearch extends Control{
 				neighborhodSize = nPr;
 			
 			ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateNeighborhood(current, neighborhodSize);
-			//ArrayList<PairVO> arrayNeighbors = neighborCalculator.calculateCompleteNeighborhood(current);
 
 			Graphic graphic = new Graphic();
 			graphic.addPoint(new Point(0, GammaInitialSolution));
@@ -285,6 +284,12 @@ public class TabuSearch extends Control{
 			return best;
 		}
 		
+		/**
+		 * Add candidate to a fix size array ordered with the best candidates
+		 * @param bestCandidates - the array of best candidates
+		 * @param pairCandidate - new candidate
+		 * @param maxSize - max size of the array
+		 */
 		private void addToBestCandidates(ArrayList<PairVO> bestCandidates,
 				PairVO pairCandidate, int maxSize) {
 			
@@ -310,6 +315,17 @@ public class TabuSearch extends Control{
 			
 		}
 		
+		/**
+		 * Evaluate a neighbors and create a list with the best ones.
+		 * @param bestCandidates - list of best candidates
+		 * @param arrayNeighbors - list of neighbors to evaluate
+		 * @param nonImprovingIn - non improving 
+		 * @param current - current solution
+		 * @param modifier - modifier of the structure
+		 * @param gammaCalculator - component that calculate the gamma function
+		 * @param executionResults - consolidated results
+		 * @throws Exception
+		 */
 		private void getBestCandidates(ArrayList<PairVO> bestCandidates, ArrayList<PairVO> arrayNeighbors, int nonImprovingIn, IStructure current, IModifier modifier, IGammaCalculator gammaCalculator,ExecutionResults executionResults) throws Exception{
 			
 			for (int index = 0; index < arrayNeighbors.size() && !optimalAchieved && nonImprovingIn>=0; index++) {
