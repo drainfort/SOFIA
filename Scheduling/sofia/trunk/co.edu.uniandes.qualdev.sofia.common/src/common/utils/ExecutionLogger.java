@@ -52,6 +52,7 @@ public class ExecutionLogger {
 	
 	/**
 	 * Print message into the log
+	 * @param notice- the message to print in the log
 	 */
 	public void printLog(String notice){
 		if(useLogger)

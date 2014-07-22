@@ -49,7 +49,7 @@ public class OperationIndexVO {
 	 * Constructor of the class
 	 * @param job - Job index
 	 * @param station - Station index
-	 * @param processingTime
+	 * @param processingTime - processing time of the operation
 	 */
 	public OperationIndexVO( int processingTime, int job, int station) {
 		jobId = job;
@@ -75,7 +75,7 @@ public class OperationIndexVO {
 	 * @param job - Job index
 	 * @param station - Station index
 	 * @param machine - Machine index
-	 * @param processingTime
+	 * @param processingTime - Processing time of the operation
 	 */
 	public OperationIndexVO(int processingTime,int job, int station, int machine) {
 		jobId = job;
