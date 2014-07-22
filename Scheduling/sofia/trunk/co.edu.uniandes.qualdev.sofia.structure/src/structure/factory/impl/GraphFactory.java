@@ -47,7 +47,7 @@ public class GraphFactory extends AbstractStructureFactory {
 	 * @param problemMatrix - File of the problem matrix
 	 * @param betas - Betas of the problem
 	 * @return graph that represents the problem
-	 * @throws Exception
+	 * @throws Exception - Method error
 	 */
 	public IStructure createSolutionGraph(Integer[][] A,
 			String problemMatrix, ArrayList<BetaVO> betas) throws Exception{

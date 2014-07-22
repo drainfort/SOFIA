@@ -67,8 +67,8 @@ public class GraphScenariosFactory {
 	
 	/**
 	 * Returns an initial problem obtained from the file in the parameter.
-	 * @return
-	 * @throws Exception
+	 * @return Construct Graph 
+	 * @throws Exception - Functionality error
 	 */
 	public static Graph buildSimple04x04Problem() throws Exception{
 		ArrayList<String> problemFiles = new ArrayList<String>();

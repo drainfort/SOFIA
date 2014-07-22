@@ -105,6 +105,7 @@ public class Graph extends AbstractStructure {
 	 * Constructor of the class
 	 * @param processingTimesFile - File of the processing time of the problem
 	 * @param pBetas - Betas of the problem
+	 * @throws Exception - Functionality error
 	 */
 	public Graph(String processingTimesFile, ArrayList<BetaVO> pBetas) throws Exception {
 		super(processingTimesFile, pBetas);
@@ -967,12 +968,6 @@ public class Graph extends AbstractStructure {
 		weightedNodesCriticaRoute = null;
 	}
 
-	/**
-	 * Print in the console the matrix given in the parameter.
-	 * 
-	 * @param matrixToPrint
-	 *            . The matrix that is going to be printed in the console.
-	 */
 	public String toString() {
 		String matrix = "";
 		int numMachines = operationsMatrix.length;
@@ -1110,7 +1105,7 @@ public class Graph extends AbstractStructure {
 	
 	/**
 	 * Calculates the longest paths of the graph.
-	 * @throws Exception 
+	 * @throws Exception - Functionality error
 	 */
 	public ArrayList<CriticalPath> getCriticalPaths() throws Exception{
 		int cmax = 0;

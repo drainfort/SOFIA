@@ -17,7 +17,7 @@ public interface IModifier {
 	 * @param movement - candidate pair
 	 * @param structure - current structure that is going to be modified
 	 * @return structure - new structure after the modification
-	 * @throws Exception
+	 * @throws Exception - Method error
 	 */
 	public IStructure performModification(PairVO movement, IStructure structure) throws Exception;
 }

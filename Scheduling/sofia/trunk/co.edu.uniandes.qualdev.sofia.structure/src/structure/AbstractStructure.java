@@ -73,7 +73,7 @@ public abstract class AbstractStructure  implements IStructure{
 	 * Constructor of the class. It is able to create a structure
 	 * with a non-defined problem: Neither processing times nor betas.
 	 * @param totalJobs - number of jobs
-	 * @param totalSations - number of stations
+	 * @param totalStations - number of stations
 	 */
 	public AbstractStructure(int totalJobs, int totalStations){
 		this.totalJobs = totalJobs;
@@ -94,7 +94,7 @@ public abstract class AbstractStructure  implements IStructure{
 	 * @param processingTimesFile - Processing time file
 	 * @param mVector - File of initial solution of the vector
 	 * @param pBetas - Betas of the problem
-	 * @throws Exception
+	 * @throws Exception - Method error
 	 */
 	public AbstractStructure(String processingTimesFile, String mVector, ArrayList<BetaVO> pBetas)throws Exception{
 		betas = new HashMap<String, Beta>();
@@ -114,6 +114,10 @@ public abstract class AbstractStructure  implements IStructure{
 	/**
 	 * Constructor of the class. It is able to create a structure
 	 * with the problem: Operations with processing times + betas.
+	 * 
+	 * @param processingTimesFile - name of the file that has the processing time information
+	 * @param pBetas - betas of the problem
+	 * @throws Exception - Method error
 	 */
 	public AbstractStructure(String processingTimesFile, ArrayList<BetaVO> pBetas) throws Exception{
 		betas = new HashMap<String, Beta>();

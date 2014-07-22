@@ -30,6 +30,7 @@ public interface IStructure {
 	 *            Position of the initial operation within the vector
 	 * @param finalOperationPosition
 	 *            Position of the final operation within the vector
+	 * @throws Exception - Method error
 	 */
 	public void exchangeOperations(int initialOperationPosition,
 			int finalOperationPosition) throws Exception;
@@ -61,6 +62,7 @@ public interface IStructure {
 	 *            Operation that must be inserted
 	 * @param successorOperationPosition
 	 *            Operation that indicates the successor
+	 * @throws Exception - Method error
 	 */
 	public void insertOperationBefore(int toInsertOperationPosition,
 			int successorOperationPosition) throws Exception;
@@ -85,6 +87,7 @@ public interface IStructure {
 	 *            Operation that must be inserted
 	 * @param successorOperationPosition
 	 *            Operation that indicates the successor
+	 * @throws Exception - Method error
 	 */
 	public void insertOperationAfter(int toInsertOperationPosition,
 			int successorOperationPosition) throws Exception;
@@ -148,7 +151,7 @@ public interface IStructure {
 	 * 
 	 * @param position Position where the required operation is located
 	 * @return operation The operation required
-	 * @throws Exception 
+	 * @throws Exception - Method error
 	 */
 	public IOperation getOperationByPosition(int position) throws Exception;
 
@@ -177,6 +180,7 @@ public interface IStructure {
 	 * @param jobId The required job id
 	 * @param stationId The required station id
 	 * @return operations List of operations occurring in the job and station in the parameters
+	 * @throws Exception - Method error
 	 */
 	public ArrayList<IOperation> getOperationsByJobAndStation(int jobId,
 			int stationId) throws Exception;
@@ -186,16 +190,17 @@ public interface IStructure {
 	 * initial and final time for each node (operation)
 	 * @param initialPosition - Initial position of the operation to recalculate part of the matrix
 	 * @return CMatrix
+	 * @throws Exception - Method error
 	 */
 	public int[][] calculateCMatrix(int initialPosition) throws Exception;
 
 	/**
 	 * Updates the C matrix according to an interchange (swap) given by the pair
 	 * in the parameter
-	 * <pre> The corresponding swap must be done before calling this method.
-	 * @param pair
+	 * <pre> The corresponding swap must be done before calling this method. </pre>
+	 * @param pair - last pair to be inserted to the structure
 	 * @return the updated C matrix.
-	 * @throws Exception 
+	 * @throws Exception - Method error 
 	 */
 	public int[][] updateCMatrix(PairVO pair) throws Exception;
 	
@@ -205,7 +210,7 @@ public interface IStructure {
 	 * 
 	 * @return initialTimes A matrix containing the current initial time
 	 * of each operation
-	 * @throws Exception 
+	 * @throws Exception - Method error 
 	 */
 	public int[][] calculateInitialTimesMatrix() throws Exception;
 	
@@ -223,6 +228,7 @@ public interface IStructure {
 	 *            Identifier of the job
 	 * @return route. A collection of integers that represents the collection of
 	 *         the identifiers of the machines that compose the route of the job
+	 * @throws Exception - Method error
 	 */
 	public Collection<Integer> getJobRoute(int jobId) throws Exception;
 
@@ -234,6 +240,7 @@ public interface IStructure {
 	 * @return route. A collection of integers that represents the collection of
 	 *         the identifiers of the jobs that compose the sequence of the
 	 *         station
+	 * @throws Exception - Method error
 	 */
 	public Collection<Integer> getStationSequence(int stationId) throws Exception;
 	
@@ -287,7 +294,7 @@ public interface IStructure {
 	 * Get the operation in the position that enter as parameter
 	 * @param pos - position of the query
 	 * @return Operation - in the specified position
-	 * @throws Exception
+	 * @throws Exception - Method error
 	 */
 	public IOperation getPosition(int pos) throws Exception;
 	
@@ -302,7 +309,7 @@ public interface IStructure {
 	 * @param initialPosition - index of first station
 	 * @param finalPosition - position of the second station
 	 * @return int - value with the travel time between the two stations
-	 * @throws Exception
+	 * @throws Exception - Method error
 	 */
 	public int getTT(int initialPosition, int finalPosition) throws Exception;
 	
@@ -312,7 +319,7 @@ public interface IStructure {
 	 * @param predecessor - Position of the predecessor in the structure
 	 * @param vector - Array of operations
 	 * @return int - value with the travel time
-	 * @throws Exception
+	 * @throws Exception - Method error
 	 */
 	public int getTTBetas(IOperation Cij, int predecessor, ArrayList<IOperation> vector) throws Exception;
 	
@@ -321,7 +328,7 @@ public interface IStructure {
 	 * @param origin - Origin operation
 	 * @param destination - Destination operation
 	 * @return int - value of the travel time among the specified operations
-	 * @throws Exception
+	 * @throws Exception - Method error
 	 */
 	public int getTTBetas(IOperation origin, IOperation destination) throws Exception;
 	
@@ -337,6 +344,7 @@ public interface IStructure {
 	 * @param operationIndexVO
 	 *            Object of the class OperationIndexVO with the information of an
 	 *            operation
+	 * @return if the operation was scheduled
 	 */
 	public boolean scheduleOperation(OperationIndexVO operationIndexVO);
 	

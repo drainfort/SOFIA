@@ -44,19 +44,19 @@ public abstract class Beta {
 	/**
 	 * Loads the information relative to the beta from a given collection of files.
 	 * @param informationFiles. The collection of files that contain the information about the beta.
-	 * @throws IOException
+	 * @throws IOException - Method error
 	 */
 	abstract public void loadBeta(ArrayList<String> informationFiles) throws IOException;
 
 	/**
 	 * Returns the collection of files that contain the information about the beta.
-	 * @return
+	 * @return the information files for the specific beta
 	 */
 	abstract public ArrayList<String> getInformationFiles();
 
 	/**
 	 * Sets the collection of files that contain the information about the beta.
-	 * @param informationFiles
+	 * @param informationFiles - information files that contains the data of the beta
 	 */
 	abstract public void setInformationFiles(ArrayList<String> informationFiles);
 	
