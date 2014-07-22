@@ -93,7 +93,7 @@ public class Node {
 	/**
 	 * Calculate the final time for the node
 	 * @return int value of the ending time of the operation
-	 * @throws Exception
+	 * @throws Exception - Functionality error
 	 */
 	public int calculateC() throws Exception{
 
@@ -128,7 +128,7 @@ public class Node {
 	/**
 	 * Calculate the initial time of the node
 	 * @return int - initial time
-	 * @throws Exception
+	 * @throws Exception - Functionality error
 	 */
 	public int calculateInitialTime() throws Exception {
 		return this.calculateC() - this.operation.getOperationIndex().getProcessingTime();
@@ -181,7 +181,7 @@ public class Node {
 	 * @param criticalRoutes current critical routes
 	 * @param incidencias - number of appearances in the routes
 	 * @return the critical routes that this node is part off.
-	 * @throws Exception
+	 * @throws Exception - Functionality error
 	 */
 	public ArrayList<CriticalPath> getCriticalRoutes(ArrayList<CriticalPath> criticalRoutes, ArrayList<int[]> incidencias)throws Exception{
 		//Caso Base

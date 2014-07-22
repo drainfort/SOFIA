@@ -81,7 +81,7 @@ public class Test_N1_Random {
 	
 	/**
 	 * The size of the complete neighborhood in the graph should be vectorSize P 2. P = permutation.
-	 * @throws Exception
+	 * @throws Exception - Functionality error
 	 */
 	@Test
 	public void testNeighborhoodSizeGraphScenario1() throws Exception{
@@ -101,7 +101,7 @@ public class Test_N1_Random {
 	
 	/**
 	 * The size of the complete neighborhood in the vector should be vectorSize P 2. P = permutation.
-	 * @throws Exception
+	 * @throws Exception - Functionality error
 	 */
 	@Test
 	public void testNeighborhoodSizeVectorScenario1() throws Exception{

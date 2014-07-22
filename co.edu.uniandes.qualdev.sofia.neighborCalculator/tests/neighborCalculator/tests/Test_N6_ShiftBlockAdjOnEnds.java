@@ -156,7 +156,7 @@ public class Test_N6_ShiftBlockAdjOnEnds {
 	
 	/**
 	 * The size of the complete neighborhood in the graph should be criticalPathSize P 2. (P = permutation) For all the critical paths
-	 * @throws Exception
+	 * @throws Exception - Functionality error
 	 */
 	@Test
 	public void testNeighborhoodSizeGraphScenario1() throws Exception{
@@ -176,7 +176,7 @@ public class Test_N6_ShiftBlockAdjOnEnds {
 	
 	/**
 	 * The size of the complete neighborhood in the vector should be criticalPathSize P 2. (P = permutation) For all the critical paths
-	 * @throws Exception
+	 * @throws Exception - Functionality error
 	 */
 	@Test
 	public void testNeighborhoodSizeVectorScenario1() throws Exception{

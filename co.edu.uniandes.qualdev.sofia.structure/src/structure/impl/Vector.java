@@ -57,6 +57,9 @@ public class Vector extends AbstractStructure{
 
 	/**
 	 * Constructor of the class that initializes an empty structure
+	 * @param totalJobs - total number of jobs
+	 * @param totalStations - total number of stations
+	 * @param decodingStrategy - decoding strategy
 	 */
 	public Vector(int totalJobs, int totalStations, Decoding decodingStrategy){
 		super(totalJobs, totalStations);
@@ -66,8 +69,13 @@ public class Vector extends AbstractStructure{
 		this.decodingStrategy = decodingStrategy;
 	}
 	
+
 	/**
 	 * Constructor of the class
+	 * @param processingTimesFile - processing time files for loading the problem
+	 * @param pBetas - information of restrictions of the problem
+	 * @param decodingStrategy - decoding strategy
+	 * @throws Exception - Problem with the method
 	 */
 	public Vector(String processingTimesFile, ArrayList<BetaVO> pBetas, Decoding decodingStrategy) throws Exception {
 		super(processingTimesFile, pBetas);
@@ -79,6 +87,11 @@ public class Vector extends AbstractStructure{
 	
 	/**
 	 * Constructor of the class
+	 * @param processingTimesFile - processing time files for loading the problem
+	 * @param mVector - initial vector
+	 * @param pBetas - information of restrictions of the problem
+	 * @param decodingStrategy - decoding strategy
+	 * @throws Exception - Problem with the method
 	 */
 	public Vector(String processingTimesFile, String mVector, ArrayList<BetaVO> pBetas, Decoding decodingStrategy) throws Exception {
 		super(processingTimesFile, mVector, pBetas);
@@ -712,6 +725,7 @@ public class Vector extends AbstractStructure{
 	
 	/**
 	 * Returns the collection of operations such that their C value is the biggest one.
+	 * @param CMatrix - Matrix of final times of scheduled operations
 	 * @return lastOperations. A collection of IOperations such that its C value is the biggest one.
 	 */
 	public ArrayList<IOperation> getLastOperation(int[][]CMatrix){

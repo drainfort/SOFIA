@@ -37,7 +37,7 @@ public class Test_CalculateAMatrix {
 	
 	/**
 	 * Test of the matrix C calculation for the instance of the scenario
-	 * @throws Exception 
+	 * @throws Exception - Method error 
 	 */
 	@Test
 	public void testCalculateAMatrix() throws Exception {

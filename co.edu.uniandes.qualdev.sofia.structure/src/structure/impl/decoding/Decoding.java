@@ -32,6 +32,7 @@ public abstract class Decoding {
 	/**
 	 * Decodes the permutation list received in the parameter
 	 * @param operations Permutation list to be decoded
+	 * @return the list of operations after the decoding strategy
 	 */
 	abstract public ArrayList<IOperation> decode(ArrayList<IOperation> operations);
 	
@@ -41,7 +42,7 @@ public abstract class Decoding {
 	
 	/**
 	 * Initialize the array of unscheduled operations
-	 * @param problem
+	 * @param problem - matrix of operations
 	 */
 	public void initialize(OperationIndexVO [][] problem){
 		unscheduledOperations = new ArrayList<OperationIndexVO>();
@@ -54,7 +55,7 @@ public abstract class Decoding {
 	
 	/**
 	 * Initializes the vector relationship with the reference given in the parameter
-	 * @param vector
+	 * @param vector - current structure
 	 */
 	public void setVector(Vector vector){
 		this.vector = vector;
