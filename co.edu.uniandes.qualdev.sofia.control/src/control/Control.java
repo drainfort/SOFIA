@@ -71,7 +71,7 @@ public abstract class Control {
 	 * @param optimal - The best solution or the optimal solution
 	 * @param isOptimal - If the instance has an optimal solution
 	 * @return executionResults - The consolidated results
-	 * @throws Exception
+	 * @throws Exception - Method error
 	 */
 	abstract public ExecutionResults execute(IStructure initialSolution,
 			INeighborCalculator neighborCalculator, ArrayList<IModifier> modifiers,

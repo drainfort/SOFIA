@@ -14,6 +14,7 @@ public interface IParametersLoader {
 	 * Loads the corresponding parameters from a properties file
 	 * @param config
 	 * 			properties that contains the parameters that should be loaded
+	 * @return loaded properties
 	 */
 	public Properties loadParameters(Properties config);
 

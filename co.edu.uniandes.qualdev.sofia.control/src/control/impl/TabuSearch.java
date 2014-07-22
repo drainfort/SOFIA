@@ -76,9 +76,9 @@ public class TabuSearch extends Control{
 			IModifier modifier = modifiers.get(0);
 			ExecutionLogger.getInstance().initializeLogger(resultFile, instanceName);
 			
-			/*if(initialSolution instanceof Graph){
+			if(initialSolution instanceof Graph){
 				((Graph)initialSolution).drawGraph3("./results/graph1/grafo.html", true, null);
-			}*/	
+			}	
 			
 			double GammaInitialSolution = gammaCalculator.calculateGamma(initialSolution);
 			executionResults = new ExecutionResults();
@@ -119,7 +119,7 @@ public class TabuSearch extends Control{
 		 * @param stopTime - Max Time
 		 * @param GammaInitialSolution - gamma of the initial solution
 		 * @return IStructure - The best solution. 
-		 * @throws Exception
+		 * @throws Exception - Method error
 		 */
 		public IStructure tabuSearch(IStructure initialSolution,
 				INeighborCalculator neighborCalculator, IModifier modifier,

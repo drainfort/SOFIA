@@ -109,7 +109,7 @@ public class SimpleSimulatedAnnealing extends Control {
 	 * @param startTime - Initial time
 	 * @param stopTime - Max Time
 	 * @return IStructure - The best solution. 
-	 * @throws Exception
+	 * @throws Exception - Method error
 	 */
 	public IStructure simulatedAnnealing (Properties params, IStructure initialSolution, IGammaCalculator gammaCalculator, INeighborCalculator neighborCalculator, IModifier modifier, Integer optimal, boolean isOptimal, ExecutionResults executionResults, long startTime, long stopTime) throws Exception{
 		
@@ -180,6 +180,7 @@ public class SimpleSimulatedAnnealing extends Control {
 				x++;
 				// Obtains a next solution (Y) from the current one (X)
 				PairVO YMovement = neighborCalculator.calculateNeighbor(X);
+				//System.out.println(YMovement);
 				IStructure Y = modifier.performModification(YMovement, X);
 
 				if(Y ==null){
