@@ -15,9 +15,9 @@ public class MatrixUtils {
 	/**
 	 * Loads an integer matrix from a file given in the parameter
 	 * 
-	 * @param filePath
-	 * @return
-	 * @throws IOException
+	 * @param filePath - name of the file of the matrix
+	 * @return integer matrix with the information of the file
+	 * @throws IOException - Method error
 	 */
 	public static Integer[][] loadMatrix(String filePath) throws IOException {
 		Integer[][] answer = null;

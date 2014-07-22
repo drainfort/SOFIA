@@ -40,7 +40,7 @@ public class RandomNumber {
 	 * parameters
 	 * @param min - Lower value of the interval
 	 * @param max - Max value of the interval
-	 * @return
+	 * @return a number between the min and the max
 	 */
 	public int randomNumber(int min, int max) {
 		int a = randomNumber.nextInt(max);
