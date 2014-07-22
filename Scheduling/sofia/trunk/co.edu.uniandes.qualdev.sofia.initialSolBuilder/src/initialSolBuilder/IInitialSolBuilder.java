@@ -27,9 +27,11 @@ public interface IInitialSolBuilder {
 	 * 			Factory that is able to create a solution structure
 	 * @param gammaCalculator
 	 * 			Component that is able to calculate the gamma value of a given solution
+	 * @param decodingStrategy
+	 *          Component that decodes the solution
 	 * @return vector
 	 * 			Vector representing the initial solution provided by the component.
-	 * @throws Exception
+	 * @throws Exception - Method error
 	 */
 	public IStructure createInitialSolution(ArrayList<String> problemFiles,
 			ArrayList<BetaVO> betas, String structureFactory, IGammaCalculator gammaCalculator,
@@ -40,7 +42,6 @@ public interface IInitialSolBuilder {
 	/**
 	 * Returns the name of the constructive algorithm responsible for the creation of
 	 * the initial solution
-	 * .
 	 * @return Name of the constructive algorithm
 	 */
 	public String getName();
