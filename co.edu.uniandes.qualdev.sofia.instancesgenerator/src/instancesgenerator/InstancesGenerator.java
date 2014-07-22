@@ -61,12 +61,12 @@ public class InstancesGenerator {
 	  * Generates and prints in the console an instance according 
 	  * to the given size and the time and machine seeds.
 	  * 
-	  * @param jobs. Amount of jobs in the system
-	  * @param stations. Amount of stations in the system
 	  * @param timeSeed. Time seed
 	  * @param machineSeed. Machine seed
 	  * @param processingTimeInterval. Interval for the generation of processing times.
 	  * @param parallelMachinesInterval. Interval for the generation of parallel machines.
+	  * @param size - size of the instance
+	  * @param visitTimeInterval - Interval for the generation of travel times.
 	  */
 	public void generateAndPrintInstance(int size, int timeSeed, int machineSeed, Interval processingTimeInterval, Interval visitTimeInterval, Interval parallelMachinesInterval){
 		
@@ -153,7 +153,8 @@ public class InstancesGenerator {
 	 * Generates and prints an instance according to the given size and the machine/time seed matrixes. 
 	 * @param matrixMachineSeed The machine seed matrix
 	 * @param matrixTimeSeed The time seed matrix
-	 * @return
+	 * @param parallel - Matrix with number of machines per stations
+	 * @return matrix of processing times
 	 */
 	public Integer[][] generateProcessingTimesMatrix(Integer[][] matrixMachineSeed, Integer[][] matrixTimeSeed, Integer[] parallel) {
 		
