@@ -71,9 +71,9 @@ public class IterativeAlgorithm {
 	/**
 	 * Creates an iterative algorithm
 	 * @param algorithmConfiguration configuration of the algorithm
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws ClassNotFoundException
+	 * @throws InstantiationException - Error in method
+	 * @throws IllegalAccessException - Error in method
+	 * @throws ClassNotFoundException - Error in method
 	 */
 	public IterativeAlgorithm(Properties algorithmConfiguration)
 			throws InstantiationException, IllegalAccessException,
@@ -131,7 +131,7 @@ public class IterativeAlgorithm {
 	 * @param problem The scheduling problem that the algorithm is going to solve
 	 * @param initialSolution - Initial solution for the scheduling problem
 	 * @return results for the problem
-	 * @throws Exception
+	 * @throws Exception - Error in method
 	 */
 	public ExecutionResults execute(SchedulingProblem problem, IStructure initialSolution) throws Exception {
 		//TODO fix the true always

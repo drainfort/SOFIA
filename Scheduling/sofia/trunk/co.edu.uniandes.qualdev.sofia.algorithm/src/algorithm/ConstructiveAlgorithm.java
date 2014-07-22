@@ -27,10 +27,10 @@ public class ConstructiveAlgorithm {
 	/**
 	 * Creates a constructive algorithm from the parameters
 	 * 
-	 * @param initialSolutionBuilderClassName
-	 * @throws ClassNotFoundException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @param initialSolutionBuilderClassName - Implementation of the initialSolutionBuilder
+	 * @throws ClassNotFoundException - Error in method
+	 * @throws IllegalAccessException - Error in method
+	 * @throws InstantiationException - Error in method
 	 */
 	public ConstructiveAlgorithm(String initialSolutionBuilderClassName) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		System.out.println("initialSolutionBuilderClassName: " + initialSolutionBuilderClassName);

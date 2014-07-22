@@ -51,15 +51,16 @@ public abstract class SchedulingAlgorithm {
 
 	/**
 	 * Constructor of the class.
-	 * @param currentBks 
+	 * @param currentBks - current restrictions of the scheduling problem
+	 * @param algorithmConfiguration - Parameter configuration of the algorithm
+	 * @param problemConfiguration - Problem configuration
+	 * @param instanceType - Benchmark of the instance
+	 * @param hasOptimal - If the instance has an optimal solution
 	 * 
-	 * @param configurationFile. The configuration file that contains the 
-	 * 								information about what components should be instantiated. 
-	 * 
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws ClassNotFoundException
-	 * @throws Exception
+	 * @throws InstantiationException - Method error
+	 * @throws IllegalAccessException - Method error
+	 * @throws ClassNotFoundException - Method error
+	 * @throws Exception - Method error
 	 */
 	public SchedulingAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks, String instanceType, boolean hasOptimal)
 			throws InstantiationException, IllegalAccessException,
@@ -206,8 +207,11 @@ public abstract class SchedulingAlgorithm {
 	 * Executes the algorithm by calling the execute method of the control
 	 * component
 	 * 
+	 * @param instanceName - name of the instance
+	 * @param instanceFile - file with the description files of the instance
 	 * @throws Exception
 	 *             If something fails
+	 * @return consolidated results of the execution
 	 */
 	public abstract ExecutionResults execute(String instanceName, String instanceFile) throws Exception;
 

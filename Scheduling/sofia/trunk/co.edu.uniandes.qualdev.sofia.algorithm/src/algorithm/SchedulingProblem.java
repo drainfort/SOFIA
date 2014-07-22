@@ -67,10 +67,10 @@ public class SchedulingProblem {
 	 * @param bkss - best known solutions of the scheduling problem
 	 * @param currentBks -  best known solution for the combination of problem and betas
 	 * @param hasOptimal -Boolean that specifies if this problem has optimal solution
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws ClassNotFoundException
-	 * @throws Exception
+	 * @throws InstantiationException - Method error
+	 * @throws IllegalAccessException - Method error
+	 * @throws ClassNotFoundException - Method error
+	 * @throws Exception - Method error
 	 */
 	public SchedulingProblem(ArrayList<String> problemFiles, ArrayList<BetaVO> betas, String structrureFactory, 
 				HashMap<String, Integer> bkss, String currentBks, boolean hasOptimal) throws InstantiationException, IllegalAccessException, ClassNotFoundException, 

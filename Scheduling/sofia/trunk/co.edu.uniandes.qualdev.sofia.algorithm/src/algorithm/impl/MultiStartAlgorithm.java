@@ -24,15 +24,15 @@ public class MultiStartAlgorithm extends SchedulingAlgorithm {
 	// -----------------------------------------------
 	/**
 	 * Constructor of the class 
-	 * @param algorithmConfiguration
-	 * @param problemConfiguration
-	 * @param currentBks
-	 * @param instanceType
-	 * @param hasOptimal
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws ClassNotFoundException
-	 * @throws Exception
+	 * @param algorithmConfiguration - paremters of the algorithm
+	 * @param problemConfiguration - configuration of the problem
+	 * @param currentBks - betas included in the scheduling problem
+	 * @param instanceType - benchmark of the problem
+	 * @param hasOptimal - if the instance has optimal solution
+	 * @throws InstantiationException - Method error
+	 * @throws IllegalAccessException - Method error
+	 * @throws ClassNotFoundException - Method error
+	 * @throws Exception - Method error
 	 */
 	public MultiStartAlgorithm(Properties algorithmConfiguration, Properties problemConfiguration, String currentBks, String instanceType, boolean hasOptimal)
 			throws InstantiationException, IllegalAccessException,
