@@ -92,10 +92,10 @@ public class ConfigurationAdapter {
 	 * @param instanceType - instance type
 	 * @param algorithmDefinition - algorithm definition and parameters
 	 * @param resultsFile - file destination for the results
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws ClassNotFoundException
-	 * @throws Exception
+	 * @throws InstantiationException - Parameter error
+	 * @throws IllegalAccessException - Parameter error
+	 * @throws ClassNotFoundException - Parameter error
+	 * @throws Exception - Functionality error
 	 */
 	public void launch(ArrayList<String> instancesToExecute, String instanceType,
 			AlgorithmConfigurationVO algorithmDefinition, String resultsFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, Exception {
