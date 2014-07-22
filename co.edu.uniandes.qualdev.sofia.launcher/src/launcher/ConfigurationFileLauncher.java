@@ -147,7 +147,7 @@ public class ConfigurationFileLauncher {
 	
 	/**
 	 * Method that executes the framework
-	 * @throws Exception
+	 * @throws Exception - Error in method
 	 */
 	public void launchSofia() throws Exception{
 		
