@@ -264,6 +264,7 @@ public class ChartPrinter {
 				"<th scope=\"col\">MODE</th>"+
 				"<th scope=\"col\">GAP</th>"+
 				"<th scope=\"col\">TimesBetter</th>"+
+				"<th scope=\"col\">Variation Coefficient</th>"+
 				"<th scope=\"col\" class=\"rightTopCorner\">VISITED NEIGHBORS</th>"+
 				"</tr></thead><tbody>");
 		for ( int i =0; i< globalExecutionResults.size();i++) {
@@ -296,7 +297,7 @@ public class ChartPrinter {
 			if(bestCmax<results.get(0).getOptimal())bestCMaxString+="**";
 			double average = sumBestCMax/iterations;
 			double averageProcessing =processingTime/iterations;
-			
+			double variation = 0;
 			double mode = 0;
 			int maxCount = 0;
 			
@@ -310,10 +311,12 @@ public class ChartPrinter {
 		            maxCount = count;
 		            mode = executionResults.getBestCmax();
 		        }
+		        variation += Math.pow(average-executionResults.getBestCmax(),2);
 		    }
 		    double gap = ((bestCmax-results.get(0).getOptimal())/results.get(0).getOptimal())*100;
 		    DecimalFormat df2 = new DecimalFormat("###,##");
-			
+		    variation = variation/(iterations-1); 
+			double coefficient = Math.sqrt(variation)/average*100;
 			//System.out.println(average);
 			
 			if(i ==globalExecutionResults.size()-1){
@@ -328,6 +331,7 @@ public class ChartPrinter {
 				pw.println("<td>"+mode+"</td>");
 				pw.println("<td>"+Double.valueOf(df2.format(gap))+"%</td>");
 				pw.println("<td>"+lessBKS+"</td>");
+				pw.println("<td>"+Double.valueOf(df2.format(coefficient))+"%</td>");
 				pw.println("<td class =\"rightBottomCorner\"> "+neighbor+"</td>");
 			}
 			else{
@@ -342,6 +346,7 @@ public class ChartPrinter {
 				pw.println("<td>"+mode+"</td>");
 				pw.println("<td>"+Double.valueOf(df2.format(gap))+"%</td>");
 				pw.println("<td>"+lessBKS+"</td>");
+				pw.println("<td>"+Double.valueOf(df2.format(coefficient))+"%</td>");
 				pw.println("<td>"+neighbor+"</td>");
 			}
 		}
